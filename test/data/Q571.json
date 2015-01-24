@@ -1,0 +1,2136 @@
+{
+  "sitelinks": {
+    "zhwiki": {
+      "badges": [],
+      "title": "图书",
+      "site": "zhwiki"
+    },
+    "zh_yuewiki": {
+      "badges": [],
+      "title": "書",
+      "site": "zh_yuewiki"
+    },
+    "zh_min_nanwiki": {
+      "badges": [],
+      "title": "Chheh",
+      "site": "zh_min_nanwiki"
+    },
+    "yowiki": {
+      "badges": [],
+      "title": "Ìwé",
+      "site": "yowiki"
+    },
+    "yiwiki": {
+      "badges": [],
+      "title": "בוך",
+      "site": "yiwiki"
+    },
+    "xhwiki": {
+      "badges": [],
+      "title": "Incwadi",
+      "site": "xhwiki"
+    },
+    "wawiki": {
+      "badges": [],
+      "title": "Live (po lére)",
+      "site": "wawiki"
+    },
+    "warwiki": {
+      "badges": [],
+      "title": "Basahon",
+      "site": "warwiki"
+    },
+    "viwiki": {
+      "badges": [],
+      "title": "Sách",
+      "site": "viwiki"
+    },
+    "vepwiki": {
+      "badges": [],
+      "title": "Kirj",
+      "site": "vepwiki"
+    },
+    "uzwiki": {
+      "badges": [],
+      "title": "Kitob",
+      "site": "uzwiki"
+    },
+    "urwikiquote": {
+      "badges": [],
+      "title": "کتاب",
+      "site": "urwikiquote"
+    },
+    "urwiki": {
+      "badges": [],
+      "title": "کتاب",
+      "site": "urwiki"
+    },
+    "ukwikiquote": {
+      "badges": [],
+      "title": "Книга",
+      "site": "ukwikiquote"
+    },
+    "ukwiki": {
+      "badges": [],
+      "title": "Книга",
+      "site": "ukwiki"
+    },
+    "ttwiki": {
+      "badges": [],
+      "title": "Китап",
+      "site": "ttwiki"
+    },
+    "trwikiquote": {
+      "badges": [],
+      "title": "Okumak",
+      "site": "trwikiquote"
+    },
+    "trwiki": {
+      "badges": [],
+      "title": "Kitap",
+      "site": "trwiki"
+    },
+    "tpiwiki": {
+      "badges": [],
+      "title": "Buk",
+      "site": "tpiwiki"
+    },
+    "tlwiki": {
+      "badges": [],
+      "title": "Aklat",
+      "site": "tlwiki"
+    },
+    "thwiki": {
+      "badges": [],
+      "title": "หนังสือ",
+      "site": "thwiki"
+    },
+    "tgwiki": {
+      "badges": [],
+      "title": "Китоб",
+      "site": "tgwiki"
+    },
+    "tewiki": {
+      "badges": [],
+      "title": "పుస్తకము",
+      "site": "tewiki"
+    },
+    "tawiki": {
+      "badges": [],
+      "title": "நூல் அமைப்பு",
+      "site": "tawiki"
+    },
+    "swwiki": {
+      "badges": [],
+      "title": "Kitabu",
+      "site": "swwiki"
+    },
+    "svwiki": {
+      "badges": [],
+      "title": "Bok",
+      "site": "svwiki"
+    },
+    "suwiki": {
+      "badges": [],
+      "title": "Buku",
+      "site": "suwiki"
+    },
+    "sswiki": {
+      "badges": [],
+      "title": "Íncwadzí",
+      "site": "sswiki"
+    },
+    "srwikiquote": {
+      "badges": [],
+      "title": "Knjiga",
+      "site": "srwikiquote"
+    },
+    "srwiki": {
+      "badges": [],
+      "title": "Књига",
+      "site": "srwiki"
+    },
+    "sqwiki": {
+      "badges": [],
+      "title": "Libri",
+      "site": "sqwiki"
+    },
+    "sowiki": {
+      "badges": [],
+      "title": "Buug",
+      "site": "sowiki"
+    },
+    "snwiki": {
+      "badges": [],
+      "title": "Bhuku",
+      "site": "snwiki"
+    },
+    "slwikiquote": {
+      "badges": [],
+      "title": "Knjiga",
+      "site": "slwikiquote"
+    },
+    "slwiki": {
+      "badges": [],
+      "title": "Knjiga",
+      "site": "slwiki"
+    },
+    "skwikiquote": {
+      "badges": [],
+      "title": "Kniha",
+      "site": "skwikiquote"
+    },
+    "skwiki": {
+      "badges": [],
+      "title": "Kniha",
+      "site": "skwiki"
+    },
+    "siwiki": {
+      "badges": [],
+      "title": "පොත",
+      "site": "siwiki"
+    },
+    "simplewiki": {
+      "badges": [],
+      "title": "Book",
+      "site": "simplewiki"
+    },
+    "shwiki": {
+      "badges": [],
+      "title": "Knjiga",
+      "site": "shwiki"
+    },
+    "scowiki": {
+      "badges": [],
+      "title": "Beuk",
+      "site": "scowiki"
+    },
+    "scnwiki": {
+      "badges": [],
+      "title": "Libbru",
+      "site": "scnwiki"
+    },
+    "sahwiki": {
+      "badges": [],
+      "title": "Кинигэ",
+      "site": "sahwiki"
+    },
+    "rwwiki": {
+      "badges": [],
+      "title": "Igitabo",
+      "site": "rwwiki"
+    },
+    "ruwikiquote": {
+      "badges": [],
+      "title": "Книга",
+      "site": "ruwikiquote"
+    },
+    "ruwiki": {
+      "badges": [],
+      "title": "Книга",
+      "site": "ruwiki"
+    },
+    "ruewiki": {
+      "badges": [],
+      "title": "Книга",
+      "site": "ruewiki"
+    },
+    "rowikiquote": {
+      "badges": [],
+      "title": "Cărți",
+      "site": "rowikiquote"
+    },
+    "rowiki": {
+      "badges": [],
+      "title": "Carte",
+      "site": "rowiki"
+    },
+    "roa_rupwiki": {
+      "badges": [],
+      "title": "Carti",
+      "site": "roa_rupwiki"
+    },
+    "quwiki": {
+      "badges": [],
+      "title": "Liwru",
+      "site": "quwiki"
+    },
+    "hrwikiquote": {
+      "badges": [],
+      "title": "Knjige",
+      "site": "hrwikiquote"
+    },
+    "hrwiki": {
+      "badges": [],
+      "title": "Knjiga",
+      "site": "hrwiki"
+    },
+    "hiwiki": {
+      "badges": [],
+      "title": "पुस्तक",
+      "site": "hiwiki"
+    },
+    "hewikiquote": {
+      "badges": [],
+      "title": "ספרות",
+      "site": "hewikiquote"
+    },
+    "hewiki": {
+      "badges": [],
+      "title": "ספר",
+      "site": "hewiki"
+    },
+    "hakwiki": {
+      "badges": [],
+      "title": "Si",
+      "site": "hakwiki"
+    },
+    "gvwiki": {
+      "badges": [],
+      "title": "Lioar",
+      "site": "gvwiki"
+    },
+    "gnwiki": {
+      "badges": [],
+      "title": "Kuatiañe'ẽ",
+      "site": "gnwiki"
+    },
+    "glwiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "glwiki"
+    },
+    "gdwiki": {
+      "badges": [],
+      "title": "Leabhar",
+      "site": "gdwiki"
+    },
+    "gawiki": {
+      "badges": [],
+      "title": "Leabhar",
+      "site": "gawiki"
+    },
+    "ganwiki": {
+      "badges": [],
+      "title": "書",
+      "site": "ganwiki"
+    },
+    "frwikiquote": {
+      "badges": [],
+      "title": "Livre",
+      "site": "frwikiquote"
+    },
+    "frwiki": {
+      "badges": [],
+      "title": "Livre (document)",
+      "site": "frwiki"
+    },
+    "fiwikiquote": {
+      "badges": [],
+      "title": "Kirja",
+      "site": "fiwikiquote"
+    },
+    "fiwiki": {
+      "badges": [],
+      "title": "Kirja",
+      "site": "fiwiki"
+    },
+    "fawikiquote": {
+      "badges": [],
+      "title": "کتاب",
+      "site": "fawikiquote"
+    },
+    "fawiki": {
+      "badges": [],
+      "title": "کتاب",
+      "site": "fawiki"
+    },
+    "euwiki": {
+      "badges": [],
+      "title": "Liburu",
+      "site": "euwiki"
+    },
+    "etwikiquote": {
+      "badges": [],
+      "title": "Raamatud",
+      "site": "etwikiquote"
+    },
+    "etwiki": {
+      "badges": [],
+      "title": "Raamat",
+      "site": "etwiki"
+    },
+    "eswikiquote": {
+      "badges": [],
+      "title": "Libro",
+      "site": "eswikiquote"
+    },
+    "eswiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "eswiki"
+    },
+    "eowikiquote": {
+      "badges": [],
+      "title": "Libro",
+      "site": "eowikiquote"
+    },
+    "eowiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "eowiki"
+    },
+    "enwikiquote": {
+      "badges": [],
+      "title": "Books",
+      "site": "enwikiquote"
+    },
+    "enwiki": {
+      "badges": [],
+      "title": "Book",
+      "site": "enwiki"
+    },
+    "elwikiquote": {
+      "badges": [],
+      "title": "Βιβλία",
+      "site": "elwikiquote"
+    },
+    "elwiki": {
+      "badges": [],
+      "title": "Βιβλίο",
+      "site": "elwiki"
+    },
+    "diqwiki": {
+      "badges": [],
+      "title": "Kıtabi",
+      "site": "diqwiki"
+    },
+    "dewikiquote": {
+      "badges": [],
+      "title": "Buch",
+      "site": "dewikiquote"
+    },
+    "dewiki": {
+      "badges": [],
+      "title": "Buch",
+      "site": "dewiki"
+    },
+    "bmwiki": {
+      "badges": [],
+      "title": "Gafɛ",
+      "site": "bmwiki"
+    },
+    "bgwikiquote": {
+      "badges": [],
+      "title": "Книги — Читатели",
+      "site": "bgwikiquote"
+    },
+    "bgwiki": {
+      "badges": [],
+      "title": "Книга",
+      "site": "bgwiki"
+    },
+    "bewiki": {
+      "badges": [],
+      "title": "Кніга",
+      "site": "bewiki"
+    },
+    "be_x_oldwiki": {
+      "badges": [],
+      "title": "Кніга",
+      "site": "be_x_oldwiki"
+    },
+    "bawiki": {
+      "badges": [],
+      "title": "Китап",
+      "site": "bawiki"
+    },
+    "bat_smgwiki": {
+      "badges": [],
+      "title": "Kninga",
+      "site": "bat_smgwiki"
+    },
+    "azwiki": {
+      "badges": [],
+      "title": "Kitab",
+      "site": "azwiki"
+    },
+    "afwiki": {
+      "badges": [],
+      "title": "Boek",
+      "site": "afwiki"
+    },
+    "alswiki": {
+      "badges": [],
+      "title": "Buch",
+      "site": "alswiki"
+    },
+    "anwiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "anwiki"
+    },
+    "arcwiki": {
+      "badges": [],
+      "title": "ܟܬܒܐ (ܣܦܪܐ)",
+      "site": "arcwiki"
+    },
+    "arwiki": {
+      "badges": [],
+      "title": "كتاب",
+      "site": "arwiki"
+    },
+    "arzwiki": {
+      "badges": [],
+      "title": "كتاب",
+      "site": "arzwiki"
+    },
+    "astwiki": {
+      "badges": [],
+      "title": "Llibru",
+      "site": "astwiki"
+    },
+    "aywiki": {
+      "badges": [],
+      "title": "Panka",
+      "site": "aywiki"
+    },
+    "bnwiki": {
+      "badges": [],
+      "title": "বই",
+      "site": "bnwiki"
+    },
+    "brwiki": {
+      "badges": [],
+      "title": "Levr",
+      "site": "brwiki"
+    },
+    "bswiki": {
+      "badges": [],
+      "title": "Knjiga",
+      "site": "bswiki"
+    },
+    "bswikiquote": {
+      "badges": [],
+      "title": "Knjiga",
+      "site": "bswikiquote"
+    },
+    "cawiki": {
+      "badges": [],
+      "title": "Llibre",
+      "site": "cawiki"
+    },
+    "cawikiquote": {
+      "badges": [],
+      "title": "Llibre",
+      "site": "cawikiquote"
+    },
+    "cdowiki": {
+      "badges": [],
+      "title": "Cṳ̆",
+      "site": "cdowiki"
+    },
+    "cewiki": {
+      "badges": [],
+      "title": "Книга",
+      "site": "cewiki"
+    },
+    "chrwiki": {
+      "badges": [],
+      "title": "ᎪᏪᎵ",
+      "site": "chrwiki"
+    },
+    "ckbwiki": {
+      "badges": [],
+      "title": "کتێب",
+      "site": "ckbwiki"
+    },
+    "commonswiki": {
+      "badges": [],
+      "title": "Book",
+      "site": "commonswiki"
+    },
+    "cswiki": {
+      "badges": [],
+      "title": "Kniha",
+      "site": "cswiki"
+    },
+    "cswikiquote": {
+      "badges": [],
+      "title": "Kniha",
+      "site": "cswikiquote"
+    },
+    "cvwiki": {
+      "badges": [],
+      "title": "Кĕнеке",
+      "site": "cvwiki"
+    },
+    "cywiki": {
+      "badges": [],
+      "title": "Llyfr",
+      "site": "cywiki"
+    },
+    "dawiki": {
+      "badges": [],
+      "title": "Bog",
+      "site": "dawiki"
+    },
+    "htwiki": {
+      "badges": [],
+      "title": "Liv (pou li)",
+      "site": "htwiki"
+    },
+    "huwiki": {
+      "badges": [],
+      "title": "Könyv",
+      "site": "huwiki"
+    },
+    "huwikiquote": {
+      "badges": [],
+      "title": "Könyv",
+      "site": "huwikiquote"
+    },
+    "hywiki": {
+      "badges": [],
+      "title": "Գիրք",
+      "site": "hywiki"
+    },
+    "hywikiquote": {
+      "badges": [],
+      "title": "Գիրք",
+      "site": "hywikiquote"
+    },
+    "iawiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "iawiki"
+    },
+    "idwiki": {
+      "badges": [],
+      "title": "Buku",
+      "site": "idwiki"
+    },
+    "iewiki": {
+      "badges": [],
+      "title": "Libre",
+      "site": "iewiki"
+    },
+    "ilowiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "ilowiki"
+    },
+    "iowiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "iowiki"
+    },
+    "iswiki": {
+      "badges": [],
+      "title": "Bók",
+      "site": "iswiki"
+    },
+    "itwiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "itwiki"
+    },
+    "itwikiquote": {
+      "badges": [],
+      "title": "Libro",
+      "site": "itwikiquote"
+    },
+    "iuwiki": {
+      "badges": [],
+      "title": "ᕿᒥᕐᕈᐊᑦ/qimirruat",
+      "site": "iuwiki"
+    },
+    "jawiki": {
+      "badges": [],
+      "title": "本",
+      "site": "jawiki"
+    },
+    "jawikiquote": {
+      "badges": [],
+      "title": "書物",
+      "site": "jawikiquote"
+    },
+    "jvwiki": {
+      "badges": [],
+      "title": "Buku",
+      "site": "jvwiki"
+    },
+    "kabwiki": {
+      "badges": [],
+      "title": "Adlis",
+      "site": "kabwiki"
+    },
+    "kawiki": {
+      "badges": [],
+      "title": "წიგნი",
+      "site": "kawiki"
+    },
+    "kkwiki": {
+      "badges": [],
+      "title": "Кітап",
+      "site": "kkwiki"
+    },
+    "kowiki": {
+      "badges": [],
+      "title": "책",
+      "site": "kowiki"
+    },
+    "kshwiki": {
+      "badges": [],
+      "title": "Boch (z lääse)",
+      "site": "kshwiki"
+    },
+    "kuwiki": {
+      "badges": [],
+      "title": "Pirtûk",
+      "site": "kuwiki"
+    },
+    "kvwiki": {
+      "badges": [],
+      "title": "Небӧг",
+      "site": "kvwiki"
+    },
+    "lawiki": {
+      "badges": [
+        "Q17437796"
+      ],
+      "title": "Liber",
+      "site": "lawiki"
+    },
+    "lbwiki": {
+      "badges": [],
+      "title": "Buch",
+      "site": "lbwiki"
+    },
+    "lezwiki": {
+      "badges": [],
+      "title": "Улуб",
+      "site": "lezwiki"
+    },
+    "lmowiki": {
+      "badges": [],
+      "title": "Liber",
+      "site": "lmowiki"
+    },
+    "lnwiki": {
+      "badges": [],
+      "title": "Búku",
+      "site": "lnwiki"
+    },
+    "lowiki": {
+      "badges": [],
+      "title": "ປຶ້ມ",
+      "site": "lowiki"
+    },
+    "ltwiki": {
+      "badges": [],
+      "title": "Knyga",
+      "site": "ltwiki"
+    },
+    "ltwikiquote": {
+      "badges": [],
+      "title": "Knyga",
+      "site": "ltwikiquote"
+    },
+    "lvwiki": {
+      "badges": [],
+      "title": "Grāmata",
+      "site": "lvwiki"
+    },
+    "mgwiki": {
+      "badges": [],
+      "title": "Boky",
+      "site": "mgwiki"
+    },
+    "mhrwiki": {
+      "badges": [],
+      "title": "Книга",
+      "site": "mhrwiki"
+    },
+    "mkwiki": {
+      "badges": [],
+      "title": "Книга",
+      "site": "mkwiki"
+    },
+    "mlwiki": {
+      "badges": [],
+      "title": "പുസ്തകം",
+      "site": "mlwiki"
+    },
+    "mlwikiquote": {
+      "badges": [],
+      "title": "പുസ്തകങ്ങൾ",
+      "site": "mlwikiquote"
+    },
+    "mnwiki": {
+      "badges": [],
+      "title": "Ном",
+      "site": "mnwiki"
+    },
+    "mrwiki": {
+      "badges": [],
+      "title": "पुस्तक",
+      "site": "mrwiki"
+    },
+    "mswiki": {
+      "badges": [],
+      "title": "Buku",
+      "site": "mswiki"
+    },
+    "mwlwiki": {
+      "badges": [],
+      "title": "Libro",
+      "site": "mwlwiki"
+    },
+    "mywiki": {
+      "badges": [],
+      "title": "စာအုပ်",
+      "site": "mywiki"
+    },
+    "nahwiki": {
+      "badges": [],
+      "title": "Āmoxtli",
+      "site": "nahwiki"
+    },
+    "napwiki": {
+      "badges": [],
+      "title": "Libbro",
+      "site": "napwiki"
+    },
+    "nds_nlwiki": {
+      "badges": [],
+      "title": "Boek (literetuur)",
+      "site": "nds_nlwiki"
+    },
+    "ndswiki": {
+      "badges": [],
+      "title": "Book",
+      "site": "ndswiki"
+    },
+    "newiki": {
+      "badges": [],
+      "title": "पुस्तक",
+      "site": "newiki"
+    },
+    "newwiki": {
+      "badges": [],
+      "title": "सफू",
+      "site": "newwiki"
+    },
+    "nlwiki": {
+      "badges": [],
+      "title": "Boek (document)",
+      "site": "nlwiki"
+    },
+    "nlwikiquote": {
+      "badges": [],
+      "title": "Boek",
+      "site": "nlwikiquote"
+    },
+    "nnwiki": {
+      "badges": [],
+      "title": "Bok",
+      "site": "nnwiki"
+    },
+    "nnwikiquote": {
+      "badges": [],
+      "title": "Bøker",
+      "site": "nnwikiquote"
+    },
+    "nowiki": {
+      "badges": [],
+      "title": "Bok",
+      "site": "nowiki"
+    },
+    "ocwiki": {
+      "badges": [],
+      "title": "Libre",
+      "site": "ocwiki"
+    },
+    "oswiki": {
+      "badges": [],
+      "title": "Чиныг",
+      "site": "oswiki"
+    },
+    "pawiki": {
+      "badges": [],
+      "title": "ਕਿਤਾਬ",
+      "site": "pawiki"
+    },
+    "pdcwiki": {
+      "badges": [],
+      "title": "Buch",
+      "site": "pdcwiki"
+    },
+    "piwiki": {
+      "badges": [],
+      "title": "पोत्थकं",
+      "site": "piwiki"
+    },
+    "plwiki": {
+      "badges": [],
+      "title": "Książka",
+      "site": "plwiki"
+    },
+    "plwikiquote": {
+      "badges": [],
+      "title": "Książka",
+      "site": "plwikiquote"
+    },
+    "pnbwiki": {
+      "badges": [],
+      "title": "کتاب",
+      "site": "pnbwiki"
+    },
+    "ptwiki": {
+      "badges": [],
+      "title": "Livro",
+      "site": "ptwiki"
+    },
+    "ptwikiquote": {
+      "badges": [],
+      "title": "Livros",
+      "site": "ptwikiquote"
+    }
+  },
+  "claims": {
+    "P18": [
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "Austria - Admont Abbey Library - 1407.jpg"
+          },
+          "datatype": "commonsMedia",
+          "property": "P18",
+          "snaktype": "value"
+        },
+        "id": "Q571$1c4b5a7c-4526-f928-a2f2-0aec27271d13"
+      }
+    ],
+    "P349": [
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "00573378"
+          },
+          "datatype": "string",
+          "property": "P349",
+          "snaktype": "value"
+        },
+        "id": "Q571$50ec7349-4b3f-e998-b21a-c77d07e96afb"
+      }
+    ],
+    "P646": [
+      {
+        "references": [
+          {
+            "snaks-order": [
+              "P248",
+              "P577"
+            ],
+            "snaks": {
+              "P577": [
+                {
+                  "datavalue": {
+                    "type": "time",
+                    "value": {
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727",
+                      "precision": 11,
+                      "after": 0,
+                      "before": 0,
+                      "timezone": 0,
+                      "time": "+00000002013-10-28T00:00:00Z"
+                    }
+                  },
+                  "datatype": "time",
+                  "property": "P577",
+                  "snaktype": "value"
+                }
+              ],
+              "P248": [
+                {
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "numeric-id": 15241312,
+                      "entity-type": "item"
+                    }
+                  },
+                  "datatype": "wikibase-item",
+                  "property": "P248",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "hash": "b923b0d68beb300866b87ead39f61e63ec30d8af"
+          }
+        ],
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "/m/0bt_c3"
+          },
+          "datatype": "string",
+          "property": "P646",
+          "snaktype": "value"
+        },
+        "id": "Q571$696A4F7E-EA0A-464A-A663-465A640CC803"
+      }
+    ],
+    "P487": [
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "🕮"
+          },
+          "datatype": "string",
+          "property": "P487",
+          "snaktype": "value"
+        },
+        "id": "Q571$b0891ee4-4219-501a-9939-f3ee99e65e29"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "📚"
+          },
+          "datatype": "string",
+          "property": "P487",
+          "snaktype": "value"
+        },
+        "id": "Q571$7af19649-452f-26d7-6f97-340be44885ca"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "📙"
+          },
+          "datatype": "string",
+          "property": "P487",
+          "snaktype": "value"
+        },
+        "id": "Q571$f31641eb-46ad-c9f3-07db-ef4a333ac1b2"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "📘"
+          },
+          "datatype": "string",
+          "property": "P487",
+          "snaktype": "value"
+        },
+        "id": "Q571$2e8f906d-4014-9c8d-6cc8-db6ec50270f0"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "📗"
+          },
+          "datatype": "string",
+          "property": "P487",
+          "snaktype": "value"
+        },
+        "id": "Q571$5078feba-430e-6e4f-c292-561318734093"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "📖"
+          },
+          "datatype": "string",
+          "property": "P487",
+          "snaktype": "value"
+        },
+        "id": "Q571$7f59ff24-4cc2-e428-c413-cfd0a47ba98c"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "📕"
+          },
+          "datatype": "string",
+          "property": "P487",
+          "snaktype": "value"
+        },
+        "id": "Q571$697af154-4da3-9805-39be-bd61b8dab567"
+      }
+    ],
+    "P186": [
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "wikibase-entityid",
+            "value": {
+              "numeric-id": 11472,
+              "entity-type": "item"
+            }
+          },
+          "datatype": "wikibase-item",
+          "property": "P186",
+          "snaktype": "value"
+        },
+        "id": "Q571$e5fc623d-4f09-944d-b0ef-e739ca3f6156"
+      }
+    ],
+    "P279": [
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "wikibase-entityid",
+            "value": {
+              "numeric-id": 340169,
+              "entity-type": "item"
+            }
+          },
+          "datatype": "wikibase-item",
+          "property": "P279",
+          "snaktype": "value"
+        },
+        "id": "Q571$0115863d-4f02-0337-38c2-5e2bb7a0f628"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "wikibase-entityid",
+            "value": {
+              "numeric-id": 2342494,
+              "entity-type": "item"
+            }
+          },
+          "datatype": "wikibase-item",
+          "property": "P279",
+          "snaktype": "value"
+        },
+        "id": "Q571$04c87c4e-4bce-a9ab-eb75-d9a3ed695077"
+      },
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "wikibase-entityid",
+            "value": {
+              "numeric-id": 386724,
+              "entity-type": "item"
+            }
+          },
+          "datatype": "wikibase-item",
+          "property": "P279",
+          "snaktype": "value"
+        },
+        "id": "Q571$afe3b5c3-424e-eb7b-60e6-c2ce0d122823"
+      }
+    ],
+    "P373": [
+      {
+        "references": [
+          {
+            "snaks-order": [
+              "P143"
+            ],
+            "snaks": {
+              "P143": [
+                {
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "numeric-id": 8449,
+                      "entity-type": "item"
+                    }
+                  },
+                  "datatype": "wikibase-item",
+                  "property": "P143",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "hash": "dbe2189e7b0d3953de6f69cc1cc88109a79605a4"
+          }
+        ],
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "Books"
+          },
+          "datatype": "string",
+          "property": "P373",
+          "snaktype": "value"
+        },
+        "id": "q571$714FC274-77F6-4779-9BD1-D133F2918D2E"
+      }
+    ],
+    "P508": [
+      {
+        "references": [
+          {
+            "snaks-order": [
+              "P143"
+            ],
+            "snaks": {
+              "P143": [
+                {
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "numeric-id": 460907,
+                      "entity-type": "item"
+                    }
+                  },
+                  "datatype": "wikibase-item",
+                  "property": "P143",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "hash": "33ef5efac8ec9d2de05f19b852ff1698d9036c26"
+          }
+        ],
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "303"
+          },
+          "datatype": "string",
+          "property": "P508",
+          "snaktype": "value"
+        },
+        "id": "q571$D718DD03-82F4-4FB2-A82F-0C85CE1FC3B1"
+      }
+    ],
+    "P910": [
+      {
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "wikibase-entityid",
+            "value": {
+              "numeric-id": 5461161,
+              "entity-type": "item"
+            }
+          },
+          "datatype": "wikibase-item",
+          "property": "P910",
+          "snaktype": "value"
+        },
+        "id": "Q571$61A9B4AB-3A05-4A69-9A6A-6CAF2B7672EB"
+      }
+    ],
+    "P227": [
+      {
+        "references": [
+          {
+            "snaks-order": [
+              "P143"
+            ],
+            "snaks": {
+              "P143": [
+                {
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "numeric-id": 48183,
+                      "entity-type": "item"
+                    }
+                  },
+                  "datatype": "wikibase-item",
+                  "property": "P143",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "hash": "004ec6fbee857649acdbdbad4f97b2c8571df97b"
+          }
+        ],
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "4008570-3"
+          },
+          "datatype": "string",
+          "property": "P227",
+          "snaktype": "value"
+        },
+        "id": "Q571$5B90351E-30B1-4A78-A8E9-F8D47A214240"
+      }
+    ],
+    "P935": [
+      {
+        "references": [
+          {
+            "snaks-order": [
+              "P143"
+            ],
+            "snaks": {
+              "P143": [
+                {
+                  "datavalue": {
+                    "type": "wikibase-entityid",
+                    "value": {
+                      "numeric-id": 191168,
+                      "entity-type": "item"
+                    }
+                  },
+                  "datatype": "wikibase-item",
+                  "property": "P143",
+                  "snaktype": "value"
+                }
+              ]
+            },
+            "hash": "2f183743080f8e1970847d13a04fde9a796f1476"
+          }
+        ],
+        "rank": "normal",
+        "type": "statement",
+        "mainsnak": {
+          "datavalue": {
+            "type": "string",
+            "value": "Book"
+          },
+          "datatype": "string",
+          "property": "P935",
+          "snaktype": "value"
+        },
+        "id": "Q571$26835BD3-F7F2-4137-82F2-D9512B5EFCCD"
+      }
+    ]
+  },
+  "descriptions": {
+    "bn": {
+      "value": "আত্মজীবনমূলক উপন্যাস লজ্জা",
+      "language": "bn"
+    },
+    "fa": {
+      "value": "رسانه نوشتاری",
+      "language": "fa"
+    },
+    "fy": {
+      "value": "dokumint",
+      "language": "fy"
+    },
+    "scn": {
+      "value": "cugghiuta di palori e' mmaggini chi' rapprisentunu canuscenza, di solitu stampati o manuscritti supra a' carta riligata, o puru digitalizzati ntôn ducumentu elittronicu",
+      "language": "scn"
+    },
+    "zh": {
+      "value": "带有文字和图像的纸张的集合",
+      "language": "zh"
+    },
+    "hu": {
+      "value": "információhordozó közeg, leggyakrabban papírra írott, nyomtatott, festett jelek, betűk",
+      "language": "hu"
+    },
+    "uk": {
+      "value": "письмовий запис, неперіодичне видання у вигляді зброшурованих аркушів друкованого матеріалу",
+      "language": "uk"
+    },
+    "ru": {
+      "value": "произведение; вид печатной продукции; объединённые листы с информацией",
+      "language": "ru"
+    },
+    "de": {
+      "value": "Sammlung von bedruckten, beschriebenen, bemalten oder auch leeren Blättern aus Papier oder anderen geeigneten Materialien",
+      "language": "de"
+    },
+    "en": {
+      "value": "medium for a collection of words and/or pictures to represent knowledge, often manifested in bound paper and ink, or in e-books",
+      "language": "en"
+    },
+    "es": {
+      "value": "obra impresa",
+      "language": "es"
+    },
+    "fr": {
+      "value": "document écrit formé de pages reliées entre elles",
+      "language": "fr"
+    },
+    "it": {
+      "value": "insieme di fogli stampati oppure manoscritti",
+      "language": "it"
+    },
+    "nb": {
+      "value": "sammenbinding av ark",
+      "language": "nb"
+    },
+    "pl": {
+      "value": "dokument piśmienniczy  w postaci wielostronicowej publikacji",
+      "language": "pl"
+    },
+    "ilo": {
+      "value": "agasmang ti naisurat, naimaldit, nailustrado dagiti blanko a sabanas",
+      "language": "ilo"
+    },
+    "he": {
+      "value": "ספרות",
+      "language": "he"
+    },
+    "nl": {
+      "value": "document",
+      "language": "nl"
+    },
+    "pt": {
+      "value": "coleção de palavras e / ou imagens para representar o conhecimento, muitas vezes manifestada em papel amarrado e tinta",
+      "language": "pt"
+    },
+    "ca": {
+      "value": "obra impresa o manuscrita cosida o enquadernada de manera que es reuneix en un volum",
+      "language": "ca"
+    },
+    "mr": {
+      "value": "saraswatichandra",
+      "language": "mr"
+    },
+    "ja": {
+      "value": "情報を言語や図画でまとめ、通常、インクで紙に印刷したもの",
+      "language": "ja"
+    },
+    "zh-hans": {
+      "value": "带有文字和图像的纸张的集合",
+      "language": "zh-hans"
+    }
+  },
+  "labels": {
+    "ak": {
+      "value": "Nwoma",
+      "language": "ak"
+    },
+    "cdo": {
+      "value": "Cṳ̆",
+      "language": "cdo"
+    },
+    "fy": {
+      "value": "boek",
+      "language": "fy"
+    },
+    "rup": {
+      "value": "Carti",
+      "language": "rup"
+    },
+    "zh-tw": {
+      "value": "書籍",
+      "language": "zh-tw"
+    },
+    "sr-el": {
+      "value": "knjiga",
+      "language": "sr-el"
+    },
+    "sr-ec": {
+      "value": "књига",
+      "language": "sr-ec"
+    },
+    "si": {
+      "value": "පොත",
+      "language": "si"
+    },
+    "nan": {
+      "value": "Chheh",
+      "language": "nan"
+    },
+    "sgs": {
+      "value": "Kninga",
+      "language": "sgs"
+    },
+    "gsw": {
+      "value": "Buech",
+      "language": "gsw"
+    },
+    "or": {
+      "value": "ବହି",
+      "language": "or"
+    },
+    "zh-hk": {
+      "value": "書籍",
+      "language": "zh-hk"
+    },
+    "be-tarask": {
+      "value": "кніга",
+      "language": "be-tarask"
+    },
+    "ce": {
+      "value": "Книга",
+      "language": "ce"
+    },
+    "pa": {
+      "value": "ਕਿਤਾਬ",
+      "language": "pa"
+    },
+    "lo": {
+      "value": "ປຶ້ມ",
+      "language": "lo"
+    },
+    "zh-hant": {
+      "value": "書籍",
+      "language": "zh-hant"
+    },
+    "vep": {
+      "value": "Kirj",
+      "language": "vep"
+    },
+    "diq": {
+      "value": "Kıtabi",
+      "language": "diq"
+    },
+    "mhr": {
+      "value": "Кнага",
+      "language": "mhr"
+    },
+    "gd": {
+      "value": "Leabhar",
+      "language": "gd"
+    },
+    "hak": {
+      "value": "Si",
+      "language": "hak"
+    },
+    "zh-hans": {
+      "value": "图书",
+      "language": "zh-hans"
+    },
+    "zh-cn": {
+      "value": "图书",
+      "language": "zh-cn"
+    },
+    "min": {
+      "value": "Buku",
+      "language": "min"
+    },
+    "hi": {
+      "value": "पुस्तक",
+      "language": "hi"
+    },
+    "ckb": {
+      "value": "پەرتووک",
+      "language": "ckb"
+    },
+    "yue": {
+      "value": "書",
+      "language": "yue"
+    },
+    "en-gb": {
+      "value": "Book",
+      "language": "en-gb"
+    },
+    "en-ca": {
+      "value": "Book",
+      "language": "en-ca"
+    },
+    "de-ch": {
+      "value": "Buch",
+      "language": "de-ch"
+    },
+    "ln": {
+      "value": "Búku",
+      "language": "ln"
+    },
+    "lmo": {
+      "value": "liber",
+      "language": "lmo"
+    },
+    "lez": {
+      "value": "Улуб",
+      "language": "lez"
+    },
+    "lb": {
+      "value": "Buch",
+      "language": "lb"
+    },
+    "la": {
+      "value": "Liber",
+      "language": "la"
+    },
+    "kv": {
+      "value": "Небӧг",
+      "language": "kv"
+    },
+    "ku": {
+      "value": "Pirtûk",
+      "language": "ku"
+    },
+    "ksh": {
+      "value": "Boch",
+      "language": "ksh"
+    },
+    "ko": {
+      "value": "책",
+      "language": "ko"
+    },
+    "kk": {
+      "value": "Кітап",
+      "language": "kk"
+    },
+    "kab": {
+      "value": "Adlis",
+      "language": "kab"
+    },
+    "ka": {
+      "value": "წიგნი",
+      "language": "ka"
+    },
+    "jv": {
+      "value": "Buku",
+      "language": "jv"
+    },
+    "ja": {
+      "value": "本",
+      "language": "ja"
+    },
+    "iu": {
+      "value": "ᕿᒥᕐᕈᐊᑦ/qimirruat",
+      "language": "iu"
+    },
+    "is": {
+      "value": "Bók",
+      "language": "is"
+    },
+    "io": {
+      "value": "Libro",
+      "language": "io"
+    },
+    "ie": {
+      "value": "Libre",
+      "language": "ie"
+    },
+    "id": {
+      "value": "Buku",
+      "language": "id"
+    },
+    "ia": {
+      "value": "Libro",
+      "language": "ia"
+    },
+    "hy": {
+      "value": "Գիրք",
+      "language": "hy"
+    },
+    "hu": {
+      "value": "könyv",
+      "language": "hu"
+    },
+    "ht": {
+      "value": "Liv",
+      "language": "ht"
+    },
+    "hr": {
+      "value": "Knjiga",
+      "language": "hr"
+    },
+    "he": {
+      "value": "ספר",
+      "language": "he"
+    },
+    "gv": {
+      "value": "Lioar",
+      "language": "gv"
+    },
+    "gn": {
+      "value": "Kuatiañe'ẽ",
+      "language": "gn"
+    },
+    "gl": {
+      "value": "Libro",
+      "language": "gl"
+    },
+    "gan": {
+      "value": "書",
+      "language": "gan"
+    },
+    "ga": {
+      "value": "Leabhar",
+      "language": "ga"
+    },
+    "fa": {
+      "value": "کتاب",
+      "language": "fa"
+    },
+    "eu": {
+      "value": "Liburu",
+      "language": "eu"
+    },
+    "az": {
+      "value": "Kitab",
+      "language": "az"
+    },
+    "ay": {
+      "value": "Panka",
+      "language": "ay"
+    },
+    "ast": {
+      "value": "Llibru",
+      "language": "ast"
+    },
+    "arz": {
+      "value": "كتاب",
+      "language": "arz"
+    },
+    "arc": {
+      "value": "ܟܬܒܐ",
+      "language": "arc"
+    },
+    "ar": {
+      "value": "كتاب",
+      "language": "ar"
+    },
+    "an": {
+      "value": "Libro",
+      "language": "an"
+    },
+    "af": {
+      "value": "Boek",
+      "language": "af"
+    },
+    "pl": {
+      "value": "książka",
+      "language": "pl"
+    },
+    "en": {
+      "value": "book",
+      "language": "en"
+    },
+    "fr": {
+      "value": "livre",
+      "language": "fr"
+    },
+    "nb": {
+      "value": "bok",
+      "language": "nb"
+    },
+    "es": {
+      "value": "libro",
+      "language": "es"
+    },
+    "it": {
+      "value": "libro",
+      "language": "it"
+    },
+    "de": {
+      "value": "Buch",
+      "language": "de"
+    },
+    "fi": {
+      "value": "kirja",
+      "language": "fi"
+    },
+    "ba": {
+      "value": "Китап",
+      "language": "ba"
+    },
+    "be": {
+      "value": "кніга",
+      "language": "be"
+    },
+    "bg": {
+      "value": "книга",
+      "language": "bg"
+    },
+    "bm": {
+      "value": "Gafɛ",
+      "language": "bm"
+    },
+    "bn": {
+      "value": "বই",
+      "language": "bn"
+    },
+    "br": {
+      "value": "Levr",
+      "language": "br"
+    },
+    "bs": {
+      "value": "Knjiga",
+      "language": "bs"
+    },
+    "ca": {
+      "value": "llibre",
+      "language": "ca"
+    },
+    "chr": {
+      "value": "ᎪᏪᎵ",
+      "language": "chr"
+    },
+    "cs": {
+      "value": "kniha",
+      "language": "cs"
+    },
+    "cv": {
+      "value": "Кĕнеке",
+      "language": "cv"
+    },
+    "cy": {
+      "value": "Llyfr",
+      "language": "cy"
+    },
+    "da": {
+      "value": "bog",
+      "language": "da"
+    },
+    "el": {
+      "value": "βιβλίο",
+      "language": "el"
+    },
+    "eo": {
+      "value": "libro",
+      "language": "eo"
+    },
+    "et": {
+      "value": "Raamat",
+      "language": "et"
+    },
+    "lt": {
+      "value": "Knyga",
+      "language": "lt"
+    },
+    "lv": {
+      "value": "grāmata",
+      "language": "lv"
+    },
+    "mg": {
+      "value": "Boky",
+      "language": "mg"
+    },
+    "mk": {
+      "value": "книга",
+      "language": "mk"
+    },
+    "ml": {
+      "value": "പുസ്തകം",
+      "language": "ml"
+    },
+    "mn": {
+      "value": "Ном",
+      "language": "mn"
+    },
+    "mr": {
+      "value": "पुस्तक",
+      "language": "mr"
+    },
+    "ms": {
+      "value": "Buku",
+      "language": "ms"
+    },
+    "mwl": {
+      "value": "Libro",
+      "language": "mwl"
+    },
+    "my": {
+      "value": "စာအုပ်",
+      "language": "my"
+    },
+    "nah": {
+      "value": "Āmoxtli",
+      "language": "nah"
+    },
+    "nap": {
+      "value": "Libbro",
+      "language": "nap"
+    },
+    "nds": {
+      "value": "Book",
+      "language": "nds"
+    },
+    "ne": {
+      "value": "पुस्तक",
+      "language": "ne"
+    },
+    "new": {
+      "value": "सफू",
+      "language": "new"
+    },
+    "nl": {
+      "value": "boek",
+      "language": "nl"
+    },
+    "nn": {
+      "value": "Bok",
+      "language": "nn"
+    },
+    "oc": {
+      "value": "libre",
+      "language": "oc"
+    },
+    "os": {
+      "value": "Чиныг",
+      "language": "os"
+    },
+    "pdc": {
+      "value": "Buch",
+      "language": "pdc"
+    },
+    "pi": {
+      "value": "पोत्थकं",
+      "language": "pi"
+    },
+    "pnb": {
+      "value": "کتاب",
+      "language": "pnb"
+    },
+    "pt": {
+      "value": "livro",
+      "language": "pt"
+    },
+    "qu": {
+      "value": "Liwru",
+      "language": "qu"
+    },
+    "ro": {
+      "value": "carte",
+      "language": "ro"
+    },
+    "ru": {
+      "value": "книга",
+      "language": "ru"
+    },
+    "rue": {
+      "value": "Книга",
+      "language": "rue"
+    },
+    "rw": {
+      "value": "Igitabo",
+      "language": "rw"
+    },
+    "sah": {
+      "value": "Кинигэ",
+      "language": "sah"
+    },
+    "scn": {
+      "value": "libbru",
+      "language": "scn"
+    },
+    "sco": {
+      "value": "beuk",
+      "language": "sco"
+    },
+    "sh": {
+      "value": "Knjiga",
+      "language": "sh"
+    },
+    "simple": {
+      "value": "Book",
+      "language": "simple"
+    },
+    "sk": {
+      "value": "kniha",
+      "language": "sk"
+    },
+    "sl": {
+      "value": "Knjiga",
+      "language": "sl"
+    },
+    "sn": {
+      "value": "Bhuku",
+      "language": "sn"
+    },
+    "so": {
+      "value": "Buug",
+      "language": "so"
+    },
+    "sq": {
+      "value": "Libri",
+      "language": "sq"
+    },
+    "sr": {
+      "value": "књига",
+      "language": "sr"
+    },
+    "ss": {
+      "value": "Íncwadzí",
+      "language": "ss"
+    },
+    "su": {
+      "value": "Buku",
+      "language": "su"
+    },
+    "sv": {
+      "value": "bok",
+      "language": "sv"
+    },
+    "sw": {
+      "value": "Kitabu",
+      "language": "sw"
+    },
+    "ta": {
+      "value": "நூல்",
+      "language": "ta"
+    },
+    "te": {
+      "value": "పుస్తకము",
+      "language": "te"
+    },
+    "tg": {
+      "value": "Китоб",
+      "language": "tg"
+    },
+    "th": {
+      "value": "หนังสือ",
+      "language": "th"
+    },
+    "tl": {
+      "value": "Aklat",
+      "language": "tl"
+    },
+    "tpi": {
+      "value": "Buk",
+      "language": "tpi"
+    },
+    "tr": {
+      "value": "Kitap",
+      "language": "tr"
+    },
+    "tt": {
+      "value": "Китап",
+      "language": "tt"
+    },
+    "uk": {
+      "value": "книга",
+      "language": "uk"
+    },
+    "ur": {
+      "value": "کتاب",
+      "language": "ur"
+    },
+    "uz": {
+      "value": "kitob",
+      "language": "uz"
+    },
+    "vi": {
+      "value": "sách",
+      "language": "vi"
+    },
+    "wa": {
+      "value": "Live",
+      "language": "wa"
+    },
+    "war": {
+      "value": "Basahon",
+      "language": "war"
+    },
+    "xh": {
+      "value": "Incwadi",
+      "language": "xh"
+    },
+    "yi": {
+      "value": "בוך",
+      "language": "yi"
+    },
+    "yo": {
+      "value": "Ìwé",
+      "language": "yo"
+    },
+    "zh": {
+      "value": "图书",
+      "language": "zh"
+    },
+    "nds-nl": {
+      "value": "Boek",
+      "language": "nds-nl"
+    },
+    "ilo": {
+      "value": "Libro",
+      "language": "ilo"
+    },
+    "pt-br": {
+      "value": "livro",
+      "language": "pt-br"
+    }
+  },
+  "pageid": 841,
+  "ns": 0,
+  "title": "Q571",
+  "lastrevid": 188258897,
+  "modified": "2015-01-15T13:53:11Z",
+  "id": "Q571",
+  "type": "item",
+  "aliases": {
+    "zh": [
+      {
+        "value": "书",
+        "language": "zh"
+      },
+      {
+        "value": "书籍",
+        "language": "zh"
+      }
+    ],
+    "fr": [
+      {
+        "value": "ouvrage",
+        "language": "fr"
+      }
+    ],
+    "ja": [
+      {
+        "value": "書籍",
+        "language": "ja"
+      },
+      {
+        "value": "書物",
+        "language": "ja"
+      },
+      {
+        "value": "図書",
+        "language": "ja"
+      }
+    ],
+    "he": [
+      {
+        "value": "ספרים",
+        "language": "he"
+      }
+    ],
+    "pl": [
+      {
+        "value": "Tom",
+        "language": "pl"
+      },
+      {
+        "value": "Tomik",
+        "language": "pl"
+      }
+    ]
+  }
+}

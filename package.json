@@ -1,0 +1,36 @@
+{
+  "name": "wikidata-sdk",
+  "version": "0.0.1",
+  "description": "a javascript tool suite to query wikidata data",
+  "main": "build/wikidata-sdk.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script/register --watch",
+    "build": "coffee -o build -c src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/maxlath/wikidata-sdk"
+  },
+  "keywords": [
+    "wikidata",
+    "sdk",
+    "javascript",
+    "commons",
+    "wdq"
+  ],
+  "author": "maxlath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxlath/wikidata-sdk/issues"
+  },
+  "homepage": "https://github.com/maxlath/wikidata-sdk",
+  "devDependencies": {
+    "coffee-script": "^1.8.0",
+    "lodash": "^2.4.1",
+    "mocha": "^2.1.0",
+    "should": "^4.6.1"
+  }
+}
