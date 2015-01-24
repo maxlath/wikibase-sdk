@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register --watch",
-    "build": "coffee -o build -c src"
+    "build": "coffee --watch -o build -c src"
   },
   "repository": {
     "type": "git",
