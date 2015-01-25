@@ -47,7 +47,7 @@ https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ingmar%20Bergm
 on the same pattern
 
 ```javascript
-wdk.getEntities(ids, languages, properties, format)
+var url = wdk.getEntities(ids, languages, properties, format)
 ```
 
 properties being wikidata entities' properties: info, sitelinks, labels, descriptions, claims.
@@ -180,3 +180,18 @@ request(url, function(err, response){
 - normalizeIds
 - normalizeWikidataTime
 - toPropertiesArray
+
+
+### A little [CoffeeScript](coffeescript.org) / [Promises](https://www.youtube.com/watch?v=qbKWsbJ76-s) workflow demo
+that's how I love to work :)
+
+```coffeescript
+breq = require 'bluereq' # a little request lib returning bluebird-based promises
+
+ids = ['Q647268', 'Q771376', 'Q860998', 'Q965704']
+url = wdk.getEntities ids, user.language
+
+entities = breq.get(url).then wdk.parse.wd.entities
+
+# do useful stuff with those entities data
+```
