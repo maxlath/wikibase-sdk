@@ -28,7 +28,7 @@
           value = 'Q' + datavalue.value['numeric-id'];
           break;
         case 'time':
-          value = wd_.normalizeTime(datavalue.value.time);
+          value = wd_.normalizeWikidataTime(datavalue.value.time);
           break;
         default:
           value = null;
