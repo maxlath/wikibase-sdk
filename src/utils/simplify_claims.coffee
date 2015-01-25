@@ -16,7 +16,7 @@ simpifyStatement = (statement)->
     switch datatype
       when 'string', 'commonsMedia' then value = datavalue.value
       when 'wikibase-item' then value = 'Q' + datavalue.value['numeric-id']
-      when 'time' then value = wd_.normalizeTime(datavalue.value.time)
+      when 'time' then value = wd_.normalizeWikidataTime(datavalue.value.time)
       else value = null
     return value
   else
