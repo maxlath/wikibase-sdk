@@ -3,5 +3,5 @@ module.exports =
   getEntities: require './queries/wikidata_get_entities'
   getReverseClaims: require './queries/wdq_get_reverse_claims'
   simplifyClaims: require './utils/simplify_claims'
-  parseWdqResponse: require './utils/parse_wdq_response'
+  parse: require './utils/parse_responses'
   utils: require './utils/utils'
