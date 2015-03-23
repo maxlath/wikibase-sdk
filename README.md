@@ -197,5 +197,4 @@ entities = breq.get(url).then wdk.parse.wd.entities
 ```
 
 # License
-MIT
-(see LICENSE.md file)
+[MIT](LICENSE.md)
