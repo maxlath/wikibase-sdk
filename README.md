@@ -72,7 +72,7 @@ and you can then query the obtained entities ids
 ```javascript
 request(url, function(err, response){
   if err dealWithError(err);
-  var entities = wdk.parseWdqResponse(response);
+  var entities = wdk.parse.wdq.entities(response);
   var url2 = wdk.getEntities(entities);
   request(url2 ....
 });
