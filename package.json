@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/maxlath/wikidata-sdk",
   "devDependencies": {
-    "coffee-script": "^1.8.0",
-    "lodash": "^2.4.1",
-    "mocha": "^2.1.0",
+    "coffee-script": "^1.9.2",
+    "lodash": "^3.7.0",
+    "mocha": "^2.2.4",
     "should": "^4.6.1"
   }
 }
