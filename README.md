@@ -149,7 +149,7 @@ So instead of:
 we could have
 
 ```json
-P279: [ 'Q340169', 'Q2342494', 'Q386724' ]
+"P279": [ "Q340169", "Q2342494", "Q386724" ]
 ```
 
 you just need to pass your entity' claims object to simplifyClaims as such:
@@ -191,9 +191,10 @@ breq = require 'bluereq' # a little request lib returning bluebird-based promise
 ids = ['Q647268', 'Q771376', 'Q860998', 'Q965704']
 url = wdk.getEntities ids, user.language
 
-entities = breq.get(url).then wdk.parse.wd.entities
+breq.get(url)
+.then wdk.parse.wd.entities
+.then (entities)-> # do useful stuff with those entities data
 
-# do useful stuff with those entities data
 ```
 
 # License
