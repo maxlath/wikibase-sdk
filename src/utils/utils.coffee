@@ -37,8 +37,4 @@ wd_.wikidataTimeToISOString = (wikidataTime)->
 # keeping normalizeWikidataTime as legacy
 wd_.normalizeWikidataTime = wd_.wikidataTimeToEpochTime
 
-wd_.toPropertiesArray = (obj)->
-  if typeof obj is 'string' then obj = [obj]
-  else obj or []
-
 module.exports = wd_

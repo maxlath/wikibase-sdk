@@ -7,11 +7,11 @@ module.exports = (ids, languages=['en'], props, format='json')->
 
   # properties can be either one property as a string or an array or properties
   # either case me just want to deal with arrays
-  [ids, languages, props] = [ids, languages, props].map wd_.toPropertiesArray
+  ids = wd_.normalizeIds forceArray(ids)
+  languages = forceArray(languages).map shortLang
+  props = forceArray props
 
-  # get only (Q + numeric-id) ids
-  ids = wd_.normalizeIds(ids)
-
+  # add English to have fallbacks values
   unless 'en' in languages then languages.push 'en'
 
   query =
@@ -20,6 +20,15 @@ module.exports = (ids, languages=['en'], props, format='json')->
     languages: languages.join '|'
     format: format
 
-  if props? and props.length > 0 then query.props = props.join '|'
+  if props?.length > 0 then query.props = props.join '|'
 
   return buildUrl 'wikidata', query
+
+
+# languages have to be 2-letters language codes
+shortLang = (language)-> language[0..2]
+
+# a polymorphism helper: accept either a string or an array and return an array
+forceArray = (array)->
+  if typeof array is 'string' then array = [array]
+  return array or []

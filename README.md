@@ -183,7 +183,6 @@ request(url, function(err, response){
 - wikidataTimeToEpochTime
 - wikidataTimeToISOString
 - normalizeWikidataTime (aliased to wikidataTimeToEpochTime)
-- toPropertiesArray
 
 
 ### A little [CoffeeScript](coffeescript.org) / [Promises](https://www.youtube.com/watch?v=qbKWsbJ76-s) workflow demo
