@@ -178,7 +178,10 @@ request(url, function(err, response){
 - isWikidataPropertyId
 - normalizeId
 - normalizeIds
-- normalizeWikidataTime
+- wikidataTimeToDateObject
+- wikidataTimeToEpochTime
+- wikidataTimeToISOString
+- normalizeWikidataTime (aliased to wikidataTimeToEpochTime)
 - toPropertiesArray
 
 
