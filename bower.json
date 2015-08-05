@@ -1,0 +1,21 @@
+{
+  "name": "wikidata-sdk",
+  "version": "0.0.6",
+  "homepage": "https://github.com/maxlath/wikidata-sdk",
+  "authors": [
+    "maxlath <k@maxlath.eu>"
+  ],
+  "description": "a javascript tool suite to query and work with wikidata data",
+  "main": "dist/wikidata-sdk.js",
+  "keywords": [
+    "wikidata"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

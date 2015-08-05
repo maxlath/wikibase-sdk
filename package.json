@@ -1,14 +1,15 @@
 {
   "name": "wikidata-sdk",
   "version": "0.0.6",
-  "description": "a javascript tool suite to query wikidata data",
+  "description": "a javascript tool suite to query and work with wikidata data",
   "main": "build/wikidata-sdk.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register --watch",
-    "build": "coffee --watch -o build -c src"
+    "build": "coffee --watch -o build -c src",
+    "dist": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js"
   },
   "repository": {
     "type": "git",
