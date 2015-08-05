@@ -1,4 +1,5 @@
-![wikidata](https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg)
+![wikidata](https://pbs.twimg.com/profile_images/2498571390/cizdiwz4oiiq1zae94jp.png)
+
 A javascript tool-suite to query [wikidata](http://wikidata.org/) and handle its results.
 
 used APIs:
