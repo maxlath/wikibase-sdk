@@ -15,6 +15,7 @@ simpifyStatement = (statement)->
     [datatype, datavalue] = [mainsnak.datatype, mainsnak.datavalue]
     switch datatype
       when 'string', 'commonsMedia' then value = datavalue.value
+      when 'monolingualtext' then value = datavalue.value.text
       when 'wikibase-item' then value = 'Q' + datavalue.value['numeric-id']
       when 'time' then value = wd_.normalizeWikidataTime(datavalue.value.time)
       else value = null
