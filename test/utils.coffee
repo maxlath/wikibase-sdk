@@ -48,3 +48,34 @@ describe 'wd_', ->
       wd_.normalizeId('50', true, 'P').should.equal '50'
       wd_.normalizeId('50', true, 'anything').should.equal '50'
       done()
+
+
+  ISOtime = '2014-05-14T00:00:00.000Z'
+  wdTime = '+2014-05-14T00:00:00Z'
+  epoch = 1400025600000
+  ISOnegativeTime = '-000044-03-15T00:00:00.000Z'
+  negativeWdTime = '-0044-03-15T00:00:00Z'
+  negativeEpoch = -63549360000000
+
+  describe 'normalizeWikidataTime', ->
+    it 'env', (done)->
+      new Date(epoch).toISOString().should.equal ISOtime
+      new Date(negativeEpoch).toISOString().should.equal ISOnegativeTime
+      done()
+
+    it 'should return a number (epoch time)', (done)->
+      wd_.normalizeWikidataTime(wdTime).should.be.a.Number
+      done()
+
+    it 'should return a number for negative time', (done)->
+      wd_.normalizeWikidataTime(negativeWdTime).should.be.a.Number
+      done()
+
+    it 'should return the right number', (done)->
+      wd_.normalizeWikidataTime(wdTime).should.equal epoch
+      done()
+
+    it 'should return the right number for negative time too', (done)->
+      wd_.normalizeWikidataTime(negativeWdTime).should.equal negativeEpoch
+      done()
+

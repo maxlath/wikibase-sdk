@@ -18,21 +18,24 @@ wd_.normalizeId = (id, numericId, type='Q')->
 wd_.normalizeIds = (ids, numericId, type='Q')->
   ids.map (id)-> wd_.normalizeId(id, numericId, type)
 
-wd_.normalizeWikidataTime = (wikidataTime)->
-  # wikidata time looks like: '+00000001862-01-01T00:00:00Z'
-  # or "-00000000427-01-01T00:00:00Z" for BC dates
-  # normalizeWikidataTime returns epoch time in milliseconds
-  # witch can then be easily converted by javascript's Date object
-  parts = wikidataTime.split '-'
-  switch parts.length
-    when 3
-      [year, month, rest] = parts
-    when 4
-      [sign, year, month, rest] = parts
-      year = "-" + year
-    else console.error "unknown wikidata time format"
-  day = rest[0..1]
-  return new Date(year, month, day).getTime()
+wd_.wikidataTimeToDateObject = (wikidataTime)->
+  sign = wikidataTime[0]
+  rest = wikidataTime[1..-1]
+  if sign is '-'
+    # using ISO8601 expanded notation for negative years: adding 2 leading zeros
+    date = "-00#{rest}"
+    return new Date(date)
+  else
+    return new Date(rest)
+
+wd_.wikidataTimeToEpochTime = (wikidataTime)->
+  wd_.wikidataTimeToDateObject(wikidataTime).getTime()
+
+wd_.wikidataTimeToISOString = (wikidataTime)->
+  wd_.wikidataTimeToDateObject(wikidataTime).toISOString()
+
+# keeping normalizeWikidataTime as legacy
+wd_.normalizeWikidataTime = wd_.wikidataTimeToEpochTime
 
 wd_.toPropertiesArray = (obj)->
   if typeof obj is 'string' then obj = [obj]
