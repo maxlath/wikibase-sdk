@@ -10,7 +10,8 @@
     "test": "mocha --compilers coffee:coffee-script/register --watch",
     "build": "rm -rf build; coffee -o build -c src",
     "build-watch": "rm -rf build; coffee --watch -o build -c src",
-    "dist": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js"
+    "dist": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js",
+    "prepublish": "npm run build; npm run dist;"
   },
   "repository": {
     "type": "git",
