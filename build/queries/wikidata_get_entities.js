@@ -3,11 +3,11 @@
   var buildUrl, forceArray, ref, shortLang, wd_,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  wd_ = require('../utils/utils');
+  wd_ = require('../helpers/helpers');
 
   buildUrl = require('../utils/build_url');
 
-  ref = require('../utils/misc'), forceArray = ref.forceArray, shortLang = ref.shortLang;
+  ref = require('../utils/utils'), forceArray = ref.forceArray, shortLang = ref.shortLang;
 
   module.exports = function(ids, languages, props, format) {
     var query;
