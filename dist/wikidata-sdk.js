@@ -221,6 +221,13 @@ exports.encode = exports.stringify = require('./encode');
     }
   };
 
+  wd_.getNumericId = function(id) {
+    if (!wd_.isWikidataId(id)) {
+      throw new Error("invalid wikidata id: " + id);
+    }
+    return id.replace(/Q|P/, '');
+  };
+
   wd_.normalizeIds = function(ids, numericId, type) {
     if (type == null) {
       type = 'Q';

@@ -15,7 +15,7 @@ wd_.normalizeId = (id, numericId, type='Q')->
 
   else throw new Error 'invalid id'
 
-wd_.getNumericId: (id)->
+wd_.getNumericId = (id)->
   unless wd_.isWikidataId id then throw new Error "invalid wikidata id: #{id}"
   return id.replace /Q|P/, ''
 
