@@ -9,10 +9,11 @@
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register",
     "test-watch": "mocha --compilers coffee:coffee-script/register --watch",
+    "lint": "coffeelint -f ./coffeelint.json src/**",
     "build": "rm -rf build; coffee -o build -c src",
     "build-watch": "rm -rf build; coffee --watch -o build -c src",
     "dist": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js",
-    "prepublish": "npm run test && npm run build && npm run dist"
+    "prepublish": "npm run lint && npm run test && npm run build && npm run dist"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   "homepage": "https://github.com/maxlath/wikidata-sdk",
   "devDependencies": {
     "coffee-script": "^1.9.3",
+    "coffeelint": "^1.10.1",
     "lodash": "^3.10.1",
     "mocha": "^2.2.5",
     "should": "^7.0.2"
