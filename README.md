@@ -174,6 +174,7 @@ request(url, function(err, response){
 ### Misc
 
 - isNumericId
+- getNumericId
 - isWikidataId
 - isWikidataEntityId
 - isWikidataPropertyId
