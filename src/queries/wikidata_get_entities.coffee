@@ -1,5 +1,6 @@
 wd_ = require '../utils/utils'
 buildUrl = require '../utils/build_url'
+{ forceArray, shortLang } = require '../utils/misc'
 
 module.exports = (ids, languages=['en'], props, format='json')->
   # ids cant be let empty
@@ -23,12 +24,3 @@ module.exports = (ids, languages=['en'], props, format='json')->
   if props?.length > 0 then query.props = props.join '|'
 
   return buildUrl 'wikidata', query
-
-
-# languages have to be 2-letters language codes
-shortLang = (language)-> language[0..2]
-
-# a polymorphism helper: accept either a string or an array and return an array
-forceArray = (array)->
-  if typeof array is 'string' then array = [array]
-  return array or []

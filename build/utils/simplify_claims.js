@@ -24,6 +24,9 @@
         case 'commonsMedia':
           value = datavalue.value;
           break;
+        case 'monolingualtext':
+          value = datavalue.value.text;
+          break;
         case 'wikibase-item':
           value = 'Q' + datavalue.value['numeric-id'];
           break;

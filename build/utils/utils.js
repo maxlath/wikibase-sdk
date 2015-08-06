@@ -72,14 +72,6 @@
 
   wd_.normalizeWikidataTime = wd_.wikidataTimeToEpochTime;
 
-  wd_.toPropertiesArray = function(obj) {
-    if (typeof obj === 'string') {
-      return obj = [obj];
-    } else {
-      return obj || [];
-    }
-  };
-
   module.exports = wd_;
 
 }).call(this);
