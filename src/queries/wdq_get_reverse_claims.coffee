@@ -1,5 +1,5 @@
 buildUrl = require '../utils/build_url'
-wd_ = require '../utils/utils'
+wd_ = require '../helpers/helpers'
 
 wdq_ =
   claim: (P, Q)->

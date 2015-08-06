@@ -1,6 +1,6 @@
-wd_ = require '../utils/utils'
+wd_ = require '../helpers/helpers'
 buildUrl = require '../utils/build_url'
-{ forceArray, shortLang } = require '../utils/misc'
+{ forceArray, shortLang } = require '../utils/utils'
 
 module.exports = (ids, languages=['en'], props, format='json')->
   # ids cant be let empty

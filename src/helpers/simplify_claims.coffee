@@ -1,4 +1,4 @@
-wd_ = require './utils'
+wd_ = require './helpers'
 
 module.exports = (claims)->
   simpleClaims = {}

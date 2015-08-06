@@ -1,5 +1,5 @@
-wd_ = require './utils'
-simplifyClaims = require('./simplify_claims')
+wd_ = require './helpers'
+simplifyClaims = require './simplify_claims'
 
 module.exports =
   wd:

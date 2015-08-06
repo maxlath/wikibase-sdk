@@ -1,6 +1,6 @@
 should = require 'should'
 
-wd_ = require('../src/utils/utils')
+wd_ = require('../src/helpers/helpers')
 
 describe 'wd_', ->
   it 'env', (done)->

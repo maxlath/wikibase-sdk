@@ -4,7 +4,7 @@ fs = require 'fs'
 Q571 = fs.readFileSync 'test/data/Q571.json', 'utf8'
 Q571 = JSON.parse Q571
 
-simplifyClaims = require('../src/utils/simplify_claims')
+simplifyClaims = require('../src/helpers/simplify_claims')
 
 describe 'simplifyClaims', ->
   it 'env', (done)->
