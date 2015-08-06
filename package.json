@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script/register --watch",
-    "build": "coffee --watch -o build -c src",
+    "build": "rm -rf build; coffee -o build -c src",
+    "build-watch": "rm -rf build; coffee --watch -o build -c src",
     "dist": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js"
   },
   "repository": {
