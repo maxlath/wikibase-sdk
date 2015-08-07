@@ -12,7 +12,9 @@
     "lint": "coffeelint -f ./coffeelint.json src/**",
     "build": "rm -rf build; coffee -o build -c src",
     "build-watch": "rm -rf build; coffee --watch -o build -c src",
-    "dist": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js",
+    "dist": "npm run browserify && npm run minimize",
+    "browserify": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js",
+    "minimize": "uglifyjs dist/wikidata-sdk.js -c -m > dist/wikidata-sdk.min.js",
     "prepublish": "npm run lint && npm run test && npm run build && npm run dist"
   },
   "repository": {
@@ -37,6 +39,7 @@
     "coffeelint": "^1.10.1",
     "lodash": "^3.10.1",
     "mocha": "^2.2.5",
-    "should": "^7.0.2"
+    "should": "^7.0.2",
+    "uglify-js": "^2.4.24"
   }
 }
