@@ -6,6 +6,20 @@ used APIs:
 - [wikidata API](https://www.wikidata.org/w/api.php)
 - [wmlabs WDQ](http://wdq.wmflabs.org/api_documentation.html)
 
+# Summary
+- [Installation](https://github.com/maxlath/wikidata-sdk#installation)
+- [How-to](https://github.com/maxlath/wikidata-sdk#how-to)
+  - [Build queries urls to:](https://github.com/maxlath/wikidata-sdk#build-queries-urls-to)
+    - [search in wikidata entities](https://github.com/maxlath/wikidata-sdk#search-in-wikidata-entities)
+    - [get entities by id](https://github.com/maxlath/wikidata-sdk#get-entities-by-id)
+    - [get entities reverse claims](https://github.com/maxlath/wikidata-sdk#get-entities-reverse-claims)
+  - [Other utils](https://github.com/maxlath/wikidata-sdk#other-utils)
+    - [simplify claims results](https://github.com/maxlath/wikidata-sdk#simplify-claims-results)
+  - [Misc](https://github.com/maxlath/wikidata-sdk#misc)
+- [A little CoffeeScript / Promises workflow demo](https://github.com/maxlath/wikidata-sdk#a-little-coffeescript--promises-workflow-demo)
+- [License](https://github.com/maxlath/wikidata-sdk#license)
+
+
 # Installation
 
 in a terminal at your project root:
