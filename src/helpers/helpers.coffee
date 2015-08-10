@@ -1,3 +1,5 @@
+wikidataTimeToDateObject = require './wikidata_time_to_date_object'
+
 wd_ = {}
 wd_.isNumericId = (id)-> /^[0-9]+$/.test id
 wd_.isWikidataId = (id)-> /^(Q|P)[0-9]+$/.test id
@@ -22,21 +24,13 @@ wd_.getNumericId = (id)->
 wd_.normalizeIds = (ids, numericId, type='Q')->
   ids.map (id)-> wd_.normalizeId(id, numericId, type)
 
-wd_.wikidataTimeToDateObject = (wikidataTime)->
-  sign = wikidataTime[0]
-  rest = wikidataTime[1..-1]
-  if sign is '-'
-    # using ISO8601 expanded notation for negative years: adding 2 leading zeros
-    date = "-00#{rest}"
-    return new Date(date)
-  else
-    return new Date(rest)
+wd_.wikidataTimeToDateObject = wikidataTimeToDateObject
 
 wd_.wikidataTimeToEpochTime = (wikidataTime)->
-  wd_.wikidataTimeToDateObject(wikidataTime).getTime()
+  wikidataTimeToDateObject(wikidataTime).getTime()
 
 wd_.wikidataTimeToISOString = (wikidataTime)->
-  wd_.wikidataTimeToDateObject(wikidataTime).toISOString()
+  wikidataTimeToDateObject(wikidataTime).toISOString()
 
 # keeping normalizeWikidataTime as legacy
 wd_.normalizeWikidataTime = wd_.wikidataTimeToEpochTime
