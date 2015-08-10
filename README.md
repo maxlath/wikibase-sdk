@@ -114,7 +114,7 @@ and you can then query the obtained entities ids
 
 ```javascript
 request(url, function(err, response){
-  if err dealWithError(err);
+  if (err) { dealWithError(err) };
   var entities = wdk.parse.wdq.entities(response);
   var url2 = wdk.getEntities(entities);
   request(url2 ....
@@ -206,7 +206,7 @@ in your workflow, that could give something like:
 ```javascript
 var url = wdk.getEntities('Q535');
 request(url, function(err, response){
-  if err dealWithError(err);
+  if (err) { dealWithError(err) };
   var entity = response.entities.Q535;
   entity.claims = wdk.simplifyClaims(entity.claims);
 });
