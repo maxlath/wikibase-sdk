@@ -8,6 +8,9 @@ used APIs:
 
 # Summary
 - [Installation](https://github.com/maxlath/wikidata-sdk#installation)
+  - [via NPM](https://github.com/maxlath/wikidata-sdk#via-npm)
+  - [via Bower](https://github.com/maxlath/wikidata-sdk#via-bower)
+  - [The Old Way](https://github.com/maxlath/wikidata-sdk#the-old-way)
 - [How-to](https://github.com/maxlath/wikidata-sdk#how-to)
   - [Build queries urls to:](https://github.com/maxlath/wikidata-sdk#build-queries-urls-to)
     - [search in wikidata entities](https://github.com/maxlath/wikidata-sdk#search-in-wikidata-entities)
@@ -22,16 +25,41 @@ used APIs:
 
 # Installation
 
-in a terminal at your project root:
+## via NPM
+  in a terminal at your project root:
 
-```bash
-npm install wikidata-sdk --save
-```
+  ```bash
+  npm install wikidata-sdk --save
+  ```
 
-then in your javascript project:
-```javascript
-var wdk = require('wikidata-sdk')
-```
+  then in your javascript project:
+  ```javascript
+  var wdk = require('wikidata-sdk')
+  ```
+
+## via Bower
+  in a terminal at your project root:
+  ```bash
+  bower install wikidata-sdk --save
+  ```
+
+  then, in your project, include either
+  ```
+  /bower_components/wikidata-sdk/dist/wikidata-sdk.js
+  ```
+  or
+  ```
+  /bower_components/wikidata-sdk/dist/wikidata-sdk.min.js
+  ```
+
+  this will create a global object named `wdk` (in a browser, accessible at `window.wdk`)
+
+
+## The Old Way
+
+  Just download the raw package from this repository or, even more lazy, include a `<script src="https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/dist/wikidata-sdk.min.js"></script>` in your html to get wdk from github.
+
+  In either case, this will create a global object named `wdk` (in a browser, accessible at `window.wdk`)
 
 # How-to
 
