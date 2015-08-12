@@ -1,8 +1,6 @@
 module.exports = (wikidataTime)->
   sign = wikidataTime[0]
   rest = wikidataTime[1..-1]
-  console.log 'sign', sign
-  console.log 'rest', rest
   date = fullDateData sign, rest
 
   if date.toString() is 'Invalid Date'
