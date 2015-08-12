@@ -346,8 +346,6 @@ exports.encode = exports.stringify = require('./encode');
     var date, rest, sign;
     sign = wikidataTime[0];
     rest = wikidataTime.slice(1);
-    console.log('sign', sign);
-    console.log('rest', rest);
     date = fullDateData(sign, rest);
     if (date.toString() === 'Invalid Date') {
       return parseInvalideDate(sign, rest);
