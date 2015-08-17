@@ -2,6 +2,8 @@
 
 A javascript tool-suite to query [wikidata](http://wikidata.org/) and handle its results.
 
+This library had for primary purpose to serve the needs of the (inventaire)[https://github.com/inventaire/inventaire] project but extending its capabilities to other needs it totally possible: feel welcome to post your suggestions as issues or pull requests!
+
 used APIs:
 - [wikidata API](https://www.wikidata.org/w/api.php)
 - [wmlabs WDQ](http://wdq.wmflabs.org/api_documentation.html)
