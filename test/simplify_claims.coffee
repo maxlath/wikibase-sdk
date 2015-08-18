@@ -4,8 +4,8 @@ fs = require 'fs'
 Q571 = fs.readFileSync 'test/data/Q571.json', 'utf8'
 Q571 = JSON.parse Q571
 
-Q4132785 = fs.readFileSync 'test/data/Q4132785.json', 'utf8'
-Q4132785 = JSON.parse Q4132785
+Q4132785 = JSON.parse fs.readFileSync('test/data/Q4132785.json', 'utf8')
+Q328212 = JSON.parse fs.readFileSync('test/data/Q328212.json', 'utf8')
 
 # a fake entity to simulate a possible negative invalid date
 Q4132785NegativeDate = fs.readFileSync 'test/data/Q4132785-negative-date.json', 'utf8'
@@ -56,4 +56,10 @@ describe 'simplifyClaims', ->
     # console.log 'firstP577', firstP577
     isNaN(firstP577).should.equal false
     firstP577.should.equal -123797894400000
+    done()
+
+  it 'should return a url for datatype url', (done)->
+    simplified = simplifyClaims Q328212.claims
+    firstP856 = simplified.P856[0]
+    firstP856.should.equal "http://veronicarothbooks.blogspot.com"
     done()
