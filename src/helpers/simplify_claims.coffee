@@ -12,7 +12,8 @@ simpifyStatement = (statement)->
   # e.g. a string, an entity Qid or an epoch time number
   mainsnak = statement.mainsnak
   if mainsnak?
-    [datatype, datavalue] = [mainsnak.datatype, mainsnak.datavalue]
+    { datatype, datavalue } = mainsnak
+    unless datavalue? then return null
     switch datatype
       when 'string', 'commonsMedia', 'url' then { value } = datavalue
       when 'monolingualtext' then value = datavalue.value.text
