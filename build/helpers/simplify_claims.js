@@ -22,6 +22,7 @@
       switch (datatype) {
         case 'string':
         case 'commonsMedia':
+        case 'url':
           value = datavalue.value;
           break;
         case 'monolingualtext':
