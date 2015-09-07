@@ -15,10 +15,13 @@
   };
 
   simpifyStatement = function(statement) {
-    var datatype, datavalue, mainsnak, ref, value;
+    var datatype, datavalue, mainsnak, value;
     mainsnak = statement.mainsnak;
     if (mainsnak != null) {
-      ref = [mainsnak.datatype, mainsnak.datavalue], datatype = ref[0], datavalue = ref[1];
+      datatype = mainsnak.datatype, datavalue = mainsnak.datavalue;
+      if (datavalue == null) {
+        return null;
+      }
       switch (datatype) {
         case 'string':
         case 'commonsMedia':
