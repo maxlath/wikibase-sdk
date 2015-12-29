@@ -20,19 +20,20 @@ describe 'wikidata getEntities', ->
     it 'accepts ids as an array', (done)->
       url = getEntities(['Q535', 'Q7546'])
       url = qs.unescape(url)
-      url.should.match new RegExp('&ids=Q535|Q7546&')
+      # use split instead of a regexp to work around pipe escaping issues
+      url.split('&ids=Q535|Q7546&').length.should.equal 2
       done()
 
     it 'accepts numeric ids', (done)->
       url = getEntities(['535', '7546'])
       url = qs.unescape(url)
-      url.should.match new RegExp('&ids=Q535|Q7546&')
+      url.split('&ids=Q535|Q7546&').length.should.equal 2
       done()
 
   describe 'languages', ->
-    it "default to languages = ['en']", (done)->
+    it "default to no language parameter", (done)->
       url = getEntities('Q535')
-      url.should.match new RegExp('&languages=en&')
+      url.should.not.match new RegExp('languages')
       done()
 
     it 'accepts one language as a string', (done)->
@@ -40,16 +41,10 @@ describe 'wikidata getEntities', ->
       url.should.match new RegExp('&languages=fr')
       done()
 
-    it 'always include en', (done)->
-      url = getEntities('Q535', 'fr')
-      url = qs.unescape(url)
-      url.should.match new RegExp('&languages=fr|en&')
-      done()
-
     it 'accepts language as an array', (done)->
       url = getEntities('Q535', ['fr', 'de'])
       url = qs.unescape(url)
-      url.should.match new RegExp('&languages=fr|de|en&')
+      url.split('&languages=fr|de').length.should.equal 2
       done()
 
   describe 'properties', ->
