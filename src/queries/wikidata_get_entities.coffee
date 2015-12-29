@@ -1,10 +1,10 @@
 wd_ = require '../helpers/helpers'
 buildUrl = require '../utils/build_url'
-{ forceArray, shortLang } = require '../utils/utils'
+{ isPlainObject, forceArray, shortLang } = require '../utils/utils'
 
 module.exports = (ids, languages, props, format)->
   # polymorphism: arguments can be passed as an object keys
-  if ids?.ids?
+  if isPlainObject ids
     { ids, languages, props, format } = ids
 
   format or= 'json'

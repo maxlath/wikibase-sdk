@@ -7,3 +7,10 @@ module.exports =
   forceArray: (array)->
     if typeof array is 'string' then array = [array]
     return array or []
+
+  # simplistic implementation to filter-out arrays
+  isPlainObject: (obj)->
+    unless obj? then return false
+    unless typeof obj is 'object' then return false
+    if obj instanceof Array then return false
+    return true
