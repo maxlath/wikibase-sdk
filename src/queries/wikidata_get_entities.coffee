@@ -2,7 +2,13 @@ wd_ = require '../helpers/helpers'
 buildUrl = require '../utils/build_url'
 { forceArray, shortLang } = require '../utils/utils'
 
-module.exports = (ids, languages, props, format='json')->
+module.exports = (ids, languages, props, format)->
+  # polymorphism: arguments can be passed as an object keys
+  if ids?.ids?
+    { ids, languages, props, format } = ids
+
+  format or= 'json'
+
   # ids cant be let empty
   unless ids? or ids.length is 0 then throw new Error 'no id provided'
 
