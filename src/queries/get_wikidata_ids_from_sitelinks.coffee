@@ -1,8 +1,5 @@
-# https://www.wikidata.org/w/api.php?action=wbgetentities&sites=enwiki&titles=Aspirin&languages=en&format=json&props=info
 buildUrl = require '../utils/build_url'
 { isPlainObject, forceArray, shortLang } = require '../utils/utils'
-require 'colors'
-
 
 module.exports = (titles, sites, languages, props, format)->
   # polymorphism: arguments can be passed as an object keys
@@ -37,8 +34,6 @@ module.exports = (titles, sites, languages, props, format)->
   if props?.length > 0 then query.props = props.join '|'
 
   return buildUrl 'wikidata', query
-
-require 'colors'
 
 parseSite = (site)->
   # convert 2 letters language code to Wikipedia sitelinks code
