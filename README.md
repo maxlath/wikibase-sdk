@@ -128,6 +128,7 @@ var url = wdk.getEntities({
 In wikidata API answers, you can only access claims on the entity's page, not claims pointing to this entity (what would be in the "what links here" page).
 
 Fortunatly, you can query wikimedia awesome WDQ tool \o/
+(And now also a [SPARQL endpoint](https://query.wikidata.org), for which wikidata-sdk doesn't provide any tool yet)
 
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
