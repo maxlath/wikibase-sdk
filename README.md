@@ -101,13 +101,27 @@ var url = wdk.searchEntities({
 on the same pattern
 
 ```javascript
-var url = wdk.getEntities(ids, languages, properties, format)
+var ids = 'Q571'; // could also be several ids as an array: ['Q1', 'Q5', 'Q571']
+var languages = ['en', 'fr', 'de']; // returns all languages if not specified
+var properties = ['info', 'claims']; // returns all data if not specified
+var format = 'xml'; // defaults to json
+var url = wdk.getEntities(ids, languages, properties, format);
 ```
 
 properties being wikidata entities' properties: info, sitelinks, labels, descriptions, claims.
 
 ids, languages, properties can get either one single value as a string or several values in a array
 
+
+And Again, this can also be passed as an object:
+```javascript
+var url = wdk.getEntities({
+  ids: ['Q1', 'Q5', 'Q571'],
+  languages: ['en', 'fr', 'de'], // returns all languages if not specified
+  properties: ['info', 'claims'], // returns all data if not specified
+  format: 'xml' // defaults to json
+})
+```
 
 ### get entities reverse claims
 
