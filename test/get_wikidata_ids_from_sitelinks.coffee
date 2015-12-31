@@ -1,9 +1,9 @@
 should = require 'should'
 _ = require 'lodash'
 qs = require 'querystring'
-getIds = require('../src/queries/get_wikidata_ids_from_sitelink')
+getIds = require('../src/queries/get_wikidata_ids_from_sitelinks')
 
-describe 'wikidata getWikidataIdsFromSitelink', ->
+describe 'wikidata getWikidataIdsFromSitelinks', ->
   describe 'polymorphism', ->
     it 'accepts parameters as multiple arguments', (done)->
       url = getIds 'Lyon', 'dewiki', 'en', 'info', 'json'
