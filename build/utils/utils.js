@@ -9,6 +9,18 @@
         array = [array];
       }
       return array || [];
+    },
+    isPlainObject: function(obj) {
+      if (obj == null) {
+        return false;
+      }
+      if (typeof obj !== 'object') {
+        return false;
+      }
+      if (obj instanceof Array) {
+        return false;
+      }
+      return true;
     }
   };
 
