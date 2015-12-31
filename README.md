@@ -17,7 +17,7 @@ used APIs:
   - [Build queries urls to:](#build-queries-urls-to)
     - [search in wikidata entities](#search-in-wikidata-entities)
     - [get entities by id](#get-entities-by-id)
-    - [get entities from Wikipedia articles titles](#get-entities-by-wikipedia-articles-titles)
+    - [get entities from Wikipedia titles](#get-entities-by-wikipedia-titles)
     - [get entities from any Wikimedia project titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
   - [Other utils](#other-utils)
@@ -125,7 +125,7 @@ var url = wdk.getEntities({
 })
 ```
 
-### get entities by Wikipedia articles titles
+### get entities by Wikipedia titles
 
 This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
 ```javascript
