@@ -17,6 +17,8 @@ used APIs:
   - [Build queries urls to:](#build-queries-urls-to)
     - [search in wikidata entities](#search-in-wikidata-entities)
     - [get entities by id](#get-entities-by-id)
+    - [get entities from Wikipedia articles titles](#get-entities-by-wikipedia-articles-titles)
+    - [get entities from any Wikimedia project titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
   - [Other utils](#other-utils)
     - [simplify claims results](#simplify-claims-results)
@@ -121,6 +123,52 @@ var url = wdk.getEntities({
   properties: ['info', 'claims'], // returns all data if not specified
   format: 'xml' // defaults to json
 })
+```
+
+### get entities by Wikipedia articles titles
+
+This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
+```javascript
+var url = wdk.getWikidataIdsFromWikipediaTitles('Hamburg');
+//=> 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg&sites=enwiki&format=json'
+
+var url = wdk.getWikidataIdsFromWikipediaTitles(['Hamburg', 'Lyon', 'Berlin']);
+// => 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg%7CLyon%7CBerlin&sites=enwiki&format=json'
+```
+
+By default, it looks in the English Wikipedia, but we can change that:
+```javascript
+var titles = 'Hamburg';
+var sites = 'dewiki'; // or you can just pass the 2-letters language codes: 'de'
+var languages = ['en', 'fr', 'de']; // those are the languages in which we would like the entities data
+var properties = ['info', 'claims'];
+var format = 'json';
+var url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, properties, format);
+```
+or using the object interface:
+```javascript
+var url = wdk.getWikidataIdsFromWikipediaTitles({
+  titles: 'Hamburg',
+  sites: 'dewiki',
+  languages: ['en', 'fr', 'de'],
+  properties: ['info', 'claims'],
+  format: 'json'
+});
+```
+
+### get entities by other Wikimedia projects titles
+
+This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
+
+```javascript
+var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwikisource');
+```
+
+Actually, `getWikidataIdsFromWikipediaTitles` is just an alias of `getWikidataIdsFromSitelinks`, so you can use it for Wikipedia too:
+```javascript
+var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki');
+// or given it defauts to the Wikipedia project:
+var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr');
 ```
 
 ### get entities reverse claims
