@@ -16,6 +16,12 @@ describe 'wikidata searchEntities', ->
       url.should.match new RegExp('search=johnnybegood')
       done()
 
+    it 'accepts an object', (done)->
+      url = searchEntities({search: 'johnnybegood', language: 'fr'})
+      url.should.match new RegExp('search=johnnybegood')
+      url.should.match new RegExp('language=fr')
+      done()
+
     it 'throw on empty string', (done)->
       (-> searchEntities('')).should.throw()
       done()

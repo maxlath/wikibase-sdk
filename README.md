@@ -73,18 +73,27 @@ used APIs:
 var url = wdk.searchEntities('Ingmar Bergman');
 ```
 
-or with more parameters:
-```javascript
-var search = 'Ingmar Bergman'
-var languages = 'fr' // will default to 'en'
-var limit = 10 // default 20
-var format = 'json' // default to json
-
-var url = wdk.searchEntities(search, languages, limit, format);
-```
 this returns a query url that you are then free to request with the tool you like
 ```
 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ingmar%20Bergman&language=en&limit=20&format=json
+```
+
+or with more parameters:
+```javascript
+var search = 'Ingmar Bergman'
+var language = 'fr' // will default to 'en'
+var limit = 10 // default 20
+var format = 'json' // default to json
+
+var url = wdk.searchEntities(search, language, limit, format);
+```
+which can also be passed as an object:
+```javascript
+var url = wdk.searchEntities({
+  search: 'Ingmar Bergman',
+  format: 'xml',
+  language: 'sv'
+});
 ```
 
 ### get entities by id
