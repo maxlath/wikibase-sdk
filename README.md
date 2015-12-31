@@ -20,9 +20,11 @@ used APIs:
     - [get entities from Wikipedia titles](#get-entities-by-wikipedia-titles)
     - [get entities from any Wikimedia project titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
-  - [Other utils](#other-utils)
+  - [Results parsers](#results-parsers)
+    - [Wikidata API queries](#wikidata-api-queries)
+    - [WDQ queries](#wdq-queries)
     - [simplify claims results](#simplify-claims-results)
-  - [Misc](#misc)
+  - [Other utils](#other-utils)
 - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
 - [License](#license)
 
@@ -201,7 +203,13 @@ it also work for string values: e.g. let's say you want to find which book as 97
 var url = wdk.getReverseClaims('P212', '978-0-465-06710-7');
 ```
 
-## Other utils
+## Results parsers
+
+### Wikidata API queries
+you can pass the results from `wdk.searchEntities`, `wdk.getEntities`, `wdk.getWikidataIdsFromWikipediaTitles`, or `wdk.getWikidataIdsFromSitelinks` to `wdk.parse.wd.entities`, it will return entities with simplified claims (cf "simplify claims results" hereafter)
+
+### WDQ queries
+you can pass the results from `wdk.getReverseClaims` to `wdk.parse.wdq.entities`, it will return a list of Wikidata entities `Q` ids
 
 ### simplify claims results
 For each entities claims, Wikidata's API returns a deep object that requires some parsing that could be avoided for simple uses.
@@ -287,7 +295,7 @@ request(url, function(err, response){
 ```
 
 
-### Misc
+## Other utils
 
 - isNumericId
 - getNumericId
