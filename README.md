@@ -294,6 +294,7 @@ request(url, function(err, response){
 });
 ```
 
+To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
 
 ## Other utils
 
