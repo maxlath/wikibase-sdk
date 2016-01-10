@@ -6,6 +6,7 @@ Q571 = JSON.parse Q571
 
 Q4132785 = JSON.parse fs.readFileSync('test/data/Q4132785.json', 'utf8')
 Q328212 = JSON.parse fs.readFileSync('test/data/Q328212.json', 'utf8')
+Q22002395 = JSON.parse fs.readFileSync('test/data/Q22002395.json', 'utf8')
 
 # a fake entity to simulate a possible negative invalid date
 Q4132785NegativeDate = fs.readFileSync 'test/data/Q4132785-negative-date.json', 'utf8'
@@ -62,4 +63,11 @@ describe 'simplifyClaims', ->
     simplified = simplifyClaims Q328212.claims
     firstP856 = simplified.P856[0]
     firstP856.should.equal "http://veronicarothbooks.blogspot.com"
+    done()
+
+  it 'should keep only non-null values', (done)->
+    simplified = simplifyClaims Q22002395.claims
+    # Q22002395 P50 has 2 values with "snaktype": "somevalue"
+    # that should be removed
+    _.all(simplified.P50, (qid)-> qid?).should.equal true
     done()
