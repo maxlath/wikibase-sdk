@@ -334,6 +334,7 @@ exports.encode = exports.stringify = require('./encode');
       case 'string':
       case 'commonsMedia':
       case 'url':
+      case 'external-id':
         return datavalue.value;
       case 'monolingualtext':
         return datavalue.value.text;
