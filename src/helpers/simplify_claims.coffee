@@ -28,7 +28,7 @@ simpifyStatement = (statement)->
   unless datavalue? then return null
 
   switch datatype
-    when 'string', 'commonsMedia', 'url' then return datavalue.value
+    when 'string', 'commonsMedia', 'url', 'external-id' then return datavalue.value
     when 'monolingualtext' then return datavalue.value.text
     when 'wikibase-item' then return 'Q' + datavalue.value['numeric-id']
     when 'time' then return wd_.normalizeWikidataTime(datavalue.value.time)
