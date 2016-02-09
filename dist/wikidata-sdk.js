@@ -537,7 +537,7 @@ exports.encode = exports.stringify = require('./encode');
     }
     language || (language = 'en');
     limit || (limit = '20');
-    format || (format = '20');
+    format || (format = 'json');
     return buildUrl('wikidata', {
       action: 'wbsearchentities',
       search: search,

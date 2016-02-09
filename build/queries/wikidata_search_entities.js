@@ -18,7 +18,7 @@
     }
     language || (language = 'en');
     limit || (limit = '20');
-    format || (format = '20');
+    format || (format = 'json');
     return buildUrl('wikidata', {
       action: 'wbsearchentities',
       search: search,
