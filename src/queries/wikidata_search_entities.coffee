@@ -11,7 +11,7 @@ module.exports = (search, language, limit, format)->
 
   language or= 'en'
   limit or= '20'
-  format or= '20'
+  format or= 'json'
 
   return buildUrl 'wikidata',
     action: 'wbsearchentities'
