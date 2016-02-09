@@ -36,3 +36,9 @@ describe 'wikidata searchEntities', ->
       url = searchEntities('Q35802', 'la')
       url.should.match new RegExp('language=la')
       done()
+
+  describe 'format', ->
+    it 'should have json as default format', (done)->
+      url = searchEntities 'Ingmar Bergman'
+      url.should.match new RegExp('format=json')
+      done()
