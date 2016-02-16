@@ -177,12 +177,12 @@ var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
 
 ### get entities reverse claims
 
-> /!\ WDQ will be deprecated, use the [SPARQL endpoint](#sparql query) instead
+> **/!\ WDQ will be deprecated, use the [SPARQL endpoint](#sparql-queries) instead**
 
 In wikidata API answers, you can only access claims on the entity's page, not claims pointing to this entity (what would be in the "what links here" page).
 
 Fortunatly, you can query wikimedia awesome WDQ tool \o/
-(And now also an even more awesome [SPARQL endpoint](#sparql query))
+(And now also an even more awesome [SPARQL endpoint](#sparql-queries))
 
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
@@ -209,7 +209,9 @@ var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 
 ### sparql queries
 
-But now, there is even more powerful than WDQ: the all mighty [Wikidata SPARQL endpoint](http://query.wikidata.org/)! [SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a [user manual](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual), [an awesome tool to test you queries with autocomplete](https://query.wikidata.org/) and [lots of examples](https://www.mediawiki.org/wiki/Wikibase/Indexing/SPARQL_Query_Examples)!
+But now, there is even more powerful than WDQ: the all mighty [Wikidata SPARQL endpoint](http://query.wikidata.org/)!
+
+[SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a [user manual](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual), [an awesome tool to test you queries with autocomplete](https://query.wikidata.org/) and [lots of examples](https://www.mediawiki.org/wiki/Wikibase/Indexing/SPARQL_Query_Examples)!
 
 Then, to get JSON results you can [make a HTTP query to  https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with Wdk can be done like this:
 ```javascript
