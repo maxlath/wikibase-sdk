@@ -5,8 +5,9 @@ A javascript tool-suite to query [wikidata](http://wikidata.org/) and handle its
 This library had for primary purpose to serve the needs of the [inventaire](https://github.com/inventaire/inventaire) project but extending its capabilities to other needs it totally possible: feel welcome to post your suggestions as issues or pull requests!
 
 used APIs:
-- [wikidata API](https://www.wikidata.org/w/api.php)
-- [wmlabs WDQ](http://wdq.wmflabs.org/api_documentation.html)
+- [Wikidata API](https://www.wikidata.org/w/api.php)
+- [Wikidata Query](http://query.wikidata.org/) (SPARQL)
+- [WMLabs WDQ](http://wdq.wmflabs.org/api_documentation.html)
 
 # Summary
 - [Installation](#installation)
@@ -20,6 +21,7 @@ used APIs:
     - [get entities from Wikipedia titles](#get-entities-by-wikipedia-titles)
     - [get entities from any Wikimedia project titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
+    - [sparql queries](#sparql-queries)
   - [Results parsers](#results-parsers)
     - [Wikidata API queries](#wikidata-api-queries)
     - [WDQ queries](#wdq-queries)
@@ -175,10 +177,12 @@ var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
 
 ### get entities reverse claims
 
+> /!\ WDQ will be deprecated, use the [SPARQL endpoint](#sparql query) instead
+
 In wikidata API answers, you can only access claims on the entity's page, not claims pointing to this entity (what would be in the "what links here" page).
 
 Fortunatly, you can query wikimedia awesome WDQ tool \o/
-(And now also a [SPARQL endpoint](https://query.wikidata.org), for which wikidata-sdk doesn't provide any tool yet)
+(And now also an even more awesome [SPARQL endpoint](#sparql query))
 
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
@@ -202,6 +206,35 @@ it also work for string values: e.g. let's say you want to find which book as 97
 ```javascript
 var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
+
+### sparql queries
+
+But now, there is even more powerful than WDQ: the all mighty [Wikidata SPARQL endpoint](http://query.wikidata.org/)! [SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a [user manual](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual), [an awesome tool to test you queries with autocomplete](https://query.wikidata.org/) and [lots of examples](https://www.mediawiki.org/wiki/Wikibase/Indexing/SPARQL_Query_Examples)!
+
+Then, to get JSON results you can [make a HTTP query to  https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with Wdk can be done like this:
+```javascript
+var url = wdk.sparqlQuery(SPARQL)
+```
+
+Exemple taken from [inventaire SPARQL queries](https://github.com/inventaire/inventaire/tree/master/server/data/wikidata/queries) (here written using [ES6 template string](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/template_strings) capabilities)
+```javascript
+var authorId = 'Q535'
+var sparql = `
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?work ?date WHERE {
+  ?work wdt:P50 wd:${authorQid} .
+  OPTIONAL {
+    ?work wdt:P577 ?date .
+  }
+}
+`
+var url = wdk.sparqlQuery(sparql)
+// => https://query.wikidata.org/sparql?format=json&query=%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20%3Fwork%20%3Fdate%20WHERE%20%7B%0A%20%20%3Fwork%20wdt%3AP50%20wd%3AQ535%20.%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fwork%20wdt%3AP577%20%3Fdate%20.%0A%20%20%7D%0A%7D%0A
+
+```
+Querying this url should return a big collection of objects with `work` and `date` attributes corresponding to all Mr Q535's works
 
 ## Results parsers
 
