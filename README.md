@@ -74,7 +74,7 @@ used APIs:
 ### search in wikidata entities
 
 ```javascript
-var url = wdk.searchEntities('Ingmar Bergman');
+var url = wdk.searchEntities('Ingmar Bergman')
 ```
 
 this returns a query url that you are then free to request with the tool you like
@@ -89,7 +89,7 @@ var language = 'fr' // will default to 'en'
 var limit = 10 // default 20
 var format = 'json' // default to json
 
-var url = wdk.searchEntities(search, language, limit, format);
+var url = wdk.searchEntities(search, language, limit, format)
 ```
 which can also be passed as an object:
 ```javascript
@@ -97,7 +97,7 @@ var url = wdk.searchEntities({
   search: 'Ingmar Bergman',
   format: 'xml',
   language: 'sv'
-});
+})
 ```
 
 ### get entities by id
@@ -105,11 +105,11 @@ var url = wdk.searchEntities({
 on the same pattern
 
 ```javascript
-var ids = 'Q571'; // could also be several ids as an array: ['Q1', 'Q5', 'Q571']
-var languages = ['en', 'fr', 'de']; // returns all languages if not specified
-var properties = ['info', 'claims']; // returns all data if not specified
-var format = 'xml'; // defaults to json
-var url = wdk.getEntities(ids, languages, properties, format);
+var ids = 'Q571' // could also be several ids as an array: ['Q1', 'Q5', 'Q571']
+var languages = ['en', 'fr', 'de'] // returns all languages if not specified
+var properties = ['info', 'claims'] // returns all data if not specified
+var format = 'xml' // defaults to json
+var url = wdk.getEntities(ids, languages, properties, format)
 ```
 
 properties being wikidata entities' properties: info, sitelinks, labels, descriptions, claims.
@@ -131,21 +131,21 @@ var url = wdk.getEntities({
 
 This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
 ```javascript
-var url = wdk.getWikidataIdsFromWikipediaTitles('Hamburg');
+var url = wdk.getWikidataIdsFromWikipediaTitles('Hamburg')
 //=> 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg&sites=enwiki&format=json'
 
-var url = wdk.getWikidataIdsFromWikipediaTitles(['Hamburg', 'Lyon', 'Berlin']);
+var url = wdk.getWikidataIdsFromWikipediaTitles(['Hamburg', 'Lyon', 'Berlin'])
 // => 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg%7CLyon%7CBerlin&sites=enwiki&format=json'
 ```
 
 By default, it looks in the English Wikipedia, but we can change that:
 ```javascript
-var titles = 'Hamburg';
-var sites = 'dewiki'; // or you can just pass the 2-letters language codes: 'de'
-var languages = ['en', 'fr', 'de']; // those are the languages in which we would like the entities data
-var properties = ['info', 'claims'];
-var format = 'json';
-var url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, properties, format);
+var titles = 'Hamburg'
+var sites = 'dewiki' // or you can just pass the 2-letters language codes: 'de'
+var languages = ['en', 'fr', 'de'] // those are the languages in which we would like the entities data
+var properties = ['info', 'claims']
+var format = 'json'
+var url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, properties, format)
 ```
 or using the object interface:
 ```javascript
@@ -155,7 +155,7 @@ var url = wdk.getWikidataIdsFromWikipediaTitles({
   languages: ['en', 'fr', 'de'],
   properties: ['info', 'claims'],
   format: 'json'
-});
+})
 ```
 
 ### get entities by other Wikimedia projects titles
@@ -163,14 +163,14 @@ var url = wdk.getWikidataIdsFromWikipediaTitles({
 This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
 
 ```javascript
-var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwikisource');
+var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwikisource')
 ```
 
 Actually, `getWikidataIdsFromWikipediaTitles` is just an alias of `getWikidataIdsFromSitelinks`, so you can use it for Wikipedia too:
 ```javascript
-var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki');
+var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki')
 // or given it defauts to the Wikipedia project:
-var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr');
+var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
 ```
 
 ### get entities reverse claims
@@ -183,24 +183,24 @@ Fortunatly, you can query wikimedia awesome WDQ tool \o/
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
 ```javascript
-var url = wdk.getReverseClaims('P50', 'Q7243');
+var url = wdk.getReverseClaims('P50', 'Q7243')
 ```
 
 and you can then query the obtained entities ids
 
 ```javascript
 request(url, function(err, response){
-  if (err) { dealWithError(err) };
-  var entities = wdk.parse.wdq.entities(response);
-  var url2 = wdk.getEntities(entities);
+  if (err) { dealWithError(err) }
+  var entities = wdk.parse.wdq.entities(response)
+  var url2 = wdk.getEntities(entities)
   request(url2 ....
-});
+})
 ```
 
 it also work for string values: e.g. let's say you want to find which book as 978-0-465-06710-7 for ISBN-13 ([P212](http://www.wikidata.org/entity/P212)):
 
 ```javascript
-var url = wdk.getReverseClaims('P212', '978-0-465-06710-7');
+var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
 ## Results parsers
@@ -279,19 +279,19 @@ we could have
 
 you just need to pass your entity' claims object to simplifyClaims as such:
 ```javascript
-var simpleClaims = wdk.simplifyClaims(claims);
+var simpleClaims = wdk.simplifyClaims(claims)
 
 ```
 
 in your workflow, that could give something like:
 
 ```javascript
-var url = wdk.getEntities('Q535');
+var url = wdk.getEntities('Q535')
 request(url, function(err, response){
-  if (err) { dealWithError(err) };
-  var entity = response.entities.Q535;
-  entity.claims = wdk.simplifyClaims(entity.claims);
-});
+  if (err) { dealWithError(err) }
+  var entity = response.entities.Q535
+  entity.claims = wdk.simplifyClaims(entity.claims)
+})
 ```
 
 To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
