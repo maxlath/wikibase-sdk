@@ -12,6 +12,8 @@
 
   wdk.getWikidataIdsFromSitelinks = require('./queries/get_wikidata_ids_from_sitelinks');
 
+  wdk.sparqlQuery = require('./queries/wikidata_sparql_query');
+
   wdk.getReverseClaims = require('./queries/wdq_get_reverse_claims');
 
   wdk.simplifyClaims = require('./helpers/simplify_claims');
