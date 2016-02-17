@@ -220,7 +220,7 @@ var url = wdk.sparqlQuery(SPARQL)
 
 Exemple taken from [inventaire SPARQL queries](https://github.com/inventaire/inventaire/tree/master/server/data/wikidata/queries) (here written using [ES6 template string](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/template_strings) capabilities)
 ```javascript
-var authorId = 'Q535'
+var authorQid = 'Q535'
 var sparql = `
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
