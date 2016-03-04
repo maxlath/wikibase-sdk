@@ -25,8 +25,10 @@
     "wikidata",
     "sdk",
     "javascript",
-    "commons",
-    "wdq"
+    "api",
+    "wdq",
+    "sparql",
+    "wdk"
   ],
   "author": "maxlath",
   "license": "MIT",
