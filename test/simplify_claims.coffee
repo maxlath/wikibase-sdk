@@ -16,9 +16,9 @@ simplifyClaims = require('../src/helpers/simplify_claims')
 
 describe 'simplifyClaims', ->
   it 'env', (done)->
-    Q571.should.be.an.Object
+    Q571.should.be.an.Object()
     Q571.claims.should.be.ok
-    Q4132785.should.be.an.Object
+    Q4132785.should.be.an.Object()
     Q4132785.claims.P577[0].should.be.ok
     done()
 
@@ -36,7 +36,7 @@ describe 'simplifyClaims', ->
   it 'should return a collection of arrays', (done)->
     simplified = simplifyClaims(Q571.claims)
     for k, v of simplified
-      v.should.be.an.Array
+      v.should.be.an.Array()
     done()
 
   it 'should return a valid time for possible invalid dates', (done)->

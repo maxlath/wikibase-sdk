@@ -4,14 +4,14 @@ wd_ = require('../src/helpers/helpers')
 
 describe 'wd_', ->
   it 'env', (done)->
-    wd_.should.be.an.Object
+    wd_.should.be.an.Object()
     done()
 
   describe 'normalizeId', ->
     it 'should return a string', (done)->
-      wd_.normalizeId('Q571').should.be.a.String
-      wd_.normalizeId('P50').should.be.a.String
-      wd_.normalizeId('571').should.be.a.String
+      wd_.normalizeId('Q571').should.be.a.String()
+      wd_.normalizeId('P50').should.be.a.String()
+      wd_.normalizeId('571').should.be.a.String()
       done()
 
     it 'should return a Q id by default', (done)->
@@ -64,11 +64,11 @@ describe 'wd_', ->
       done()
 
     it 'should return a number (epoch time)', (done)->
-      wd_.normalizeWikidataTime(wdTime).should.be.a.Number
+      wd_.normalizeWikidataTime(wdTime).should.be.a.Number()
       done()
 
     it 'should return a number for negative time', (done)->
-      wd_.normalizeWikidataTime(negativeWdTime).should.be.a.Number
+      wd_.normalizeWikidataTime(negativeWdTime).should.be.a.Number()
       done()
 
     it 'should return the right number', (done)->

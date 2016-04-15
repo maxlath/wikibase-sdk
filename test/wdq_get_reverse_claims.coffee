@@ -5,12 +5,12 @@ getReverseClaims = require('../src/queries/wdq_get_reverse_claims')
 
 describe 'simplifyClaims', ->
   it 'env', (done)->
-    getReverseClaims.should.be.a.Function
+    getReverseClaims.should.be.a.Function()
     done()
 
   it 'should return a url', (done)->
     url = getReverseClaims('P50', 'Q535')
-    url.should.be.a.String
+    url.should.be.a.String()
     url.should.match new RegExp('http\:\/\/')
     done()
 
