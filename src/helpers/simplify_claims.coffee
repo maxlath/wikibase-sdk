@@ -1,24 +1,27 @@
 wd_ = require './helpers'
 
-module.exports = (claims)->
+# expects an entity 'claims' object
+simplifyClaims = (claims)->
   simpleClaims = {}
-  for id, claim of claims
-    simpleClaims[id] = simpifyClaim claim
+  for id, propClaims of claims
+    simpleClaims[id] = simplifyPropertyClaims propClaims
   return simpleClaims
 
-simpifyClaim = (claim)->
+# expects the 'claims' array of a particular property
+simplifyPropertyClaims = (propClaims)->
   simplifiedClaim = []
-  for statement in claim
-    simpifiedStatement = simpifyStatement statement
+  for claim in propClaims
+    simpifiedStatement = simplifyClaim claim
     # filter-out null values
     if simpifiedStatement? then simplifiedClaim.push simpifiedStatement
 
   return simplifiedClaim
 
-simpifyStatement = (statement)->
-  # tries to replace wikidata deep statement object by a simple value
+# expects a single claim object
+simplifyClaim = (claim)->
+  # tries to replace wikidata deep claim object by a simple value
   # e.g. a string, an entity Qid or an epoch time number
-  { mainsnak } = statement
+  { mainsnak } = claim
 
   # should only happen in snaktype: "novalue" cases or alikes
   unless mainsnak? then return null
@@ -33,3 +36,9 @@ simpifyStatement = (statement)->
     when 'wikibase-item' then return 'Q' + datavalue.value['numeric-id']
     when 'time' then return wd_.normalizeWikidataTime(datavalue.value.time)
     else return null
+
+
+module.exports =
+  simplifyClaims: simplifyClaims
+  simplifyPropertyClaims: simplifyPropertyClaims
+  simplifyClaim: simplifyClaim
