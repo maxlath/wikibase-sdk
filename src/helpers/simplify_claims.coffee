@@ -9,13 +9,11 @@ simplifyClaims = (claims)->
 
 # expects the 'claims' array of a particular property
 simplifyPropertyClaims = (propClaims)->
-  simplifiedClaim = []
-  for claim in propClaims
-    simpifiedStatement = simplifyClaim claim
-    # filter-out null values
-    if simpifiedStatement? then simplifiedClaim.push simpifiedStatement
+  propClaims
+  .map simplifyClaim
+  .filter nonNull
 
-  return simplifiedClaim
+nonNull = (obj)-> obj?
 
 # expects a single claim object
 simplifyClaim = (claim)->
