@@ -26,6 +26,9 @@ used APIs:
     - [Wikidata API queries](#wikidata-api-queries)
     - [WDQ queries](#wdq-queries)
     - [simplify claims results](#simplify-claims-results)
+        - [simplifyClaims](#simplifyClaims)
+        - [simplifyPropertyClaims](#simplifyPropertyClaims)
+        - [simplifyClaim](#simplifyClaim)
   - [Other utils](#other-utils)
 - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
 - [License](#license)
@@ -246,7 +249,7 @@ you can pass the results from `wdk.searchEntities`, `wdk.getEntities`, `wdk.getW
 ### WDQ queries
 you can pass the results from `wdk.getReverseClaims` to `wdk.parse.wdq.entities`, it will return a list of Wikidata entities `Q` ids
 
-### simplify claims results
+### Simplify claims results
 For each entities claims, Wikidata's API returns a deep object that requires some parsing that could be avoided for simple uses.
 
 So instead of:
@@ -312,10 +315,12 @@ we could have
 "P279": [ "Q340169", "Q2342494", "Q386724" ]
 ```
 
+That's what `simplifyClaims`, `simplifyPropertyClaims`, `simplifyClaim` do, each at their own level:
+
+#### simplifyClaims
 you just need to pass your entity' claims object to simplifyClaims as such:
 ```javascript
-var simpleClaims = wdk.simplifyClaims(claims)
-
+var simplifiedClaims = wdk.simplifyClaims(entity.claims)
 ```
 
 in your workflow, that could give something like:
@@ -325,11 +330,23 @@ var url = wdk.getEntities('Q535')
 request(url, function(err, response){
   if (err) { dealWithError(err) }
   var entity = response.entities.Q535
-  entity.claims = wdk.simplifyClaims(entity.claims)
+  simplifiedClaims = wdk.simplifyClaims(entity.claims)
 })
 ```
 
 To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
+
+#### simplifyPropertyClaims
+Same as simplifyClaims but expects an array of claims, typically the array of claims of a specific property:
+```javascript
+var simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
+```
+
+#### simplifyClaim
+Same as simplifyClaims but expects a unique claim
+```javascript
+var simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
+```
 
 ## Other utils
 
