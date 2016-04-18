@@ -77,6 +77,7 @@ used APIs:
 ## Build queries urls to
 
 ### search in wikidata entities
+*associated Wikidata doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
 
 ```javascript
 var url = wdk.searchEntities('Ingmar Bergman')
@@ -122,6 +123,7 @@ var url = wdk.searchEntities({
 If the values aren't available in the desired language, it will fallback to the English value if available.
 
 ### get entities by id
+*associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 on the same pattern
 
@@ -149,6 +151,7 @@ var url = wdk.getEntities({
 ```
 
 ### get entities by Wikipedia titles
+*associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
 ```javascript
@@ -180,6 +183,7 @@ var url = wdk.getWikidataIdsFromWikipediaTitles({
 ```
 
 ### get entities by other Wikimedia projects titles
+*associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
 
@@ -266,6 +270,8 @@ you can pass the results from `wdk.searchEntities`, `wdk.getEntities`, `wdk.getW
 you can pass the results from `wdk.getReverseClaims` to `wdk.parse.wdq.entities`, it will return a list of Wikidata entities `Q` ids
 
 ### Simplify claims results
+*associated Wikidata doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
+
 For each entities claims, Wikidata's API returns a deep object that requires some parsing that could be avoided for simple uses.
 
 So instead of:
