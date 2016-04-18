@@ -91,8 +91,8 @@ or with more parameters:
 ```javascript
 var search = 'Ingmar Bergman'
 var language = 'fr' // will default to 'en'
-var limit = 10 // default 20
-var format = 'json' // default to json
+var limit = 10 // defaults to 20
+var format = 'json' // defaults to json
 
 var url = wdk.searchEntities(search, language, limit, format)
 ```
@@ -104,6 +104,22 @@ var url = wdk.searchEntities({
   language: 'sv'
 })
 ```
+
+By default, the `uselang` parameter (the language in which the search results are returned) is set to the same as the language passed, but if for some weird use case you need to set a different language, you can still pass a 2 letters language code:
+* as last argument (inline interface)
+```javascript
+var uselang = 'eo'
+var url = wdk.searchEntities(search, language, limit, format, uselang)
+```
+* or set `uselang` in the option object (object interface).
+```javascript
+var url = wdk.searchEntities({
+  search: 'Ingmar Bergman',
+  language: 'sv',
+  uselang: 'eo'
+})
+```
+If the values aren't available in the desired language, it will fallback to the English value if available.
 
 ### get entities by id
 
