@@ -3,6 +3,7 @@ var args = process.argv.slice(2)
 var wdk = require('..')
 var copy = require('./lib/copy')
 var breq = require('bluereq')
+var logError = require('./lib/log_error')
 
 var id = args[0]
 var lang = args[1] || 'en'
@@ -28,10 +29,6 @@ function parseLabel (res) {
   } else {
     console.error('entity label not found'.red)
   }
-}
-
-function logError (err) {
-  console.error(err.stack || err)
 }
 
 breq.get(url)

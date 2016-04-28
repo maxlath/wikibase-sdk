@@ -4,7 +4,8 @@
   "description": "a javascript tool suite to query and work with wikidata data",
   "main": "build/wikidata-sdk.js",
   "bin": {
-    "qlabel": "./bin/qlabel"
+    "qlabel": "./bin/qlabel",
+    "wikiqid": "./bin/wikiqid"
   },
   "directories": {
     "test": "tests"

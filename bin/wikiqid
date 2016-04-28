@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+// allow to pass a title without having to put it in ""
+var args = process.argv.slice(2)
+var wdk = require('..')
+var copy = require('./lib/copy')
+var breq = require('bluereq')
+var logError = require('./lib/log_error')
+var _ = require('lodash')
+
+var last = args.slice(-1)[0]
+var lang
+if (last.length === 2) {
+  lang = args.pop()
+}
+lang = lang || 'en'
+
+var title = args.join(' ')
+
+if (title.length === 0) {
+  console.error('missing title'.red)
+  return
+}
+
+// parse the url if a wikipedia url was provided as title
+var re = /https:\/\/\w{2,4}\.wikipedia\.org\/wiki\//
+if (title.match(re)){
+  title = title.replace('https://fr.wikipedia.org/wiki/', '')
+  title = global.decodeURIComponent(title)
+}
+
+// Capitalizing the first letter makes it more conveninent for one-word queries
+// but quite randome for multi-word queries or just one-word queries
+// with title that don't take an capital
+// Might need to be removed :/
+title = title[0].toUpperCase() + title.slice(1)
+
+url = wdk.getWikidataIdsFromSitelinks(title, lang)
+
+function parseIds (res) {
+  var entities = res.body.entities
+  var ids = Object.keys(entities)
+  if (ids.length === 1 && ids[0] !== '-1') {
+    id = ids[0]
+    var descriptions = formatDescriptions(entities[id].descriptions)
+    // log descriptions has a confirmation that we found the right entity
+    console.log(descriptions.grey)
+    // copy and output the corresponding id
+    copy(id)
+  } else {
+    console.error('id not found'.red, res.body)
+  }
+}
+
+function formatDescriptions (descriptions) {
+  return _.values(descriptions)
+    .map(_.property('value'))
+    .join('\n')
+}
+
+breq.get(url)
+.then(parseIds)
+.catch(logError)
