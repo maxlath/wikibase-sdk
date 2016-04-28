@@ -30,7 +30,10 @@ used APIs:
         - [simplifyPropertyClaims](#simplifypropertyclaims)
         - [simplifyClaim](#simplifyclaim)
   - [Other utils](#other-utils)
-- [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
+  - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
+- [Command Line Interface](#cli)
+  - [qlabel](#qlabel)
+  - [wikiqid](#wikiqid)
 - [License](#license)
 
 
@@ -398,6 +401,39 @@ breq.get(url)
 .then wdk.parse.wd.entities
 .then (entities)-> # do useful stuff with those entities data
 
+```
+
+## CLI
+Now some sweeties from the command line!
+Executables are regrouped in the `bin` folder, so you can execute them using there file path (ex: `./bin/qlabel`), but it is way more convenient to have them globally accessible (ex: `qlabel`), and for that, `wikidata-sdk` must be installed globally:
+```sh
+npm install -g wikidata-sdk
+```
+
+### qlabel
+Working with Wikidata, we often end up with obscure ids. We can always look-up those ids labels on the website but that means loading pages and pages, when a small API call and parsing could return just what we need: a label
+```sh
+qlabel Q1103345
+# => The Cluetrain Manifesto
+```
+By default, the result is in English, but we can pass a 2-letters language code as second argument
+```sh
+qlabel Q1103345 de
+# => Cluetrain-Manifest
+```
+
+### wikiqid
+This one is kind of the other way around: pass it the title of a Wikipedia article and it will return the corresponding Wikidata id
+```sh
+wikiqid Cantabria
+# => Q3946
+wikiqid New Delhi
+# => Q987
+```
+By default, it will look at the English Wikipedia, but you can specify another language by passing a 2-letters language code as last argument
+```sh
+wikiqid science politique fr
+# => Q36442
 ```
 
 # License
