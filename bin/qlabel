@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+var args = process.argv.slice(2)
+var wdk = require('..')
+var copy = require('./lib/copy')
+var breq = require('bluereq')
+
+var id = args[0]
+var lang = args[1] || 'en'
+id = wdk.normalizeId(id)
+
+var languages = [lang]
+if (lang !== 'en') {
+  // always request the English label as a fallback
+  languages.push('en')
+}
+
+var url = wdk.getEntities(id, languages, 'labels')
+
+function parseLabel (res) {
+  var entity = res.body.entities[id]
+  if (entity.missing != null) {
+    console.error('entity not found'.red, id)
+    return
+  }
+  var label = entity.labels[lang] || entity.labels['en']
+  if (label != null) {
+    copy(label.value)
+  } else {
+    console.error('entity label not found'.red)
+  }
+}
+
+function logError (err) {
+  console.error(err.stack || err)
+}
+
+breq.get(url)
+.then(parseLabel)
+.catch(logError)
