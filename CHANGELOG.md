@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 3.0.0 - 2016-05-13
+* Extracting "bin" executables (qlabel, wikiqid) to there own modules: [wikidata-cli](https://npmjs.com/package/wikidata-cli). Bumping the major version as it could be considered a breaking change (despite the fact that those executables weren't really part of wikidata-sdk and that they were added very recently)
+
 ## 2.6.0 - 2016-04-28
 * Added [CLI tools](https://github.com/maxlath/wikidata-sdk#cli): [qlabel](https://github.com/maxlath/wikidata-sdk#qlabel) and [wikiqid](https://github.com/maxlath/wikidata-sdk#wikiqid)
 
