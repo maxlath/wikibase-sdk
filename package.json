@@ -3,10 +3,6 @@
   "version": "2.6.0",
   "description": "a javascript tool suite to query and work with wikidata data",
   "main": "build/wikidata-sdk.js",
-  "bin": {
-    "qlabel": "./bin/qlabel",
-    "wikiqid": "./bin/wikiqid"
-  },
   "directories": {
     "test": "tests"
   },
@@ -28,7 +24,6 @@
   "keywords": [
     "wikidata",
     "sdk",
-    "javascript",
     "api",
     "wdq",
     "sparql",
@@ -41,11 +36,8 @@
   },
   "homepage": "https://github.com/maxlath/wikidata-sdk",
   "devDependencies": {
-    "bluereq": "^2.1.0",
     "coffee-script": "^1.9.3",
     "coffeelint": "^1.10.1",
-    "colors": "^1.1.2",
-    "copy-paste": "^1.2.0",
     "lodash": "^3.10.1",
     "mocha": "^2.2.5",
     "should": "^7.0.2",
