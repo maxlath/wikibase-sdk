@@ -14,7 +14,8 @@ module.exports = (ids, languages, props, format)->
   if ids.length > 50
     console.warn """getEntities accepts 50 ids max to match Wikidata API limitations:
       this request won't get all the desired entities.
-      You can use getManyEntities instead to generate several request urls to work around this limitation"""
+      You can use getManyEntities instead to generate several request urls
+      to work around this limitation"""
 
   # Properties can be either one property as a string
   # or an array or properties;

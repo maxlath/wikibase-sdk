@@ -17,6 +17,9 @@
     if (!((ids != null) || ids.length === 0)) {
       throw new Error('no id provided');
     }
+    if (ids.length > 50) {
+      console.warn("getEntities accepts 50 ids max to match Wikidata API limitations:\nthis request won't get all the desired entities.\nYou can use getManyEntities instead to generate several request urls\nto work around this limitation");
+    }
     ids = wd_.normalizeIds(forceArray(ids));
     props = forceArray(props);
     query = {
