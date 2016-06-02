@@ -40,7 +40,7 @@
     "coffeelint": "^1.10.1",
     "lodash": "^3.10.1",
     "mocha": "^2.2.5",
-    "should": "^7.0.2",
+    "should": "^9.0.0",
     "uglify-js": "^2.4.24"
   }
 }

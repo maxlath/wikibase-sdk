@@ -18,6 +18,7 @@ used APIs:
   - [Build queries urls to:](#build-queries-urls-to)
     - [search in wikidata entities](#search-in-wikidata-entities)
     - [get entities by id](#get-entities-by-id)
+    - [get many entities by id](#get-many-entities-by-id)
     - [get entities from Wikipedia titles](#get-entities-by-wikipedia-titles)
     - [get entities from any Wikimedia project titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
@@ -152,6 +153,27 @@ var url = wdk.getEntities({
   format: 'xml' // defaults to json
 })
 ```
+
+### get many entities by id
+Above 50 ids, `wdk.getEntities` will warn you that your request won't be fully fullfiled by Wikidata API due to its limitations policy.
+You can use `wdk.getManyEntities` instead to generate several request urls to work around this limitation:
+
+The arguments API is the same as getEntities:
+```javascript
+var urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
+// or
+var urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json')
+// or
+var urls = wdk.getEntities({
+  ids: ['Q1', 'Q2', 'Q3', ..., 'Q123'],
+  languages: ['en', 'fr', 'de'],
+  properties: ['info', 'claims'],
+  format: 'json'
+})
+```
+but it returns an array of urls instead.
+
+:warning: This limitation policy was probably there for a reason, right? This should be the exception, make sure to set an interval between your requests (500ms, 1s?), and if you really need a lot of entities, consider using [dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_.28recommended.29): there are [great tools](https://github.com/maxlath/wikidata-filter) to work with those too!
 
 ### get entities by Wikipedia titles
 *associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*

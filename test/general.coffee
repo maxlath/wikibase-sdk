@@ -8,6 +8,7 @@ describe 'general', ->
 
     wdk.searchEntities.should.be.a.Function()
     wdk.getEntities.should.be.a.Function()
+    wdk.getManyEntities.should.be.a.Function()
     wdk.getWikidataIdsFromSitelinks.should.be.a.Function()
     wdk.getReverseClaims.should.be.a.Function()
 
