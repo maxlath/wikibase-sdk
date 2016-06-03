@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 3.1.0 - 2016-06-02
+* Added [wdk.getManyEntities](https://github.com/maxlath/wikidata-sdk#get-many-entities-by-id)
+
 ## 3.0.0 - 2016-05-13
 * Extracting "bin" executables (qlabel, wikiqid) to there own modules: [wikidata-cli](https://npmjs.com/package/wikidata-cli). Bumping the major version as it could be considered a breaking change (despite the fact that those executables weren't really part of wikidata-sdk and that they were added very recently)
 
