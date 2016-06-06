@@ -16,6 +16,8 @@ describe 'general', ->
     wdk.simplifyPropertyClaims.should.be.a.Function()
     wdk.simplifyClaims.should.be.a.Function()
 
+    wdk.simplifySparqlResults.should.be.a.Function()
+
     parse.should.be.an.Object()
     parse.wd.should.be.an.Object()
     parse.wd.entities.should.be.an.Function()

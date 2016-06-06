@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 3.2.0 - 2016-06-06
+* Added [wdk.simplifySparqlResults](https://github.com/maxlath/wikidata-sdk#simplify-sparql-results)
+
 ## 3.1.0 - 2016-06-02
 * Added [wdk.getManyEntities](https://github.com/maxlath/wikidata-sdk#get-many-entities-by-id)
 

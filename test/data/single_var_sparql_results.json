@@ -1,0 +1,28 @@
+{
+  "head" : {
+    "vars" : [ "genre" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "genre" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q112983"
+      }
+    }, {
+      "genre" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q185598"
+      }
+    }, {
+      "genre" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q3879286"
+      }
+    }, {
+      "genre" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q1473346"
+      }
+    } ]
+  }
+}

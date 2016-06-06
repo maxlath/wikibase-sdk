@@ -25,11 +25,13 @@ used APIs:
     - [sparql queries](#sparql-queries)
   - [Results parsers](#results-parsers)
     - [Wikidata API queries](#wikidata-api-queries)
-    - [WDQ queries](#wdq-queries)
-    - [simplify claims results](#simplify-claims-results)
+      - [simplify claims results](#simplify-claims-results)
         - [simplifyClaims](#simplifyclaims)
         - [simplifyPropertyClaims](#simplifypropertyclaims)
         - [simplifyClaim](#simplifyclaim)
+    - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
+      - [simplify sparql results](#simplify-sparql-results)
+    - [WDQ queries](#wdq-queries)
   - [Other utils](#other-utils)
   - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
 - [Command Line Interface](#cli)
@@ -173,7 +175,7 @@ var urls = wdk.getEntities({
 ```
 but it returns an array of urls instead.
 
-:warning: This limitation policy was probably there for a reason, right? This should be the exception, make sure to set an interval between your requests (500ms, 1s?), and if you really need a lot of entities, consider using [dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_.28recommended.29): there are [great tools](https://github.com/maxlath/wikidata-filter) to work with those too!
+:warning: This limitation policy was probably there for a reason, right? This should be the exception, make sure to set an interval between your requests (500ms, 1s?), and if you really need a lot of entities, consider using [dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_.28recommended.29): there are [great tools](https://github.com/maxlath/wikidata-filter) to work with those too! ;)
 
 ### get entities by Wikipedia titles
 *associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
@@ -291,10 +293,7 @@ Querying this url should return a big collection of objects with `work` and `dat
 ### Wikidata API queries
 you can pass the results from `wdk.searchEntities`, `wdk.getEntities`, `wdk.getWikidataIdsFromWikipediaTitles`, or `wdk.getWikidataIdsFromSitelinks` to `wdk.parse.wd.entities`, it will return entities with simplified claims (cf "simplify claims results" hereafter)
 
-### WDQ queries
-you can pass the results from `wdk.getReverseClaims` to `wdk.parse.wdq.entities`, it will return a list of Wikidata entities `Q` ids
-
-### Simplify claims results
+#### Simplify claims results
 *associated Wikidata doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
 
 For each entities claims, Wikidata's API returns a deep object that requires some parsing that could be avoided for simple uses.
@@ -364,7 +363,7 @@ we could have
 
 That's what `simplifyClaims`, `simplifyPropertyClaims`, `simplifyClaim` do, each at their own level:
 
-#### simplifyClaims
+##### simplifyClaims
 you just need to pass your entity' claims object to simplifyClaims as such:
 ```javascript
 var simplifiedClaims = wdk.simplifyClaims(entity.claims)
@@ -383,17 +382,81 @@ request(url, function(err, response){
 
 To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
 
-#### simplifyPropertyClaims
+##### simplifyPropertyClaims
 Same as simplifyClaims but expects an array of claims, typically the array of claims of a specific property:
 ```javascript
 var simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
 ```
 
-#### simplifyClaim
+##### simplifyClaim
 Same as simplifyClaims but expects a unique claim
 ```javascript
 var simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
 ```
+
+### Wikidata Query (SPARQL) results
+#### simplify sparql results
+With [SPARQL queries](#sparql-queries), you get results that look like this:
+```json
+{
+  "head" : {
+    "vars" : [ "author", "authorLabel", "birth" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "author" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q3731207"
+      },
+      "authorLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Ercole Patti"
+      },
+      "birth" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "1903"
+      }
+    }
+    ]
+  }
+}
+```
+`simplifySparqlResults` converts it to a way simpler:
+```json
+[
+  {
+    "author": {
+      "value": "Q3731207",
+      "label": "Ercole Patti"
+    },
+    "birth": "1903"
+  }
+]
+```
+That's style hairy, because we requested 3 variables, but this gets even simpler if there is only one variable!
+Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`, the output of `simplifySparqlResults` will be:
+```json
+["Q3731207"]
+```
+And then to make it even more simpler, we can... hum no, that's all we got.
+
+Use it like so:
+```javascript
+var simplifiedResults = wdk.simplifySparqlResults(results)
+```
+or for a more complete example (using [promises](https://www.promisejs.org))
+```javascript
+// see the "SPARQL Query" section above
+var url = wdk.sparqlQuery(SPARQL)
+promiseRequest(url)
+.then(wdk.simplifySparqlResults)
+.then((simplifiedResults) => { // do awesome stuffs here })
+```
+
+### WDQ queries
+you can pass the results from `wdk.getReverseClaims` to `wdk.parse.wdq.entities`, it will return a list of Wikidata entities `Q` ids
 
 ## Other utils
 
@@ -410,7 +473,7 @@ var simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
 - normalizeWikidataTime (aliased to wikidataTimeToEpochTime)
 
 
-### A little [CoffeeScript](coffeescript.org) / [Promises](https://www.youtube.com/watch?v=qbKWsbJ76-s) workflow demo
+### A little [CoffeeScript](coffeescript.org) / [Promises](https://www.promisejs.org) workflow demo
 that's how I love to work :)
 
 ```coffeescript

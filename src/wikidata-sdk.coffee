@@ -15,6 +15,8 @@ wdk.simplifyClaim = simplifyClaim
 wdk.simplifyPropertyClaims = simplifyPropertyClaims
 wdk.simplifyClaims = simplifyClaims
 
+wdk.simplifySparqlResults = require './queries/wikidata_simplify_sparql_results'
+
 # aliases
 wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks
 

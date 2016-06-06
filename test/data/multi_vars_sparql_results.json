@@ -1,0 +1,53 @@
+{
+  "head" : {
+    "vars" : [ "entity", "entityLabel", "year" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "entity" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q3731207"
+      },
+      "entityLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Ercole Patti"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "1903"
+      }
+    }, {
+      "entity" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q8302875"
+      },
+      "entityLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Jean-Claude Lalumière"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "1970"
+      }
+    }, {
+      "entity" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q505932"
+      },
+      "entityLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Paul Bailey"
+      },
+      "year" : {
+        "datatype" : "http://www.w3.org/2001/XMLSchema#integer",
+        "type" : "literal",
+        "value" : "1937"
+      }
+    } ]
+  }
+}
