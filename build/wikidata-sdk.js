@@ -28,6 +28,8 @@
 
   wdk.simplifyClaims = simplifyClaims;
 
+  wdk.simplifySparqlResults = require('./queries/wikidata_simplify_sparql_results');
+
   wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks;
 
   wdk.helpers = helpers;
