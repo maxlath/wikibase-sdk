@@ -35,10 +35,7 @@ used APIs:
   - [Other utils](#other-utils)
   - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
 - [Command Line Interface](#cli)
-  - [qlabel](#qlabel)
-  - [wikiqid](#wikiqid)
 - [License](#license)
-
 
 # Installation
 
