@@ -6,7 +6,10 @@ module.exports = (input)->
   results = input.results.bindings
   if vars.length is 1
     varName = vars[0]
-    return results.map (result)-> parseValue result[varName]
+    return results
+    .map (result)-> parseValue result[varName]
+    # filtering-out bnodes
+    .filter (result)-> result?
 
   else
     [ varsWithLabel, varsWithout ] = identifyVars vars
@@ -17,6 +20,7 @@ module.exports = (input)->
 
       for varName in varsWithLabel
         simpifiedResult[varName] =
+          # not filtering out bnodes as other variables can be meaningful
           value: parseValue result[varName]
           label: result["#{varName}Label"].value
 
@@ -29,6 +33,8 @@ module.exports = (input)->
 parseValue = (valueOjb)->
   switch valueOjb.type
     when 'uri' then return parseUri valueOjb.value
+    # blank nodes will be filtered-out in order to get things simple
+    when 'bnode' then return null
     else valueOjb.value
 
 parseUri = (uri)-> uri.replace 'http://www.wikidata.org/entity/', ''

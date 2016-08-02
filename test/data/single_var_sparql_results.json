@@ -20,6 +20,11 @@
       }
     }, {
       "genre" : {
+        "type" : "bnode",
+        "value" : "t284055162"
+      }
+    }, {
+      "genre" : {
         "type" : "uri",
         "value" : "http://www.wikidata.org/entity/Q1473346"
       }

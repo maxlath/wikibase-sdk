@@ -20,13 +20,13 @@
       }
     }, {
       "entity" : {
-        "type" : "uri",
-        "value" : "http://www.wikidata.org/entity/Q8302875"
+        "type" : "bnode",
+        "value" : "t284055162"
       },
       "entityLabel" : {
         "xml:lang" : "en",
         "type" : "literal",
-        "value" : "Jean-Claude Lalumière"
+        "value" : "FAKE BNODE"
       },
       "year" : {
         "datatype" : "http://www.w3.org/2001/XMLSchema#integer",

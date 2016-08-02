@@ -21,7 +21,7 @@ describe 'wikidata simplify SPARQL results', ->
       done()
 
   describe 'single var', ->
-    it 'should return an array of results values', (done)->
+    it 'should return an array of results values, filtering out blank nodes', (done)->
       output = simplify singleVarData
       output[0].should.equal 'Q112983'
       output.forEach (result)-> helpers.isWikidataId(result).should.be.true()
