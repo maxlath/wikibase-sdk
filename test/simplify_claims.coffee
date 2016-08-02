@@ -33,7 +33,7 @@ describe 'simplifyClaims', ->
     newLength.should.equal originalLength
     done()
 
-  it 'should return a indexed collection of arrays', (done)->
+  it 'should return an indexed collection of arrays', (done)->
     simplified = simplifyClaims Q571.claims
     for k, v of simplified
       v.should.be.an.Array()
