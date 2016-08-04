@@ -30,6 +30,7 @@ module.exports = (input)->
       return simpifiedResult
 
 parseValue = (valueObj)->
+  unless valueObj? then return
   switch valueObj.type
     when 'uri' then parseUri valueObj.value
     # blank nodes will be filtered-out in order to get things simple
