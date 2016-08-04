@@ -452,14 +452,27 @@
     }
   };
 
-  parseValue = function(valueOjb) {
-    switch (valueOjb.type) {
+  parseValue = function(valueObj) {
+    if (valueObj == null) {
+      return;
+    }
+    switch (valueObj.type) {
       case 'uri':
-        return parseUri(valueOjb.value);
+        return parseUri(valueObj.value);
       case 'bnode':
         return null;
       default:
-        return valueOjb.value;
+        switch (valueObj.datatype.replace('http://www.w3.org/2001/XMLSchema#', '')) {
+          case 'decimal':
+          case 'integer':
+          case 'float':
+          case 'double':
+            return parseFloat(valueObj.value);
+          case 'boolean':
+            return valueObj.value === 'true';
+          default:
+            return valueObj.value;
+        }
     }
   };
 
