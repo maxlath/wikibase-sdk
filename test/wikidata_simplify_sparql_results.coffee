@@ -33,5 +33,5 @@ describe 'wikidata simplify SPARQL results', ->
       output[0].should.be.an.Object()
       output[0].entity.value.should.equal 'Q3731207'
       output[0].entity.label.should.equal 'Ercole Patti'
-      output[0].year.should.equal '1903'
+      output[0].year.should.equal 1903
       done()
