@@ -29,22 +29,16 @@ module.exports = (input)->
 
       return simpifiedResult
 
-
 parseValue = (valueObj)->
   switch valueObj.type
-    when 'uri' then return parseUri valueObj.value
+    when 'uri' then parseUri valueObj.value
     # blank nodes will be filtered-out in order to get things simple
-    when 'bnode' then return null
+    when 'bnode' then null
     else
-      switch valueObj.datatype
-        when 'http://www.w3.org/2001/XMLSchema#decimal'
-           , 'http://www.w3.org/2001/XMLSchema#integer'
-           , 'http://www.w3.org/2001/XMLSchema#float'
-           , 'http://www.w3.org/2001/XMLSchema#double'
-          return 1*valueObj.value
-        when 'http://www.w3.org/2001/XMLSchema#boolean'
-          return valueObj.value == "true"
-        else return valueObj.value
+      switch valueObj.datatype.replace 'http://www.w3.org/2001/XMLSchema#', ''
+        when 'decimal', 'integer', 'float', 'double' then parseFloat valueObj.value
+        when 'boolean' then valueObj.value is 'true'
+        else valueObj.value
 
 parseUri = (uri)-> uri.replace 'http://www.wikidata.org/entity/', ''
 isLabelKey = (key)-> /^\w+Label$/.test key
