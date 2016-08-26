@@ -1,11 +1,7 @@
 should = require 'should'
 _ = require 'lodash'
 wd_ = require '../src/helpers/helpers'
-fs = require 'fs'
-
-# requires path relative to process.cwd
-tolstoiBooks = fs.readFileSync 'test/data/P50-Q7243.json', 'utf8'
-tolstoiBooks = JSON.parse tolstoiBooks
+tolstoiBooks = require './data/P50-Q7243.json'
 
 parse = require('../src/helpers/parse_responses')
 

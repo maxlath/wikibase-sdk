@@ -1,16 +1,13 @@
 should = require 'should'
 _ = require 'lodash'
-fs = require 'fs'
-Q571 = fs.readFileSync 'test/data/Q571.json', 'utf8'
-Q571 = JSON.parse Q571
-
-Q4132785 = JSON.parse fs.readFileSync('test/data/Q4132785.json', 'utf8')
-Q328212 = JSON.parse fs.readFileSync('test/data/Q328212.json', 'utf8')
-Q22002395 = JSON.parse fs.readFileSync('test/data/Q22002395.json', 'utf8')
+Q571 = require './data/Q571.json'
+Q4132785 = require './data/Q4132785.json'
+Q328212 = require './data/Q328212.json'
+Q22002395 = require './data/Q22002395.json'
+Q2112 = require './data/Q2112.json'
 
 # a fake entity to simulate a possible negative invalid date
-Q4132785NegativeDate = fs.readFileSync 'test/data/Q4132785-negative-date.json', 'utf8'
-Q4132785NegativeDate = JSON.parse Q4132785NegativeDate
+Q4132785NegativeDate = require './data/Q4132785-negative-date.json'
 
 { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../src/helpers/simplify_claims')
 
@@ -69,4 +66,11 @@ describe 'simplifyClaim', ->
   it 'should return a url for datatype url', (done)->
     simplified = simplifyClaim Q328212.claims.P856[0]
     simplified.should.equal "http://veronicarothbooks.blogspot.com"
+    done()
+
+  it 'should return simplify globecoordinate as a latLng array', (done)->
+    simplified = simplifyClaim Q2112.claims.P625[0]
+    simplified.should.be.an.Array()
+    simplified[0].should.equal 52.016666666667
+    simplified[1].should.equal 8.5166666666667
     done()
