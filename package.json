@@ -1,6 +1,6 @@
 {
   "name": "wikidata-sdk",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "a javascript tool suite to query and work with wikidata data",
   "main": "build/wikidata-sdk.js",
   "directories": {
