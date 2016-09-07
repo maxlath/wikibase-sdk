@@ -5,6 +5,7 @@ simplify = require '../src/queries/wikidata_simplify_sparql_results.coffee'
 
 singleVarData = require './data/single_var_sparql_results.json'
 multiVarsData = require './data/multi_vars_sparql_results.json'
+noDatatypeData = require './data/no_datatype_sparql_results.json'
 
 describe 'wikidata simplify SPARQL results', ->
   describe 'common', ->
@@ -34,4 +35,9 @@ describe 'wikidata simplify SPARQL results', ->
       output[0].entity.value.should.equal 'Q3731207'
       output[0].entity.label.should.equal 'Ercole Patti'
       output[0].year.should.equal 1903
+      done()
+
+    it 'should not throw when the datatype is missing', (done)->
+      output = simplify noDatatypeData
+      output[0].year.should.equal '1937'
       done()

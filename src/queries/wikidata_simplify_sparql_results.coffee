@@ -36,9 +36,10 @@ parseValue = (valueObj)->
     # blank nodes will be filtered-out in order to get things simple
     when 'bnode' then null
     else
-      switch valueObj.datatype.replace 'http://www.w3.org/2001/XMLSchema#', ''
+      switch valueObj.datatype?.replace 'http://www.w3.org/2001/XMLSchema#', ''
         when 'decimal', 'integer', 'float', 'double' then parseFloat valueObj.value
         when 'boolean' then valueObj.value is 'true'
+        # return the raw value if the datatype is missing
         else valueObj.value
 
 parseUri = (uri)-> uri.replace 'http://www.wikidata.org/entity/', ''
