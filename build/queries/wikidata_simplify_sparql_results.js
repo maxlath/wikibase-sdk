@@ -39,6 +39,7 @@
   };
 
   parseValue = function(valueObj) {
+    var ref;
     if (valueObj == null) {
       return;
     }
@@ -48,7 +49,7 @@
       case 'bnode':
         return null;
       default:
-        switch (valueObj.datatype.replace('http://www.w3.org/2001/XMLSchema#', '')) {
+        switch ((ref = valueObj.datatype) != null ? ref.replace('http://www.w3.org/2001/XMLSchema#', '') : void 0) {
           case 'decimal':
           case 'integer':
           case 'float':
