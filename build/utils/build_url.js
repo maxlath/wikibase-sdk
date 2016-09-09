@@ -11,8 +11,7 @@
 
   roots = {
     wikidata: 'https://www.wikidata.org/w/api.php',
-    commons: 'http://commons.wikimedia.org',
-    wdq: 'http://wdq.wmflabs.org/api'
+    commons: 'http://commons.wikimedia.org'
   };
 
   module.exports = function(domain, queryObj) {
