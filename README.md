@@ -34,7 +34,9 @@ used APIs:
     - [WDQ queries](#wdq-queries)
   - [Other utils](#other-utils)
   - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
-- [Command Line Interface](#cli)
+- [Contributing](#contributing)
+- [See Also](#see-also)
+  - [Command Line Interface tools](#command-line-interface-tools)
 - [License](#license)
 
 # Installation
@@ -485,8 +487,27 @@ breq.get(url)
 
 ```
 
-## CLI
-moved to [wikidata-cli](https://npmjs.com/package/wikidata-cli)
+## Contributing
+Code contributions and propositions are very welcome, here are some design constraints you should be aware of:
+* `wikidata-sdk` should stay "small" and dependency-free, so that a web application can include it in its bundle without paying a too high cost for it.
+* Therefore, it should focus on providing basic, general helper functions most application working with Wikidata would need
+
+## See Also
+
+### Command-Line Interface tools
+
+#### [wikidata-cli](https://www.npmjs.com/package/wikidata-cli)
+the command-line interface to Wikidata
+
+#### [wikidata-filter](https://npmjs.com/package/wikidata-filter)
+a command-line tool to filter a Wikidata dump by claim
+
+#### [wikidata-agent](https://github.com/maxlath/wikidata-agent)
+a small server to edit Wikidata from the terminal:
+`curl -X POST http://localhost:4115/claim -d 'entity=Q4115189&property=P2002&value=Zorg'`
+
+#### [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy)
+command-line tool to extract taxonomies from Wikidata
 
 # License
 [MIT](LICENSE.md)
