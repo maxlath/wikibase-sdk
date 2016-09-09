@@ -7,7 +7,7 @@ wdk.getEntities = require './queries/wikidata_get_entities'
 wdk.getManyEntities = require './queries/wikidata_get_many_entities'
 wdk.getWikidataIdsFromSitelinks = require './queries/get_wikidata_ids_from_sitelinks'
 wdk.sparqlQuery = require './queries/wikidata_sparql_query'
-wdk.getReverseClaims = require './queries/wdq_get_reverse_claims'
+wdk.getReverseClaims = require './queries/get_reverse_claims'
 wdk.parse = require './helpers/parse_responses'
 
 { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require './helpers/simplify_claims'
