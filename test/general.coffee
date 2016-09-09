@@ -21,8 +21,6 @@ describe 'general', ->
     parse.should.be.an.Object()
     parse.wd.should.be.an.Object()
     parse.wd.entities.should.be.an.Function()
-    parse.wdq.should.be.an.Object()
-    parse.wdq.entities.should.be.an.Function()
 
     wdk.getWikidataIdsFromWikipediaTitles.should.be.a.Function()
 
