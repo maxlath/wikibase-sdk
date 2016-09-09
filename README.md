@@ -7,7 +7,6 @@ This library had for primary purpose to serve the needs of the [inventaire](http
 used APIs:
 - [Wikidata API](https://www.wikidata.org/w/api.php)
 - [Wikidata Query](http://query.wikidata.org/) (SPARQL)
-- [WMLabs WDQ](http://wdq.wmflabs.org/api_documentation.html)
 
 # Summary
 - [Installation](#installation)
@@ -31,7 +30,6 @@ used APIs:
         - [simplifyClaim](#simplifyclaim)
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
-    - [WDQ queries](#wdq-queries)
   - [Other utils](#other-utils)
   - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
 - [Contributing](#contributing)
@@ -226,12 +224,9 @@ var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
 
 ### get entities reverse claims
 
-> **/!\ WDQ will be deprecated, use the [SPARQL endpoint](#sparql-queries) instead**
-
 In wikidata API answers, you can only access claims on the entity's page, not claims pointing to this entity (what would be in the "what links here" page).
 
-Fortunatly, you can query wikimedia awesome WDQ tool \o/
-(And now also an even more awesome [SPARQL endpoint](#sparql-queries))
+Fortunatly, we can use the [SPARQL endpoint](#sparql-queries) to get relations the other way around, answering the question "*what are the entities having this value for this property?*". This is `wdk.getReverseClaims``provides
 
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
@@ -243,26 +238,26 @@ and you can then query the obtained entities ids
 
 ```javascript
 request(url, function(err, response){
-  if (err) { dealWithError(err) }
-  var entities = wdk.parse.wdq.entities(response)
+  if (err) return dealWithError(err)
+  var entities = wdk.simplifySparqlResults(response.body)
   var url2 = wdk.getEntities(entities)
   request(url2 ....
 })
 ```
 
-it also work for string values: e.g. let's say you want to find which book as 978-0-465-06710-7 for ISBN-13 ([P212](http://www.wikidata.org/entity/P212)):
+it also work for string values: e.g. let's say you want to find which book as `978-0-465-06710-7` for ISBN-13 ([P212](http://www.wikidata.org/entity/P212)):
 
 ```javascript
 var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
-### sparql queries
+### SPARQL queries
 
-But now, there is even more powerful than WDQ: the all mighty [Wikidata SPARQL endpoint](http://query.wikidata.org/)!
+SPARQL queries are the best way to extract knowledge from Wikidata entities graph.
 
-[SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a [user manual](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual), [an awesome tool to test you queries with autocomplete](https://query.wikidata.org/) and [lots of examples](https://www.mediawiki.org/wiki/Wikibase/Indexing/SPARQL_Query_Examples)!
+[SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a [user manual](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual), [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), a [tutorial](https://www.youtube.com/watch?v=oN5tdMSXWV8), and [lots of examples](https://www.mediawiki.org/wiki/Wikibase/Indexing/SPARQL_Query_Examples)!
 
-Then, to get JSON results you can [make a HTTP query to  https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with Wdk can be done like this:
+Then, to get JSON results you can [make a HTTP query to  https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with `wikidata-sdk` can be done like this:
 ```javascript
 var url = wdk.sparqlQuery(SPARQL)
 ```
@@ -271,9 +266,6 @@ Exemple taken from [inventaire SPARQL queries](https://github.com/inventaire/inv
 ```javascript
 var authorQid = 'Q535'
 var sparql = `
-PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-
 SELECT ?work ?date WHERE {
   ?work wdt:P50 wd:${authorQid} .
   OPTIONAL {
@@ -453,9 +445,6 @@ promiseRequest(url)
 .then(wdk.simplifySparqlResults)
 .then((simplifiedResults) => { // do awesome stuffs here })
 ```
-
-### WDQ queries
-you can pass the results from `wdk.getReverseClaims` to `wdk.parse.wdq.entities`, it will return a list of Wikidata entities `Q` ids
 
 ## Other utils
 
