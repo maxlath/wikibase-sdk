@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 4.0.0 - 2016-09-09
+* Compleltly removed uses and references to wdq:
+  * BREAKING CHANGE: [getReverseClaims](https://github.com/maxlath/wikidata-sdk#get-entities-reverse-claims) now returns a query to the SPARQL endpoint. Its result should thus be parsed with [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk#simplify-sparql-results) instead of `wdk.parse.wdq.entities`. This parser was thus removed.
+
 ## 3.2.0 - 2016-06-06
 * Added [wdk.simplifySparqlResults](https://github.com/maxlath/wikidata-sdk#simplify-sparql-results)
 
