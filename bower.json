@@ -1,6 +1,6 @@
 {
   "name": "wikidata-sdk",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "homepage": "https://github.com/maxlath/wikidata-sdk",
   "authors": [
     "maxlath <k@maxlath.eu>"
@@ -8,7 +8,12 @@
   "description": "a javascript tool suite to query and work with wikidata data",
   "main": "dist/wikidata-sdk.js",
   "keywords": [
-    "wikidata"
+    "wikidata",
+    "sdk",
+    "api",
+    "wdq",
+    "sparql",
+    "wdk"
   ],
   "license": "MIT",
   "ignore": [

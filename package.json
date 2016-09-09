@@ -15,7 +15,9 @@
     "dist": "npm run browserify && npm run minify",
     "browserify": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js",
     "minify": "uglifyjs dist/wikidata-sdk.js -c -m > dist/wikidata-sdk.min.js",
-    "prepublish": "npm run lint && npm run test && npm run build && npm run dist"
+    "prepublish": "npm run lint && npm run test && npm run build && npm run dist",
+    "update-bower": "./scripts/update_bower",
+    "bump-version": "./scripts/bump_version"
   },
   "repository": {
     "type": "git",
@@ -39,9 +41,11 @@
     "browserify": "^13.1.0",
     "coffee-script": "^1.9.3",
     "coffeelint": "^1.10.1",
+    "jsondepth": "^1.3.2",
     "lodash": "^3.10.1",
     "mocha": "^2.2.5",
     "should": "^9.0.0",
     "uglify-js": "^2.4.24"
-  }
+  },
+  "dependencies": {}
 }

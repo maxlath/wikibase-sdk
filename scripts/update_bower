@@ -1,0 +1,16 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+
+{ name, version, description, homepage, keywords, license } = require '../package.json'
+bower = require '../bower.json'
+
+bower.name = name
+bower.version = version
+bower.description = description
+bower.homepage = homepage
+bower.keywords = keywords
+bower.license = license
+
+fs.writeFile './bower.json', JSON.stringify(bower, null, 2), (err, res)->
+  if err then console.error err
+  else console.log 'updated bower.json'
