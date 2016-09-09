@@ -1,7 +1,7 @@
 should = require 'should'
 
 helpers = require '../src/helpers/helpers'
-simplify = require '../src/queries/wikidata_simplify_sparql_results.coffee'
+simplify = require '../src/queries/simplify_sparql_results.coffee'
 
 singleVarData = require './data/single_var_sparql_results.json'
 multiVarsData = require './data/multi_vars_sparql_results.json'

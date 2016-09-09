@@ -1,6 +1,6 @@
 should = require 'should'
 
-getManyEntities = require('../src/queries/wikidata_get_many_entities')
+getManyEntities = require('../src/queries/get_many_entities')
 manyIds = [1..80].map (id)-> "Q#{id}"
 
 describe 'wikidata getManyEntities', ->

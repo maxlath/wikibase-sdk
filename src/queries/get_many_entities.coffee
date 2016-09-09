@@ -1,4 +1,4 @@
-getEntities = require './wikidata_get_entities'
+getEntities = require './get_entities'
 { isPlainObject } = require '../utils/utils'
 
 module.exports = (ids, languages, props, format)->

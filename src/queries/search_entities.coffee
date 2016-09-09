@@ -1,4 +1,3 @@
-wd_ = require '../helpers/helpers'
 buildUrl = require '../utils/build_url'
 { isPlainObject } = require '../utils/utils'
 

@@ -1,6 +1,6 @@
 should = require 'should'
 
-wdSparqlQuery = require('../src/queries/wikidata_sparql_query')
+wdSparqlQuery = require('../src/queries/sparql_query')
 console.log 'wdSparqlQuery', wdSparqlQuery
 
 sparqlExemple = """

@@ -2,11 +2,11 @@ module.exports = wdk = {}
 
 helpers = require './helpers/helpers'
 
-wdk.searchEntities = require './queries/wikidata_search_entities'
-wdk.getEntities = require './queries/wikidata_get_entities'
-wdk.getManyEntities = require './queries/wikidata_get_many_entities'
+wdk.searchEntities = require './queries/search_entities'
+wdk.getEntities = require './queries/get_entities'
+wdk.getManyEntities = require './queries/get_many_entities'
 wdk.getWikidataIdsFromSitelinks = require './queries/get_wikidata_ids_from_sitelinks'
-wdk.sparqlQuery = require './queries/wikidata_sparql_query'
+wdk.sparqlQuery = require './queries/sparql_query'
 wdk.getReverseClaims = require './queries/get_reverse_claims'
 wdk.parse = require './helpers/parse_responses'
 
@@ -15,7 +15,7 @@ wdk.simplifyClaim = simplifyClaim
 wdk.simplifyPropertyClaims = simplifyPropertyClaims
 wdk.simplifyClaims = simplifyClaims
 
-wdk.simplifySparqlResults = require './queries/wikidata_simplify_sparql_results'
+wdk.simplifySparqlResults = require './queries/simplify_sparql_results'
 
 # aliases
 wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks

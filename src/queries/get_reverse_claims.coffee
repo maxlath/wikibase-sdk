@@ -1,8 +1,8 @@
-wd_ = require '../helpers/helpers'
-sparqlQuery = require './wikidata_sparql_query'
+helpers = require '../helpers/helpers'
+sparqlQuery = require './sparql_query'
 
 module.exports = (property, value, limit=1000)->
-  if wd_.isWikidataEntityId(value) then value = "wd:#{value}"
+  if helpers.isWikidataEntityId(value) then value = "wd:#{value}"
   else if typeof value is 'string' then value = "\"#{value}\""
 
   sparql = """

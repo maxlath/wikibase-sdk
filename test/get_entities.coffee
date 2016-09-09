@@ -2,7 +2,7 @@ should = require 'should'
 _ = require 'lodash'
 qs = require 'querystring'
 
-getEntities = require('../src/queries/wikidata_get_entities')
+getEntities = require('../src/queries/get_entities')
 
 describe 'wikidata getEntities', ->
   describe 'polymorphism', ->

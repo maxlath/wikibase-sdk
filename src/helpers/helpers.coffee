@@ -1,38 +1,38 @@
 wikidataTimeToDateObject = require './wikidata_time_to_date_object'
 
-wd_ = {}
-wd_.isNumericId = (id)-> /^[0-9]+$/.test id
-wd_.isWikidataId = (id)-> /^(Q|P)[0-9]+$/.test id
-wd_.isWikidataEntityId = (id)-> /^Q[0-9]+$/.test id
-wd_.isWikidataPropertyId = (id)-> /^P[0-9]+$/.test id
+helpers = {}
+helpers.isNumericId = (id)-> /^[0-9]+$/.test id
+helpers.isWikidataId = (id)-> /^(Q|P)[0-9]+$/.test id
+helpers.isWikidataEntityId = (id)-> /^Q[0-9]+$/.test id
+helpers.isWikidataPropertyId = (id)-> /^P[0-9]+$/.test id
 
-wd_.normalizeId = (id, numericId, type='Q')->
-  if wd_.isNumericId(id)
+helpers.normalizeId = (id, numericId, type='Q')->
+  if helpers.isNumericId(id)
     if numericId then id
     else "#{type}#{id}"
 
-  else if wd_.isWikidataId(id)
+  else if helpers.isWikidataId(id)
     if numericId then id[1..-1]
     else id
 
   else throw new Error 'invalid id'
 
-wd_.getNumericId = (id)->
-  unless wd_.isWikidataId id then throw new Error "invalid wikidata id: #{id}"
+helpers.getNumericId = (id)->
+  unless helpers.isWikidataId id then throw new Error "invalid wikidata id: #{id}"
   return id.replace /Q|P/, ''
 
-wd_.normalizeIds = (ids, numericId, type='Q')->
-  ids.map (id)-> wd_.normalizeId(id, numericId, type)
+helpers.normalizeIds = (ids, numericId, type='Q')->
+  ids.map (id)-> helpers.normalizeId(id, numericId, type)
 
-wd_.wikidataTimeToDateObject = wikidataTimeToDateObject
+helpers.wikidataTimeToDateObject = wikidataTimeToDateObject
 
-wd_.wikidataTimeToEpochTime = (wikidataTime)->
+helpers.wikidataTimeToEpochTime = (wikidataTime)->
   wikidataTimeToDateObject(wikidataTime).getTime()
 
-wd_.wikidataTimeToISOString = (wikidataTime)->
+helpers.wikidataTimeToISOString = (wikidataTime)->
   wikidataTimeToDateObject(wikidataTime).toISOString()
 
 # keeping normalizeWikidataTime as legacy
-wd_.normalizeWikidataTime = wd_.wikidataTimeToEpochTime
+helpers.normalizeWikidataTime = helpers.wikidataTimeToEpochTime
 
-module.exports = wd_
+module.exports = helpers

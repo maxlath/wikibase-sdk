@@ -1,6 +1,6 @@
 # should = require 'should'
 # _ = require 'lodash'
-# wd_ = require '../src/helpers/helpers'
+# helpers = require '../src/helpers/helpers'
 # tolstoiBooks = require './data/P50-Q7243.json'
 
 # parse = require('../src/helpers/parse_responses')

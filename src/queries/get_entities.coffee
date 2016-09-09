@@ -1,4 +1,4 @@
-wd_ = require '../helpers/helpers'
+helpers = require '../helpers/helpers'
 buildUrl = require '../utils/build_url'
 { isPlainObject, forceArray, shortLang } = require '../utils/utils'
 
@@ -20,7 +20,7 @@ module.exports = (ids, languages, props, format)->
   # Properties can be either one property as a string
   # or an array or properties;
   # either case me just want to deal with arrays
-  ids = wd_.normalizeIds forceArray(ids)
+  ids = helpers.normalizeIds forceArray(ids)
   props = forceArray props
 
   query =

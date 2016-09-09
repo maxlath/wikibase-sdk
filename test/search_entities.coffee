@@ -1,6 +1,6 @@
 should = require 'should'
 
-searchEntities = require('../src/queries/wikidata_search_entities')
+searchEntities = require('../src/queries/search_entities')
 
 describe 'wikidata searchEntities', ->
 
