@@ -1,4 +1,4 @@
-A javascript tool-suite to query [Wikidata](http://wikidata.org/), and parse and simplify its results
+A javascript tool-suite to query [Wikidata](http://wikidata.org/) and simplify its results.
 
 [![wikidata](https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/assets/wikidata.jpg)](https://wikidata.org)
 
