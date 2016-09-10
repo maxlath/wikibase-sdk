@@ -1,11 +1,11 @@
 {
   "name": "wikidata-sdk",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "homepage": "https://github.com/maxlath/wikidata-sdk",
   "authors": [
     "maxlath <k@maxlath.eu>"
   ],
-  "description": "a javascript tool suite to query and work with wikidata data",
+  "description": "A javascript tool-suite to query Wikidata and simplify its results",
   "main": "dist/wikidata-sdk.js",
   "keywords": [
     "wikidata",
