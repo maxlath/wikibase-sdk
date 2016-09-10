@@ -1,6 +1,8 @@
-![wikidata](https://pbs.twimg.com/profile_images/2498571390/cizdiwz4oiiq1zae94jp.png)
+A javascript tool-suite to query [Wikidata](http://wikidata.org/), and parse and simplify its results
 
-A javascript tool-suite to query [wikidata](http://wikidata.org/) and handle its results.
+[![wikidata](https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/assets/wikidata.jpg)](https://wikidata.org)
+
+[![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/) [![NPM](https://nodei.co/npm-dl/wikidata-sdk.png?months=6&height=3)](https://npmjs.com/package/wikidata-sdk/)
 
 This library had for primary purpose to serve the needs of the [inventaire](https://github.com/inventaire/inventaire) project but extending its capabilities to other needs it totally possible: feel welcome to post your suggestions as issues or pull requests!
 
