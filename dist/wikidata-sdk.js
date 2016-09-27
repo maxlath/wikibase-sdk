@@ -148,6 +148,8 @@
         return datavalue.value.id;
       case 'time':
         return helpers.normalizeWikidataTime(datavalue.value.time);
+      case 'quantity':
+        return parseFloat(datavalue.value.amount);
       case 'globe-coordinate':
         return getLatLngFromCoordinates(datavalue.value);
       default:
