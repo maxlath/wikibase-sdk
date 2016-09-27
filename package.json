@@ -15,7 +15,7 @@
     "dist": "npm run browserify && npm run minify",
     "browserify": "browserify build/wikidata-sdk.js -s wdk > dist/wikidata-sdk.js",
     "minify": "uglifyjs dist/wikidata-sdk.js -c -m > dist/wikidata-sdk.min.js",
-    "prepublish": "npm run lint && npm run test && npm run build && npm run dist",
+    "prepublish": "./scripts/prepublish",
     "update-bower": "./scripts/update_bower",
     "bump-version": "./scripts/bump_version"
   },

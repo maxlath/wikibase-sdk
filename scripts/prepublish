@@ -1,0 +1,10 @@
+npm run lint &&
+npm run test &&
+npm run build &&
+npm run dist &&
+
+# verify that the build produced no difference
+test "$(git status --porcelain |grep M |wc -l)" == "0" ||
+# otherwise, it's that the version was bumped without updating build & dist before
+echo "Git directory not clean: always manage versions with bump-version script" &&
+exit 1

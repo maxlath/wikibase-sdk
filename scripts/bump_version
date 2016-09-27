@@ -10,6 +10,12 @@ echo "version: $tag"
 echo "updating bower..."
 npm run update-bower
 git add bower.json
+
+echo "updating build & dist..."
+npm run build
+npm run dist
+git add build/helpers/simplify_claims.js dist/wikidata-sdk.js dist/wikidata-sdk.min.js
+
 echo "amending version commit..."
 git commit --amend --no-edit
 # deleting the tag on npm version commit
