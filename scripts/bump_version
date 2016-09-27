@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+[ -z $1 ] && echo "missing version type: major, minor, or patch" && exit 1
+
 # exit if npm version returned nothing on stdout
 echo "npm version $1"
 npm version $1
