@@ -31,7 +31,7 @@ simplifyClaim = (claim)->
   switch datatype
     when 'string', 'commonsMedia', 'url', 'external-id' then return datavalue.value
     when 'monolingualtext' then return datavalue.value.text
-    when 'wikibase-item' then return 'Q' + datavalue.value['numeric-id']
+    when 'wikibase-item', 'wikibase-property' then return datavalue.value.id
     when 'time' then return helpers.normalizeWikidataTime datavalue.value.time
     when 'globe-coordinate' then return getLatLngFromCoordinates datavalue.value
     else return null
