@@ -41,7 +41,8 @@
       case 'monolingualtext':
         return datavalue.value.text;
       case 'wikibase-item':
-        return 'Q' + datavalue.value['numeric-id'];
+      case 'wikibase-property':
+        return datavalue.value.id;
       case 'time':
         return helpers.normalizeWikidataTime(datavalue.value.time);
       case 'globe-coordinate':
