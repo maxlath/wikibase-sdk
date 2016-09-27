@@ -33,6 +33,7 @@ simplifyClaim = (claim)->
     when 'monolingualtext' then return datavalue.value.text
     when 'wikibase-item', 'wikibase-property' then return datavalue.value.id
     when 'time' then return helpers.normalizeWikidataTime datavalue.value.time
+    when 'quantity' then parseFloat datavalue.value.amount
     when 'globe-coordinate' then return getLatLngFromCoordinates datavalue.value
     else return null
 
