@@ -428,7 +428,7 @@ With [SPARQL queries](#sparql-queries), you get results that look like this:
   }
 ]
 ```
-That's style hairy, because we requested 3 variables, but this gets even simpler if there is only one variable!
+That's still hairy, because we requested 3 variables, but this gets even simpler if there is only one variable!
 Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`, the output of `simplifySparqlResults` will be:
 ```json
 ["Q3731207"]
