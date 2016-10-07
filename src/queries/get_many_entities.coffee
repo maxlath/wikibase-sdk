@@ -4,7 +4,7 @@ getEntities = require './get_entities'
 module.exports = (ids, languages, props, format)->
   # polymorphism: arguments can be passed as an object keys
   if isPlainObject ids
-    { ids, languages, props, format } = ids
+    { ids, languages, props, format } = ids
 
   unless ids instanceof Array
     throw new Error "getManyEntities expects an array of ids"

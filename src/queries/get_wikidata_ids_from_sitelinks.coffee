@@ -4,7 +4,7 @@ buildUrl = require '../utils/build_url'
 module.exports = (titles, sites, languages, props, format)->
   # polymorphism: arguments can be passed as an object keys
   if isPlainObject titles
-    { titles, sites, languages, props, format } = titles
+    { titles, sites, languages, props, format } = titles
 
   format or= 'json'
 
