@@ -1,13 +1,15 @@
 helpers = require './helpers'
 
-# expects an entity 'claims' object
+# Expects an entity 'claims' object
+# Ex: entity.claims
 simplifyClaims = (claims)->
   simpleClaims = {}
   for id, propClaims of claims
     simpleClaims[id] = simplifyPropertyClaims propClaims
   return simpleClaims
 
-# expects the 'claims' array of a particular property
+# Expects the 'claims' array of a particular property
+# Ex: entity.claims.P369
 simplifyPropertyClaims = (propClaims)->
   propClaims
   .map simplifyClaim
@@ -15,7 +17,8 @@ simplifyPropertyClaims = (propClaims)->
 
 nonNull = (obj)-> obj?
 
-# expects a single claim object
+# Expects a single claim object
+# Ex: entity.claims.P369[0]
 simplifyClaim = (claim)->
   # tries to replace wikidata deep claim object by a simple value
   # e.g. a string, an entity Qid or an epoch time number
