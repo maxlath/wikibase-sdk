@@ -257,7 +257,7 @@ var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 
 SPARQL queries are the best way to extract knowledge from Wikidata entities graph.
 
-[SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a [user manual](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual), [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), a [tutorial](https://www.youtube.com/watch?v=oN5tdMSXWV8), and [lots of examples](https://www.mediawiki.org/wiki/Wikibase/Indexing/SPARQL_Query_Examples)!
+[SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a super rich [Wikidata Query Help](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Wikidata_Query_Help) page, [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), and [lots of examples](https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:SPARQL_query_service/queries/examples)!
 
 Then, to get JSON results you can [make a HTTP query to  https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with `wikidata-sdk` can be done like this:
 ```javascript
@@ -441,7 +441,7 @@ var simplifiedResults = wdk.simplifySparqlResults(results)
 ```
 or for a more complete example (using [promises](https://www.promisejs.org))
 ```javascript
-// see the "SPARQL Query" section above
+// see the "SPARQL Query" section above
 var url = wdk.sparqlQuery(SPARQL)
 promiseRequest(url)
 .then(wdk.simplifySparqlResults)
