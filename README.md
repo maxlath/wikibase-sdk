@@ -4,40 +4,50 @@ A javascript tool-suite to query [Wikidata](http://wikidata.org/) and simplify i
 
 [![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/) [![NPM](https://nodei.co/npm-dl/wikidata-sdk.png?months=6&height=3)](https://npmjs.com/package/wikidata-sdk/)
 
-This library had for primary purpose to serve the needs of the [inventaire](https://github.com/inventaire/inventaire) project but extending its capabilities to other needs it totally possible: feel welcome to post your suggestions as issues or pull requests!
+This library had for primary purpose to serve the needs of the [inventaire](https://github.com/inventaire/inventaire) project but extending its capabilities to other needs it totally possible: feel welcome to post your suggestions as issues or pull requests! See the [Contributing](#contributing) section for design constraints.
 
 used APIs:
 - [Wikidata API](https://www.wikidata.org/w/api.php)
 - [Wikidata Query](http://query.wikidata.org/) (SPARQL)
 
 # Summary
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
 - [Installation](#installation)
   - [via NPM](#via-npm)
   - [via Bower](#via-bower)
   - [The Old Way](#the-old-way)
 - [How-to](#how-to)
-  - [Build queries urls to:](#build-queries-urls-to)
+  - [Build queries urls to](#build-queries-urls-to)
     - [search in wikidata entities](#search-in-wikidata-entities)
     - [get entities by id](#get-entities-by-id)
     - [get many entities by id](#get-many-entities-by-id)
-    - [get entities from Wikipedia titles](#get-entities-by-wikipedia-titles)
-    - [get entities from any Wikimedia project titles](#get-entities-by-other-wikimedia-projects-titles)
+    - [get entities by Wikipedia titles](#get-entities-by-wikipedia-titles)
+    - [get entities by other Wikimedia projects titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
-    - [sparql queries](#sparql-queries)
+    - [SPARQL queries](#sparql-queries)
   - [Results parsers](#results-parsers)
     - [Wikidata API queries](#wikidata-api-queries)
-      - [simplify claims results](#simplify-claims-results)
+      - [Simplify claims results](#simplify-claims-results)
         - [simplifyClaims](#simplifyclaims)
         - [simplifyPropertyClaims](#simplifypropertyclaims)
         - [simplifyClaim](#simplifyclaim)
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
   - [Other utils](#other-utils)
-  - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
-- [Contributing](#contributing)
-- [See Also](#see-also)
-  - [Command Line Interface tools](#command-line-interface-tools)
+    - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
+  - [Contributing](#contributing)
+  - [See Also](#see-also)
+    - [Command-Line Interface tools](#command-line-interface-tools)
+      - [wikidata-cli](#wikidata-cli)
+      - [wikidata-filter](#wikidata-filter)
+      - [wikidata-agent](#wikidata-agent)
+      - [wikidata-taxonomy](#wikidata-taxonomy)
 - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Installation
 
