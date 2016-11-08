@@ -523,6 +523,24 @@
         ]
     },
     "claims": {
+        "P123456789": [
+            {
+                "mainsnak": {
+                    "comment": "THIS IS A FAKE CLAIM TO TEST PROPERTY VALUES",
+                    "snaktype": "value",
+                    "property": "P123456789",
+                    "datavalue": {
+                        "value": {
+                            "entity-type": "property",
+                            "numeric-id": 207614,
+                            "id": "P207614"
+                        },
+                        "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-property"
+                }
+            }
+        ],
         "P190": [
             {
                 "mainsnak": {

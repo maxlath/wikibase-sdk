@@ -2,24 +2,25 @@ helpers = require './helpers'
 
 # Expects an entity 'claims' object
 # Ex: entity.claims
-simplifyClaims = (claims)->
+simplifyClaims = (claims, entityPrefix, propertyPrefix)->
   simpleClaims = {}
   for id, propClaims of claims
-    simpleClaims[id] = simplifyPropertyClaims propClaims
+    if propertyPrefix then id = "#{propertyPrefix}:#{id}"
+    simpleClaims[id] = simplifyPropertyClaims propClaims, entityPrefix, propertyPrefix
   return simpleClaims
 
 # Expects the 'claims' array of a particular property
 # Ex: entity.claims.P369
-simplifyPropertyClaims = (propClaims)->
+simplifyPropertyClaims = (propClaims, entityPrefix, propertyPrefix)->
   propClaims
-  .map simplifyClaim
+  .map (claim)-> simplifyClaim claim, entityPrefix, propertyPrefix
   .filter nonNull
 
 nonNull = (obj)-> obj?
 
 # Expects a single claim object
 # Ex: entity.claims.P369[0]
-simplifyClaim = (claim)->
+simplifyClaim = (claim, entityPrefix, propertyPrefix)->
   # tries to replace wikidata deep claim object by a simple value
   # e.g. a string, an entity Qid or an epoch time number
   { mainsnak } = claim
@@ -32,13 +33,18 @@ simplifyClaim = (claim)->
   unless datavalue? then return null
 
   switch datatype
-    when 'string', 'commonsMedia', 'url', 'external-id' then return datavalue.value
-    when 'monolingualtext' then return datavalue.value.text
-    when 'wikibase-item', 'wikibase-property' then return datavalue.value.id
-    when 'time' then return helpers.normalizeWikidataTime datavalue.value.time
+    when 'string', 'commonsMedia', 'url', 'external-id' then datavalue.value
+    when 'monolingualtext' then datavalue.value.text
+    when 'wikibase-item' then prefixedId datavalue, entityPrefix
+    when 'wikibase-property' then prefixedId datavalue, propertyPrefix
+    when 'time' then helpers.normalizeWikidataTime datavalue.value.time
     when 'quantity' then parseFloat datavalue.value.amount
-    when 'globe-coordinate' then return getLatLngFromCoordinates datavalue.value
-    else return null
+    when 'globe-coordinate' then getLatLngFromCoordinates datavalue.value
+    else null
+
+prefixedId = (datavalue, prefix)->
+  { id } = datavalue.value
+  if typeof prefix is 'string' then "#{prefix}:#{id}" else id
 
 getLatLngFromCoordinates = (value)->
   { latitude, longitude } = value

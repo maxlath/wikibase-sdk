@@ -36,6 +36,21 @@ describe 'simplifyClaims', ->
       v.should.be.an.Array()
     done()
 
+  it 'should pass entity and property prefixes down', (done)->
+    simplified = simplifyClaims Q2112.claims, 'wd'
+    simplified.P190[0].should.equal 'wd:Q207614'
+    simplified = simplifyClaims Q2112.claims, null, 'wdt'
+    simplified['wdt:P123456789'][0].should.equal 'wdt:P207614'
+    done()
+
+  it 'should return prefixed properties if passed a property prefix', (done)->
+    simplified = simplifyClaims Q2112.claims, 'wd', 'wdt'
+    simplified['wdt:P190'].should.be.an.Array()
+    simplified['wdt:P190'][0].should.equal 'wd:Q207614'
+    simplified = simplifyClaims Q2112.claims, null, 'wdt'
+    simplified['wdt:P123456789'][0].should.equal 'wdt:P207614'
+    done()
+
 describe 'simplifyPropertyClaims', ->
   it 'should return an arrays', (done)->
     simplified = simplifyPropertyClaims Q571.claims.P487
@@ -47,6 +62,13 @@ describe 'simplifyPropertyClaims', ->
     # Q22002395 P50 has 2 values with "snaktype": "somevalue"
     # that should be removed
     _.all(simplified, (qid)-> qid?).should.equal true
+    done()
+
+  it 'should pass entity and property prefixes down', (done)->
+    simplified = simplifyPropertyClaims Q2112.claims.P190, 'wd'
+    simplified[0].should.equal 'wd:Q207614'
+    simplified = simplifyPropertyClaims Q2112.claims.P123456789, null, 'wdt'
+    simplified[0].should.equal 'wdt:P207614'
     done()
 
 describe 'simplifyClaim', ->
@@ -73,4 +95,28 @@ describe 'simplifyClaim', ->
     simplified.should.be.an.Array()
     simplified[0].should.equal 52.016666666667
     simplified[1].should.equal 8.5166666666667
+    done()
+
+  it 'should return prefixed entity ids if passed an entity prefix', (done)->
+    simplified = simplifyClaim Q2112.claims.P190[0]
+    simplified.should.equal 'Q207614'
+    simplified = simplifyClaim Q2112.claims.P190[0], 'wd'
+    simplified.should.equal 'wd:Q207614'
+    simplified = simplifyClaim Q2112.claims.P190[0], 'wd:'
+    simplified.should.equal 'wd::Q207614'
+    simplified = simplifyClaim Q2112.claims.P190[0], 'wdbla'
+    simplified.should.equal 'wdbla:Q207614'
+    done()
+
+  it 'should return prefixed property ids if passed a property prefix', (done)->
+    simplified = simplifyClaim Q2112.claims.P123456789[0]
+    simplified.should.equal 'P207614'
+    simplified = simplifyClaim Q2112.claims.P123456789[0], null
+    simplified.should.equal 'P207614'
+    simplified = simplifyClaim Q2112.claims.P123456789[0], null, 'wdt'
+    simplified.should.equal 'wdt:P207614'
+    simplified = simplifyClaim Q2112.claims.P123456789[0], null, 'wdt:'
+    simplified.should.equal 'wdt::P207614'
+    simplified = simplifyClaim Q2112.claims.P123456789[0], null, 'wdtbla'
+    simplified.should.equal 'wdtbla:P207614'
     done()

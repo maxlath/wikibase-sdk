@@ -34,6 +34,7 @@ used APIs:
         - [simplifyClaims](#simplifyclaims)
         - [simplifyPropertyClaims](#simplifypropertyclaims)
         - [simplifyClaim](#simplifyclaim)
+        - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
   - [Other utils](#other-utils)
@@ -395,6 +396,21 @@ var simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
 Same as simplifyClaims but expects a unique claim
 ```javascript
 var simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
+```
+
+##### Add prefixes to entities and properties ids
+It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by passing an entity prefix and/or a property prefix as 2nd and 3rd arguments of any claim simplification function:
+```javascript
+var entityPrefix = 'wd'
+var propertyPrefix = 'wdt'
+wdk.simplifyClaims(entity.claims, entityPrefix, propertyPrefix)
+wdk.simplifyPropertyClaims(entity.claims.P31, entityPrefix, propertyPrefix)
+wdk.simplifyClaim(entity.claims.P31[0], entityPrefix, propertyPrefix)
+```
+Results would then look something like
+```{
+  "wdt:P279": [ "wd:Q340169", "wd:Q2342494", "wd:Q386724" ]
+}
 ```
 
 ### Wikidata Query (SPARQL) results
