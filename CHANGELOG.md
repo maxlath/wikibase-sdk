@@ -1,8 +1,11 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 4.1.0 - 2016-11-08
+* [Simplify claims functions](https://github.com/maxlath/wikidata-sdk#simplify-claims-results) now each accept a 2nd and 3rd optional arguments to [specify entity and property id prefixes](https://github.com/maxlath/wikidata-sdk#add-prefixes-to-entities-and-properties-ids)
+
 ## 4.0.0 - 2016-09-09
-* Compleltly removed uses and references to wdq:
+* Completly removed uses and references to wdq:
   * BREAKING CHANGE: [getReverseClaims](https://github.com/maxlath/wikidata-sdk#get-entities-reverse-claims) now returns a query to the SPARQL endpoint. Its result should thus be parsed with [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk#simplify-sparql-results) instead of `wdk.parse.wdq.entities`. This parser was thus removed.
 
 ## 3.2.0 - 2016-06-06
