@@ -53,40 +53,55 @@ used APIs:
 # Installation
 
 ## via NPM
-  in a terminal at your project root:
+in a terminal at your project root:
 
-  ```bash
-  npm install wikidata-sdk --save
-  ```
+```sh
+npm install wikidata-sdk --save
+```
 
-  then in your javascript project:
-  ```javascript
-  var wdk = require('wikidata-sdk')
-  ```
+then in your javascript project:
+```javascript
+var wdk = require('wikidata-sdk')
+```
 
 ## via Bower
-  in a terminal at your project root:
-  ```bash
-  bower install wikidata-sdk --save
-  ```
+in a terminal at your project root:
+```sh
+bower install wikidata-sdk --save
+```
 
-  then, in your project, include either
-  ```
-  /bower_components/wikidata-sdk/dist/wikidata-sdk.js
-  ```
-  or
-  ```
-  /bower_components/wikidata-sdk/dist/wikidata-sdk.min.js
-  ```
+then, in your project, include either
+```
+/bower_components/wikidata-sdk/dist/wikidata-sdk.js
+```
+or
+```
+/bower_components/wikidata-sdk/dist/wikidata-sdk.min.js
+```
 
-  this will create a global object named `wdk` (in a browser, accessible at `window.wdk`)
-
+this will create a global object named `wdk` (in a browser, accessible at `window.wdk`)
 
 ## The Old Way
 
-  Just download the raw package from this repository or, even more lazy, include a `<script src="https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/dist/wikidata-sdk.min.js"></script>` in your html to get wdk from github.
+Just download the raw package from this repository:
+```sh
+cd /path/to/project
+wget https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/dist/wikidata-sdk.js
+```
+and then in your HTML:
+```html
+<script src="/wikidata-sdk.min.js"></script>
+```
+This will create a global object named `wdk`.
 
-  In either case, this will create a global object named `wdk` (in a browser, accessible at `window.wdk`)
+**Tip**: to work, this requires having a file server running at your project's root.
+The simplest form of such a server can be:
+```sh
+cd /path/to/project
+python -m SimpleHTTPServer
+```
+or, if you have NodeJS and NPM installed, you can use the awesome [live-server](https://github.com/tapio/live-server)
+
 
 # How-to
 
