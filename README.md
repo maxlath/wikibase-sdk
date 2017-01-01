@@ -38,7 +38,7 @@ used APIs:
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
   - [Other utils](#other-utils)
-    - [A little CoffeeScript / Promises workflow demo](#a-little-coffeescript--promises-workflow-demo)
+    - [A little Promises workflow demo](#a-little-promises-workflow-demo)
   - [Contributing](#contributing)
   - [See Also](#see-also)
     - [Command-Line Interface tools](#command-line-interface-tools)
@@ -74,7 +74,7 @@ then, in your project, include either
 ```
 /bower_components/wikidata-sdk/dist/wikidata-sdk.js
 ```
-or
+or use the minified version
 ```
 /bower_components/wikidata-sdk/dist/wikidata-sdk.min.js
 ```
@@ -504,19 +504,18 @@ promiseRequest(url)
 - normalizeWikidataTime (aliased to wikidataTimeToEpochTime)
 
 
-### A little [CoffeeScript](coffeescript.org) / [Promises](https://www.promisejs.org) workflow demo
+### A little [Promises](https://www.promisejs.org) workflow demo
 that's how I love to work :)
 
-```coffeescript
-breq = require 'bluereq' # a little request lib returning bluebird-based promises
-
-ids = ['Q647268', 'Q771376', 'Q860998', 'Q965704']
-url = wdk.getEntities ids, user.language
+```js
+// a little request lib returning bluebird-based promises
+const breq = require 'bluereq'
+const ids = ['Q647268', 'Q771376', 'Q860998', 'Q965704']
+const url = wdk.getEntities(ids, user.language)
 
 breq.get(url)
-.then wdk.parse.wd.entities
-.then (entities)-> # do useful stuff with those entities data
-
+.then(wdk.parse.wd.entities)
+.then((entities) => //do your thing with those entities data)
 ```
 
 ## Contributing
