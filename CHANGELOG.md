@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 4.2.0 - 2017-01-02
+* Added the option to [keep qualifiers](https://github.com/maxlath/wikidata-sdk#keep-qualifiers) to simplifyClaims functions
+
 ## 4.1.0 - 2016-11-08
 * [Simplify claims functions](https://github.com/maxlath/wikidata-sdk#simplify-claims-results) now each accept a 2nd and 3rd optional arguments to [specify entity and property id prefixes](https://github.com/maxlath/wikidata-sdk#add-prefixes-to-entities-and-properties-ids)
 
