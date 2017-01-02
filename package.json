@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha",
     "test-watch": "mocha --watch",
-    "lint": "standard ./lib,./test",
+    "lint": "standard",
     "build": "browserify lib/index.js -s wdk -o dist/wikidata-sdk.js -t [ babelify --presets [ es2015 ] ]",
     "minify": "uglifyjs dist/wikidata-sdk.js -c -m > dist/wikidata-sdk.min.js",
     "dist": "npm run build && npm run minify",
@@ -50,5 +50,10 @@
     "standard": "^8.6.0",
     "uglify-js": "^2.4.24"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
+  }
 }
