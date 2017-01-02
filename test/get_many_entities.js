@@ -1,4 +1,5 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 const _ = require('lodash')
 
 const getManyEntities = require('../lib/queries/get_many_entities')
@@ -9,7 +10,7 @@ describe('wikidata getManyEntities', function () {
     it('should return an array of urls', function (done) {
       const urls = getManyEntities(manyIds, 'fr', 'info', 'json')
       urls.should.be.an.Array()
-      urls.forEach((url) => /^https/.test(url).should.be.true() )
+      urls.forEach((url) => /^https/.test(url).should.be.true())
       done()
     })
   })

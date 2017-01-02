@@ -1,12 +1,12 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 
-searchEntities = require('../lib/queries/search_entities')
+const searchEntities = require('../lib/queries/search_entities')
 
 describe('wikidata searchEntities', function () {
-
   describe('action', function () {
     it('action should be wbsearchentities', function (done) {
-const       url = searchEntities('Ingmar Bergman')
+      const url = searchEntities('Ingmar Bergman')
       url.should.match(new RegExp('action=wbsearchentities'))
       done()
     })

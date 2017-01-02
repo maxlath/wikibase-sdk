@@ -1,4 +1,5 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 const wdk = require('../lib/index')
 
 describe('general', function () {

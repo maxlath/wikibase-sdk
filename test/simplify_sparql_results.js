@@ -1,4 +1,5 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 
 const helpers = require('../lib/helpers/helpers')
 const simplify = require('../lib/queries/simplify_sparql_results')

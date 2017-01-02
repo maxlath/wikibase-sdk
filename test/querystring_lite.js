@@ -1,4 +1,5 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 
 const qsLite = require('../lib/utils/querystring_lite')
 
@@ -15,7 +16,7 @@ describe('qsLite', function () {
         name: 'Bond',
         drink: 'martini'
       }
-      qstring = qsLite.stringify(query)
+      const qstring = qsLite.stringify(query)
       qstring.should.be.a.String()
       qstring.should.be.equal('name=Bond&drink=martini')
       done()

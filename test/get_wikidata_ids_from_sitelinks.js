@@ -1,5 +1,5 @@
-const should = require('should')
-const _ = require('lodash')
+/* eslint-env mocha */
+require('should')
 const qs = require('querystring')
 const getIds = require('../lib/queries/get_wikidata_ids_from_sitelinks')
 
@@ -93,7 +93,7 @@ describe('wikidata getWikidataIdsFromSitelinks', function () {
   })
 
   describe('languages', function () {
-    it("default to no language parameter", function (done) {
+    it('default to no language parameter', function (done) {
       const url = getIds('Lyon')
       url.should.equal(getIds({titles: 'Lyon'}))
       url.should.not.match(new RegExp('languages'))

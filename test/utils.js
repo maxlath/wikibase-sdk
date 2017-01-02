@@ -1,10 +1,10 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 
 const utils = require('../lib/utils/utils')
 
 describe('utils', function () {
   describe('isPlainObject', function () {
-
     it('should return true for plain objects', function (done) {
       utils.isPlainObject({}).should.equal(true)
       utils.isPlainObject({a: 1, b: 2}).should.equal(true)

@@ -1,4 +1,5 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 
 const wdSparqlQuery = require('../lib/queries/sparql_query')
 console.log('wdSparqlQuery', wdSparqlQuery)
@@ -33,7 +34,7 @@ describe('wdSparqlQuery', function () {
   it('should return a url', function (done) {
     const url = wdSparqlQuery(sparqlExemple)
     url.should.be.a.String()
-    url.should.match(new RegExp('https\:\/\/'))
+    url.should.match(new RegExp('https://'))
     done()
   })
 })

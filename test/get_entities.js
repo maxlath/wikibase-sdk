@@ -1,5 +1,5 @@
-const should = require('should')
-const _ = require('lodash')
+/* eslint-env mocha */
+require('should')
 const qs = require('querystring')
 
 const getEntities = require('../lib/queries/get_entities')
@@ -17,11 +17,11 @@ describe('wikidata getEntities', function () {
 
     it('accepts parameters as a unique object argument', function (done) {
       const url = getEntities({
-          ids: 'Q1',
-          languages: 'fr',
-          props: 'info',
-          format: 'json'
-        })
+        ids: 'Q1',
+        languages: 'fr',
+        props: 'info',
+        format: 'json'
+      })
 
       url.split('&ids=Q1').length.should.equal(2)
       url.split('&languages=fr').length.should.equal(2)
@@ -64,7 +64,7 @@ describe('wikidata getEntities', function () {
     })
   })
   describe('languages', function () {
-    it("default to no language parameter", function (done) {
+    it('default to no language parameter', function (done) {
       const url = getEntities('Q535')
       url.should.equal(getEntities({ids: 'Q535'}))
       url.should.not.match(new RegExp('languages'))

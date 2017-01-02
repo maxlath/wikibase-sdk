@@ -1,4 +1,5 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 
 const helpers = require('../lib/helpers/helpers')
 
@@ -56,7 +57,6 @@ describe('helpers', function () {
       done()
     })
   })
-
 
   const ISOtime = '2014-05-14T00:00:00.000Z'
   const wdTime = '+2014-05-14T00:00:00Z'

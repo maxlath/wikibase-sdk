@@ -1,4 +1,5 @@
-const should = require('should')
+/* eslint-env mocha */
+require('should')
 const _ = require('lodash')
 const Q571 = require('./data/Q571.json')
 const Q646148 = require('./data/Q646148.json')
@@ -82,7 +83,6 @@ describe('simplifyClaims', function () {
     simplifiedWithQualifiers['wdt:P39'][1].qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
     done()
   })
-
 })
 
 describe('simplifyPropertyClaims', function () {
