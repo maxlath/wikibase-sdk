@@ -428,6 +428,36 @@ Results would then look something like
 }
 ```
 
+##### Keep qualifiers
+You can keep qualifiers by passing `true` as 4th arguments of any claim simplification function:
+```javascript
+wdk.simplifyClaims(entity.claims, null, null, true)
+wdk.simplifyPropertyClaims(entity.claims.P50, null, null, true)
+wdk.simplifyClaim(entity.claims.P50[0], null, null, true)
+```
+Results would then look something like
+```{
+  "P50": [
+    { "value": "Q5111731", "qualifiers": {
+        "P1545": [ "17" ],
+        "P1416": [ "Q1341845" ]
+    } },
+    { "value": "Q20895241", "qualifiers": {
+        "P1545": [ "8" ],
+        "P1416": [ "Q19845644" ]
+    } },
+    { "value": "Q27863244", "qualifiers": {
+        "P1545": [ "7" ],
+        "P1416": [ "Q678765" ]
+    } },
+    { "value": "Q27887604", "qualifiers": {
+        "P1545": [ "10" ],
+        "P1416": [ "Q640694" ]
+    } },
+  ]
+}
+```
+
 ### Wikidata Query (SPARQL) results
 #### simplify sparql results
 With [SPARQL queries](#sparql-queries), you get results that look like this:
