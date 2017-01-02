@@ -57,6 +57,23 @@ describe('simplifyClaims', function () {
     simplified2['wdt:P123456789'][0].should.equal('wdt:P207614')
     done()
   })
+
+  it('should return the correct value when called with keepQualifiers=true', function (done) {
+    const simplified = simplifyClaims(Q571.claims)
+    const simplifiedWithQualifiers = simplifyClaims(Q571.claims, null, null, true)
+    for (let property in simplifiedWithQualifiers) {
+      let propertyValues = simplifiedWithQualifiers[property]
+      propertyValues.should.be.an.Array()
+      for (let index in propertyValues) {
+        let valueObj = propertyValues[index]
+        valueObj.should.be.an.Object()
+        let value = simplified[property][index]
+        valueObj.value.should.equal(value)
+        valueObj.qualifiers.should.be.an.Object()
+      }
+    }
+    done()
+  })
 })
 
 describe('simplifyPropertyClaims', function () {
@@ -79,6 +96,20 @@ describe('simplifyPropertyClaims', function () {
     simplified[0].should.equal('wd:Q207614')
     const simplified2 = simplifyPropertyClaims(Q2112.claims.P123456789, null, 'wdt')
     simplified2[0].should.equal('wdt:P207614')
+    done()
+  })
+
+  it('should return the correct value when called with keepQualifiers=true', function (done) {
+    const simplified = simplifyPropertyClaims(Q571.claims.P279)
+    const simplifiedWithQualifiers = simplifyPropertyClaims(Q571.claims.P279, null, null, true)
+    simplifiedWithQualifiers.should.be.an.Array()
+    for (let index in simplifiedWithQualifiers) {
+      let valueObj = simplifiedWithQualifiers[index]
+      valueObj.should.be.an.Object()
+      let value = simplified[index]
+      valueObj.value.should.equal(value)
+      valueObj.qualifiers.should.be.an.Object()
+    }
     done()
   })
 })
@@ -138,4 +169,22 @@ describe('simplifyClaim', function () {
     simplified5.should.equal('wdtbla:P207614')
     done()
   })
+
+  it('should return the correct value when called with keepQualifiers=true', function (done) {
+    const simplified = simplifyClaim(Q571.claims.P279[0])
+    const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P279[0], null, null, true)
+    simplifiedWithQualifiers.value.should.equal(simplified)
+    simplifiedWithQualifiers.qualifiers.should.be.an.Object()
+    done()
+  })
+
+  it('should include qualifiers when called with keepQualifiers=true', function (done) {
+    const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], null, null, true)
+    simplifiedWithQualifiers.qualifiers.P973.should.be.an.Array()
+    simplifiedWithQualifiers.qualifiers.P973[0].should.equal('http://mappings.dbpedia.org/index.php/OntologyClass:Book')
+    simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+    simplifiedWithQualifiers.qualifiers.P813[0].should.equal(1433980800000)
+    done()
+  })
+
 })
