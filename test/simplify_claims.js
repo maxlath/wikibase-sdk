@@ -72,8 +72,7 @@ describe('simplifyClaims', function () {
     for (let property in simplifiedWithQualifiers) {
       let propertyValues = simplifiedWithQualifiers[property]
       propertyValues.should.be.an.Array()
-      for (let index in propertyValues) {
-        let valueObj = propertyValues[index]
+      for (let [index, valueObj] of propertyValues.entries()) {
         valueObj.should.be.an.Object()
         let value = simplified[property][index]
         valueObj.value.should.equal(value)
@@ -125,8 +124,7 @@ describe('simplifyPropertyClaims', function () {
     const simplified = simplifyPropertyClaims(Q571.claims.P279)
     const simplifiedWithQualifiers = simplifyPropertyClaims(Q571.claims.P279, null, null, true)
     simplifiedWithQualifiers.should.be.an.Array()
-    for (let index in simplifiedWithQualifiers) {
-      let valueObj = simplifiedWithQualifiers[index]
+    for (let [index, valueObj] of simplifiedWithQualifiers.entries()) {
       valueObj.should.be.an.Object()
       let value = simplified[index]
       valueObj.value.should.equal(value)
