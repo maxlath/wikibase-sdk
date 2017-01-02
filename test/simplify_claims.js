@@ -27,6 +27,13 @@ describe('simplifyClaims', function () {
     done()
   })
 
+  it('should not mutate the original object', function (done) {
+    const simplified = simplifyClaims(Q571.claims)
+    simplified.should.not.equal(Q571.claims)
+    simplified.P487.should.not.equal(Q571.claims.P487)
+    done()
+  })
+
   it('should return an object of same length', function (done) {
     const originalLength = Object.keys(Q571.claims).length
     const simplified = simplifyClaims(Q571.claims)
@@ -89,6 +96,13 @@ describe('simplifyPropertyClaims', function () {
   it('should return an arrays', function (done) {
     const simplified = simplifyPropertyClaims(Q571.claims.P487)
     simplified.should.be.an.Array()
+    done()
+  })
+
+  it('should not mutate the original array', function (done) {
+    const simplified = simplifyPropertyClaims(Q571.claims.P487)
+    simplified.should.not.equal(Q571.claims.P487)
+    simplified[0].should.not.equal(Q571.claims.P487[0])
     done()
   })
 
