@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 
 const wdSparqlQuery = require('../lib/queries/sparql_query')

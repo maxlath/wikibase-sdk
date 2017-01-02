@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 const qs = require('querystring')
 const getIds = require('../lib/queries/get_wikidata_ids_from_sitelinks')

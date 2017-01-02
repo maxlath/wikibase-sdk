@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 
 const helpers = require('../lib/helpers/helpers')

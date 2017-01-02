@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 
 const qsLite = require('../lib/utils/querystring_lite')

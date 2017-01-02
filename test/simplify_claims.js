@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 const _ = require('lodash')
 const Q571 = require('./data/Q571.json')

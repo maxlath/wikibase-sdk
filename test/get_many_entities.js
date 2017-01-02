@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 const _ = require('lodash')
 

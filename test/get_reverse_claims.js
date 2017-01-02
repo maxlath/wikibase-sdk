@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 
 const getReverseClaims = require('../lib/queries/get_reverse_claims')

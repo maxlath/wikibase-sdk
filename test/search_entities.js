@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 
 const searchEntities = require('../lib/queries/search_entities')

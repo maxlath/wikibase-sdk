@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 require('should')
 
 const utils = require('../lib/utils/utils')
