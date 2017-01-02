@@ -436,24 +436,21 @@ wdk.simplifyPropertyClaims(entity.claims.P50, null, null, true)
 wdk.simplifyClaim(entity.claims.P50[0], null, null, true)
 ```
 Results would then look something like
-```{
+```json
+{
   "P50": [
-    { "value": "Q5111731", "qualifiers": {
-        "P1545": [ "17" ],
-        "P1416": [ "Q1341845" ]
-    } },
-    { "value": "Q20895241", "qualifiers": {
-        "P1545": [ "8" ],
-        "P1416": [ "Q19845644" ]
-    } },
-    { "value": "Q27863244", "qualifiers": {
-        "P1545": [ "7" ],
-        "P1416": [ "Q678765" ]
-    } },
-    { "value": "Q27887604", "qualifiers": {
-        "P1545": [ "10" ],
-        "P1416": [ "Q640694" ]
-    } },
+    {
+      "value": "Q5111731",
+      "qualifiers": { "P1545": ["17"], "P1416": ["Q1341845"]} } ,
+    {
+      "value": "Q20895241",
+      "qualifiers": { "P1545": ["8"]," P1416": ["Q19845644"]} } ,
+    {
+      "value": "Q27863244",
+      "qualifiers": { "P1545": ["7"]," P1416": ["Q678765"]} } ,
+    {
+      "value": "Q27887604",
+      "qualifiers": { "P1545": ["10"], "P1416": ["Q640694"] } }
   ]
 }
 ```
