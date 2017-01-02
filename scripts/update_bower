@@ -17,4 +17,4 @@ fs.writeFile('./bower.json', JSON.stringify(bower, null, 2), function (err, res)
   } else {
     console.log('updated bower.json')
   }
-}
+})
