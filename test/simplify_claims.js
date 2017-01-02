@@ -1,6 +1,7 @@
 const should = require('should')
 const _ = require('lodash')
 const Q571 = require('./data/Q571.json')
+const Q646148 = require('./data/Q646148.json')
 const Q4132785 = require('./data/Q4132785.json')
 const Q328212 = require('./data/Q328212.json')
 const Q22002395 = require('./data/Q22002395.json')
@@ -74,6 +75,14 @@ describe('simplifyClaims', function () {
     }
     done()
   })
+
+  it('should include prefixes in qualifiers claims', function (done) {
+    const simplifiedWithQualifiers = simplifyClaims(Q646148.claims, 'wd', 'wdt', true)
+    simplifiedWithQualifiers['wdt:P39'][1].qualifiers['wdt:P1365'].should.be.an.Array()
+    simplifiedWithQualifiers['wdt:P39'][1].qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
+    done()
+  })
+
 })
 
 describe('simplifyPropertyClaims', function () {
@@ -110,6 +119,13 @@ describe('simplifyPropertyClaims', function () {
       valueObj.value.should.equal(value)
       valueObj.qualifiers.should.be.an.Object()
     }
+    done()
+  })
+
+  it('should include prefixes in qualifiers claims', function (done) {
+    const simplifiedWithQualifiers = simplifyPropertyClaims(Q646148.claims.P39, 'wd', 'wdt', true)
+    simplifiedWithQualifiers[1].qualifiers['wdt:P1365'].should.be.an.Array()
+    simplifiedWithQualifiers[1].qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
     done()
   })
 })
@@ -187,4 +203,10 @@ describe('simplifyClaim', function () {
     done()
   })
 
+  it('should include prefixes in qualifiers claims', function (done) {
+    const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], 'wd', 'wdt', true)
+    simplifiedWithQualifiers.qualifiers['wdt:P1365'].should.be.an.Array()
+    simplifiedWithQualifiers.qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
+    done()
+  })
 })
