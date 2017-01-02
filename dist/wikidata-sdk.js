@@ -89,23 +89,23 @@ var helpers = require('./helpers');
 
 // Expects an entity 'claims' object
 // Ex: entity.claims
-var simplifyClaims = function simplifyClaims(claims, entityPrefix, propertyPrefix) {
+var simplifyClaims = function simplifyClaims(claims, entityPrefix, propertyPrefix, keepQualifiers) {
   var simpleClaims = {};
   for (var id in claims) {
     var propClaims = claims[id];
     if (propertyPrefix) {
       id = propertyPrefix + ':' + id;
     }
-    simpleClaims[id] = simplifyPropertyClaims(propClaims, entityPrefix, propertyPrefix);
+    simpleClaims[id] = simplifyPropertyClaims(propClaims, entityPrefix, propertyPrefix, keepQualifiers);
   }
   return simpleClaims;
 };
 
 // Expects the 'claims' array of a particular property
 // Ex: entity.claims.P369
-var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims, entityPrefix, propertyPrefix) {
+var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims, entityPrefix, propertyPrefix, keepQualifiers) {
   return propClaims.map(function (claim) {
-    return simplifyClaim(claim, entityPrefix, propertyPrefix);
+    return simplifyClaim(claim, entityPrefix, propertyPrefix, keepQualifiers);
   }).filter(nonNull);
 };
 
@@ -115,10 +115,11 @@ var nonNull = function nonNull(obj) {
 
 // Expects a single claim object
 // Ex: entity.claims.P369[0]
-var simplifyClaim = function simplifyClaim(claim, entityPrefix, propertyPrefix) {
+var simplifyClaim = function simplifyClaim(claim, entityPrefix, propertyPrefix, keepQualifiers) {
   // tries to replace wikidata deep claim object by a simple value
   // e.g. a string, an entity Qid or an epoch time number
-  var mainsnak = claim.mainsnak;
+  var mainsnak = claim.mainsnak,
+      qualifiers = claim.qualifiers;
 
   // should only happen in snaktype: `novalue` cases or alikes
 
@@ -130,26 +131,48 @@ var simplifyClaim = function simplifyClaim(claim, entityPrefix, propertyPrefix) 
 
   if (datavalue == null) return null;
 
+  var value = null;
+
   switch (datatype) {
     case 'string':
     case 'commonsMedia':
     case 'url':
     case 'external-id':
-      return datavalue.value;
+      value = datavalue.value;
+      break;
     case 'monolingualtext':
-      return datavalue.value.text;
+      value = datavalue.value.text;
+      break;
     case 'wikibase-item':
-      return prefixedId(datavalue, entityPrefix);
+      value = prefixedId(datavalue, entityPrefix);
+      break;
     case 'wikibase-property':
-      return prefixedId(datavalue, propertyPrefix);
+      value = prefixedId(datavalue, propertyPrefix);
+      break;
     case 'time':
-      return helpers.normalizeWikidataTime(datavalue.value.time);
+      value = helpers.normalizeWikidataTime(datavalue.value.time);
+      break;
     case 'quantity':
-      return parseFloat(datavalue.value.amount);
+      value = parseFloat(datavalue.value.amount);
+      break;
     case 'globe-coordinate':
-      return getLatLngFromCoordinates(datavalue.value);
-    default:
-      return null;
+      value = getLatLngFromCoordinates(datavalue.value);
+      break;
+  }
+
+  if (keepQualifiers) {
+    var simpleQualifiers = {};
+
+    for (var qualifierProp in qualifiers) {
+      simpleQualifiers[qualifierProp] = qualifiers[qualifierProp].map(prepareQualifierClaim);
+    }
+
+    return {
+      value: value,
+      qualifiers: simplifyClaims(simpleQualifiers, entityPrefix, propertyPrefix)
+    };
+  } else {
+    return value;
   }
 };
 
@@ -163,6 +186,10 @@ var getLatLngFromCoordinates = function getLatLngFromCoordinates(value) {
   return [value.latitude, value.longitude];
 };
 
+var prepareQualifierClaim = function prepareQualifierClaim(claim) {
+  return { mainsnak: claim };
+};
+
 module.exports = {
   simplifyClaims: simplifyClaims,
   simplifyPropertyClaims: simplifyPropertyClaims,
@@ -171,8 +198,6 @@ module.exports = {
 
 },{"./helpers":1}],4:[function(require,module,exports){
 'use strict';
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 module.exports = function (wikidataTime) {
   var sign = wikidataTime[0];
@@ -203,12 +228,7 @@ var parseInvalideDate = function parseInvalideDate(sign, rest) {
   // This is probably a date of unsuffisient precision
   // such as 1953-00-00T00:00:00Z, thus invalid
   // It should at least have a year, so let's fallback to ${year}-01-01
-  var _rest$split$0$split = rest.split('T')[0].split('-'),
-      _rest$split$0$split2 = _slicedToArray(_rest$split$0$split, 3),
-      year = _rest$split$0$split2[0],
-      month = _rest$split$0$split2[1],
-      day = _rest$split$0$split2[2];
-
+  var year = rest.split('T')[0].split('-')[0];
   return fullDateData(sign, year);
 };
 
