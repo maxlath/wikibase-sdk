@@ -35,6 +35,7 @@ used APIs:
         - [simplifyPropertyClaims](#simplifypropertyclaims)
         - [simplifyClaim](#simplifyclaim)
         - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
+        - [Keep qualifiers](#keep-qualifiers)
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
   - [Other utils](#other-utils)
