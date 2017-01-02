@@ -16,7 +16,8 @@
     "prepublish": "./scripts/prepublish",
     "update-bower": "./scripts/update_bower",
     "bump-version": "./scripts/bump_version",
-    "update-toc": "doctoc README.md"
+    "update-toc": "doctoc README.md",
+    "add-fixture-entity": "./scripts/add_fixture_entity"
   },
   "repository": {
     "type": "git",
@@ -48,7 +49,8 @@
     "mocha": "^2.2.5",
     "should": "^9.0.0",
     "standard": "^8.6.0",
-    "uglify-js": "^2.4.24"
+    "uglify-js": "^2.4.24",
+    "wikidata-cli": "^3.0.6"
   },
   "dependencies": {},
   "standard": {
