@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 npm run lint &&
-npm run test &&
-npm run build &&
-npm run dist &&
+npm test &&
+npm run dist
 
 # prepublish is also run on npm install, thus the need to check the context
 [ ! -d ".git" ] && exit 0
