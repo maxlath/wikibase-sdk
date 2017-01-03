@@ -1,7 +1,6 @@
 require('should')
 
 const wdSparqlQuery = require('../lib/queries/sparql_query')
-console.log('wdSparqlQuery', wdSparqlQuery)
 
 const sparqlExemple = `
   PREFIX wikibase: <http://wikiba.se/ontology#>
