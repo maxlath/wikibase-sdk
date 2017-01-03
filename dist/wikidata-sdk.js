@@ -672,23 +672,9 @@ module.exports = function (sparql) {
 },{}],13:[function(require,module,exports){
 'use strict';
 
-// replacing what we need of querystring in case
-// querystring isnt available (esp. in the browser)
-var qs;
-try {
-  qs = require('querystring');
-} catch (err) {
-  qs = require('./querystring_lite');
-}
-
 var wikidataApiRoot = 'https://www.wikidata.org/w/api.php';
-
-var isBrowser;
-try {
-  isBrowser = window != null;
-} catch (err) {
-  isBrowser = false;
-}
+var isBrowser = typeof location !== 'undefined' && typeof document !== 'undefined';
+var qs = isBrowser ? require('./querystring_lite') : require('querystring');
 
 module.exports = function (queryObj) {
   // Request CORS headers if the request is made from a browser
