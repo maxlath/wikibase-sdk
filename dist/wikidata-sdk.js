@@ -318,7 +318,7 @@ module.exports = function (ids, languages, props, format) {
 
   if (props && props.length > 0) query.props = props.join('|');
 
-  return buildUrl('wikidata', query);
+  return buildUrl(query);
 };
 
 },{"../helpers/helpers":1,"../utils/build_url":13,"../utils/utils":15}],7:[function(require,module,exports){
@@ -431,7 +431,7 @@ module.exports = function (titles, sites, languages, props, format) {
 
   if (props && props.length > 0) query.props = props.join('|');
 
-  return buildUrl('wikidata', query);
+  return buildUrl(query);
 };
 
 // convert 2 letters language code to Wikipedia sitelinks code
@@ -466,7 +466,7 @@ module.exports = function (search, language, limit, format, uselang) {
   limit = limit || '20';
   format = format || 'json';
 
-  return buildUrl('wikidata', {
+  return buildUrl({
     action: 'wbsearchentities',
     search: search,
     language: language,
@@ -681,13 +681,20 @@ try {
   qs = require('./querystring_lite');
 }
 
-var roots = {
-  wikidata: 'https://www.wikidata.org/w/api.php',
-  commons: 'http://commons.wikimedia.org'
-};
+var wikidataApiRoot = 'https://www.wikidata.org/w/api.php';
 
-module.exports = function (domain, queryObj) {
-  return roots[domain] + '?' + qs.stringify(queryObj);
+var isBrowser;
+try {
+  isBrowser = window != null;
+} catch (err) {
+  isBrowser = false;
+}
+
+module.exports = function (queryObj) {
+  // Request CORS headers if the request is made from a browser
+  // See https://www.wikidata.org/w/api.php ('origin' parameter)
+  if (isBrowser) queryObj.origin = '*';
+  return wikidataApiRoot + '?' + qs.stringify(queryObj);
 };
 
 },{"./querystring_lite":14,"querystring":18}],14:[function(require,module,exports){
