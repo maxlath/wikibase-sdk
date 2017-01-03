@@ -424,7 +424,8 @@ wdk.simplifyPropertyClaims(entity.claims.P31, entityPrefix, propertyPrefix)
 wdk.simplifyClaim(entity.claims.P31[0], entityPrefix, propertyPrefix)
 ```
 Results would then look something like
-```{
+```json
+{
   "wdt:P279": [ "wd:Q340169", "wd:Q2342494", "wd:Q386724" ]
 }
 ```
