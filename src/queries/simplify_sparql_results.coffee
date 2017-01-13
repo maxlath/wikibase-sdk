@@ -19,10 +19,11 @@ module.exports = (input)->
       simpifiedResult = {}
 
       for varName in varsWithLabel
-        simpifiedResult[varName] =
-          # not filtering out bnodes as other variables can be meaningful
-          value: parseValue result[varName]
-          label: result["#{varName}Label"].value
+        if result["#{varName}Label"]
+          simpifiedResult[varName] =
+            # not filtering out bnodes as other variables can be meaningful
+            value: parseValue result[varName]
+            label: result["#{varName}Label"].value
 
       for varName in varsWithout
         simpifiedResult[varName] = parseValue result[varName]
