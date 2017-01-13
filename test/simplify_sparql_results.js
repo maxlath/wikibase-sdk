@@ -1,10 +1,11 @@
-require('should')
+const should = require('should')
 
 const helpers = require('../lib/helpers/helpers')
 const simplify = require('../lib/queries/simplify_sparql_results')
 const singleVarData = require('./data/single_var_sparql_results.json')
 const multiVarsData = require('./data/multi_vars_sparql_results.json')
 const noDatatypeData = require('./data/no_datatype_sparql_results.json')
+const sparqlResultsWithOptionalValues = require('./data/sparql_results_with_optional_values.json')
 
 describe('wikidata simplify SPARQL results', function () {
   describe('common', function () {
@@ -45,6 +46,14 @@ describe('wikidata simplify SPARQL results', function () {
     it('should not throw when the datatype is missing', function (done) {
       const output = simplify(noDatatypeData)
       output[0].year.should.equal('1937')
+      done()
+    })
+
+    it('should not throw when an optional variable has no result', function (done) {
+      simplify.bind(null, sparqlResultsWithOptionalValues).should.not.throw()
+      const result = simplify(sparqlResultsWithOptionalValues)[0]
+      result.composer.should.be.an.Object()
+      should(result.genre).not.be.ok()
       done()
     })
   })
