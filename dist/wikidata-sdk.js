@@ -611,11 +611,11 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
       for (var _iterator2 = varsWithLabel[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var varName = _step2.value;
 
-        simplifiedResult[varName] = {
-          // not filtering out bnodes as other variables can be meaningful
-          value: parseValue(result[varName]),
-          label: result[varName + 'Label'].value
-        };
+        var value = parseValue(result[varName]);
+        if (value != null) {
+          var label = result[varName + 'Label'] && result[varName + 'Label'].value;
+          simplifiedResult[varName] = { value: value, label: label };
+        }
       }
     } catch (err) {
       _didIteratorError2 = true;
