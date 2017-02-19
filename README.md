@@ -571,6 +571,8 @@ The command-line interface to Wikidata
 ### [wikidata-filter](https://npmjs.com/package/wikidata-filter)
 A command-line tool to filter a Wikidata dump by claim
 
+### [wikidata-subset-search-engine](https://github.com/inventaire/wikidata-subset-search-engine) Tools to setup an ElasticSearch instance fed with subsets of Wikidata
+
 ### [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy)
 Command-line tool to extract taxonomies from Wikidata
 
