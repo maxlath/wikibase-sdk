@@ -554,24 +554,22 @@ breq.get(url)
 ## Contributing
 Code contributions and propositions are very welcome, here are some design constraints you should be aware of:
 * `wikidata-sdk` should stay "small" and dependency-free, so that a web application can include it in its bundle without paying a too high cost for it.
-* Therefore, it should focus on providing basic, general helper functions most application working with Wikidata would need
+* Therefore, it should focus on providing basic, general helper functions most application working with Wikidata would need.
+* Edition operations should go into [wikidata-edit](https://www.npmjs.com/package/wikidata-edit) as it involves working with Wikidata credentials/tokens.
 
 ## See Also
 
-### Command-Line Interface tools
+### [wikidata-edit](https://www.npmjs.com/package/wikidata-edit)
+Edit Wikidata from NodeJS
 
-#### [wikidata-cli](https://www.npmjs.com/package/wikidata-cli)
-the command-line interface to Wikidata
+### [wikidata-cli](https://www.npmjs.com/package/wikidata-cli)
+The command-line interface to Wikidata
 
-#### [wikidata-filter](https://npmjs.com/package/wikidata-filter)
-a command-line tool to filter a Wikidata dump by claim
+### [wikidata-filter](https://npmjs.com/package/wikidata-filter)
+A command-line tool to filter a Wikidata dump by claim
 
-#### [wikidata-agent](https://github.com/maxlath/wikidata-agent)
-a small server to edit Wikidata from the terminal:
-`curl -X POST http://localhost:4115/claim -d 'entity=Q4115189&property=P2002&value=Zorg'`
-
-#### [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy)
-command-line tool to extract taxonomies from Wikidata
+### [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy)
+Command-line tool to extract taxonomies from Wikidata
 
 # License
 [MIT](LICENSE.md)
