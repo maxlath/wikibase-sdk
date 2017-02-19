@@ -557,6 +557,9 @@ Code contributions and propositions are very welcome, here are some design const
 * Therefore, it should focus on providing basic, general helper functions most application working with Wikidata would need.
 * Edition operations should go into [wikidata-edit](https://www.npmjs.com/package/wikidata-edit) as it involves working with Wikidata credentials/tokens.
 
+## Donate
+We are developing and maintaining tools to work with Wikidata from NodeJS, the browser, or simply the command line, with quality and ease of use at heart. Any donation will be interpreted as a "please keep going, your work is very much needed and awesome. PS: love". [Donate](https://liberapay.com/WikidataJS)
+
 ## See Also
 
 ### [wikidata-edit](https://www.npmjs.com/package/wikidata-edit)
