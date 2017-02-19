@@ -576,5 +576,7 @@ A command-line tool to filter a Wikidata dump by claim
 ### [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy)
 Command-line tool to extract taxonomies from Wikidata
 
+### [Other Wikidata external tools](https://www.wikidata.org/wiki/Wikidata:Tools/External_tools)
+
 # License
 [MIT](LICENSE.md)
