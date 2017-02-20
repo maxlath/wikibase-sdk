@@ -49,6 +49,7 @@ used APIs:
     - [wikidata-subset-search-engine Tools to setup an ElasticSearch instance fed with subsets of Wikidata](#wikidata-subset-search-engine-tools-to-setup-an-elasticsearch-instance-fed-with-subsets-of-wikidata)
     - [wikidata-taxonomy](#wikidata-taxonomy)
     - [Other Wikidata external tools](#other-wikidata-external-tools)
+  - [You may also like](#you-may-also-like)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -579,6 +580,12 @@ A command-line tool to filter a Wikidata dump by claim
 Command-line tool to extract taxonomies from Wikidata
 
 ### [Other Wikidata external tools](https://www.wikidata.org/wiki/Wikidata:Tools/External_tools)
+
+## You may also like
+
+[![inventaire banner](https://inventaire.io/public/images/inventaire-brittanystevens-13947832357-CC-BY-lighter-blue-4-banner-500px.png)](https://inventaire.io)
+
+Do you know [inventaire.io](https://inventaire.io/)? It's a web app to share books with your friends built on top of Wikidata! And its [libre software](http://github.com/inventaire/inventaire) too.
 
 # License
 [MIT](LICENSE.md)
