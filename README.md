@@ -309,7 +309,7 @@ var url = wdk.sparqlQuery(sparql)
 // => https://query.wikidata.org/sparql?format=json&query=%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20%3Fwork%20%3Fdate%20WHERE%20%7B%0A%20%20%3Fwork%20wdt%3AP50%20wd%3AQ535%20.%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fwork%20wdt%3AP577%20%3Fdate%20.%0A%20%20%7D%0A%7D%0A
 
 ```
-Querying this url should return a big collection of objects with `work` and `date` attributes corresponding to all Mr Q535's works
+Querying this url should return a big collection of objects with `work` and `date` attributes corresponding to all Mr Q535's works, that you might want to [simplify](#simplify-sparql-results) before working with it.
 
 ## Results parsers
 
