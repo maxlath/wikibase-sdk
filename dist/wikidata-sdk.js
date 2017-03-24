@@ -373,7 +373,7 @@ module.exports = function (property, value) {
   if (helpers.isWikidataEntityId(value)) {
     value = 'wd:' + value;
   } else if (typeof value === 'string') {
-    value = '`' + value + '`';
+    value = '\'' + value + '\'';
   }
 
   var sparql = '\n    SELECT ?subject WHERE {\n      ?subject wdt:' + property + ' ' + value + ' .\n    }\n    LIMIT ' + limit + '\n    ';
