@@ -277,6 +277,18 @@ it also work for string values: e.g. let's say you want to find which book as `9
 var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
+* options
+  * limit:
+    ```javascript
+    # Find only 10 works of Victor Hugo
+    var url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
+    ```
+  * make the value case insensitive:
+    ```javascript
+    # Find entities that have a twitter username matching 'BouletCorp', without considering the case
+    var url = wdk.getReverseClaims('P2002', 'BouletCorp', { caseInsensitive: true })
+    ```
+
 ### SPARQL queries
 
 SPARQL queries are the best way to extract knowledge from Wikidata entities graph.
