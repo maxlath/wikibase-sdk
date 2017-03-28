@@ -16,6 +16,13 @@ describe('simplifyClaims', function () {
     url.match(/WHERE/).should.be.ok()
     url.match(/LIMIT/).should.be.ok()
     url.match(/subject%20wdt%3AP50%20wd%3AQ535/).should.be.ok()
+    url.match(/LIMIT%201000/).should.be.ok()
+    done()
+  })
+
+  it('should default to limit=1000', function (done) {
+    const url = getReverseClaims('P50', 'Q535')
+    url.match(/LIMIT%201000/).should.be.ok()
     done()
   })
 
