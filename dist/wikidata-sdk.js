@@ -382,6 +382,7 @@ function getValueString(value) {
   } else if (typeof value === 'string') {
     value = '\'' + value + '\'';
   }
+  return value;
 }
 
 function directValueQuery(property, value, limit) {
