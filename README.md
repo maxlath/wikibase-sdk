@@ -27,6 +27,7 @@ used APIs:
     - [get entities by Wikipedia titles](#get-entities-by-wikipedia-titles)
     - [get entities by other Wikimedia projects titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
+      - [options](#options)
     - [SPARQL queries](#sparql-queries)
   - [Results parsers](#results-parsers)
     - [Wikidata API queries](#wikidata-api-queries)
@@ -277,7 +278,7 @@ it also work for string values: e.g. let's say you want to find which book as `9
 var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
-#### options
+### options
 * **limit**:
 
 Default value: `1000`
