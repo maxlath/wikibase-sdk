@@ -372,6 +372,7 @@ module.exports = function (property, value) {
   var limit = options.limit,
       caseInsensitive = options.caseInsensitive;
 
+  limit = limit || 1000;
   var sparqlFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
   return sparqlQuery(sparqlFn(property, getValueString(value), limit));
 };
