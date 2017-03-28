@@ -368,18 +368,29 @@ var helpers = require('../helpers/helpers');
 var sparqlQuery = require('./sparql_query');
 
 module.exports = function (property, value) {
-  var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000;
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var limit = options.limit,
+      caseInsensitive = options.caseInsensitive;
 
+  var sparqlFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
+  return sparqlQuery(sparqlFn(property, getValueString(value), limit));
+};
+
+function getValueString(value) {
   if (helpers.isWikidataEntityId(value)) {
     value = 'wd:' + value;
   } else if (typeof value === 'string') {
     value = '\'' + value + '\'';
   }
+}
 
-  var sparql = '\n    SELECT ?subject WHERE {\n      ?subject wdt:' + property + ' ' + value + ' .\n    }\n    LIMIT ' + limit + '\n    ';
+function directValueQuery(property, value, limit) {
+  return 'SELECT ?subject WHERE {\n      ?subject wdt:' + property + ' ' + value + ' .\n    }\n    LIMIT ' + limit;
+}
 
-  return sparqlQuery(sparql);
-};
+function caseInsensitiveValueQuery(property, value, limit) {
+  return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (regex(?value, "' + value + '", "i"))\n  }\n  LIMIT ' + limit;
+}
 
 },{"../helpers/helpers":1,"./sparql_query":12}],9:[function(require,module,exports){
 'use strict';
