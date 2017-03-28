@@ -15,6 +15,7 @@ describe('simplifyClaims', function () {
     url.match(/SELECT/).should.be.ok()
     url.match(/WHERE/).should.be.ok()
     url.match(/LIMIT/).should.be.ok()
+    url.match(/subject%20wdt%3AP50%20wd%3AQ535/).should.be.ok()
     done()
   })
 
