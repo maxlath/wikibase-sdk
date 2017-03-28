@@ -58,7 +58,7 @@ npm install wikidata-sdk --save
 ```
 
 then in your javascript project:
-```javascript
+```js
 var wdk = require('wikidata-sdk')
 ```
 
@@ -108,7 +108,7 @@ or, if you have NodeJS and NPM installed, you can use the awesome [live-server](
 ### search in wikidata entities
 *associated Wikidata doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
 
-```javascript
+```js
 var url = wdk.searchEntities('Ingmar Bergman')
 ```
 
@@ -118,7 +118,7 @@ https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ingmar%20Bergm
 ```
 
 or with more parameters:
-```javascript
+```js
 var search = 'Ingmar Bergman'
 var language = 'fr' // will default to 'en'
 var limit = 10 // defaults to 20
@@ -127,7 +127,7 @@ var format = 'json' // defaults to json
 var url = wdk.searchEntities(search, language, limit, format)
 ```
 which can also be passed as an object:
-```javascript
+```js
 var url = wdk.searchEntities({
   search: 'Ingmar Bergman',
   format: 'xml',
@@ -137,12 +137,12 @@ var url = wdk.searchEntities({
 
 By default, the `uselang` parameter (the language in which the search results are returned) is set to the same as the language passed, but if for some weird use case you need to set a different language, you can still pass a 2 letters language code:
 * as last argument (inline interface)
-```javascript
+```js
 var uselang = 'eo'
 var url = wdk.searchEntities(search, language, limit, format, uselang)
 ```
 * or set `uselang` in the option object (object interface).
-```javascript
+```js
 var url = wdk.searchEntities({
   search: 'Ingmar Bergman',
   language: 'sv',
@@ -156,7 +156,7 @@ If the values aren't available in the desired language, it will fallback to the 
 
 on the same pattern
 
-```javascript
+```js
 var ids = 'Q571' // could also be several ids as an array: ['Q1', 'Q5', 'Q571']
 var languages = ['en', 'fr', 'de'] // returns all languages if not specified
 var properties = ['info', 'claims'] // returns all data if not specified
@@ -170,7 +170,7 @@ ids, languages, properties can get either one single value as a string or severa
 
 
 And Again, this can also be passed as an object:
-```javascript
+```js
 var url = wdk.getEntities({
   ids: ['Q1', 'Q5', 'Q571'],
   languages: ['en', 'fr', 'de'], // returns all languages if not specified
@@ -184,7 +184,7 @@ Above 50 ids, `wdk.getEntities` will warn you that your request won't be fully f
 You can use `wdk.getManyEntities` instead to generate several request urls to work around this limitation:
 
 The arguments API is the same as getEntities:
-```javascript
+```js
 var urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
 // or
 var urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json')
@@ -204,7 +204,7 @@ but it returns an array of urls instead.
 *associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
-```javascript
+```js
 var url = wdk.getWikidataIdsFromWikipediaTitles('Hamburg')
 //=> 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg&sites=enwiki&format=json'
 
@@ -213,7 +213,7 @@ var url = wdk.getWikidataIdsFromWikipediaTitles(['Hamburg', 'Lyon', 'Berlin'])
 ```
 
 By default, it looks in the English Wikipedia, but we can change that:
-```javascript
+```js
 var titles = 'Hamburg'
 var sites = 'dewiki' // or you can just pass the 2-letters language codes: 'de'
 var languages = ['en', 'fr', 'de'] // those are the languages in which we would like the entities data
@@ -222,7 +222,7 @@ var format = 'json'
 var url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, properties, format)
 ```
 or using the object interface:
-```javascript
+```js
 var url = wdk.getWikidataIdsFromWikipediaTitles({
   titles: 'Hamburg',
   sites: 'dewiki',
@@ -237,12 +237,12 @@ var url = wdk.getWikidataIdsFromWikipediaTitles({
 
 This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
 
-```javascript
+```js
 var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwikisource')
 ```
 
 Actually, `getWikidataIdsFromWikipediaTitles` is just an alias of `getWikidataIdsFromSitelinks`, so you can use it for Wikipedia too:
-```javascript
+```js
 var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki')
 // or given it defauts to the Wikipedia project:
 var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
@@ -256,13 +256,13 @@ Fortunatly, we can use the [SPARQL endpoint](#sparql-queries) to get relations t
 
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
-```javascript
+```js
 var url = wdk.getReverseClaims('P50', 'Q7243')
 ```
 
 and you can then query the obtained entities ids
 
-```javascript
+```js
 request(url, function(err, response){
   if (err) return dealWithError(err)
   var entities = wdk.simplifySparqlResults(response.body)
@@ -273,21 +273,27 @@ request(url, function(err, response){
 
 it also work for string values: e.g. let's say you want to find which book as `978-0-465-06710-7` for ISBN-13 ([P212](http://www.wikidata.org/entity/P212)):
 
-```javascript
+```js
 var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
-* options
-  * limit:
-    ```javascript
-    # Find only 10 works of Victor Hugo
-    var url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
-    ```
-  * make the value case insensitive:
-    ```javascript
-    # Find entities that have a twitter username matching 'BouletCorp', without considering the case
-    var url = wdk.getReverseClaims('P2002', 'BouletCorp', { caseInsensitive: true })
-    ```
+#### options
+* **limit**:
+
+Default value: `1000`
+```js
+// Find only 10 works of Victor Hugo
+var url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
+```
+
+* make the value **case insensitive**:
+
+> :warning: use only when needed as it makes the query less perfomante
+
+```js
+// Find entities that have a twitter username matching 'BouletCorp', without considering the case
+var url = wdk.getReverseClaims('P2002', 'BouletCorp', { caseInsensitive: true })
+```
 
 ### SPARQL queries
 
@@ -296,12 +302,12 @@ SPARQL queries are the best way to extract knowledge from Wikidata entities grap
 [SPARQL](https://en.wikipedia.org/wiki/Sparql) can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a super rich [Wikidata Query Help](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Wikidata_Query_Help) page, [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), and [lots of examples](https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:SPARQL_query_service/queries/examples)!
 
 Then, to get JSON results you can [make a HTTP query to  https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with `wikidata-sdk` can be done like this:
-```javascript
+```js
 var url = wdk.sparqlQuery(SPARQL)
 ```
 
 Exemple taken from [inventaire SPARQL queries](https://github.com/inventaire/inventaire/tree/master/server/data/wikidata/queries) (here written using [ES6 template string](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/template_strings) capabilities)
-```javascript
+```js
 var authorQid = 'Q535'
 var sparql = `
 SELECT ?work ?date WHERE {
@@ -394,13 +400,13 @@ That's what `simplifyClaims`, `simplifyPropertyClaims`, `simplifyClaim` do, each
 
 ##### simplifyClaims
 you just need to pass your entity' claims object to simplifyClaims as such:
-```javascript
+```js
 var simplifiedClaims = wdk.simplifyClaims(entity.claims)
 ```
 
 in your workflow, that could give something like:
 
-```javascript
+```js
 var url = wdk.getEntities('Q535')
 request(url, function(err, response){
   if (err) { dealWithError(err) }
@@ -413,19 +419,19 @@ To keep things simple, "weird" values are removed (for instance, statements of d
 
 ##### simplifyPropertyClaims
 Same as simplifyClaims but expects an array of claims, typically the array of claims of a specific property:
-```javascript
+```js
 var simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
 ```
 
 ##### simplifyClaim
 Same as simplifyClaims but expects a unique claim
-```javascript
+```js
 var simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
 ```
 
 ##### Add prefixes to entities and properties ids
 It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by passing an entity prefix and/or a property prefix as 2nd and 3rd arguments of any claim simplification function:
-```javascript
+```js
 var entityPrefix = 'wd'
 var propertyPrefix = 'wdt'
 wdk.simplifyClaims(entity.claims, entityPrefix, propertyPrefix)
@@ -441,7 +447,7 @@ Results would then look something like
 
 ##### Keep qualifiers
 You can keep qualifiers by passing `true` as 4th arguments of any claim simplification function:
-```javascript
+```js
 wdk.simplifyClaims(entity.claims, null, null, true)
 wdk.simplifyPropertyClaims(entity.claims.P50, null, null, true)
 wdk.simplifyClaim(entity.claims.P50[0], null, null, true)
@@ -519,11 +525,11 @@ Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for 
 And then to make it even more simpler, we can... hum no, that's all we got.
 
 Use it like so:
-```javascript
+```js
 var simplifiedResults = wdk.simplifySparqlResults(results)
 ```
 or for a more complete example (using [promises](https://www.promisejs.org))
-```javascript
+```js
 // see the "SPARQL Query" section above
 var url = wdk.sparqlQuery(SPARQL)
 promiseRequest(url)
