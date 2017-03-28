@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 4.3.0 - 2017-03-28
+* Added `limit` and `caseInsensitive` options to [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk#get-entities-reverse-claims)
+
 ## 4.2.0 - 2017-01-02
 * Added the option to [keep qualifiers](https://github.com/maxlath/wikidata-sdk#keep-qualifiers) to simplifyClaims functions
 
