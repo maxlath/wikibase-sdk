@@ -1,3 +1,5 @@
+# Wikidata SDK
+
 A javascript tool-suite to query [Wikidata](http://wikidata.org/) and simplify its results.
 
 [![wikidata](https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/assets/wikidata.jpg)](https://wikidata.org)
@@ -10,7 +12,7 @@ used APIs:
 - [Wikidata API](https://www.wikidata.org/w/api.php)
 - [Wikidata Query](http://query.wikidata.org/) (SPARQL)
 
-# Summary
+## Summary
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -20,14 +22,14 @@ used APIs:
   - [via Bower](#via-bower)
   - [The Old Way](#the-old-way)
 - [How-to](#how-to)
-  - [Build queries urls to](#build-queries-urls-to)
+  - [Build queries URLs](#build-queries-urls)
     - [search in wikidata entities](#search-in-wikidata-entities)
     - [get entities by id](#get-entities-by-id)
     - [get many entities by id](#get-many-entities-by-id)
     - [get entities by Wikipedia titles](#get-entities-by-wikipedia-titles)
     - [get entities by other Wikimedia projects titles](#get-entities-by-other-wikimedia-projects-titles)
     - [get entities reverse claims](#get-entities-reverse-claims)
-      - [options](#options)
+    - [options](#options)
     - [SPARQL queries](#sparql-queries)
   - [Results parsers](#results-parsers)
     - [Wikidata API queries](#wikidata-api-queries)
@@ -40,18 +42,18 @@ used APIs:
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
   - [Other utils](#other-utils)
-    - [A little Promises workflow demo](#a-little-promises-workflow-demo)
-  - [Contributing](#contributing)
-  - [Donate](#donate)
-  - [See Also](#see-also)
-  - [You may also like](#you-may-also-like)
+  - [A little Promises workflow demo](#a-little-promises-workflow-demo)
+- [Contributing](#contributing)
+- [Donate](#donate)
+- [See Also](#see-also)
+- [You may also like](#you-may-also-like)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Installation
+## Installation
 
-## via NPM
+### via NPM
 in a terminal at your project root:
 
 ```sh
@@ -63,7 +65,7 @@ then in your javascript project:
 var wdk = require('wikidata-sdk')
 ```
 
-## via Bower
+### via Bower
 in a terminal at your project root:
 ```sh
 bower install wikidata-sdk --save
@@ -80,7 +82,7 @@ or use the minified version
 
 this will create a global object named `wdk` (in a browser, accessible at `window.wdk`)
 
-## The Old Way
+### The Old Way
 
 Just download the raw package from this repository:
 ```sh
@@ -102,11 +104,11 @@ python -m SimpleHTTPServer
 or, if you have NodeJS and NPM installed, you can use the awesome [live-server](https://github.com/tapio/live-server)
 
 
-# How-to
+## How-to
 
-## Build queries urls to
+### Build queries URLs
 
-### search in wikidata entities
+#### search in wikidata entities
 *associated Wikidata doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
 
 ```js
@@ -152,7 +154,7 @@ var url = wdk.searchEntities({
 ```
 If the values aren't available in the desired language, it will fallback to the English value if available.
 
-### get entities by id
+#### get entities by id
 *associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 on the same pattern
@@ -180,7 +182,7 @@ var url = wdk.getEntities({
 })
 ```
 
-### get many entities by id
+#### get many entities by id
 Above 50 ids, `wdk.getEntities` will warn you that your request won't be fully fullfiled by Wikidata API due to its limitations policy.
 You can use `wdk.getManyEntities` instead to generate several request urls to work around this limitation:
 
@@ -201,7 +203,7 @@ but it returns an array of urls instead.
 
 :warning: This limitation policy was probably there for a reason, right? This should be the exception, make sure to set an interval between your requests (500ms, 1s?), and if you really need a lot of entities, consider using [dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_.28recommended.29): there are [great tools](https://github.com/maxlath/wikidata-filter) to work with those too! ;)
 
-### get entities by Wikipedia titles
+#### get entities by Wikipedia titles
 *associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
@@ -233,7 +235,7 @@ var url = wdk.getWikidataIdsFromWikipediaTitles({
 })
 ```
 
-### get entities by other Wikimedia projects titles
+#### get entities by other Wikimedia projects titles
 *associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
@@ -249,7 +251,7 @@ var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki')
 var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
 ```
 
-### get entities reverse claims
+#### get entities reverse claims
 
 In wikidata API answers, you can only access claims on the entity's page, not claims pointing to this entity (what would be in the "what links here" page).
 
@@ -278,7 +280,7 @@ it also work for string values: e.g. let's say you want to find which book as `9
 var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
-### options
+#### options
 * **limit**:
 
 Default value: `1000`
@@ -296,7 +298,7 @@ var url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
 var url = wdk.getReverseClaims('P2002', 'BouletCorp', { caseInsensitive: true })
 ```
 
-### SPARQL queries
+#### SPARQL queries
 
 SPARQL queries are the best way to extract knowledge from Wikidata entities graph.
 
@@ -324,12 +326,12 @@ var url = wdk.sparqlQuery(sparql)
 ```
 Querying this url should return a big collection of objects with `work` and `date` attributes corresponding to all Mr Q535's works, that you might want to [simplify](#simplify-sparql-results) before working with it.
 
-## Results parsers
+### Results parsers
 
-### Wikidata API queries
+#### Wikidata API queries
 you can pass the results from `wdk.searchEntities`, `wdk.getEntities`, `wdk.getWikidataIdsFromWikipediaTitles`, or `wdk.getWikidataIdsFromSitelinks` to `wdk.parse.wd.entities`, it will return entities with simplified claims (cf "simplify claims results" hereafter)
 
-#### Simplify claims results
+##### Simplify claims results
 *associated Wikidata doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
 
 For each entities claims, Wikidata's API returns a deep object that requires some parsing that could be avoided for simple uses.
@@ -399,7 +401,7 @@ we could have
 
 That's what `simplifyClaims`, `simplifyPropertyClaims`, `simplifyClaim` do, each at their own level:
 
-##### simplifyClaims
+###### simplifyClaims
 you just need to pass your entity' claims object to simplifyClaims as such:
 ```js
 var simplifiedClaims = wdk.simplifyClaims(entity.claims)
@@ -418,19 +420,19 @@ request(url, function(err, response){
 
 To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
 
-##### simplifyPropertyClaims
+###### simplifyPropertyClaims
 Same as simplifyClaims but expects an array of claims, typically the array of claims of a specific property:
 ```js
 var simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
 ```
 
-##### simplifyClaim
+###### simplifyClaim
 Same as simplifyClaims but expects a unique claim
 ```js
 var simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
 ```
 
-##### Add prefixes to entities and properties ids
+###### Add prefixes to entities and properties ids
 It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by passing an entity prefix and/or a property prefix as 2nd and 3rd arguments of any claim simplification function:
 ```js
 var entityPrefix = 'wd'
@@ -446,7 +448,7 @@ Results would then look something like
 }
 ```
 
-##### Keep qualifiers
+###### Keep qualifiers
 You can keep qualifiers by passing `true` as 4th arguments of any claim simplification function:
 ```js
 wdk.simplifyClaims(entity.claims, null, null, true)
@@ -477,8 +479,8 @@ Results would then look something like
 }
 ```
 
-### Wikidata Query (SPARQL) results
-#### simplify sparql results
+#### Wikidata Query (SPARQL) results
+##### simplify sparql results
 With [SPARQL queries](#sparql-queries), you get results that look like this:
 ```json
 {
@@ -538,7 +540,7 @@ promiseRequest(url)
 .then((simplifiedResults) => { // do awesome stuffs here })
 ```
 
-## Other utils
+### Other utils
 
 - isNumericId
 - getNumericId
@@ -551,7 +553,6 @@ promiseRequest(url)
 - wikidataTimeToEpochTime
 - wikidataTimeToISOString
 - normalizeWikidataTime (aliased to wikidataTimeToEpochTime)
-
 
 ### A little [Promises](https://www.promisejs.org) workflow demo
 that's how I love to work :)
@@ -591,5 +592,5 @@ We are developing and maintaining tools to work with Wikidata from NodeJS, the b
 
 Do you know [inventaire.io](https://inventaire.io/)? It's a web app to share books with your friends, built on top of Wikidata! And its [libre software](http://github.com/inventaire/inventaire) too.
 
-# License
+## License
 [MIT](LICENSE.md)
