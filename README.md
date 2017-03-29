@@ -31,6 +31,7 @@ used APIs:
     - [get entities reverse claims](#get-entities-reverse-claims)
     - [options](#options)
     - [SPARQL queries](#sparql-queries)
+  - [Use a custom Wikibase instance](#use-a-custom-wikibase-instance)
   - [Results parsers](#results-parsers)
     - [Wikidata API queries](#wikidata-api-queries)
       - [Simplify claims results](#simplify-claims-results)
@@ -325,6 +326,18 @@ var url = wdk.sparqlQuery(sparql)
 
 ```
 Querying this url should return a big collection of objects with `work` and `date` attributes corresponding to all Mr Q535's works, that you might want to [simplify](#simplify-sparql-results) before working with it.
+
+### Use a custom Wikibase instance
+
+All queries URLs are set for Wikidata API: `https://www.wikidata.org/w/api.php`.
+To use a custom instance, you can simply replace the default API endpoint by your custom one:
+```js
+const defaultEndpoint = 'https://www.wikidata.org/w/api.php'
+const customEndpoint = 'https://mywikibase.instance/w/api.php'
+const customize = (url) => url.replace(defaultEndpoint, customEndpoint)
+
+var url = customize(wdk.anyOfTheQueryUrlFunctionsHereAfter(params))
+```
 
 ### Results parsers
 
