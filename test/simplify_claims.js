@@ -145,15 +145,15 @@ describe('simplifyClaim', function () {
   it('should return a valid time for possible invalid dates', function (done) {
     // exemple: Q4132785>P577 is 1953-00-00T00:00:00Z
     const simplified = simplifyClaim(Q4132785.claims.P577[0])
-    isNaN(simplified).should.equal(false)
-    simplified.should.equal(-536457600000)
+    simplified.should.equal('1953-01-01T00:00:00.000Z')
     done()
   })
 
   it('should return a valid time even for possible invalid negative date', function (done) {
+    // exemple: Q4132785>P577 is -1953-00-00T00:00:00Z
     const simplified = simplifyClaim(Q4132785NegativeDate.claims.P577[0])
-    isNaN(simplified).should.equal(false)
-    simplified.should.equal(-123797894400000)
+    // cf https://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15.1
+    simplified.should.equal('-001953-01-01T00:00:00.000Z')
     done()
   })
 
@@ -210,7 +210,7 @@ describe('simplifyClaim', function () {
     simplifiedWithQualifiers.qualifiers.P973.should.be.an.Array()
     simplifiedWithQualifiers.qualifiers.P973[0].should.equal('http://mappings.dbpedia.org/index.php/OntologyClass:Book')
     simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
-    simplifiedWithQualifiers.qualifiers.P813[0].should.equal(1433980800000)
+    simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11T00:00:00.000Z')
     done()
   })
 
