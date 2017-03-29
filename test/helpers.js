@@ -42,6 +42,37 @@ describe('helpers', function () {
       done()
     })
   })
+  describe('wikidataTimeToISOString', function () {
+    it('should convert wikidata date to ISO date', function (done) {
+      helpers.wikidataTimeToISOString('+1885-05-22T00:00:00Z')
+      .should.equal('1885-05-22T00:00:00.000Z')
+
+      helpers.wikidataTimeToISOString('+0180-03-17T00:00:00Z')
+      .should.equal('0180-03-17T00:00:00.000Z')
+
+      helpers.wikidataTimeToISOString('-0398-00-00T00:00:00Z')
+      .should.equal('-000398-01-01T00:00:00.000Z')
+      done()
+    })
+
+    it('should return a valid time for possible invalid dates', function (done) {
+      helpers.wikidataTimeToISOString('+1953-00-00T00:00:00Z')
+      .should.equal('1953-01-01T00:00:00.000Z')
+      done()
+    })
+
+    it('should return a valid time even for possible invalid negative date', function (done) {
+      helpers.wikidataTimeToISOString('-1953-00-00T00:00:00Z')
+      .should.equal('-001953-01-01T00:00:00.000Z')
+      done()
+    })
+
+    it('should return a valid time for dates far in the past', function (done) {
+      helpers.wikidataTimeToISOString('-13798000000-00-00T00:00:00Z')
+      .should.equal('-13798000000-00-00T00:00:00Z')
+      done()
+    })
+  })
   describe('isEntityId', function () {
     it('should accept both item and property ids', function (done) {
       helpers.isEntityId('Q571').should.be.true()

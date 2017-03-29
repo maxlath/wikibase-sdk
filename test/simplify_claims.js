@@ -7,9 +7,6 @@ const Q328212 = require('./data/Q328212.json')
 const Q22002395 = require('./data/Q22002395.json')
 const Q2112 = require('./data/Q2112.json')
 
-// a fake entity to simulate a possible negative invalid date
-const Q4132785NegativeDate = require('./data/Q4132785-negative-date.json')
-
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
 
 describe('simplifyClaims', function () {
@@ -142,21 +139,6 @@ describe('simplifyPropertyClaims', function () {
 })
 
 describe('simplifyClaim', function () {
-  it('should return a valid time for possible invalid dates', function (done) {
-    // exemple: Q4132785>P577 is 1953-00-00T00:00:00Z
-    const simplified = simplifyClaim(Q4132785.claims.P577[0])
-    simplified.should.equal('1953-01-01T00:00:00.000Z')
-    done()
-  })
-
-  it('should return a valid time even for possible invalid negative date', function (done) {
-    // exemple: Q4132785>P577 is -1953-00-00T00:00:00Z
-    const simplified = simplifyClaim(Q4132785NegativeDate.claims.P577[0])
-    // cf https://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15.1
-    simplified.should.equal('-001953-01-01T00:00:00.000Z')
-    done()
-  })
-
   it('should return a url for datatype url', function (done) {
     const simplified = simplifyClaim(Q328212.claims.P856[0])
     simplified.should.equal('http://veronicarothbooks.blogspot.com')
