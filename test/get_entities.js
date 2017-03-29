@@ -53,14 +53,6 @@ describe('wikidata getEntities', function () {
       url2.split('&ids=Q535|Q7546&').length.should.equal(2)
       done()
     })
-
-    it('accepts numeric ids', function (done) {
-      const url = getEntities(['535', '7546'])
-      url.should.equal(getEntities({ids: ['535', '7546']}))
-      const url2 = qs.unescape(url)
-      url2.split('&ids=Q535|Q7546&').length.should.equal(2)
-      done()
-    })
   })
   describe('languages', function () {
     it('default to no language parameter', function (done) {

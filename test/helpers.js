@@ -8,55 +8,6 @@ describe('helpers', function () {
     done()
   })
 
-  describe('normalizeId', function () {
-    it('should return a string', function (done) {
-      helpers.normalizeId('Q571').should.be.a.String()
-      helpers.normalizeId('P50').should.be.a.String()
-      helpers.normalizeId('571').should.be.a.String()
-      done()
-    })
-
-    it('should return a Q id by default', function (done) {
-      helpers.normalizeId('Q571').should.equal('Q571')
-      helpers.normalizeId('571').should.equal('Q571')
-      helpers.normalizeId('571').should.equal('Q571')
-      done()
-    })
-
-    it('should return a numeric id if requested', function (done) {
-      helpers.normalizeId('Q571', true).should.equal('571')
-      helpers.normalizeId('571', true).should.equal('571')
-      done()
-    })
-
-    it('should return a Q id in the other case', function (done) {
-      helpers.normalizeId('Q571', false).should.equal('Q571')
-      helpers.normalizeId('571', false).should.equal('Q571')
-      done()
-    })
-
-    it('should return a P id if requested', function (done) {
-      helpers.normalizeId('P50', false, 'P').should.equal('P50')
-      helpers.normalizeId('50', false, 'P').should.equal('P50')
-      done()
-    })
-
-    it('should return a Q in the other case', function (done) {
-      helpers.normalizeId('Q571', false, 'Q').should.equal('Q571')
-      helpers.normalizeId('571', false, 'Q').should.equal('Q571')
-      done()
-    })
-
-    it('should have no type with numeric id anyway', function (done) {
-      helpers.normalizeId('Q571', true, 'Q').should.equal('571')
-      helpers.normalizeId('571', true, 'Q').should.equal('571')
-      helpers.normalizeId('Q50', true, 'P').should.equal('50')
-      helpers.normalizeId('50', true, 'P').should.equal('50')
-      helpers.normalizeId('50', true, 'anything').should.equal('50')
-      done()
-    })
-  })
-
   const ISOtime = '2014-05-14T00:00:00.000Z'
   const wdTime = '+2014-05-14T00:00:00Z'
   const epoch = 1400025600000
