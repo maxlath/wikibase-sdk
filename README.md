@@ -42,7 +42,14 @@ used APIs:
         - [Keep qualifiers](#keep-qualifiers)
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
-  - [Other utils](#other-utils)
+  - [Ids tests](#ids-tests)
+    - [isItemId](#isitemid)
+    - [isPropertyId](#ispropertyid)
+    - [isEntityId](#isentityid)
+  - [Wikidata Time converters](#wikidata-time-converters)
+    - [wikidataTimeToDateObject](#wikidatatimetodateobject)
+    - [wikidataTimeToEpochTime](#wikidatatimetoepochtime)
+    - [wikidataTimeToISOString](#wikidatatimetoisostring)
   - [A little Promises workflow demo](#a-little-promises-workflow-demo)
 - [Contributing](#contributing)
 - [Donate](#donate)
@@ -553,19 +560,41 @@ promiseRequest(url)
 .then((simplifiedResults) => { // do awesome stuffs here })
 ```
 
-### Other utils
+### Ids tests
+#### isItemId
+item ids a.k.a. `Q` ids
+#### isPropertyId
+property ids a.k.a. `P` ids
+#### isEntityId
+Accepts both `P` and `Q` ids
 
-- isNumericId
-- getNumericId
-- isWikidataId
-- isWikidataEntityId
-- isWikidataPropertyId
-- normalizeId
-- normalizeIds
-- wikidataTimeToDateObject
-- wikidataTimeToEpochTime
-- wikidataTimeToISOString
-- normalizeWikidataTime (aliased to wikidataTimeToEpochTime)
+### Wikidata Time converters
+#### wikidataTimeToDateObject
+#### wikidataTimeToEpochTime
+#### wikidataTimeToISOString
+Uses [extended years following ECMAScript standard](https://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15.1)
+```js
+var wikidataTime = '+1885-05-22T00:00:00Z'
+wdk.wikidataTimeToISOString(wikidataTime)
+// => '1885-05-22T00:00:00.000Z'
+
+wikidataTime = '+0180-03-17T00:00:00Z'
+wdk.wikidataTimeToISOString(wikidataTime)
+// => '0180-03-17T00:00:00.000Z'
+
+wikidataTime = '-0398-00-00T00:00:00Z'
+wdk.wikidataTimeToISOString(wikidataTime)
+// => '-000398-01-01T00:00:00.000Z'
+
+```
+until it can't: when the date are too far in the past or the future, it will simply return the Wikidata time
+```js
+wikidataTime = '-13798000000-00-00T00:00:00Z'
+wdk.wikidataTimeToISOString(wikidataTime)
+// => '-13798000000-00-00T00:00:00Z'
+
+```
+This is the time normalizer used by `simplifyClaims` functions
 
 ### A little [Promises](https://www.promisejs.org) workflow demo
 that's how I love to work :)
