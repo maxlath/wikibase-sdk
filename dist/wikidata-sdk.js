@@ -1,63 +1,44 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.wdk = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var wikidataTimeToDateObject = require('./wikidata_time_to_date_object');
+var toDateObject = require('./wikidata_time_to_date_object');
 
 var helpers = {};
-helpers.isNumericId = function (id) {
-  return (/^[0-9]+$/.test(id)
-  );
-};
-helpers.isWikidataId = function (id) {
+helpers.isEntityId = function (id) {
   return (/^(Q|P)[0-9]+$/.test(id)
   );
 };
-helpers.isWikidataEntityId = function (id) {
+helpers.isItemId = function (id) {
   return (/^Q[0-9]+$/.test(id)
   );
 };
-helpers.isWikidataPropertyId = function (id) {
+helpers.isPropertyId = function (id) {
   return (/^P[0-9]+$/.test(id)
   );
 };
 
-helpers.normalizeId = function (id, numericId) {
-  var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Q';
+helpers.wikidataTimeToDateObject = toDateObject;
 
-  if (helpers.isNumericId(id)) {
-    return numericId ? id : '' + type + id;
-  } else if (helpers.isWikidataId(id)) {
-    return numericId ? id.slice(1) : id;
-  } else {
-    throw new Error('invalid id');
-  }
+// Try to parse the date or return the input
+var bestEffort = function bestEffort(fn) {
+  return function (value) {
+    try {
+      return fn(value);
+    } catch (err) {
+      return value;
+    }
+  };
 };
 
-helpers.getNumericId = function (id) {
-  if (!helpers.isWikidataId(id)) throw new Error('invalid wikidata id: ' + id);
-  return id.replace(/Q|P/, '');
+var toEpochTime = function toEpochTime(wikidataTime) {
+  return toDateObject(wikidataTime).getTime();
+};
+var toISOString = function toISOString(wikidataTime) {
+  return toDateObject(wikidataTime).toISOString();
 };
 
-helpers.normalizeIds = function (ids, numericId) {
-  var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Q';
-
-  return ids.map(function (id) {
-    return helpers.normalizeId(id, numericId, type);
-  });
-};
-
-helpers.wikidataTimeToDateObject = wikidataTimeToDateObject;
-
-helpers.wikidataTimeToEpochTime = function (wikidataTime) {
-  return wikidataTimeToDateObject(wikidataTime).getTime();
-};
-
-helpers.wikidataTimeToISOString = function (wikidataTime) {
-  return wikidataTimeToDateObject(wikidataTime).toISOString();
-};
-
-// keeping normalizeWikidataTime as legacy
-helpers.normalizeWikidataTime = helpers.wikidataTimeToEpochTime;
+helpers.wikidataTimeToEpochTime = bestEffort(toEpochTime);
+helpers.wikidataTimeToISOString = bestEffort(toISOString);
 
 module.exports = helpers;
 
@@ -150,7 +131,7 @@ var simplifyClaim = function simplifyClaim(claim, entityPrefix, propertyPrefix, 
       value = prefixedId(datavalue, propertyPrefix);
       break;
     case 'time':
-      value = helpers.normalizeWikidataTime(datavalue.value.time);
+      value = helpers.wikidataTimeToISOString(datavalue.value.time);
       break;
     case 'quantity':
       value = parseFloat(datavalue.value.amount);
@@ -271,7 +252,6 @@ for (var key in helpers) {
 },{"./helpers/helpers":1,"./helpers/parse_responses":2,"./helpers/simplify_claims":3,"./queries/get_entities":6,"./queries/get_many_entities":7,"./queries/get_reverse_claims":8,"./queries/get_wikidata_ids_from_sitelinks":9,"./queries/search_entities":10,"./queries/simplify_sparql_results":11,"./queries/sparql_query":12}],6:[function(require,module,exports){
 'use strict';
 
-var helpers = require('../helpers/helpers');
 var buildUrl = require('../utils/build_url');
 
 var _require = require('../utils/utils'),
@@ -302,7 +282,7 @@ module.exports = function (ids, languages, props, format) {
   // Properties can be either one property as a string
   // or an array or properties;
   // either case me just want to deal with arrays
-  ids = helpers.normalizeIds(forceArray(ids));
+  ids = forceArray(ids);
   props = forceArray(props);
 
   var query = {
@@ -321,7 +301,7 @@ module.exports = function (ids, languages, props, format) {
   return buildUrl(query);
 };
 
-},{"../helpers/helpers":1,"../utils/build_url":13,"../utils/utils":15}],7:[function(require,module,exports){
+},{"../utils/build_url":13,"../utils/utils":15}],7:[function(require,module,exports){
 'use strict';
 
 var _templateObject = _taggedTemplateLiteral(['getManyEntities expects an array of ids'], ['getManyEntities expects an array of ids']);
@@ -380,7 +360,7 @@ module.exports = function (property, value) {
 };
 
 function getValueString(value) {
-  if (helpers.isWikidataEntityId(value)) {
+  if (helpers.isItemId(value)) {
     value = 'wd:' + value;
   } else if (typeof value === 'string') {
     value = '\'' + value + '\'';
