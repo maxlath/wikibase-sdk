@@ -38,6 +38,7 @@ describe('simplifyClaims', function () {
     should(url.match(/SELECT/)).be.ok()
     should(url.match(/WHERE/)).be.ok()
     should(url.match(/LIMIT/)).be.ok()
+    should(url.match(/FILTER%20%28lcase%28%3Fvalue%29%20%3D%20%27bouletcorp%27%29/)).be.ok()
     done()
   })
 })
