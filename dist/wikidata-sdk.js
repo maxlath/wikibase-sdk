@@ -374,7 +374,9 @@ module.exports = function (property, value) {
 
   limit = limit || 1000;
   var sparqlFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
-  return sparqlQuery(sparqlFn(property, getValueString(value), limit));
+  var valueString = getValueString(value);
+  var sparql = sparqlFn(property, valueString, limit);
+  return sparqlQuery(sparql);
 };
 
 function getValueString(value) {
@@ -390,8 +392,10 @@ function directValueQuery(property, value, limit) {
   return 'SELECT ?subject WHERE {\n      ?subject wdt:' + property + ' ' + value + ' .\n    }\n    LIMIT ' + limit;
 }
 
+// Discussion on how to make this query optimal:
+// http://stackoverflow.com/q/43073266/3324977
 function caseInsensitiveValueQuery(property, value, limit) {
-  return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (regex(?value, "' + value + '", "i"))\n  }\n  LIMIT ' + limit;
+  return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n  }\n  LIMIT ' + limit;
 }
 
 },{"../helpers/helpers":1,"./sparql_query":12}],9:[function(require,module,exports){
@@ -675,14 +679,17 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
 };
 
 },{}],12:[function(require,module,exports){
-"use strict";
+'use strict';
+
+var _require = require('../utils/utils'),
+    fixedEncodeURIComponent = _require.fixedEncodeURIComponent;
 
 module.exports = function (sparql) {
-  var query = encodeURIComponent(sparql);
-  return "https://query.wikidata.org/sparql?format=json&query=" + query;
+  var query = fixedEncodeURIComponent(sparql);
+  return 'https://query.wikidata.org/sparql?format=json&query=' + query;
 };
 
-},{}],13:[function(require,module,exports){
+},{"../utils/utils":15}],13:[function(require,module,exports){
 'use strict';
 
 var wikidataApiRoot = 'https://www.wikidata.org/w/api.php';
@@ -739,7 +746,17 @@ module.exports = {
   isPlainObject: function isPlainObject(obj) {
     if (!obj || (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object' || obj instanceof Array) return false;
     return true;
+  },
+
+  // encodeURIComponent ignores !, ', (, ), and *
+  // cf https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Description
+  fixedEncodeURIComponent: function fixedEncodeURIComponent(str) {
+    return encodeURIComponent(str).replace(/[!'()*]/g, encodeCharacter);
   }
+};
+
+var encodeCharacter = function encodeCharacter(c) {
+  return '%' + c.charCodeAt(0).toString(16);
 };
 
 },{}],16:[function(require,module,exports){
