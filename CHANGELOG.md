@@ -1,6 +1,16 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.0.0 - 2017-03-28
+**Breaking Changes**:
+* ([00e3c81](https://github.com/maxlath/wikidata-sdk/commit/00e3c81)) Fixed [naming issues](https://github.com/maxlath/wikidata-sdk/issues/15):
+  * renamed `isWikidataId` => `isEntityId`
+  * renamed `isWikidataEntityId` => `isItemId`
+  * renamed `isWikidataPropertyId` => `isPropertyId`
+* ([df4301a](https://github.com/maxlath/wikidata-sdk/commit/df4301a)) Removed helpers that were only needed to work with the now-offline WDQ service that is, all helpers dealing with entities ids in there numeric id form: `isNumericId`, `normalizeId`, `getNumericId`, `normalizeIds`
+* ([a5ae25f](https://github.com/maxlath/wikidata-sdk/commit/a5ae25f)) Removed `normalizeWikidataTime` alias: use one of `wikidataTimeToDateObject`, `wikidataTimeToEpochTime`, `wikidataTimeToISOString` instead
+* ([e2158f9](https://github.com/maxlath/wikidata-sdk/commit/e2158f9)) `simplifyClaims` functions now use `wikidataTimeToISOString` as time normalizer instead of `wikidataTimeToEpochTime`
+
 ## 4.3.0 - 2017-03-28
 * Added `limit` and `caseInsensitive` options to [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk#get-entities-reverse-claims)
 
