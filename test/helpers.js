@@ -15,7 +15,7 @@ describe('helpers', function () {
   const negativeWdTime = '-0044-03-15T00:00:00Z'
   const negativeEpoch = -63549360000000
 
-  describe('normalizeWikidataTime', function () {
+  describe('wikidataTimeToEpochTime', function () {
     it('env', function (done) {
       new Date(epoch).toISOString().should.equal(ISOtime)
       new Date(negativeEpoch).toISOString().should.equal(ISOnegativeTime)
@@ -23,22 +23,22 @@ describe('helpers', function () {
     })
 
     it('should return a number (epoch time)', function (done) {
-      helpers.normalizeWikidataTime(wdTime).should.be.a.Number()
+      helpers.wikidataTimeToEpochTime(wdTime).should.be.a.Number()
       done()
     })
 
     it('should return a number for negative time', function (done) {
-      helpers.normalizeWikidataTime(negativeWdTime).should.be.a.Number()
+      helpers.wikidataTimeToEpochTime(negativeWdTime).should.be.a.Number()
       done()
     })
 
     it('should return the right number', function (done) {
-      helpers.normalizeWikidataTime(wdTime).should.equal(epoch)
+      helpers.wikidataTimeToEpochTime(wdTime).should.equal(epoch)
       done()
     })
 
     it('should return the right number for negative time too', function (done) {
-      helpers.normalizeWikidataTime(negativeWdTime).should.equal(negativeEpoch)
+      helpers.wikidataTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
       done()
     })
   })

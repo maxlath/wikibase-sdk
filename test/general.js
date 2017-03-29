@@ -31,7 +31,6 @@ describe('general', function () {
     helpers.wikidataTimeToDateObject.should.be.a.Function()
     helpers.wikidataTimeToEpochTime.should.be.a.Function()
     helpers.wikidataTimeToISOString.should.be.a.Function()
-    helpers.normalizeWikidataTime.should.be.a.Function()
 
     wdk.isEntityId.should.be.a.Function()
     wdk.isItemId.should.be.a.Function()
@@ -39,7 +38,6 @@ describe('general', function () {
     wdk.wikidataTimeToDateObject.should.be.a.Function()
     wdk.wikidataTimeToEpochTime.should.be.a.Function()
     wdk.wikidataTimeToISOString.should.be.a.Function()
-    wdk.normalizeWikidataTime.should.be.a.Function()
     done()
   })
 })
