@@ -63,7 +63,7 @@ npm install wikidata-sdk --save
 
 then in your javascript project:
 ```js
-var wdk = require('wikidata-sdk')
+const wdk = require('wikidata-sdk')
 ```
 
 ### via Bower
@@ -113,7 +113,7 @@ or, if you have NodeJS and NPM installed, you can use the awesome [live-server](
 *associated Wikidata doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
 
 ```js
-var url = wdk.searchEntities('Ingmar Bergman')
+const url = wdk.searchEntities('Ingmar Bergman')
 ```
 
 this returns a query url that you are then free to request with the tool you like
@@ -123,16 +123,16 @@ https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ingmar%20Bergm
 
 or with more parameters:
 ```js
-var search = 'Ingmar Bergman'
-var language = 'fr' // will default to 'en'
-var limit = 10 // defaults to 20
-var format = 'json' // defaults to json
+const search = 'Ingmar Bergman'
+const language = 'fr' // will default to 'en'
+const limit = 10 // defaults to 20
+const format = 'json' // defaults to json
 
-var url = wdk.searchEntities(search, language, limit, format)
+const url = wdk.searchEntities(search, language, limit, format)
 ```
 which can also be passed as an object:
 ```js
-var url = wdk.searchEntities({
+const url = wdk.searchEntities({
   search: 'Ingmar Bergman',
   format: 'xml',
   language: 'sv'
@@ -142,12 +142,12 @@ var url = wdk.searchEntities({
 By default, the `uselang` parameter (the language in which the search results are returned) is set to the same as the language passed, but if for some weird use case you need to set a different language, you can still pass a 2 letters language code:
 * as last argument (inline interface)
 ```js
-var uselang = 'eo'
-var url = wdk.searchEntities(search, language, limit, format, uselang)
+const uselang = 'eo'
+const url = wdk.searchEntities(search, language, limit, format, uselang)
 ```
 * or set `uselang` in the option object (object interface).
 ```js
-var url = wdk.searchEntities({
+const url = wdk.searchEntities({
   search: 'Ingmar Bergman',
   language: 'sv',
   uselang: 'eo'
@@ -161,11 +161,11 @@ If the values aren't available in the desired language, it will fallback to the 
 on the same pattern
 
 ```js
-var ids = 'Q571' // could also be several ids as an array: ['Q1', 'Q5', 'Q571']
-var languages = ['en', 'fr', 'de'] // returns all languages if not specified
-var properties = ['info', 'claims'] // returns all data if not specified
-var format = 'xml' // defaults to json
-var url = wdk.getEntities(ids, languages, properties, format)
+const ids = 'Q571' // could also be several ids as an array: ['Q1', 'Q5', 'Q571']
+const languages = ['en', 'fr', 'de'] // returns all languages if not specified
+const properties = ['info', 'claims'] // returns all data if not specified
+const format = 'xml' // defaults to json
+const url = wdk.getEntities(ids, languages, properties, format)
 ```
 
 properties being wikidata entities' properties: info, sitelinks, labels, descriptions, claims.
@@ -175,7 +175,7 @@ ids, languages, properties can get either one single value as a string or severa
 
 And Again, this can also be passed as an object:
 ```js
-var url = wdk.getEntities({
+const url = wdk.getEntities({
   ids: ['Q1', 'Q5', 'Q571'],
   languages: ['en', 'fr', 'de'], // returns all languages if not specified
   properties: ['info', 'claims'], // returns all data if not specified
@@ -189,11 +189,11 @@ You can use `wdk.getManyEntities` instead to generate several request urls to wo
 
 The arguments API is the same as getEntities:
 ```js
-var urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
+const urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
 // or
-var urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json')
+const urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json')
 // or
-var urls = wdk.getEntities({
+const urls = wdk.getEntities({
   ids: ['Q1', 'Q2', 'Q3', ..., 'Q123'],
   languages: ['en', 'fr', 'de'],
   properties: ['info', 'claims'],
@@ -209,25 +209,25 @@ but it returns an array of urls instead.
 
 This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
 ```js
-var url = wdk.getWikidataIdsFromWikipediaTitles('Hamburg')
+const url = wdk.getWikidataIdsFromWikipediaTitles('Hamburg')
 //=> 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg&sites=enwiki&format=json'
 
-var url = wdk.getWikidataIdsFromWikipediaTitles(['Hamburg', 'Lyon', 'Berlin'])
+const url = wdk.getWikidataIdsFromWikipediaTitles(['Hamburg', 'Lyon', 'Berlin'])
 // => 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg%7CLyon%7CBerlin&sites=enwiki&format=json'
 ```
 
 By default, it looks in the English Wikipedia, but we can change that:
 ```js
-var titles = 'Hamburg'
-var sites = 'dewiki' // or you can just pass the 2-letters language codes: 'de'
-var languages = ['en', 'fr', 'de'] // those are the languages in which we would like the entities data
-var properties = ['info', 'claims']
-var format = 'json'
-var url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, properties, format)
+const titles = 'Hamburg'
+const sites = 'dewiki' // or you can just pass the 2-letters language codes: 'de'
+const languages = ['en', 'fr', 'de'] // those are the languages in which we would like the entities data
+const properties = ['info', 'claims']
+const format = 'json'
+const url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, properties, format)
 ```
 or using the object interface:
 ```js
-var url = wdk.getWikidataIdsFromWikipediaTitles({
+const url = wdk.getWikidataIdsFromWikipediaTitles({
   titles: 'Hamburg',
   sites: 'dewiki',
   languages: ['en', 'fr', 'de'],
@@ -242,14 +242,14 @@ var url = wdk.getWikidataIdsFromWikipediaTitles({
 This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
 
 ```js
-var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwikisource')
+const url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwikisource')
 ```
 
 Actually, `getWikidataIdsFromWikipediaTitles` is just an alias of `getWikidataIdsFromSitelinks`, so you can use it for Wikipedia too:
 ```js
-var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki')
+const url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki')
 // or given it defauts to the Wikipedia project:
-var url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
+const url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
 ```
 
 #### get entities reverse claims
@@ -261,7 +261,7 @@ Fortunatly, we can use the [SPARQL endpoint](#sparql-queries) to get relations t
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
 ```js
-var url = wdk.getReverseClaims('P50', 'Q7243')
+const url = wdk.getReverseClaims('P50', 'Q7243')
 ```
 
 and you can then query the obtained entities ids
@@ -269,8 +269,8 @@ and you can then query the obtained entities ids
 ```js
 request(url, function(err, response){
   if (err) return dealWithError(err)
-  var entities = wdk.simplifySparqlResults(response.body)
-  var url2 = wdk.getEntities(entities)
+  const entities = wdk.simplifySparqlResults(response.body)
+  const url2 = wdk.getEntities(entities)
   request(url2 ....
 })
 ```
@@ -278,7 +278,7 @@ request(url, function(err, response){
 it also work for string values: e.g. let's say you want to find which book as `978-0-465-06710-7` for ISBN-13 ([P212](http://www.wikidata.org/entity/P212)):
 
 ```js
-var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
+const url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
 #### options
@@ -287,7 +287,7 @@ var url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 Default value: `1000`
 ```js
 // Find only 10 works of Victor Hugo
-var url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
+const url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
 ```
 
 * make the value **case insensitive**:
@@ -296,7 +296,7 @@ var url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
 
 ```js
 // Find entities that have a twitter username matching 'BouletCorp', without considering the case
-var url = wdk.getReverseClaims('P2002', 'BouletCorp', { caseInsensitive: true })
+const url = wdk.getReverseClaims('P2002', 'BouletCorp', { caseInsensitive: true })
 ```
 
 #### SPARQL queries
@@ -307,13 +307,13 @@ SPARQL queries are the best way to extract knowledge from Wikidata entities grap
 
 Then, to get JSON results you can [make a HTTP query to  https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with `wikidata-sdk` can be done like this:
 ```js
-var url = wdk.sparqlQuery(SPARQL)
+const url = wdk.sparqlQuery(SPARQL)
 ```
 
 Exemple taken from [inventaire SPARQL queries](https://github.com/inventaire/inventaire/tree/master/server/data/wikidata/queries) (here written using [ES6 template string](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/template_strings) capabilities)
 ```js
-var authorQid = 'Q535'
-var sparql = `
+const authorQid = 'Q535'
+const sparql = `
 SELECT ?work ?date WHERE {
   ?work wdt:P50 wd:${authorQid} .
   OPTIONAL {
@@ -321,7 +321,7 @@ SELECT ?work ?date WHERE {
   }
 }
 `
-var url = wdk.sparqlQuery(sparql)
+const url = wdk.sparqlQuery(sparql)
 // => https://query.wikidata.org/sparql?format=json&query=%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20%3Fwork%20%3Fdate%20WHERE%20%7B%0A%20%20%3Fwork%20wdt%3AP50%20wd%3AQ535%20.%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fwork%20wdt%3AP577%20%3Fdate%20.%0A%20%20%7D%0A%7D%0A
 
 ```
@@ -336,7 +336,7 @@ const defaultEndpoint = 'https://www.wikidata.org/w/api.php'
 const customEndpoint = 'https://mywikibase.instance/w/api.php'
 const customize = (url) => url.replace(defaultEndpoint, customEndpoint)
 
-var url = customize(wdk.anyOfTheQueryUrlFunctionsHereAfter(params))
+const url = customize(wdk.anyOfTheQueryUrlFunctionsHereAfter(params))
 ```
 
 ### Results parsers
@@ -417,16 +417,16 @@ That's what `simplifyClaims`, `simplifyPropertyClaims`, `simplifyClaim` do, each
 ###### simplifyClaims
 you just need to pass your entity' claims object to simplifyClaims as such:
 ```js
-var simplifiedClaims = wdk.simplifyClaims(entity.claims)
+const simplifiedClaims = wdk.simplifyClaims(entity.claims)
 ```
 
 in your workflow, that could give something like:
 
 ```js
-var url = wdk.getEntities('Q535')
+const url = wdk.getEntities('Q535')
 request(url, function(err, response){
   if (err) { dealWithError(err) }
-  var entity = response.entities.Q535
+  const entity = response.entities.Q535
   simplifiedClaims = wdk.simplifyClaims(entity.claims)
 })
 ```
@@ -436,20 +436,20 @@ To keep things simple, "weird" values are removed (for instance, statements of d
 ###### simplifyPropertyClaims
 Same as simplifyClaims but expects an array of claims, typically the array of claims of a specific property:
 ```js
-var simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
+const simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
 ```
 
 ###### simplifyClaim
 Same as simplifyClaims but expects a unique claim
 ```js
-var simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
+const simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
 ```
 
 ###### Add prefixes to entities and properties ids
 It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by passing an entity prefix and/or a property prefix as 2nd and 3rd arguments of any claim simplification function:
 ```js
-var entityPrefix = 'wd'
-var propertyPrefix = 'wdt'
+const entityPrefix = 'wd'
+const propertyPrefix = 'wdt'
 wdk.simplifyClaims(entity.claims, entityPrefix, propertyPrefix)
 wdk.simplifyPropertyClaims(entity.claims.P31, entityPrefix, propertyPrefix)
 wdk.simplifyClaim(entity.claims.P31[0], entityPrefix, propertyPrefix)
@@ -542,12 +542,12 @@ And then to make it even more simpler, we can... hum no, that's all we got.
 
 Use it like so:
 ```js
-var simplifiedResults = wdk.simplifySparqlResults(results)
+const simplifiedResults = wdk.simplifySparqlResults(results)
 ```
 or for a more complete example (using [promises](https://www.promisejs.org))
 ```js
 // see the "SPARQL Query" section above
-var url = wdk.sparqlQuery(SPARQL)
+const url = wdk.sparqlQuery(SPARQL)
 promiseRequest(url)
 .then(wdk.simplifySparqlResults)
 .then((simplifiedResults) => { // do awesome stuffs here })
