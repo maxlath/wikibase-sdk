@@ -352,8 +352,11 @@ const url = customize(wdk.anyOfTheQueryUrlFunctionsHereAfter(params))
 
 ### Results parsers
 
-#### Wikidata API queries
-you can pass the results from `wdk.searchEntities`, `wdk.getEntities`, `wdk.getWikidataIdsFromWikipediaTitles`, or `wdk.getWikidataIdsFromSitelinks` to `wdk.parse.wd.entities`, it will return entities with simplified claims (cf "simplify claims results" hereafter)
+##### Simplify entity
+Applying all simplifiers at once: labels, descriptions, aliases, claims, sitelinks. See next sections for details.
+```js
+wdk.simplify.entity(entity)
+```
 
 ##### Simplify claims results
 *associated Wikidata doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
@@ -423,12 +426,12 @@ we could have
 "P279": [ "Q340169", "Q2342494", "Q386724" ]
 ```
 
-That's what `simplifyClaims`, `simplifyPropertyClaims`, `simplifyClaim` do, each at their own level:
+That's what `simplify.claims`, `simplify.propertyClaims`, `simplify.claim` do, each at their own level:
 
-###### simplifyClaims
-you just need to pass your entity' claims object to simplifyClaims as such:
+###### simplify claims
+you just need to pass your entity' claims object to simplify.claims as such:
 ```js
-const simplifiedClaims = wdk.simplifyClaims(entity.claims)
+const simplifiedClaims = wdk.simplify.claims(entity.claims)
 ```
 
 in your workflow, that could give something like:
@@ -438,22 +441,22 @@ const url = wdk.getEntities('Q535')
 request(url, function(err, response){
   if (err) { dealWithError(err) }
   const entity = response.entities.Q535
-  simplifiedClaims = wdk.simplifyClaims(entity.claims)
+  simplifiedClaims = wdk.simplify.claims(entity.claims)
 })
 ```
 
 To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
 
-###### simplifyPropertyClaims
-Same as simplifyClaims but expects an array of claims, typically the array of claims of a specific property:
+###### simplify propertyClaims
+Same as simplify.claims but expects an array of claims, typically the array of claims of a specific property:
 ```js
-const simplifiedP31Claims = wdk.simplifyPropertyClaims(entity.claims.P31)
+const simplifiedP31Claims = wdk.simplify.propertyClaims(entity.claims.P31)
 ```
 
-###### simplifyClaim
-Same as simplifyClaims but expects a unique claim
+###### simplify claim
+Same as simplify.claims but expects a unique claim
 ```js
-const simplifiedP31Claim = wdk.simplifyClaim(entity.claims.P31[0])
+const simplifiedP31Claim = wdk.simplify.claim(entity.claims.P31[0])
 ```
 
 ###### Add prefixes to entities and properties ids
@@ -461,9 +464,9 @@ It may be useful to prefix entities and properties ids in case you work with dat
 ```js
 const entityPrefix = 'wd'
 const propertyPrefix = 'wdt'
-wdk.simplifyClaims(entity.claims, entityPrefix, propertyPrefix)
-wdk.simplifyPropertyClaims(entity.claims.P31, entityPrefix, propertyPrefix)
-wdk.simplifyClaim(entity.claims.P31[0], entityPrefix, propertyPrefix)
+wdk.simplify.claims(entity.claims, entityPrefix, propertyPrefix)
+wdk.simplify.propertyClaims(entity.claims.P31, entityPrefix, propertyPrefix)
+wdk.simplify.claim(entity.claims.P31[0], entityPrefix, propertyPrefix)
 ```
 Results would then look something like
 ```json
@@ -475,9 +478,9 @@ Results would then look something like
 ###### Keep qualifiers
 You can keep qualifiers by passing `true` as 4th arguments of any claim simplification function:
 ```js
-wdk.simplifyClaims(entity.claims, null, null, true)
-wdk.simplifyPropertyClaims(entity.claims.P50, null, null, true)
-wdk.simplifyClaim(entity.claims.P50[0], null, null, true)
+wdk.simplify.claims(entity.claims, null, null, true)
+wdk.simplify.propertyClaims(entity.claims.P50, null, null, true)
+wdk.simplify.claim(entity.claims.P50[0], null, null, true)
 ```
 Results would then look something like
 ```json
@@ -505,28 +508,28 @@ Results would then look something like
 
 ##### Simplify labels
 ```js
-wdk.simplifyLabels(entity.labels)
+wdk.simplify.labels(entity.labels)
 ```
 Before: `{ pl: { language: 'pl', value: 'książka' } }`
 After: `{ pl: 'książka' }`
 
 ##### Simplify descriptions
 ```js
-wdk.simplifyDescriptions(entity.descriptions)
+wdk.simplify.descriptions(entity.descriptions)
 ```
 Before: `{ pl: { language: 'pl', value: 'dokument piśmienniczy [...]' } }`
 After: `{ pl: 'dokument piśmienniczy [...]' }`
 
 ##### Simplify aliases
 ```js
-wdk.simplifyAliases(entity.aliases)
+wdk.simplify.aliases(entity.aliases)
 ```
 Before: `{ pl: [ { language: 'pl', value: 'Tom' }, { language: 'pl', value: 'Tomik' } ] }`
 After: `{ pl: [ 'Tom', 'Tomik' ] }`
 
 ##### Simplify sitelinks
 ```js
-wdk.simplifySitelinks(entity.sitelinks)
+wdk.simplify.sitelinks(entity.sitelinks)
 ```
 Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`
 After: `{ plwiki: 'Książka' }`
@@ -626,7 +629,7 @@ wdk.wikidataTimeToISOString(wikidataTime)
 // => '-13798000000-00-00T00:00:00Z'
 
 ```
-This is the time normalizer used by `simplifyClaims` functions
+This is the time normalizer used by `simplify.claims` functions
 
 ### A little [Promises](https://www.promisejs.org) workflow demo
 that's how I love to work :)
