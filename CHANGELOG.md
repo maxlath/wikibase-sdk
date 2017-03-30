@@ -1,6 +1,13 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.1.0 - 2017-03-31
+* Added [`simplify.entity`](https://github.com/maxlath/wikidata-sdk#simplify-entity)
+* Added [`simplify.labels`](https://github.com/maxlath/wikidata-sdk#simplify-labels)
+* Added [`simplify.descriptions`](https://github.com/maxlath/wikidata-sdk#simplify-descriptions)
+* Added [`simplify.aliases`](https://github.com/maxlath/wikidata-sdk#simplify-aliases)
+* Added [`simplify.sitelinks`](https://github.com/maxlath/wikidata-sdk#simplify-sitelinks)
+
 ## 5.0.0 - 2017-03-28
 **Breaking Changes**:
 * ([00e3c81](https://github.com/maxlath/wikidata-sdk/commit/00e3c81)) Fixed [naming issues](https://github.com/maxlath/wikidata-sdk/issues/15):
