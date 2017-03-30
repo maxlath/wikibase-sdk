@@ -40,6 +40,10 @@ used APIs:
         - [simplifyClaim](#simplifyclaim)
         - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
         - [Keep qualifiers](#keep-qualifiers)
+      - [Simplify labels](#simplify-labels)
+      - [Simplify descriptions](#simplify-descriptions)
+      - [Simplify aliases](#simplify-aliases)
+      - [Simplify sitelinks](#simplify-sitelinks)
     - [Wikidata Query (SPARQL) results](#wikidata-query-sparql-results)
       - [simplify sparql results](#simplify-sparql-results)
   - [Ids tests](#ids-tests)
@@ -498,6 +502,34 @@ Results would then look something like
   ]
 }
 ```
+
+##### Simplify labels
+```js
+wdk.simplifyLabels(entity.labels)
+```
+Before: `{ pl: { language: 'pl', value: 'książka' } }`
+After: `{ pl: 'książka' }`
+
+##### Simplify descriptions
+```js
+wdk.simplifyDescriptions(entity.descriptions)
+```
+Before: `{ pl: { language: 'pl', value: 'dokument piśmienniczy [...]' } }`
+After: `{ pl: 'dokument piśmienniczy [...]' }`
+
+##### Simplify aliases
+```js
+wdk.simplifyAliases(entity.aliases)
+```
+Before: `{ pl: [ { language: 'pl', value: 'Tom' }, { language: 'pl', value: 'Tomik' } ] }`
+After: `{ pl: [ 'Tom', 'Tomik' ] }`
+
+##### Simplify sitelinks
+```js
+wdk.simplifySitelinks(entity.sitelinks)
+```
+Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`
+After: `{ plwiki: 'Książka' }`
 
 #### Wikidata Query (SPARQL) results
 ##### simplify sparql results

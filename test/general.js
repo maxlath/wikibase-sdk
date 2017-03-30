@@ -16,6 +16,11 @@ describe('general', function () {
     wdk.simplifyPropertyClaims.should.be.a.Function()
     wdk.simplifyClaims.should.be.a.Function()
 
+    wdk.simplifyLabels.should.be.a.Function()
+    wdk.simplifyDescriptions.should.be.a.Function()
+    wdk.simplifyAliases.should.be.a.Function()
+    wdk.simplifySitelinks.should.be.a.Function()
+
     wdk.simplifySparqlResults.should.be.a.Function()
 
     parse.should.be.an.Object()
