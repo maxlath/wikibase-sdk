@@ -42,10 +42,10 @@ helpers.wikidataTimeToISOString = bestEffort(toISOString);
 
 module.exports = helpers;
 
-},{"./wikidata_time_to_date_object":4}],2:[function(require,module,exports){
+},{"./wikidata_time_to_date_object":6}],2:[function(require,module,exports){
 'use strict';
 
-var simplifyClaims = require('./simplify_claims');
+var simplifyEntity = require('./simplify_entity');
 
 module.exports = {
   wd: {
@@ -54,16 +54,15 @@ module.exports = {
       var _res = res,
           entities = _res.entities;
 
-      for (var id in entities) {
-        var entity = entities[id];
-        entity.claims = simplifyClaims(entity.claims);
-      }
+      Object.keys(entities).forEach(function (entityId) {
+        entities[entityId] = simplifyEntity(entities[entityId]);
+      });
       return entities;
     }
   }
 };
 
-},{"./simplify_claims":3}],3:[function(require,module,exports){
+},{"./simplify_entity":4}],3:[function(require,module,exports){
 'use strict';
 
 var helpers = require('./helpers');
@@ -180,6 +179,54 @@ module.exports = {
 },{"./helpers":1}],4:[function(require,module,exports){
 'use strict';
 
+var _require = require('./simplify_claims'),
+    simplifyClaims = _require.simplifyClaims;
+
+var simplify = require('./simplify_text_attributes');
+
+module.exports = function (entity) {
+  return {
+    id: entity.id,
+    type: entity.type,
+    modified: entity.modified,
+    labels: simplify.labels(entity.labels),
+    descriptions: simplify.descriptions(entity.descriptions),
+    aliases: simplify.aliases(entity.aliases),
+    claims: simplifyClaims(entity.claims),
+    sitelinks: simplify.sitelinks(entity.sitelinks)
+  };
+};
+
+},{"./simplify_claims":3,"./simplify_text_attributes":5}],5:[function(require,module,exports){
+'use strict';
+
+var simplifyTextAttributes = function simplifyTextAttributes(multivalue, attribute) {
+  return function (data) {
+    var simplifiedData = {};
+    Object.keys(data).forEach(function (lang) {
+      var obj = data[lang];
+      simplifiedData[lang] = multivalue ? obj.map(getValue) : obj[attribute];
+    });
+    return simplifiedData;
+  };
+};
+
+var getValue = function getValue(obj) {
+  return obj.value;
+};
+
+var labelsOrDescription = simplifyTextAttributes(false, 'value');
+
+module.exports = {
+  labels: labelsOrDescription,
+  descriptions: labelsOrDescription,
+  aliases: simplifyTextAttributes(true, 'value'),
+  sitelinks: simplifyTextAttributes(false, 'title')
+};
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
 module.exports = function (wikidataTime) {
   var sign = wikidataTime[0];
   var rest = wikidataTime.slice(1);
@@ -213,7 +260,7 @@ var parseInvalideDate = function parseInvalideDate(sign, rest) {
   return fullDateData(sign, year);
 };
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 var wdk = module.exports = {};
@@ -226,30 +273,26 @@ wdk.sparqlQuery = require('./queries/sparql_query');
 wdk.getReverseClaims = require('./queries/get_reverse_claims');
 wdk.parse = require('./helpers/parse_responses');
 
-var _require = require('./helpers/simplify_claims'),
-    simplifyClaim = _require.simplifyClaim,
-    simplifyPropertyClaims = _require.simplifyPropertyClaims,
-    simplifyClaims = _require.simplifyClaims;
+var claimsSimplifiers = require('./helpers/simplify_claims');
+var simplifySparqlResults = require('./queries/simplify_sparql_results');
 
-wdk.simplifyClaim = simplifyClaim;
-wdk.simplifyPropertyClaims = simplifyPropertyClaims;
-wdk.simplifyClaims = simplifyClaims;
+wdk.simplify = require('../lib/helpers/simplify_text_attributes');
+wdk.simplify.entity = require('../lib/helpers/simplify_entity');
+wdk.simplify.claim = claimsSimplifiers.simplifyClaim;
+wdk.simplify.propertyClaims = claimsSimplifiers.simplifyPropertyClaims;
+wdk.simplify.claims = claimsSimplifiers.simplifyClaims;
+wdk.simplify.sparqlResults = simplifySparqlResults;
 
+// Legacy
 wdk.simplifySparqlResults = require('./queries/simplify_sparql_results');
+Object.assign(wdk, claimsSimplifiers);
 
 // Aliases
 wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks;
 
-// Making helpers both available from root
-// and from wdk.helpers
-var helpers = require('./helpers/helpers');
-wdk.helpers = helpers;
-// equivalent to _.extend wdk, helpers
-for (var key in helpers) {
-  wdk[key] = helpers[key];
-}
+Object.assign(wdk, require('./helpers/helpers'));
 
-},{"./helpers/helpers":1,"./helpers/parse_responses":2,"./helpers/simplify_claims":3,"./queries/get_entities":6,"./queries/get_many_entities":7,"./queries/get_reverse_claims":8,"./queries/get_wikidata_ids_from_sitelinks":9,"./queries/search_entities":10,"./queries/simplify_sparql_results":11,"./queries/sparql_query":12}],6:[function(require,module,exports){
+},{"../lib/helpers/simplify_entity":4,"../lib/helpers/simplify_text_attributes":5,"./helpers/helpers":1,"./helpers/parse_responses":2,"./helpers/simplify_claims":3,"./queries/get_entities":8,"./queries/get_many_entities":9,"./queries/get_reverse_claims":10,"./queries/get_wikidata_ids_from_sitelinks":11,"./queries/search_entities":12,"./queries/simplify_sparql_results":13,"./queries/sparql_query":14}],8:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -301,7 +344,7 @@ module.exports = function (ids, languages, props, format) {
   return buildUrl(query);
 };
 
-},{"../utils/build_url":13,"../utils/utils":15}],7:[function(require,module,exports){
+},{"../utils/build_url":15,"../utils/utils":17}],9:[function(require,module,exports){
 'use strict';
 
 var _templateObject = _taggedTemplateLiteral(['getManyEntities expects an array of ids'], ['getManyEntities expects an array of ids']);
@@ -341,7 +384,7 @@ var getIdsGroups = function getIdsGroups(ids) {
   return groups;
 };
 
-},{"../utils/utils":15,"./get_entities":6}],8:[function(require,module,exports){
+},{"../utils/utils":17,"./get_entities":8}],10:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/helpers');
@@ -378,7 +421,7 @@ function caseInsensitiveValueQuery(property, value, limit) {
   return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n  }\n  LIMIT ' + limit;
 }
 
-},{"../helpers/helpers":1,"./sparql_query":12}],9:[function(require,module,exports){
+},{"../helpers/helpers":1,"./sparql_query":14}],11:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -436,7 +479,7 @@ var parseSite = function parseSite(site) {
   return site.length === 2 ? site + 'wiki' : site;
 };
 
-},{"../utils/build_url":13,"../utils/utils":15}],10:[function(require,module,exports){
+},{"../utils/build_url":15,"../utils/utils":17}],12:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -473,7 +516,7 @@ module.exports = function (search, language, limit, format, uselang) {
   });
 };
 
-},{"../utils/build_url":13,"../utils/utils":15}],11:[function(require,module,exports){
+},{"../utils/build_url":15,"../utils/utils":17}],13:[function(require,module,exports){
 'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -658,7 +701,7 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
   };
 };
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 var _require = require('../utils/utils'),
@@ -669,7 +712,7 @@ module.exports = function (sparql) {
   return 'https://query.wikidata.org/sparql?format=json&query=' + query;
 };
 
-},{"../utils/utils":15}],13:[function(require,module,exports){
+},{"../utils/utils":17}],15:[function(require,module,exports){
 'use strict';
 
 var wikidataApiRoot = 'https://www.wikidata.org/w/api.php';
@@ -683,7 +726,7 @@ module.exports = function (queryObj) {
   return wikidataApiRoot + '?' + qs.stringify(queryObj);
 };
 
-},{"./querystring_lite":14,"querystring":18}],14:[function(require,module,exports){
+},{"./querystring_lite":16,"querystring":20}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -704,7 +747,7 @@ module.exports = {
   }
 };
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -739,7 +782,7 @@ var encodeCharacter = function encodeCharacter(c) {
   return '%' + c.charCodeAt(0).toString(16);
 };
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -825,7 +868,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -912,11 +955,11 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":16,"./encode":17}]},{},[5])(5)
+},{"./decode":18,"./encode":19}]},{},[7])(7)
 });
