@@ -4,7 +4,7 @@ const wdk = require('../lib/index')
 describe('general', function () {
   it('env', function (done) {
     wdk.should.be.an.Object()
-    const { parse, helpers } = wdk
+    const { parse } = wdk
 
     wdk.searchEntities.should.be.a.Function()
     wdk.getEntities.should.be.a.Function()
@@ -34,13 +34,12 @@ describe('general', function () {
 
     wdk.getWikidataIdsFromWikipediaTitles.should.be.a.Function()
 
-    helpers.should.be.an.Object()
-    helpers.isEntityId.should.be.a.Function()
-    helpers.isItemId.should.be.a.Function()
-    helpers.isPropertyId.should.be.a.Function()
-    helpers.wikidataTimeToDateObject.should.be.a.Function()
-    helpers.wikidataTimeToEpochTime.should.be.a.Function()
-    helpers.wikidataTimeToISOString.should.be.a.Function()
+    wdk.isEntityId.should.be.a.Function()
+    wdk.isItemId.should.be.a.Function()
+    wdk.isPropertyId.should.be.a.Function()
+    wdk.wikidataTimeToDateObject.should.be.a.Function()
+    wdk.wikidataTimeToEpochTime.should.be.a.Function()
+    wdk.wikidataTimeToISOString.should.be.a.Function()
 
     wdk.isEntityId.should.be.a.Function()
     wdk.isItemId.should.be.a.Function()
