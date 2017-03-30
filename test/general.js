@@ -12,15 +12,20 @@ describe('general', function () {
     wdk.getWikidataIdsFromSitelinks.should.be.a.Function()
     wdk.getReverseClaims.should.be.a.Function()
 
+    wdk.simplify.should.be.a.Object()
+    wdk.simplify.labels.should.be.a.Function()
+    wdk.simplify.descriptions.should.be.a.Function()
+    wdk.simplify.aliases.should.be.a.Function()
+    wdk.simplify.sitelinks.should.be.a.Function()
+    wdk.simplify.claim.should.be.a.Function()
+    wdk.simplify.propertyClaims.should.be.a.Function()
+    wdk.simplify.claims.should.be.a.Function()
+    wdk.simplify.sparqlResults.should.be.a.Function()
+
+    // Legacy
     wdk.simplifyClaim.should.be.a.Function()
     wdk.simplifyPropertyClaims.should.be.a.Function()
     wdk.simplifyClaims.should.be.a.Function()
-
-    wdk.simplifyLabels.should.be.a.Function()
-    wdk.simplifyDescriptions.should.be.a.Function()
-    wdk.simplifyAliases.should.be.a.Function()
-    wdk.simplifySitelinks.should.be.a.Function()
-
     wdk.simplifySparqlResults.should.be.a.Function()
 
     parse.should.be.an.Object()

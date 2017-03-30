@@ -1,8 +1,11 @@
 const should = require('should')
-const _ = require('lodash')
 const Q571 = require('./data/Q571.json')
 
-const { simplifyLabels, simplifyDescriptions, simplifyAliases, simplifySitelinks } = require('../lib/helpers/simplify_text_attributes')
+const simplify = require('../lib/helpers/simplify_text_attributes')
+const simplifyLabels = simplify.labels
+const simplifyDescriptions = simplify.descriptions
+const simplifyAliases = simplify.aliases
+const simplifySitelinks = simplify.sitelinks
 
 describe('simplifyLabels', () => {
   it('should simplify labels', (done) => {
