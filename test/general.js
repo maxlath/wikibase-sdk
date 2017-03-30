@@ -13,6 +13,7 @@ describe('general', function () {
     wdk.getReverseClaims.should.be.a.Function()
 
     wdk.simplify.should.be.a.Object()
+    wdk.simplify.entity.should.be.a.Function()
     wdk.simplify.labels.should.be.a.Function()
     wdk.simplify.descriptions.should.be.a.Function()
     wdk.simplify.aliases.should.be.a.Function()
