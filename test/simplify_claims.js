@@ -338,4 +338,3 @@ describe('simplify claims functions legacy options interface', function () {
     })
   })
 })
-
