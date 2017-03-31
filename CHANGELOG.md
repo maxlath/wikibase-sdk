@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.2.0 - 2017-03-31
+* Added option `timeConverter` to [`simplify.claims`](docs/simplify_claims.md) functions
+
 ## 5.1.0 - 2017-03-31
 * Added [`simplify.entity`](https://github.com/maxlath/wikidata-sdk/blob/master/simplify_entities_data.md#simplify-entity)
 * Added [`simplify.labels`](https://github.com/maxlath/wikidata-sdk/blob/master/simplify_entities_data.md#simplify-labels)
