@@ -4,6 +4,10 @@
 var toDateObject = require('./wikidata_time_to_date_object');
 
 var helpers = {};
+helpers.isNumericId = function (id) {
+  return (/^[0-9]+$/.test(id)
+  );
+};
 helpers.isEntityId = function (id) {
   return (/^(Q|P)[0-9]+$/.test(id)
   );
@@ -15,6 +19,11 @@ helpers.isItemId = function (id) {
 helpers.isPropertyId = function (id) {
   return (/^P[0-9]+$/.test(id)
   );
+};
+
+helpers.getNumericId = function (id) {
+  if (!helpers.isEntityId(id)) throw new Error('invalid wikidata id: ' + id);
+  return id.replace(/Q|P/, '');
 };
 
 helpers.wikidataTimeToDateObject = toDateObject;
