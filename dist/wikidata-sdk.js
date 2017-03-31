@@ -107,6 +107,7 @@ var claimParsers = {
   commonsMedia: simple,
   url: simple,
   'external-id': simple,
+  math: simple,
   monolingualtext: monolingualtext,
   'wikibase-item': item,
   'wikibase-property': property,
