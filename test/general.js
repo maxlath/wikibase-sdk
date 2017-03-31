@@ -38,6 +38,8 @@ describe('general', function () {
     wdk.isEntityId.should.be.a.Function()
     wdk.isItemId.should.be.a.Function()
     wdk.isPropertyId.should.be.a.Function()
+    wdk.isNumericId.should.be.a.Function()
+    wdk.getNumericId.should.be.a.Function()
     wdk.wikidataTimeToDateObject.should.be.a.Function()
     wdk.wikidataTimeToEpochTime.should.be.a.Function()
     wdk.wikidataTimeToISOString.should.be.a.Function()
