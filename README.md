@@ -460,13 +460,12 @@ const simplifiedP31Claim = wdk.simplify.claim(entity.claims.P31[0])
 ```
 
 ###### Add prefixes to entities and properties ids
-It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by passing an entity prefix and/or a property prefix as 2nd and 3rd arguments of any claim simplification function:
+It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by setting an entity prefix and/or a property prefix in the options:
 ```js
-const entityPrefix = 'wd'
-const propertyPrefix = 'wdt'
-wdk.simplify.claims(entity.claims, entityPrefix, propertyPrefix)
-wdk.simplify.propertyClaims(entity.claims.P31, entityPrefix, propertyPrefix)
-wdk.simplify.claim(entity.claims.P31[0], entityPrefix, propertyPrefix)
+const options = { entityPrefix: 'wd', propertyPrefix: 'wdt' }
+wdk.simplify.claims(entity.claims, options)
+wdk.simplify.propertyClaims(entity.claims.P31, options)
+wdk.simplify.claim(entity.claims.P31[0], options)
 ```
 Results would then look something like
 ```json
@@ -476,11 +475,11 @@ Results would then look something like
 ```
 
 ###### Keep qualifiers
-You can keep qualifiers by passing `true` as 4th arguments of any claim simplification function:
+You can keep qualifiers by passing `keepQualifiers: true` in the options:
 ```js
-wdk.simplify.claims(entity.claims, null, null, true)
-wdk.simplify.propertyClaims(entity.claims.P50, null, null, true)
-wdk.simplify.claim(entity.claims.P50[0], null, null, true)
+wdk.simplify.claims(entity.claims, { keepQualifiers: true })
+wdk.simplify.propertyClaims(entity.claims.P50, { keepQualifiers: true })
+wdk.simplify.claim(entity.claims.P50[0], { keepQualifiers: true })
 ```
 Results would then look something like
 ```json
