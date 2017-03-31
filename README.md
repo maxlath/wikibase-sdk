@@ -28,8 +28,8 @@ A set of tools to **read** Wikidata from the [Wikidata API](https://www.wikidata
 ### Wikidata Query
 [Wikidata Query](http://query.wikidata.org/) allows to extract all sorts of data from Wikidata by walking the graph of entities using [SPARQL](https://en.wikipedia.org/wiki/SPARQL). SPARQL can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a super rich [Wikidata Query Help](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Wikidata_Query_Help) page, [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), and [lots of examples](https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:SPARQL_query_service/queries/examples)!
 
-* [Get JSON from a SPARQL query](docs/sparql_queries.md)
-* [Simplify results](docs/simplify_sparql_results.md)
+* **[Get JSON from a SPARQL query](docs/sparql_queries.md)**
+* **[Simplify results](docs/simplify_sparql_results.md)**
 * **Pre-baked queries**
   * [Get entities reverse claims](docs/get_entities_reverse_claims.md)
 
