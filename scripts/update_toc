@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+docs_with_doctoc=$(grep -r 'Summary' docs | sed 's/:.*//')
+doctoc $docs_with_doctoc

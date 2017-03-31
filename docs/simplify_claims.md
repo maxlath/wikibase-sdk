@@ -1,6 +1,23 @@
 # Simplify claims
 *associated Wikidata doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
 
+## Summary
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Intro](#intro)
+- [simplify.claims](#simplifyclaims)
+- [simplify.propertyClaims](#simplifypropertyclaims)
+- [simplify.claim](#simplifyclaim)
+- [Options](#options)
+  - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
+  - [Keep qualifiers](#keep-qualifiers)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Intro
 For each entities claims, Wikidata's API returns a deep object that requires some parsing that could be avoided for simple uses.
 
 So instead of:
@@ -67,23 +84,6 @@ we could have
 ```
 
 That's what `simplify.claims`, `simplify.propertyClaims`, `simplify.claim` do, each at their own level.
-
-
-## Summary
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [simplify.claims](#simplifyclaims)
-- [simplify.propertyClaims](#simplifypropertyclaims)
-- [simplify.claim](#simplifyclaim)
-- [Options](#options)
-  - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
-  - [Keep qualifiers](#keep-qualifiers)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 
 ## simplify.claims
 you just need to pass your entity' claims object to simplify.claims as such:

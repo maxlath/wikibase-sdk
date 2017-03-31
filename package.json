@@ -16,7 +16,7 @@
     "prepublish": "./scripts/prepublish",
     "update-bower": "./scripts/update_bower",
     "bump-version": "./scripts/bump_version",
-    "update-toc": "doctoc README.md docs/*",
+    "update-toc": "./scripts/update_toc",
     "add-fixture-entity": "./scripts/add_fixture_entity"
   },
   "repository": {
