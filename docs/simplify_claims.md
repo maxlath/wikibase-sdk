@@ -168,3 +168,15 @@ Results would then look something like
   ]
 }
 ```
+
+### Change time parser
+
+By default, `simplify.claims` functions use [`wikidataTimeToISOString`](general_helpers.md#wikidataTimeToISOString) to parse [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times).
+
+You can nevertheless request to use a different converter by setting the option `timeConverter`.
+
+Possible modes:
+
+* `iso`: the default value
+* `epoch`: get the time value as the milliseconds elapsed since 1 January 1970 00:00:00 UTC (as returned by [Javascript `getTime`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime))
+* `none`: get the raw non-standard Wikidata `time` string (ex: `+1885-00-00T00:00:00Z`)

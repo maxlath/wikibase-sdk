@@ -35,6 +35,7 @@ Accepts both `P` and `Q` ids
 ### getNumericId
 
 ## Wikidata Time converters
+> See [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times)
 
 ### wikidataTimeToDateObject
 

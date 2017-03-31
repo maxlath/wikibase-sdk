@@ -202,6 +202,17 @@ describe('simplifyClaim', function () {
     simplifiedWithQualifiers.qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
     done()
   })
+
+  it('should use a custom time converter when one is set', function (done) {
+    const timeClaim = (converter) => {
+      return simplifyClaim(Q646148.claims.P569[0], { timeConverter: converter })
+    }
+    timeClaim().should.equal('1939-11-08T00:00:00.000Z')
+    timeClaim('iso').should.equal('1939-11-08T00:00:00.000Z')
+    timeClaim('epoch').should.equal(-951436800000)
+    timeClaim('none').should.equal('+1939-11-08T00:00:00Z')
+    done()
+  })
 })
 
 describe('simplify claims functions legacy options interface', function () {
