@@ -51,7 +51,71 @@ helpers.wikidataTimeToISOString = bestEffort(toISOString);
 
 module.exports = helpers;
 
-},{"./wikidata_time_to_date_object":6}],2:[function(require,module,exports){
+},{"./wikidata_time_to_date_object":7}],2:[function(require,module,exports){
+'use strict';
+
+var _require = require('./helpers'),
+    wikidataTimeToISOString = _require.wikidataTimeToISOString,
+    wikidataTimeToEpochTime = _require.wikidataTimeToEpochTime;
+
+module.exports = function (datatype, datavalue, options) {
+  return claimParsers[datatype](datavalue, options);
+};
+
+var simple = function simple(datavalue) {
+  return datavalue.value;
+};
+var monolingualtext = function monolingualtext(datavalue) {
+  return datavalue.value.text;
+};
+var item = function item(datavalue, options) {
+  return prefixedId(datavalue, options.entityPrefix);
+};
+var property = function property(datavalue, options) {
+  return prefixedId(datavalue, options.propertyPrefix);
+};
+var prefixedId = function prefixedId(datavalue, prefix) {
+  var id = datavalue.value.id;
+
+  return typeof prefix === 'string' ? prefix + ':' + id : id;
+};
+var quantity = function quantity(datavalue) {
+  return parseFloat(datavalue.value.amount);
+};
+var coordinate = function coordinate(datavalue) {
+  return [datavalue.value.latitude, datavalue.value.longitude];
+};
+var time = function time(datavalue, options) {
+  return getTimeConverter(options.timeConverter)(datavalue.value.time);
+};
+var getTimeConverter = function getTimeConverter() {
+  var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'iso';
+  return timeConverters[key];
+};
+var identity = function identity(arg) {
+  return arg;
+};
+
+var timeConverters = {
+  iso: wikidataTimeToISOString,
+  epoch: wikidataTimeToEpochTime,
+  none: identity
+};
+
+var claimParsers = {
+  string: simple,
+  commonsMedia: simple,
+  url: simple,
+  'external-id': simple,
+  monolingualtext: monolingualtext,
+  'wikibase-item': item,
+  'wikibase-property': property,
+  time: time,
+  quantity: quantity,
+  'globe-coordinate': coordinate
+};
+
+},{"./helpers":1}],3:[function(require,module,exports){
 'use strict';
 
 var simplifyEntity = require('./simplify_entity');
@@ -71,30 +135,45 @@ module.exports = {
   }
 };
 
-},{"./simplify_entity":4}],3:[function(require,module,exports){
+},{"./simplify_entity":5}],4:[function(require,module,exports){
 'use strict';
 
-var helpers = require('./helpers');
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var parseClaim = require('./parse_claim');
 
 // Expects an entity 'claims' object
 // Ex: entity.claims
-var simplifyClaims = function simplifyClaims(claims, entityPrefix, propertyPrefix, keepQualifiers) {
+var simplifyClaims = function simplifyClaims(claims) {
+  for (var _len = arguments.length, options = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    options[_key - 1] = arguments[_key];
+  }
+
+  var _parseOptions = parseOptions(options),
+      propertyPrefix = _parseOptions.propertyPrefix;
+
   var simpleClaims = {};
   for (var id in claims) {
     var propClaims = claims[id];
     if (propertyPrefix) {
       id = propertyPrefix + ':' + id;
     }
-    simpleClaims[id] = simplifyPropertyClaims(propClaims, entityPrefix, propertyPrefix, keepQualifiers);
+    simpleClaims[id] = simplifyPropertyClaims.apply(undefined, [propClaims].concat(options));
   }
   return simpleClaims;
 };
 
 // Expects the 'claims' array of a particular property
 // Ex: entity.claims.P369
-var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims, entityPrefix, propertyPrefix, keepQualifiers) {
+var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims) {
+  for (var _len2 = arguments.length, options = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    options[_key2 - 1] = arguments[_key2];
+  }
+
   return propClaims.map(function (claim) {
-    return simplifyClaim(claim, entityPrefix, propertyPrefix, keepQualifiers);
+    return simplifyClaim.apply(undefined, [claim].concat(options));
   }).filter(nonNull);
 };
 
@@ -104,88 +183,64 @@ var nonNull = function nonNull(obj) {
 
 // Expects a single claim object
 // Ex: entity.claims.P369[0]
-var simplifyClaim = function simplifyClaim(claim, entityPrefix, propertyPrefix, keepQualifiers) {
+var simplifyClaim = function simplifyClaim(claim) {
+  for (var _len3 = arguments.length, options = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+    options[_key3 - 1] = arguments[_key3];
+  }
+
+  options = parseOptions(options);
+  var _options = options,
+      keepQualifiers = _options.keepQualifiers;
   // tries to replace wikidata deep claim object by a simple value
   // e.g. a string, an entity Qid or an epoch time number
+
   var mainsnak = claim.mainsnak,
       qualifiers = claim.qualifiers;
 
-  // should only happen in snaktype: `novalue` cases or alikes
 
-  if (mainsnak == null) return null;
-
-  var datatype = mainsnak.datatype,
-      datavalue = mainsnak.datavalue;
-  // known case: snaktype set to `somevalue`
-
-  if (datavalue == null) return null;
-
-  var value = null;
-
-  switch (datatype) {
-    case 'string':
-    case 'commonsMedia':
-    case 'url':
-    case 'external-id':
-      value = datavalue.value;
-      break;
-    case 'monolingualtext':
-      value = datavalue.value.text;
-      break;
-    case 'wikibase-item':
-      value = prefixedId(datavalue, entityPrefix);
-      break;
-    case 'wikibase-property':
-      value = prefixedId(datavalue, propertyPrefix);
-      break;
-    case 'time':
-      value = helpers.wikidataTimeToISOString(datavalue.value.time);
-      break;
-    case 'quantity':
-      value = parseFloat(datavalue.value.amount);
-      break;
-    case 'globe-coordinate':
-      value = getLatLngFromCoordinates(datavalue.value);
-      break;
-  }
-
-  if (keepQualifiers) {
-    var simpleQualifiers = {};
-
-    for (var qualifierProp in qualifiers) {
-      simpleQualifiers[qualifierProp] = qualifiers[qualifierProp].map(prepareQualifierClaim);
-    }
-
-    return {
-      value: value,
-      qualifiers: simplifyClaims(simpleQualifiers, entityPrefix, propertyPrefix)
-    };
+  var datatype, datavalue, isQualifier;
+  if (mainsnak) {
+    datatype = mainsnak.datatype;
+    datavalue = mainsnak.datavalue;
+    // Known case: snaktype set to `somevalue`
+    if (!datavalue) return null;
   } else {
-    return value;
+    // Should only happen in snaktype: `novalue` cases or alikes
+    if (!(claim && claim.datavalue)) return null;
+    // Qualifiers have no mainsnak, and define datatype, datavalue on claim
+    datavalue = claim.datavalue;
+    datatype = claim.datatype;
+    isQualifier = true;
   }
+
+  var value = parseClaim(datatype, datavalue, options);
+
+  // Qualifiers should not attempt to keep sub-qualifiers
+  if (!keepQualifiers || isQualifier) return value;
+
+  // When keeping qualifiers, the value becomes an object
+  // instead of a direct value
+  return { value: value, qualifiers: simplifyClaims(qualifiers, options) };
 };
 
-var prefixedId = function prefixedId(datavalue, prefix) {
-  var id = datavalue.value.id;
+var parseOptions = function parseOptions(options) {
+  if (options == null) return {};
 
-  return typeof prefix === 'string' ? prefix + ':' + id : id;
+  if (options[0] && _typeof(options[0]) === 'object') return options[0];
+
+  // Legacy interface
+
+  var _options2 = _slicedToArray(options, 3),
+      entityPrefix = _options2[0],
+      propertyPrefix = _options2[1],
+      keepQualifiers = _options2[2];
+
+  return { entityPrefix: entityPrefix, propertyPrefix: propertyPrefix, keepQualifiers: keepQualifiers };
 };
 
-var getLatLngFromCoordinates = function getLatLngFromCoordinates(value) {
-  return [value.latitude, value.longitude];
-};
+module.exports = { simplifyClaims: simplifyClaims, simplifyPropertyClaims: simplifyPropertyClaims, simplifyClaim: simplifyClaim };
 
-var prepareQualifierClaim = function prepareQualifierClaim(claim) {
-  return { mainsnak: claim };
-};
-
-module.exports = {
-  simplifyClaims: simplifyClaims,
-  simplifyPropertyClaims: simplifyPropertyClaims,
-  simplifyClaim: simplifyClaim
-};
-
-},{"./helpers":1}],4:[function(require,module,exports){
+},{"./parse_claim":2}],5:[function(require,module,exports){
 'use strict';
 
 var _require = require('./simplify_claims'),
@@ -206,7 +261,7 @@ module.exports = function (entity) {
   };
 };
 
-},{"./simplify_claims":3,"./simplify_text_attributes":5}],5:[function(require,module,exports){
+},{"./simplify_claims":4,"./simplify_text_attributes":6}],6:[function(require,module,exports){
 'use strict';
 
 var simplifyTextAttributes = function simplifyTextAttributes(multivalue, attribute) {
@@ -233,7 +288,7 @@ module.exports = {
   sitelinks: simplifyTextAttributes(false, 'title')
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 module.exports = function (wikidataTime) {
@@ -269,7 +324,7 @@ var parseInvalideDate = function parseInvalideDate(sign, rest) {
   return fullDateData(sign, year);
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 var wdk = module.exports = {};
@@ -301,7 +356,7 @@ wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks;
 
 Object.assign(wdk, require('./helpers/helpers'));
 
-},{"../lib/helpers/simplify_entity":4,"../lib/helpers/simplify_text_attributes":5,"./helpers/helpers":1,"./helpers/parse_responses":2,"./helpers/simplify_claims":3,"./queries/get_entities":8,"./queries/get_many_entities":9,"./queries/get_reverse_claims":10,"./queries/get_wikidata_ids_from_sitelinks":11,"./queries/search_entities":12,"./queries/simplify_sparql_results":13,"./queries/sparql_query":14}],8:[function(require,module,exports){
+},{"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_text_attributes":6,"./helpers/helpers":1,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./queries/get_entities":9,"./queries/get_many_entities":10,"./queries/get_reverse_claims":11,"./queries/get_wikidata_ids_from_sitelinks":12,"./queries/search_entities":13,"./queries/simplify_sparql_results":14,"./queries/sparql_query":15}],9:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -353,7 +408,7 @@ module.exports = function (ids, languages, props, format) {
   return buildUrl(query);
 };
 
-},{"../utils/build_url":15,"../utils/utils":17}],9:[function(require,module,exports){
+},{"../utils/build_url":16,"../utils/utils":18}],10:[function(require,module,exports){
 'use strict';
 
 var _templateObject = _taggedTemplateLiteral(['getManyEntities expects an array of ids'], ['getManyEntities expects an array of ids']);
@@ -393,7 +448,7 @@ var getIdsGroups = function getIdsGroups(ids) {
   return groups;
 };
 
-},{"../utils/utils":17,"./get_entities":8}],10:[function(require,module,exports){
+},{"../utils/utils":18,"./get_entities":9}],11:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/helpers');
@@ -430,7 +485,7 @@ function caseInsensitiveValueQuery(property, value, limit) {
   return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n  }\n  LIMIT ' + limit;
 }
 
-},{"../helpers/helpers":1,"./sparql_query":14}],11:[function(require,module,exports){
+},{"../helpers/helpers":1,"./sparql_query":15}],12:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -488,7 +543,7 @@ var parseSite = function parseSite(site) {
   return site.length === 2 ? site + 'wiki' : site;
 };
 
-},{"../utils/build_url":15,"../utils/utils":17}],12:[function(require,module,exports){
+},{"../utils/build_url":16,"../utils/utils":18}],13:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -525,7 +580,7 @@ module.exports = function (search, language, limit, format, uselang) {
   });
 };
 
-},{"../utils/build_url":15,"../utils/utils":17}],13:[function(require,module,exports){
+},{"../utils/build_url":16,"../utils/utils":18}],14:[function(require,module,exports){
 'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -710,7 +765,7 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
   };
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 var _require = require('../utils/utils'),
@@ -721,7 +776,7 @@ module.exports = function (sparql) {
   return 'https://query.wikidata.org/sparql?format=json&query=' + query;
 };
 
-},{"../utils/utils":17}],15:[function(require,module,exports){
+},{"../utils/utils":18}],16:[function(require,module,exports){
 'use strict';
 
 var wikidataApiRoot = 'https://www.wikidata.org/w/api.php';
@@ -735,7 +790,7 @@ module.exports = function (queryObj) {
   return wikidataApiRoot + '?' + qs.stringify(queryObj);
 };
 
-},{"./querystring_lite":16,"querystring":20}],16:[function(require,module,exports){
+},{"./querystring_lite":17,"querystring":21}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -756,7 +811,7 @@ module.exports = {
   }
 };
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -791,7 +846,7 @@ var encodeCharacter = function encodeCharacter(c) {
   return '%' + c.charCodeAt(0).toString(16);
 };
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -877,7 +932,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -964,11 +1019,11 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":18,"./encode":19}]},{},[7])(7)
+},{"./decode":19,"./encode":20}]},{},[8])(8)
 });
