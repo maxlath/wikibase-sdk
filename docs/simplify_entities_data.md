@@ -28,26 +28,26 @@ That's a huge chunk so it got it's own doc page: [simplify claims](simplify_clai
 ```js
 wdk.simplify.labels(entity.labels)
 ```
-Before: `{ pl: { language: 'pl', value: 'książka' } }`
+Before: `{ pl: { language: 'pl', value: 'książka' } }`<br>
 After: `{ pl: 'książka' }`
 
 ## Simplify descriptions
 ```js
 wdk.simplify.descriptions(entity.descriptions)
 ```
-Before: `{ pl: { language: 'pl', value: 'dokument piśmienniczy [...]' } }`
+Before: `{ pl: { language: 'pl', value: 'dokument piśmienniczy [...]' } }`<br>
 After: `{ pl: 'dokument piśmienniczy [...]' }`
 
 ## Simplify aliases
 ```js
 wdk.simplify.aliases(entity.aliases)
 ```
-Before: `{ pl: [ { language: 'pl', value: 'Tom' }, { language: 'pl', value: 'Tomik' } ] }`
+Before: `{ pl: [ { language: 'pl', value: 'Tom' }, { language: 'pl', value: 'Tomik' } ] }`<br>
 After: `{ pl: [ 'Tom', 'Tomik' ] }`
 
 ## Simplify sitelinks
 ```js
 wdk.simplify.sitelinks(entity.sitelinks)
 ```
-Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`
+Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`<br>
 After: `{ plwiki: 'Książka' }`
