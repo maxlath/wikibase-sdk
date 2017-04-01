@@ -7,5 +7,5 @@ const defaultInstance = 'https://www.wikidata.org/w/api.php'
 const customInstance = 'https://mywikibase.instance/w/api.php'
 const customize = (url) => url.replace(defaultInstance, customInstance)
 
-const url = customize(wdk.anyOfTheQueryUrlFunctionsHereAfter(params))
+const url = customize(wdk.anyOfTheQueryUrlFunctions(params))
 ```
