@@ -22,7 +22,7 @@ Applying all simplifiers at once: labels, descriptions, aliases, claims, sitelin
 wdk.simplify.entity(entity)
 ```
 ## Simplify claims
-That's a huge chunk so it got it's own doc page: [simplify claims](docs/simplify_claims.md)
+That's a huge chunk so it got it's own doc page: [simplify claims](simplify_claims.md)
 
 ## Simplify labels
 ```js
