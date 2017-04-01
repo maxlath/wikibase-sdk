@@ -77,11 +77,21 @@ describe('wikidata getEntities', function () {
       done()
     })
   })
-  describe('properties', function () {
+  describe('props', function () {
     it('default to no property specified', function (done) {
       const url = getEntities('Q702741', ['es', 'fi'])
       url.should.equal(getEntities({ids: 'Q702741', languages: ['es', 'fi']}))
       url.should.not.match(new RegExp('&props'))
+      done()
+    })
+    it('include the requested property', function (done) {
+      const url = getEntities({ids: 'Q702741', props: 'claims'})
+      url.should.match(new RegExp('&props=claims'))
+      done()
+    })
+    it('include the requested properties', function (done) {
+      const url = getEntities({ids: 'Q702741', props: ['claims', 'info']})
+      url.should.match(new RegExp('&props=claims|info'))
       done()
     })
   })
