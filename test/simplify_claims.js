@@ -105,7 +105,7 @@ describe('simplifyPropertyClaims', function () {
     const simplified = simplifyPropertyClaims(Q22002395.claims.P50)
     // Q22002395 P50 has 2 values with "snaktype": "somevalue"
     // that should be removed
-    _.all(simplified, (qid) => qid != null).should.equal(true)
+    _.every(simplified, (qid) => qid != null).should.equal(true)
     done()
   })
 
