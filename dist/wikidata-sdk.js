@@ -58,10 +58,6 @@ var _require = require('./helpers'),
     wikidataTimeToISOString = _require.wikidataTimeToISOString,
     wikidataTimeToEpochTime = _require.wikidataTimeToEpochTime;
 
-module.exports = function (datatype, datavalue, options) {
-  return claimParsers[datatype](datavalue, options);
-};
-
 var simple = function simple(datavalue) {
   return datavalue.value;
 };
@@ -114,6 +110,10 @@ var claimParsers = {
   time: time,
   quantity: quantity,
   'globe-coordinate': coordinate
+};
+
+module.exports = function (datatype, datavalue, options) {
+  return claimParsers[datatype](datavalue, options);
 };
 
 },{"./helpers":1}],3:[function(require,module,exports){
@@ -370,18 +370,20 @@ var _require = require('../utils/utils'),
 module.exports = function (ids, languages, props, format) {
   // polymorphism: arguments can be passed as an object keys
   if (isPlainObject(ids)) {
-    // Not using destructuring assigment there as it messes with both babel and standard
-    var params = ids;
-    ids = params.ids;
-    languages = params.languages;
-    props = params.props;
-    format = params.format;
+    var _ids = ids;
+    ids = _ids.ids;
+    languages = _ids.languages;
+    props = _ids.props;
+    format = _ids.format;
   }
 
   format = format || 'json';
 
   // ids can't be let empty
   if (!(ids && ids.length > 0)) throw new Error('no id provided');
+
+  // Allow to pass ids as a single string
+  ids = forceArray(ids);
 
   if (ids.length > 50) {
     console.warn('getEntities accepts 50 ids max to match Wikidata API limitations:\n      this request won\'t get all the desired entities.\n      You can use getManyEntities instead to generate several request urls\n      to work around this limitation');
@@ -390,8 +392,6 @@ module.exports = function (ids, languages, props, format) {
   // Properties can be either one property as a string
   // or an array or properties;
   // either case me just want to deal with arrays
-  ids = forceArray(ids);
-  props = forceArray(props);
 
   var query = {
     action: 'wbgetentities',
@@ -404,7 +404,7 @@ module.exports = function (ids, languages, props, format) {
     query.languages = languages.join('|');
   }
 
-  if (props && props.length > 0) query.props = props.join('|');
+  if (props && props.length > 0) query.props = forceArray(props).join('|');
 
   return buildUrl(query);
 };
@@ -818,9 +818,9 @@ module.exports = {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = {
-  // languages have to be 2-letters language codes
+  // Ex: keep only 'fr' in 'fr_FR'
   shortLang: function shortLang(language) {
-    return language.slice(0, 2);
+    return language.toLowerCase().split(/[^a-z]/)[0];
   },
 
   // a polymorphism helper:
