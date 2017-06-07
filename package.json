@@ -52,6 +52,9 @@
     "uglify-js": "^2.8.20",
     "wikidata-cli": "^4.8.1"
   },
+  "engines": {
+    "node": ">= 6.4"
+  },
   "dependencies": {},
   "standard": {
     "ignore": [

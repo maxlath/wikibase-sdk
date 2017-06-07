@@ -2,6 +2,10 @@
 
 A javascript tool-suite to query [Wikidata](http://wikidata.org/) and simplify its results.
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node](https://img.shields.io/badge/node-%3E=%20v6.4.0-brightgreen.svg)](http://nodejs.org)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
 [![wikidata](https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/assets/wikidata.jpg)](https://wikidata.org)
 
 [![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/) [![NPM](https://nodei.co/npm-dl/wikidata-sdk.png?months=6&height=3)](https://npmjs.com/package/wikidata-sdk/)
@@ -11,6 +15,16 @@ A javascript tool-suite to query [Wikidata](http://wikidata.org/) and simplify i
 npm install wikidata-sdk --save
 ```
 Or see [alternative installations](docs/install.md)
+
+## Import
+Node **>= v6.4.0**:
+```js
+const wdk = require('wikidata-sdk')
+```
+Older versions: if you can't update to a recent NodeJS version, a work around is to use the bundled version:
+```js
+var wdk = require('path/to/node_modules/wikidata-sdk/dist/wikidata-sdk')
+```
 
 ## Features
 ### Wikidata API
