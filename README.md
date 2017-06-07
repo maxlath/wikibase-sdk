@@ -10,6 +10,28 @@ A javascript tool-suite to query [Wikidata](http://wikidata.org/) and simplify i
 
 [![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/) [![NPM](https://nodei.co/npm-dl/wikidata-sdk.png?months=6&height=3)](https://npmjs.com/package/wikidata-sdk/)
 
+
+## Summary
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [Import](#import)
+- [Features](#features)
+  - [Wikidata API](#wikidata-api)
+  - [Wikidata Query](#wikidata-query)
+  - [General helpers](#general-helpers)
+- [Contributing](#contributing)
+- [Donate](#donate)
+- [See Also](#see-also)
+- [You may also like](#you-may-also-like)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 ## Install
 ```sh
 npm install wikidata-sdk --save
@@ -73,7 +95,7 @@ We are developing and maintaining tools to work with Wikidata from NodeJS, the b
 * [wikidata-subset-search-engine](https://github.com/inventaire/wikidata-subset-search-engine): Tools to setup an ElasticSearch instance fed with subsets of Wikidata
 * [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy): Command-line tool to extract taxonomies from Wikidata
 * [import-wikidata-dump-to-couchdb](https://github.com/maxlath/import-wikidata-dump-to-couchdb): Import a subset or a full Wikidata dump into a CouchDB database
-* [Other Wikidata external tools](https://www.wikidata.org/wiki/Wikidata:Tools/External_tools):
+* [Other Wikidata external tools](https://www.wikidata.org/wiki/Wikidata:Tools/External_tools)
 
 ## You may also like
 
