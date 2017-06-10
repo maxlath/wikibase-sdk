@@ -58,6 +58,7 @@ A set of tools to **read** Wikidata from the [Wikidata API](https://www.wikidata
   * [By Wikipedia titles](docs/get_entities.md#by-wikipedia-titles)
   * [By other Wikimedia projects titles](docs/get_entities.md#by-other-wikimedia-projects-titles)
 * **[Simplify entities data](docs/simplify_entities_data.md)**
+* **[Get revisions](docs/get_revisions.md)**
 * **Advanced**
   * [Use a custom Wikibase instance](docs/use_a_custom_wikibase_instance.md)
 

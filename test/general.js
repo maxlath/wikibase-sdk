@@ -11,6 +11,7 @@ describe('general', function () {
     wdk.getManyEntities.should.be.a.Function()
     wdk.getWikidataIdsFromSitelinks.should.be.a.Function()
     wdk.getReverseClaims.should.be.a.Function()
+    wdk.getRevisions.should.be.a.Function()
 
     wdk.simplify.should.be.a.Object()
     wdk.simplify.entity.should.be.a.Function()
