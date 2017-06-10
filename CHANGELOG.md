@@ -1,10 +1,8 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
-## 5.3.0 - 2017-06-10
+## 5.2.0 - 2017-06-10
 * Added [`getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md)
-
-## 5.2.0 - 2017-03-31
 * Added option `timeConverter` to [`simplify.claims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md) functions
 
 ## 5.1.0 - 2017-03-31
