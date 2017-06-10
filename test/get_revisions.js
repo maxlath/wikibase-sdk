@@ -1,4 +1,4 @@
-require('should')
+const should = require('should')
 const getRevisions = require('../lib/queries/get_revisions')
 const qs = require('querystring')
 const sinceYesterdayInMilliSeconds = new Date().getTime() - 24 * 60 * 60 * 1000
@@ -19,7 +19,6 @@ describe('getRevisions', function () {
 
   it('should accept several ids', function (done) {
     const url = getRevisions(['Q3548931', 'Q3548932'])
-    url.should.be.a.String()
     const query = qs.parse(url.split('?')[1])
     query.titles.should.equal('Q3548931|Q3548932')
     done()
@@ -27,7 +26,6 @@ describe('getRevisions', function () {
 
   it('should accept custom parameters', function (done) {
     const url = getRevisions('Q3548931', { limit: 2, start: sinceYesterdayInSeconds })
-    url.should.be.a.String()
     const query = qs.parse(url.split('?')[1])
     query.rvlimit.should.equal('2')
     query.rvstart.should.equal(sinceYesterdayInSeconds.toString())
@@ -36,7 +34,6 @@ describe('getRevisions', function () {
 
   it('should accept time in milliseconds', function (done) {
     const url = getRevisions('Q3548931', { start: sinceYesterdayInMilliSeconds })
-    url.should.be.a.String()
     const query = qs.parse(url.split('?')[1])
     query.rvstart.should.equal(sinceYesterdayInSeconds.toString())
     done()
@@ -45,7 +42,6 @@ describe('getRevisions', function () {
   it('should accept time in ISO format', function (done) {
     const ISOtime = new Date(sinceYesterdayInMilliSeconds).toISOString()
     const url = getRevisions('Q3548931', { end: ISOtime })
-    url.should.be.a.String()
     const query = qs.parse(url.split('?')[1])
     query.rvend.should.equal(sinceYesterdayInSeconds.toString())
     done()
@@ -54,10 +50,16 @@ describe('getRevisions', function () {
   it('should accept date objects in ISO format', function (done) {
     const dateObj = new Date(sinceYesterdayInMilliSeconds)
     const url = getRevisions('Q3548931', { end: dateObj })
-    url.should.be.a.String()
-    console.log('url', url)
     const query = qs.parse(url.split('?')[1])
     query.rvend.should.equal(sinceYesterdayInSeconds.toString())
+    done()
+  })
+
+  it('should ignore parameters that the API refuses for multiple ids', function (done) {
+    const dateObj = new Date(sinceYesterdayInMilliSeconds)
+    const url = getRevisions([ 'Q3548931', 'Q3548932' ], { end: dateObj })
+    const query = qs.parse(url.split('?')[1])
+    should(query.rvend).not.be.ok()
     done()
   })
 })

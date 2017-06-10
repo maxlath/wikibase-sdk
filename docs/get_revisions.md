@@ -15,3 +15,8 @@ wdk.getRevisions('Q3548931', { start: startTime })
 // get revisions from a precise period
 wdk.getRevisions('Q3548931', { start: startTime, end: endTime })
 ```
+
+**NB**: `limit`, `start`, and `end` parameters aren't passed when several ids are requested as the API would reject the request with this message:
+```
+'"titles", "pageids" or a generator was used to supply multiple pages but the "rvlimit", "rvstartid", "rvendid", "rvdir=newer", "rvuser", "rvexcludeuser", "rvstart", and "rvend" parameters may only be used on a single page.'
+```
