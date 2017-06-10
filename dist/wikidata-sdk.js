@@ -493,15 +493,17 @@ var _require = require('../utils/utils'),
 module.exports = function (ids) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
+  ids = forceArray(ids);
+  var uniqueId = ids.length === 1;
   var query = {
     action: 'query',
     prop: 'revisions'
   };
-  query.titles = forceArray(ids).join('|');
-  query.rvlimit = options.limit || 'max';
+  query.titles = ids.join('|');
   query.format = options.format || 'json';
-  if (options.start) query.rvstart = getEpochSeconds(options.start);
-  if (options.end) query.rvend = getEpochSeconds(options.end);
+  if (uniqueId) query.rvlimit = options.limit || 'max';
+  if (uniqueId && options.start) query.rvstart = getEpochSeconds(options.start);
+  if (uniqueId && options.end) query.rvend = getEpochSeconds(options.end);
   return buildUrl(query);
 };
 
