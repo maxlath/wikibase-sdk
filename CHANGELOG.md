@@ -1,15 +1,18 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.3.0 - 2017-06-10
+* Added [`getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md)
+
 ## 5.2.0 - 2017-03-31
-* Added option `timeConverter` to [`simplify.claims`](docs/simplify_claims.md) functions
+* Added option `timeConverter` to [`simplify.claims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md) functions
 
 ## 5.1.0 - 2017-03-31
-* Added [`simplify.entity`](https://github.com/maxlath/wikidata-sdk/blob/master/simplify_entities_data.md#simplify-entity)
-* Added [`simplify.labels`](https://github.com/maxlath/wikidata-sdk/blob/master/simplify_entities_data.md#simplify-labels)
-* Added [`simplify.descriptions`](https://github.com/maxlath/wikidata-sdk/blob/master/simplify_entities_data.md#simplify-descriptions)
-* Added [`simplify.aliases`](https://github.com/maxlath/wikidata-sdk/blob/master/simplify_entities_data.md#simplify-aliases)
-* Added [`simplify.sitelinks`](https://github.com/maxlath/wikidata-sdk/blob/master/simplify_entities_data.md#simplify-sitelinks)
+* Added [`simplify.entity`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-entity)
+* Added [`simplify.labels`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-labels)
+* Added [`simplify.descriptions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-descriptions)
+* Added [`simplify.aliases`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-aliases)
+* Added [`simplify.sitelinks`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-sitelinks)
 
 ## 5.0.0 - 2017-03-28
 **Breaking Changes**:
