@@ -336,6 +336,7 @@ wdk.getManyEntities = require('./queries/get_many_entities');
 wdk.getWikidataIdsFromSitelinks = require('./queries/get_wikidata_ids_from_sitelinks');
 wdk.sparqlQuery = require('./queries/sparql_query');
 wdk.getReverseClaims = require('./queries/get_reverse_claims');
+wdk.getRevisions = require('./queries/get_revisions');
 wdk.parse = require('./helpers/parse_responses');
 
 var claimsSimplifiers = require('./helpers/simplify_claims');
@@ -357,7 +358,7 @@ wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks;
 
 Object.assign(wdk, require('./helpers/helpers'));
 
-},{"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_text_attributes":6,"./helpers/helpers":1,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./queries/get_entities":9,"./queries/get_many_entities":10,"./queries/get_reverse_claims":11,"./queries/get_wikidata_ids_from_sitelinks":12,"./queries/search_entities":13,"./queries/simplify_sparql_results":14,"./queries/sparql_query":15}],9:[function(require,module,exports){
+},{"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_text_attributes":6,"./helpers/helpers":1,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./queries/get_entities":9,"./queries/get_many_entities":10,"./queries/get_reverse_claims":11,"./queries/get_revisions":12,"./queries/get_wikidata_ids_from_sitelinks":13,"./queries/search_entities":14,"./queries/simplify_sparql_results":15,"./queries/sparql_query":16}],9:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -368,7 +369,7 @@ var _require = require('../utils/utils'),
     shortLang = _require.shortLang;
 
 module.exports = function (ids, languages, props, format) {
-  // polymorphism: arguments can be passed as an object keys
+  // Polymorphism: arguments can be passed as an object keys
   if (isPlainObject(ids)) {
     var _ids = ids;
     ids = _ids.ids;
@@ -409,12 +410,8 @@ module.exports = function (ids, languages, props, format) {
   return buildUrl(query);
 };
 
-},{"../utils/build_url":16,"../utils/utils":18}],10:[function(require,module,exports){
+},{"../utils/build_url":17,"../utils/utils":19}],10:[function(require,module,exports){
 'use strict';
-
-var _templateObject = _taggedTemplateLiteral(['getManyEntities expects an array of ids'], ['getManyEntities expects an array of ids']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var getEntities = require('./get_entities');
 
@@ -422,17 +419,16 @@ var _require = require('../utils/utils'),
     isPlainObject = _require.isPlainObject;
 
 module.exports = function (ids, languages, props, format) {
-  // polymorphism: arguments can be passed as an object keys
+  // Polymorphism: arguments can be passed as an object keys
   if (isPlainObject(ids)) {
-    // Not using destructuring assigment there as it messes with both babel and standard
-    var params = ids;
-    ids = params.ids;
-    languages = params.languages;
-    props = params.props;
-    format = params.format;
+    var _ids = ids;
+    ids = _ids.ids;
+    languages = _ids.languages;
+    props = _ids.props;
+    format = _ids.format;
   }
 
-  if (!(ids instanceof Array)) throw new (Error(_templateObject))();
+  if (!(ids instanceof Array)) throw new Error('getManyEntities expects an array of ids');
 
   return getIdsGroups(ids).map(function (idsGroup) {
     return getEntities(idsGroup, languages, props, format);
@@ -449,7 +445,7 @@ var getIdsGroups = function getIdsGroups(ids) {
   return groups;
 };
 
-},{"../utils/utils":18,"./get_entities":9}],11:[function(require,module,exports){
+},{"../utils/utils":19,"./get_entities":9}],11:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/helpers');
@@ -486,7 +482,40 @@ function caseInsensitiveValueQuery(property, value, limit) {
   return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n  }\n  LIMIT ' + limit;
 }
 
-},{"../helpers/helpers":1,"./sparql_query":15}],12:[function(require,module,exports){
+},{"../helpers/helpers":1,"./sparql_query":16}],12:[function(require,module,exports){
+'use strict';
+
+var buildUrl = require('../utils/build_url');
+
+var _require = require('../utils/utils'),
+    forceArray = _require.forceArray;
+
+module.exports = function (ids) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var query = {
+    action: 'query',
+    prop: 'revisions'
+  };
+  query.titles = forceArray(ids).join('|');
+  query.rvlimit = options.limit || 'max';
+  query.format = options.format || 'json';
+  if (options.start) query.rvstart = getEpochSeconds(options.start);
+  if (options.end) query.rvend = getEpochSeconds(options.end);
+  return buildUrl(query);
+};
+
+var getEpochSeconds = function getEpochSeconds(date) {
+  // Return already formatted epoch seconds:
+  // if a date in milliseconds appear to be earlier than 2000-01-01, that's probably
+  // already seconds actually
+  if (typeof date === 'number' && date < earliestPointInMs) return date;
+  return Math.trunc(new Date(date).getTime() / 1000);
+};
+
+var earliestPointInMs = new Date('2000-01-01').getTime();
+
+},{"../utils/build_url":17,"../utils/utils":19}],13:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -544,7 +573,7 @@ var parseSite = function parseSite(site) {
   return site.length === 2 ? site + 'wiki' : site;
 };
 
-},{"../utils/build_url":16,"../utils/utils":18}],13:[function(require,module,exports){
+},{"../utils/build_url":17,"../utils/utils":19}],14:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -581,12 +610,10 @@ module.exports = function (search, language, limit, format, uselang) {
   });
 };
 
-},{"../utils/build_url":16,"../utils/utils":18}],14:[function(require,module,exports){
+},{"../utils/build_url":17,"../utils/utils":19}],15:[function(require,module,exports){
 'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = function (input) {
   if (typeof input === 'string') input = JSON.parse(input);
@@ -596,20 +623,14 @@ module.exports = function (input) {
   var results = input.results.bindings;
 
   if (vars.length === 1) {
-    var _ret = function () {
-      var varName = vars[0];
-      return {
-        v: results.map(function (result) {
-          return parseValue(result[varName]);
-        })
-        // filtering-out bnodes
-        .filter(function (result) {
-          return result != null;
-        })
-      };
-    }();
-
-    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+    var varName = vars[0];
+    return results.map(function (result) {
+      return parseValue(result[varName]);
+    })
+    // filtering-out bnodes
+    .filter(function (result) {
+      return result != null;
+    });
   } else {
     var _identifyVars = identifyVars(vars),
         _identifyVars2 = _slicedToArray(_identifyVars, 2),
@@ -766,7 +787,7 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
   };
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 var _require = require('../utils/utils'),
@@ -777,7 +798,7 @@ module.exports = function (sparql) {
   return 'https://query.wikidata.org/sparql?format=json&query=' + query;
 };
 
-},{"../utils/utils":18}],16:[function(require,module,exports){
+},{"../utils/utils":19}],17:[function(require,module,exports){
 'use strict';
 
 var wikidataApiRoot = 'https://www.wikidata.org/w/api.php';
@@ -791,7 +812,7 @@ module.exports = function (queryObj) {
   return wikidataApiRoot + '?' + qs.stringify(queryObj);
 };
 
-},{"./querystring_lite":17,"querystring":21}],17:[function(require,module,exports){
+},{"./querystring_lite":18,"querystring":22}],18:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -812,7 +833,7 @@ module.exports = {
   }
 };
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -847,7 +868,7 @@ var encodeCharacter = function encodeCharacter(c) {
   return '%' + c.charCodeAt(0).toString(16);
 };
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -933,7 +954,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1020,11 +1041,11 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":19,"./encode":20}]},{},[8])(8)
+},{"./decode":20,"./encode":21}]},{},[8])(8)
 });
