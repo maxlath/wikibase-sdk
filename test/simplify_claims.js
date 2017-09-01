@@ -6,6 +6,8 @@ const Q4132785 = require('./data/Q4132785.json')
 const Q328212 = require('./data/Q328212.json')
 const Q22002395 = require('./data/Q22002395.json')
 const Q2112 = require('./data/Q2112.json')
+const Q217447 = require('./data/Q217447.json')
+const Q271094 = require('./data/Q271094.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
 
@@ -151,6 +153,16 @@ describe('simplifyClaim', function () {
       simplified.should.be.an.Array()
       simplified[0].should.equal(52.016666666667)
       simplified[1].should.equal(8.5166666666667)
+      done()
+    })
+
+    it('should support geo-shape', function (done) {
+      simplifyClaim(Q217447.claims.P3896[0]).should.equal('Data:Rky/1277_Verlan_teollisuusympäristö.map')
+      done()
+    })
+
+    it('should support tabular-data', function (done) {
+      simplifyClaim(Q271094.claims.P4179[0]).should.equal('Data:Taipei Neihu District Population.tab')
       done()
     })
   })
