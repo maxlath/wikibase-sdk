@@ -139,78 +139,86 @@ describe('simplifyPropertyClaims', function () {
 })
 
 describe('simplifyClaim', function () {
-  it('should return a url for datatype url', function (done) {
-    const simplified = simplifyClaim(Q328212.claims.P856[0])
-    simplified.should.equal('http://veronicarothbooks.blogspot.com')
-    done()
+  describe('datatypes', function () {
+    it('should return a url for datatype url', function (done) {
+      const simplified = simplifyClaim(Q328212.claims.P856[0])
+      simplified.should.equal('http://veronicarothbooks.blogspot.com')
+      done()
+    })
+
+    it('should return simplify globecoordinate as a latLng array', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P625[0])
+      simplified.should.be.an.Array()
+      simplified[0].should.equal(52.016666666667)
+      simplified[1].should.equal(8.5166666666667)
+      done()
+    })
   })
 
-  it('should return simplify globecoordinate as a latLng array', function (done) {
-    const simplified = simplifyClaim(Q2112.claims.P625[0])
-    simplified.should.be.an.Array()
-    simplified[0].should.equal(52.016666666667)
-    simplified[1].should.equal(8.5166666666667)
-    done()
+  describe('prefixes', function () {
+    it('should return prefixed entity ids if passed an entity prefix', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P190[0])
+      simplified.should.equal('Q207614')
+      const simplified2 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wd' })
+      simplified2.should.equal('wd:Q207614')
+      const simplified3 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wd:' })
+      simplified3.should.equal('wd::Q207614')
+      const simplified4 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wdbla' })
+      simplified4.should.equal('wdbla:Q207614')
+      done()
+    })
+
+    it('should return prefixed property ids if passed a property prefix', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P123456789[0])
+      simplified.should.equal('P207614')
+      const simplified2 = simplifyClaim(Q2112.claims.P123456789[0], { entityPrefix: null })
+      simplified2.should.equal('P207614')
+      const simplified3 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdt' })
+      simplified3.should.equal('wdt:P207614')
+      const simplified4 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdt:' })
+      simplified4.should.equal('wdt::P207614')
+      const simplified5 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdtbla' })
+      simplified5.should.equal('wdtbla:P207614')
+      done()
+    })
   })
 
-  it('should return prefixed entity ids if passed an entity prefix', function (done) {
-    const simplified = simplifyClaim(Q2112.claims.P190[0])
-    simplified.should.equal('Q207614')
-    const simplified2 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wd' })
-    simplified2.should.equal('wd:Q207614')
-    const simplified3 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wd:' })
-    simplified3.should.equal('wd::Q207614')
-    const simplified4 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wdbla' })
-    simplified4.should.equal('wdbla:Q207614')
-    done()
+  describe('qualifiers', function () {
+    it('should return the correct value when called with keepQualifiers=true', function (done) {
+      const simplified = simplifyClaim(Q571.claims.P279[0])
+      const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P279[0], { keepQualifiers: true })
+      simplifiedWithQualifiers.value.should.equal(simplified)
+      simplifiedWithQualifiers.qualifiers.should.be.an.Object()
+      done()
+    })
+
+    it('should include qualifiers when called with keepQualifiers=true', function (done) {
+      const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true })
+      simplifiedWithQualifiers.qualifiers.P973.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P973[0].should.equal('http://mappings.dbpedia.org/index.php/OntologyClass:Book')
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11T00:00:00.000Z')
+      done()
+    })
+
+    it('should include prefixes in qualifiers claims', function (done) {
+      const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { entityPrefix: 'wd', propertyPrefix: 'wdt', keepQualifiers: true })
+      simplifiedWithQualifiers.qualifiers['wdt:P1365'].should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
+      done()
+    })
   })
 
-  it('should return prefixed property ids if passed a property prefix', function (done) {
-    const simplified = simplifyClaim(Q2112.claims.P123456789[0])
-    simplified.should.equal('P207614')
-    const simplified2 = simplifyClaim(Q2112.claims.P123456789[0], { entityPrefix: null })
-    simplified2.should.equal('P207614')
-    const simplified3 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdt' })
-    simplified3.should.equal('wdt:P207614')
-    const simplified4 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdt:' })
-    simplified4.should.equal('wdt::P207614')
-    const simplified5 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdtbla' })
-    simplified5.should.equal('wdtbla:P207614')
-    done()
-  })
-
-  it('should return the correct value when called with keepQualifiers=true', function (done) {
-    const simplified = simplifyClaim(Q571.claims.P279[0])
-    const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P279[0], { keepQualifiers: true })
-    simplifiedWithQualifiers.value.should.equal(simplified)
-    simplifiedWithQualifiers.qualifiers.should.be.an.Object()
-    done()
-  })
-
-  it('should include qualifiers when called with keepQualifiers=true', function (done) {
-    const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true })
-    simplifiedWithQualifiers.qualifiers.P973.should.be.an.Array()
-    simplifiedWithQualifiers.qualifiers.P973[0].should.equal('http://mappings.dbpedia.org/index.php/OntologyClass:Book')
-    simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
-    simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11T00:00:00.000Z')
-    done()
-  })
-
-  it('should include prefixes in qualifiers claims', function (done) {
-    const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { entityPrefix: 'wd', propertyPrefix: 'wdt', keepQualifiers: true })
-    simplifiedWithQualifiers.qualifiers['wdt:P1365'].should.be.an.Array()
-    simplifiedWithQualifiers.qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
-    done()
-  })
-
-  it('should use a custom time converter when one is set', function (done) {
-    const timeClaim = (converter) => {
-      return simplifyClaim(Q646148.claims.P569[0], { timeConverter: converter })
-    }
-    timeClaim().should.equal('1939-11-08T00:00:00.000Z')
-    timeClaim('iso').should.equal('1939-11-08T00:00:00.000Z')
-    timeClaim('epoch').should.equal(-951436800000)
-    timeClaim('none').should.equal('+1939-11-08T00:00:00Z')
-    done()
+  describe('time converter', function () {
+    it('should use a custom time converter when one is set', function (done) {
+      const timeClaim = (converter) => {
+        return simplifyClaim(Q646148.claims.P569[0], { timeConverter: converter })
+      }
+      timeClaim().should.equal('1939-11-08T00:00:00.000Z')
+      timeClaim('iso').should.equal('1939-11-08T00:00:00.000Z')
+      timeClaim('epoch').should.equal(-951436800000)
+      timeClaim('none').should.equal('+1939-11-08T00:00:00Z')
+      done()
+    })
   })
 })
