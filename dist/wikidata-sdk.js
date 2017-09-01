@@ -109,10 +109,15 @@ var claimParsers = {
   'wikibase-property': property,
   time: time,
   quantity: quantity,
-  'globe-coordinate': coordinate
+  'globe-coordinate': coordinate,
+  'geo-shape': simple,
+  'tabular-data': simple
 };
 
 module.exports = function (datatype, datavalue, options) {
+  // If you get an error like 'TypeError: claimParsers[datatype] is not a function'
+  // it means that the current datatype isn't supported yet:
+  // please report to https://github.com/maxlath/wikidata-sdk/issues
   return claimParsers[datatype](datavalue, options);
 };
 
