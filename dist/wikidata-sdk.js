@@ -178,9 +178,29 @@ var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims) {
     options[_key2 - 1] = arguments[_key2];
   }
 
+  var _parseOptions2 = parseOptions(options),
+      keepNonTruthy = _parseOptions2.keepNonTruthy,
+      areQualifiers = _parseOptions2.areQualifiers;
+
+  if (!(keepNonTruthy || areQualifiers)) propClaims = filterOutNonTruthyClaims(propClaims);
+
   return propClaims.map(function (claim) {
     return simplifyClaim.apply(undefined, [claim].concat(options));
   }).filter(nonNull);
+};
+
+var aggregatePerRank = function aggregatePerRank(aggregate, claim) {
+  var rank = claim.rank;
+
+  aggregate[rank] || (aggregate[rank] = []);
+  aggregate[rank].push(claim);
+  return aggregate;
+};
+
+var filterOutNonTruthyClaims = function filterOutNonTruthyClaims(claims) {
+  var aggregate = claims.reduce(aggregatePerRank, {});
+  // on truthyness: https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements
+  return aggregate.preferred || aggregate.normal || [];
 };
 
 var nonNull = function nonNull(obj) {
@@ -224,9 +244,12 @@ var simplifyClaim = function simplifyClaim(claim) {
   // Qualifiers should not attempt to keep sub-qualifiers
   if (!keepQualifiers || isQualifier) return value;
 
+  // Using a new object so that the original options object isn't modified
+  var qualifiersOptions = Object.assign({}, options, { areQualifiers: true });
+
   // When keeping qualifiers, the value becomes an object
   // instead of a direct value
-  return { value: value, qualifiers: simplifyClaims(qualifiers, options) };
+  return { value: value, qualifiers: simplifyClaims(qualifiers, qualifiersOptions) };
 };
 
 var parseOptions = function parseOptions(options) {
