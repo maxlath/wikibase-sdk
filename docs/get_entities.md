@@ -126,5 +126,5 @@ const url = wdk.getEntities(ids, user.language)
 
 breq.get(url)
 .then(wdk.parse.wd.entities)
-.then((entities) => // do your thing with those entities data)
+.then(entities => // do your thing with those entities data)
 ```

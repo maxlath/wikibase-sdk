@@ -56,5 +56,5 @@ or for a more complete example (using [promises](https://www.promisejs.org))
 const url = wdk.sparqlQuery(SPARQL)
 promiseRequest(url)
 .then(wdk.simplifySparqlResults)
-.then((simplifiedResults) => { // do awesome stuffs here })
+.then(simplifiedResults => { // do awesome stuffs here })
 ```
