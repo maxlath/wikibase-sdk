@@ -172,6 +172,15 @@ Results would then look something like
 }
 ```
 
+### Keep non-truthy statements
+> `keepNonTruthy`
+
+By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) are ignored. This can be disable with this option.
+```js
+wdk.simplify.claims(entity.claims, { keepNonTruthy: true })
+wdk.simplify.propertyClaims(entity.claims.P50, { keepNonTruthy: true })
+```
+
 ### Change time parser
 
 By default, `simplify.claims` functions use [`wikidataTimeToISOString`](general_helpers.md#wikidataTimeToISOString) to parse [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times).

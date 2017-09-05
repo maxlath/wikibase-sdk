@@ -538,7 +538,10 @@
                         "type": "wikibase-entityid"
                     },
                     "datatype": "wikibase-property"
-                }
+                },
+                "type": "statement",
+                "id": "Q2112$71781c61-47f7-e370-893c-11f7efe421c8",
+                "rank": "normal"
             }
         ],
         "P190": [

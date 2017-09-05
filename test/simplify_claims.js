@@ -8,6 +8,7 @@ const Q22002395 = require('./data/Q22002395.json')
 const Q2112 = require('./data/Q2112.json')
 const Q217447 = require('./data/Q217447.json')
 const Q271094 = require('./data/Q271094.json')
+const Q4115189 = require('./data/Q4115189.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
 
@@ -136,6 +137,20 @@ describe('simplifyPropertyClaims', function () {
     const simplifiedWithQualifiers = simplifyPropertyClaims(Q646148.claims.P39, { entityPrefix: 'wd', propertyPrefix: 'wdt', keepQualifiers: true })
     simplifiedWithQualifiers[1].qualifiers['wdt:P1365'].should.be.an.Array()
     simplifiedWithQualifiers[1].qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
+    done()
+  })
+
+  it('should return only truthy statements by default', function (done) {
+    const simplified = simplifyPropertyClaims(Q4115189.claims.P135)
+    simplified.length.should.equal(1)
+    simplified[0].should.equal('Q2044250')
+    done()
+  })
+
+  it('should also return non-truthy statements if requested', function (done) {
+    const options = { keepNonTruthy: true }
+    const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
+    simplified.length.should.equal(3)
     done()
   })
 })
