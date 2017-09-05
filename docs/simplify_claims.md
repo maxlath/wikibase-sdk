@@ -16,6 +16,7 @@
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep qualifiers](#keep-qualifiers)
+  - [Keep non-truthy statements](#keep-non-truthy-statements)
   - [Change time parser](#change-time-parser)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
