@@ -9,6 +9,7 @@ const Q2112 = require('./data/Q2112.json')
 const Q217447 = require('./data/Q217447.json')
 const Q271094 = require('./data/Q271094.json')
 const Q4115189 = require('./data/Q4115189.json')
+const oldclaimformat = require('./data/oldclaimformat.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
 
@@ -151,6 +152,14 @@ describe('simplifyPropertyClaims', function () {
     const options = { keepNonTruthy: true }
     const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
     simplified.length.should.equal(3)
+    done()
+  })
+
+  it('construct entity ids for old dump format', function (done) {
+    const simplified = simplifyPropertyClaims(oldclaimformat)
+    simplified.length.should.equal(2)
+    simplified[0].should.equal('Q123')
+    simplified[1].should.equal('P123')
     done()
   })
 })
