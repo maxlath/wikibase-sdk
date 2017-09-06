@@ -70,9 +70,14 @@ var item = function item(datavalue, options) {
 var property = function property(datavalue, options) {
   return prefixedId(datavalue, options.propertyPrefix);
 };
+var entityLetter = {
+  item: 'Q',
+  property: 'P'
+};
 var prefixedId = function prefixedId(datavalue, prefix) {
-  var id = datavalue.value.id;
+  var value = datavalue.value;
 
+  var id = value.id || entityLetter[value['entity-type']] + value['numeric-id'];
   return typeof prefix === 'string' ? prefix + ':' + id : id;
 };
 var quantity = function quantity(datavalue) {
