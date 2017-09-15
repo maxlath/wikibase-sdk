@@ -277,12 +277,14 @@ describe('simplifyClaim', function () {
       const noValueClaim = emptyValues.claims.P3984[0]
       should(simplifyClaim(noValueClaim)).not.be.ok()
       simplifyClaim(noValueClaim, { novalueValue: '-' }).should.equal('-')
+      simplifyClaim(noValueClaim, { novalueValue: '' }).should.equal('')
       done()
     })
     it('should return the desired somevalueValue', function (done) {
       const someValueClaim = emptyValues.claims.P3984[1]
       should(simplifyClaim(someValueClaim)).not.be.ok()
       simplifyClaim(someValueClaim, { somevalueValue: '?' }).should.equal('?')
+      simplifyClaim(someValueClaim, { somevalueValue: '' }).should.equal('')
       done()
     })
     it('should accept null as a possible value', function (done) {
