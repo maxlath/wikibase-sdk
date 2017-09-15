@@ -1,4 +1,4 @@
-require('should')
+const should = require('should')
 const _ = require('lodash')
 const Q571 = require('./data/Q571.json')
 const Q646148 = require('./data/Q646148.json')
@@ -13,6 +13,7 @@ const Q970917 = require('./data/Q970917.json')
 const Q1 = require('./data/Q1.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 const lexemeClaim = require('./data/lexeme_claim.json')
+const emptyValues = require('./data/empty_values.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims, truthyClaims, truthyPropertyClaims, simplifyQualifier, simplifyPropertyQualifiers,
 simplifyQualifiers } = require('../lib/helpers/simplify_claims')
@@ -404,6 +405,21 @@ describe('simplifyClaim', function () {
       // Can't be supported due to JS large numbers limitations;
       // 13798000000*365.25*24*60*60*1000 is too big
       // timeClaim('epoch').should.equal('-13798000000-00-00T00:00:00Z')
+      done()
+    })
+  })
+
+  describe('empty values', function () {
+    it('should return the desired novalueValue', function (done) {
+      const noValueClaim = emptyValues.claims.P3984[0]
+      should(simplifyClaim(noValueClaim)).not.be.ok()
+      simplifyClaim(noValueClaim, { novalueValue: '-' }).should.equal('-')
+      done()
+    })
+    it('should return the desired somevalueValue', function (done) {
+      const someValueClaim = emptyValues.claims.P3984[1]
+      should(simplifyClaim(someValueClaim)).not.be.ok()
+      simplifyClaim(someValueClaim, { somevalueValue: '?' }).should.equal('?')
       done()
     })
   })
