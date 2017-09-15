@@ -188,6 +188,19 @@ describe('simplifyPropertyClaims', function () {
     simplified2.length.should.equal(0)
     done()
   })
+
+  describe('empty values', function () {
+    it('should not filter-out null values if its novalueValue or somevalueValue', function (done) {
+      simplifyPropertyClaims(emptyValues.claims.P3984).length.should.equal(1)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-' }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: null }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { somevalueValue: '?' }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { somevalueValue: null }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: null, somevalueValue: null }).length.should.equal(3)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-', somevalueValue: '?' }).length.should.equal(3)
+      done()
+    })
+  })
 })
 
 describe('simplifyClaim', function () {
@@ -420,6 +433,11 @@ describe('simplifyClaim', function () {
       const someValueClaim = emptyValues.claims.P3984[1]
       should(simplifyClaim(someValueClaim)).not.be.ok()
       simplifyClaim(someValueClaim, { somevalueValue: '?' }).should.equal('?')
+      done()
+    })
+    it('should accept null as a possible value', function (done) {
+      const noValueClaim = emptyValues.claims.P3984[0]
+      should(simplifyClaim(noValueClaim, { novalueValue: null }) === null).be.true()
       done()
     })
   })
