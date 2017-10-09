@@ -1,7 +1,7 @@
 const should = require('should')
 
 const helpers = require('../lib/helpers/helpers')
-const simplify = require('../lib/queries/simplify_sparql_results')
+const simplify = require('../lib/helpers/simplify_sparql_results')
 const singleVarData = require('./data/single_var_sparql_results.json')
 const multiVarsData = require('./data/multi_vars_sparql_results.json')
 const noDatatypeData = require('./data/no_datatype_sparql_results.json')
