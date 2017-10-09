@@ -2,14 +2,14 @@ require('should')
 const _ = require('lodash')
 
 const getManyEntities = require('../lib/queries/get_many_entities')
-const manyIds = _.range(1, 80).map((id) => `Q${id}`)
+const manyIds = _.range(1, 80).map(id => `Q${id}`)
 
 describe('wikidata getManyEntities', function () {
   describe('general', function () {
     it('should return an array of urls', function (done) {
       const urls = getManyEntities(manyIds, 'fr', 'info', 'json')
       urls.should.be.an.Array()
-      urls.forEach((url) => /^https/.test(url).should.be.true())
+      urls.forEach(url => /^https/.test(url).should.be.true())
       done()
     })
   })

@@ -65,4 +65,4 @@ describe('simplifySitelinks', () => {
   })
 })
 
-const objLenght = (obj) => Object.keys(obj).length
+const objLenght = obj => Object.keys(obj).length

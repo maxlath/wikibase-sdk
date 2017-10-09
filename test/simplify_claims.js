@@ -247,7 +247,7 @@ describe('simplifyClaim', function () {
 
   describe('time converter', function () {
     it('should use a custom time converter when one is set', function (done) {
-      const timeClaim = (converter) => {
+      const timeClaim = converter => {
         return simplifyClaim(Q646148.claims.P569[0], { timeConverter: converter })
       }
       timeClaim().should.equal('1939-11-08T00:00:00.000Z')

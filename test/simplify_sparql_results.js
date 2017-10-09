@@ -28,7 +28,7 @@ describe('wikidata simplify SPARQL results', function () {
     it('should return an array of results values, filtering out blank nodes', function (done) {
       const output = simplify(singleVarData)
       output[0].should.equal('Q112983')
-      output.forEach((result) => helpers.isEntityId(result).should.be.true())
+      output.forEach(result => helpers.isEntityId(result).should.be.true())
       done()
     })
   })
