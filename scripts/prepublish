@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
 npm run lint &&
 npm test &&
 npm run dist
@@ -7,8 +7,8 @@ npm run dist
 [ ! -d ".git" ] && exit 0
 
 # verify that the build produced no modified file
-[ -z "$(git status --porcelain |grep M)" ] ||
+[ -z "$(git status --porcelain |grep M)" ] || {
 # otherwise, it's that the version was bumped without updating build & dist before
-(echo "Git directory not clean: always manage versions with bump-version script" && exit 1 )
+echo -e "\e[0;31mGit directory not clean: always manage versions with bump-version script\e[0m" && exit 1 }
 
 echo 'done prepublishing...'
