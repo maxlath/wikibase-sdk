@@ -3,9 +3,6 @@ npm run lint &&
 npm test &&
 npm run dist
 
-# prepublish is also run on npm install, thus the need to check the context
-[ ! -d ".git" ] && exit 0
-
 # verify that the build produced no modified file
 [ -z "$(git status --porcelain |grep M)" ] || {
 # otherwise, it's that the version was bumped without updating build & dist before

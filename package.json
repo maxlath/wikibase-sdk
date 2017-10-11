@@ -13,7 +13,7 @@
     "build": "browserify lib/index.js -s wdk -o dist/wikidata-sdk.js -t [ babelify --presets [ es2015 ] ]",
     "minify": "uglifyjs dist/wikidata-sdk.js -c -m > dist/wikidata-sdk.min.js",
     "dist": "npm run build && npm run minify",
-    "prepublish": "./scripts/prepublish",
+    "prepublishOnly": "./scripts/prepublish",
     "update-bower": "./scripts/update_bower",
     "bump-version": "./scripts/bump_version",
     "update-toc": "./scripts/update_toc",
