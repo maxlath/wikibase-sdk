@@ -51,7 +51,7 @@ helpers.wikidataTimeToISOString = bestEffort(toISOString);
 
 module.exports = helpers;
 
-},{"./wikidata_time_to_date_object":7}],2:[function(require,module,exports){
+},{"./wikidata_time_to_date_object":8}],2:[function(require,module,exports){
 'use strict';
 
 var _require = require('./helpers'),
@@ -295,362 +295,7 @@ module.exports = function (entity) {
   };
 };
 
-},{"./simplify_claims":4,"./simplify_text_attributes":6}],6:[function(require,module,exports){
-'use strict';
-
-var simplifyTextAttributes = function simplifyTextAttributes(multivalue, attribute) {
-  return function (data) {
-    var simplifiedData = {};
-    Object.keys(data).forEach(function (lang) {
-      var obj = data[lang];
-      simplifiedData[lang] = multivalue ? obj.map(getValue) : obj[attribute];
-    });
-    return simplifiedData;
-  };
-};
-
-var getValue = function getValue(obj) {
-  return obj.value;
-};
-
-var labelsOrDescription = simplifyTextAttributes(false, 'value');
-
-module.exports = {
-  labels: labelsOrDescription,
-  descriptions: labelsOrDescription,
-  aliases: simplifyTextAttributes(true, 'value'),
-  sitelinks: simplifyTextAttributes(false, 'title')
-};
-
-},{}],7:[function(require,module,exports){
-'use strict';
-
-module.exports = function (wikidataTime) {
-  var sign = wikidataTime[0];
-  var rest = wikidataTime.slice(1);
-  var date = fullDateData(sign, rest);
-
-  if (date.toString() === 'Invalid Date') {
-    return parseInvalideDate(sign, rest);
-  } else {
-    return date;
-  }
-};
-
-var fullDateData = function fullDateData(sign, rest) {
-  return sign === '-' ? negativeDate(rest) : positiveDate(rest);
-};
-
-var positiveDate = function positiveDate(rest) {
-  return new Date(rest);
-};
-var negativeDate = function negativeDate(rest) {
-  // using ISO8601 expanded notation for negative years: adding 2 leading zeros
-  var date = '-00' + rest;
-  return new Date(date);
-};
-
-var parseInvalideDate = function parseInvalideDate(sign, rest) {
-  // This is probably a date of unsuffisient precision
-  // such as 1953-00-00T00:00:00Z, thus invalid
-  // It should at least have a year, so let's fallback to ${year}-01-01
-  var year = rest.split('T')[0].split('-')[0];
-  return fullDateData(sign, year);
-};
-
-},{}],8:[function(require,module,exports){
-'use strict';
-
-var wdk = module.exports = {};
-
-wdk.searchEntities = require('./queries/search_entities');
-wdk.getEntities = require('./queries/get_entities');
-wdk.getManyEntities = require('./queries/get_many_entities');
-wdk.getWikidataIdsFromSitelinks = require('./queries/get_wikidata_ids_from_sitelinks');
-wdk.sparqlQuery = require('./queries/sparql_query');
-wdk.getReverseClaims = require('./queries/get_reverse_claims');
-wdk.getRevisions = require('./queries/get_revisions');
-wdk.parse = require('./helpers/parse_responses');
-
-var claimsSimplifiers = require('./helpers/simplify_claims');
-var simplifySparqlResults = require('./queries/simplify_sparql_results');
-
-wdk.simplify = require('../lib/helpers/simplify_text_attributes');
-wdk.simplify.entity = require('../lib/helpers/simplify_entity');
-wdk.simplify.claim = claimsSimplifiers.simplifyClaim;
-wdk.simplify.propertyClaims = claimsSimplifiers.simplifyPropertyClaims;
-wdk.simplify.claims = claimsSimplifiers.simplifyClaims;
-wdk.simplify.sparqlResults = simplifySparqlResults;
-
-// Legacy
-wdk.simplifySparqlResults = require('./queries/simplify_sparql_results');
-Object.assign(wdk, claimsSimplifiers);
-
-// Aliases
-wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks;
-
-Object.assign(wdk, require('./helpers/helpers'));
-
-},{"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_text_attributes":6,"./helpers/helpers":1,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./queries/get_entities":9,"./queries/get_many_entities":10,"./queries/get_reverse_claims":11,"./queries/get_revisions":12,"./queries/get_wikidata_ids_from_sitelinks":13,"./queries/search_entities":14,"./queries/simplify_sparql_results":15,"./queries/sparql_query":16}],9:[function(require,module,exports){
-'use strict';
-
-var buildUrl = require('../utils/build_url');
-
-var _require = require('../utils/utils'),
-    isPlainObject = _require.isPlainObject,
-    forceArray = _require.forceArray,
-    shortLang = _require.shortLang;
-
-module.exports = function (ids, languages, props, format) {
-  // Polymorphism: arguments can be passed as an object keys
-  if (isPlainObject(ids)) {
-    var _ids = ids;
-    ids = _ids.ids;
-    languages = _ids.languages;
-    props = _ids.props;
-    format = _ids.format;
-  }
-
-  format = format || 'json';
-
-  // ids can't be let empty
-  if (!(ids && ids.length > 0)) throw new Error('no id provided');
-
-  // Allow to pass ids as a single string
-  ids = forceArray(ids);
-
-  if (ids.length > 50) {
-    console.warn('getEntities accepts 50 ids max to match Wikidata API limitations:\n      this request won\'t get all the desired entities.\n      You can use getManyEntities instead to generate several request urls\n      to work around this limitation');
-  }
-
-  // Properties can be either one property as a string
-  // or an array or properties;
-  // either case me just want to deal with arrays
-
-  var query = {
-    action: 'wbgetentities',
-    ids: ids.join('|'),
-    format: format
-  };
-
-  if (languages) {
-    languages = forceArray(languages).map(shortLang);
-    query.languages = languages.join('|');
-  }
-
-  if (props && props.length > 0) query.props = forceArray(props).join('|');
-
-  return buildUrl(query);
-};
-
-},{"../utils/build_url":17,"../utils/utils":19}],10:[function(require,module,exports){
-'use strict';
-
-var getEntities = require('./get_entities');
-
-var _require = require('../utils/utils'),
-    isPlainObject = _require.isPlainObject;
-
-module.exports = function (ids, languages, props, format) {
-  // Polymorphism: arguments can be passed as an object keys
-  if (isPlainObject(ids)) {
-    var _ids = ids;
-    ids = _ids.ids;
-    languages = _ids.languages;
-    props = _ids.props;
-    format = _ids.format;
-  }
-
-  if (!(ids instanceof Array)) throw new Error('getManyEntities expects an array of ids');
-
-  return getIdsGroups(ids).map(function (idsGroup) {
-    return getEntities(idsGroup, languages, props, format);
-  });
-};
-
-var getIdsGroups = function getIdsGroups(ids) {
-  var groups = [];
-  while (ids.length > 0) {
-    var group = ids.slice(0, 50);
-    ids = ids.slice(50);
-    groups.push(group);
-  }
-  return groups;
-};
-
-},{"../utils/utils":19,"./get_entities":9}],11:[function(require,module,exports){
-'use strict';
-
-var helpers = require('../helpers/helpers');
-var sparqlQuery = require('./sparql_query');
-
-module.exports = function (property, value) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var limit = options.limit,
-      caseInsensitive = options.caseInsensitive;
-
-  limit = limit || 1000;
-  var sparqlFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
-  var valueString = getValueString(value);
-  var sparql = sparqlFn(property, valueString, limit);
-  return sparqlQuery(sparql);
-};
-
-function getValueString(value) {
-  if (helpers.isItemId(value)) {
-    value = 'wd:' + value;
-  } else if (typeof value === 'string') {
-    value = '\'' + value + '\'';
-  }
-  return value;
-}
-
-function directValueQuery(property, value, limit) {
-  return 'SELECT ?subject WHERE {\n      ?subject wdt:' + property + ' ' + value + ' .\n    }\n    LIMIT ' + limit;
-}
-
-// Discussion on how to make this query optimal:
-// http://stackoverflow.com/q/43073266/3324977
-function caseInsensitiveValueQuery(property, value, limit) {
-  return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n  }\n  LIMIT ' + limit;
-}
-
-},{"../helpers/helpers":1,"./sparql_query":16}],12:[function(require,module,exports){
-'use strict';
-
-var buildUrl = require('../utils/build_url');
-
-var _require = require('../utils/utils'),
-    forceArray = _require.forceArray;
-
-module.exports = function (ids) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  ids = forceArray(ids);
-  var uniqueId = ids.length === 1;
-  var query = {
-    action: 'query',
-    prop: 'revisions'
-  };
-  query.titles = ids.join('|');
-  query.format = options.format || 'json';
-  if (uniqueId) query.rvlimit = options.limit || 'max';
-  if (uniqueId && options.start) query.rvstart = getEpochSeconds(options.start);
-  if (uniqueId && options.end) query.rvend = getEpochSeconds(options.end);
-  return buildUrl(query);
-};
-
-var getEpochSeconds = function getEpochSeconds(date) {
-  // Return already formatted epoch seconds:
-  // if a date in milliseconds appear to be earlier than 2000-01-01, that's probably
-  // already seconds actually
-  if (typeof date === 'number' && date < earliestPointInMs) return date;
-  return Math.trunc(new Date(date).getTime() / 1000);
-};
-
-var earliestPointInMs = new Date('2000-01-01').getTime();
-
-},{"../utils/build_url":17,"../utils/utils":19}],13:[function(require,module,exports){
-'use strict';
-
-var buildUrl = require('../utils/build_url');
-
-var _require = require('../utils/utils'),
-    isPlainObject = _require.isPlainObject,
-    forceArray = _require.forceArray,
-    shortLang = _require.shortLang;
-
-module.exports = function (titles, sites, languages, props, format) {
-  // polymorphism: arguments can be passed as an object keys
-  if (isPlainObject(titles)) {
-    // Not using destructuring assigment there as it messes with both babel and standard
-    var params = titles;
-    titles = params.titles;
-    sites = params.sites;
-    languages = params.languages;
-    props = params.props;
-    format = params.format;
-  }
-
-  format = format || 'json';
-
-  // titles cant be let empty
-  if (!(titles && titles.length > 0)) throw new Error('no title provided');
-  // default to the English Wikipedia
-  if (!(sites && sites.length > 0)) sites = ['enwiki'];
-
-  // Properties can be either one property as a string
-  // or an array or properties;
-  // either case me just want to deal with arrays
-  titles = forceArray(titles);
-  sites = forceArray(sites).map(parseSite);
-  props = forceArray(props);
-
-  var query = {
-    action: 'wbgetentities',
-    titles: titles.join('|'),
-    sites: sites.join('|'),
-    format: format
-  };
-
-  // Normalizing only works if there is only one site and title
-  if (sites.length === 1 && titles.length === 1) {
-    query.normalize = true;
-  }
-
-  if (languages) {
-    languages = forceArray(languages).map(shortLang);
-    query.languages = languages.join('|');
-  }
-
-  if (props && props.length > 0) query.props = props.join('|');
-
-  return buildUrl(query);
-};
-
-// convert 2 letters language code to Wikipedia sitelinks code
-var parseSite = function parseSite(site) {
-  return site.length === 2 ? site + 'wiki' : site;
-};
-
-},{"../utils/build_url":17,"../utils/utils":19}],14:[function(require,module,exports){
-'use strict';
-
-var buildUrl = require('../utils/build_url');
-
-var _require = require('../utils/utils'),
-    isPlainObject = _require.isPlainObject;
-
-module.exports = function (search, language, limit, format, uselang) {
-  // polymorphism: arguments can be passed as an object keys
-  if (isPlainObject(search)) {
-    // Not using destructuring assigment there as it messes with both babel and standard
-    var params = search;
-    search = params.search;
-    language = params.language;
-    limit = params.limit;
-    format = params.format;
-    uselang = params.uselang;
-  }
-
-  if (!(search && search.length > 0)) throw new Error("search can't be empty");
-
-  language = language || 'en';
-  uselang = uselang || language;
-  limit = limit || '20';
-  format = format || 'json';
-
-  return buildUrl({
-    action: 'wbsearchentities',
-    search: search,
-    language: language,
-    limit: limit,
-    format: format,
-    uselang: uselang
-  });
-};
-
-},{"../utils/build_url":17,"../utils/utils":19}],15:[function(require,module,exports){
+},{"./simplify_claims":4,"./simplify_text_attributes":7}],6:[function(require,module,exports){
 'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -725,7 +370,7 @@ var passValue = function passValue(valueObj) {
 };
 
 var parseUri = function parseUri(uri) {
-  return uri.replace('http://www.wikidata.org/entity/', '');
+  return uri.replace('http://www.wikidata.org/entity/', '').replace('http://www.wikidata.org/prop/direct/', '');
 };
 
 var identifyVars = function identifyVars(vars) {
@@ -827,7 +472,368 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
   };
 };
 
-},{}],16:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+'use strict';
+
+var simplifyTextAttributes = function simplifyTextAttributes(multivalue, attribute) {
+  return function (data) {
+    var simplifiedData = {};
+    Object.keys(data).forEach(function (lang) {
+      var obj = data[lang];
+      simplifiedData[lang] = multivalue ? obj.map(getValue) : obj[attribute];
+    });
+    return simplifiedData;
+  };
+};
+
+var getValue = function getValue(obj) {
+  return obj.value;
+};
+
+var labelsOrDescription = simplifyTextAttributes(false, 'value');
+
+module.exports = {
+  labels: labelsOrDescription,
+  descriptions: labelsOrDescription,
+  aliases: simplifyTextAttributes(true, 'value'),
+  sitelinks: simplifyTextAttributes(false, 'title')
+};
+
+},{}],8:[function(require,module,exports){
+'use strict';
+
+module.exports = function (wikidataTime) {
+  var sign = wikidataTime[0];
+  var rest = wikidataTime.slice(1);
+  var date = fullDateData(sign, rest);
+
+  if (date.toString() === 'Invalid Date') {
+    return parseInvalideDate(sign, rest);
+  } else {
+    return date;
+  }
+};
+
+var fullDateData = function fullDateData(sign, rest) {
+  return sign === '-' ? negativeDate(rest) : positiveDate(rest);
+};
+
+var positiveDate = function positiveDate(rest) {
+  return new Date(rest);
+};
+var negativeDate = function negativeDate(rest) {
+  // using ISO8601 expanded notation for negative years: adding 2 leading zeros
+  var date = '-00' + rest;
+  return new Date(date);
+};
+
+var parseInvalideDate = function parseInvalideDate(sign, rest) {
+  // This is probably a date of unsuffisient precision
+  // such as 1953-00-00T00:00:00Z, thus invalid
+  // It should at least have a year, so let's fallback to ${year}-01-01
+  var year = rest.split('T')[0].split('-')[0];
+  return fullDateData(sign, year);
+};
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+var wdk = module.exports = {};
+
+wdk.searchEntities = require('./queries/search_entities');
+wdk.getEntities = require('./queries/get_entities');
+wdk.getManyEntities = require('./queries/get_many_entities');
+wdk.getWikidataIdsFromSitelinks = require('./queries/get_wikidata_ids_from_sitelinks');
+wdk.sparqlQuery = require('./queries/sparql_query');
+wdk.getReverseClaims = require('./queries/get_reverse_claims');
+wdk.getRevisions = require('./queries/get_revisions');
+wdk.parse = require('./helpers/parse_responses');
+
+var claimsSimplifiers = require('./helpers/simplify_claims');
+var simplifySparqlResults = require('./helpers/simplify_sparql_results');
+
+wdk.simplify = require('../lib/helpers/simplify_text_attributes');
+wdk.simplify.entity = require('../lib/helpers/simplify_entity');
+wdk.simplify.claim = claimsSimplifiers.simplifyClaim;
+wdk.simplify.propertyClaims = claimsSimplifiers.simplifyPropertyClaims;
+wdk.simplify.claims = claimsSimplifiers.simplifyClaims;
+wdk.simplify.sparqlResults = simplifySparqlResults;
+
+// Legacy
+wdk.simplifySparqlResults = require('./helpers/simplify_sparql_results');
+Object.assign(wdk, claimsSimplifiers);
+
+// Aliases
+wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks;
+
+Object.assign(wdk, require('./helpers/helpers'));
+
+},{"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_text_attributes":7,"./helpers/helpers":1,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./helpers/simplify_sparql_results":6,"./queries/get_entities":10,"./queries/get_many_entities":11,"./queries/get_reverse_claims":12,"./queries/get_revisions":13,"./queries/get_wikidata_ids_from_sitelinks":14,"./queries/search_entities":15,"./queries/sparql_query":16}],10:[function(require,module,exports){
+'use strict';
+
+var buildUrl = require('../utils/build_url');
+
+var _require = require('../utils/utils'),
+    isPlainObject = _require.isPlainObject,
+    forceArray = _require.forceArray,
+    shortLang = _require.shortLang;
+
+module.exports = function (ids, languages, props, format) {
+  // Polymorphism: arguments can be passed as an object keys
+  if (isPlainObject(ids)) {
+    var _ids = ids;
+    ids = _ids.ids;
+    languages = _ids.languages;
+    props = _ids.props;
+    format = _ids.format;
+  }
+
+  format = format || 'json';
+
+  // ids can't be let empty
+  if (!(ids && ids.length > 0)) throw new Error('no id provided');
+
+  // Allow to pass ids as a single string
+  ids = forceArray(ids);
+
+  if (ids.length > 50) {
+    console.warn('getEntities accepts 50 ids max to match Wikidata API limitations:\n      this request won\'t get all the desired entities.\n      You can use getManyEntities instead to generate several request urls\n      to work around this limitation');
+  }
+
+  // Properties can be either one property as a string
+  // or an array or properties;
+  // either case me just want to deal with arrays
+
+  var query = {
+    action: 'wbgetentities',
+    ids: ids.join('|'),
+    format: format
+  };
+
+  if (languages) {
+    languages = forceArray(languages).map(shortLang);
+    query.languages = languages.join('|');
+  }
+
+  if (props && props.length > 0) query.props = forceArray(props).join('|');
+
+  return buildUrl(query);
+};
+
+},{"../utils/build_url":17,"../utils/utils":19}],11:[function(require,module,exports){
+'use strict';
+
+var getEntities = require('./get_entities');
+
+var _require = require('../utils/utils'),
+    isPlainObject = _require.isPlainObject;
+
+module.exports = function (ids, languages, props, format) {
+  // Polymorphism: arguments can be passed as an object keys
+  if (isPlainObject(ids)) {
+    var _ids = ids;
+    ids = _ids.ids;
+    languages = _ids.languages;
+    props = _ids.props;
+    format = _ids.format;
+  }
+
+  if (!(ids instanceof Array)) throw new Error('getManyEntities expects an array of ids');
+
+  return getIdsGroups(ids).map(function (idsGroup) {
+    return getEntities(idsGroup, languages, props, format);
+  });
+};
+
+var getIdsGroups = function getIdsGroups(ids) {
+  var groups = [];
+  while (ids.length > 0) {
+    var group = ids.slice(0, 50);
+    ids = ids.slice(50);
+    groups.push(group);
+  }
+  return groups;
+};
+
+},{"../utils/utils":19,"./get_entities":10}],12:[function(require,module,exports){
+'use strict';
+
+var helpers = require('../helpers/helpers');
+var sparqlQuery = require('./sparql_query');
+// Fiter-out properties. Can't be filtered by
+// `?subject a wikibase:Item`, as those triples are omitted
+// https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#WDQS_data_differences
+var itemsOnly = 'FILTER NOT EXISTS { ?subject rdf:type wikibase:Property . } ';
+
+module.exports = function (property, value) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var limit = options.limit,
+      caseInsensitive = options.caseInsensitive,
+      keepProperties = options.keepProperties;
+
+  limit = limit || 1000;
+  var sparqlFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
+  var valueString = getValueString(value);
+  var filter = keepProperties ? '' : itemsOnly;
+  var sparql = sparqlFn(property, valueString, filter, limit);
+  return sparqlQuery(sparql);
+};
+
+function getValueString(value) {
+  if (helpers.isItemId(value)) {
+    value = 'wd:' + value;
+  } else if (typeof value === 'string') {
+    value = '\'' + value + '\'';
+  }
+  return value;
+}
+
+function directValueQuery(property, value, filter, limit) {
+  return 'SELECT ?subject WHERE {\n      ?subject wdt:' + property + ' ' + value + ' .\n      ' + filter + '\n    }\n    LIMIT ' + limit;
+}
+
+// Discussion on how to make this query optimal:
+// http://stackoverflow.com/q/43073266/3324977
+function caseInsensitiveValueQuery(property, value, filter, limit) {
+  return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n    ' + filter + '\n  }\n  LIMIT ' + limit;
+}
+
+},{"../helpers/helpers":1,"./sparql_query":16}],13:[function(require,module,exports){
+'use strict';
+
+var buildUrl = require('../utils/build_url');
+
+var _require = require('../utils/utils'),
+    forceArray = _require.forceArray;
+
+module.exports = function (ids) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  ids = forceArray(ids);
+  var uniqueId = ids.length === 1;
+  var query = {
+    action: 'query',
+    prop: 'revisions'
+  };
+  query.titles = ids.join('|');
+  query.format = options.format || 'json';
+  if (uniqueId) query.rvlimit = options.limit || 'max';
+  if (uniqueId && options.start) query.rvstart = getEpochSeconds(options.start);
+  if (uniqueId && options.end) query.rvend = getEpochSeconds(options.end);
+  return buildUrl(query);
+};
+
+var getEpochSeconds = function getEpochSeconds(date) {
+  // Return already formatted epoch seconds:
+  // if a date in milliseconds appear to be earlier than 2000-01-01, that's probably
+  // already seconds actually
+  if (typeof date === 'number' && date < earliestPointInMs) return date;
+  return Math.trunc(new Date(date).getTime() / 1000);
+};
+
+var earliestPointInMs = new Date('2000-01-01').getTime();
+
+},{"../utils/build_url":17,"../utils/utils":19}],14:[function(require,module,exports){
+'use strict';
+
+var buildUrl = require('../utils/build_url');
+
+var _require = require('../utils/utils'),
+    isPlainObject = _require.isPlainObject,
+    forceArray = _require.forceArray,
+    shortLang = _require.shortLang;
+
+module.exports = function (titles, sites, languages, props, format) {
+  // polymorphism: arguments can be passed as an object keys
+  if (isPlainObject(titles)) {
+    // Not using destructuring assigment there as it messes with both babel and standard
+    var params = titles;
+    titles = params.titles;
+    sites = params.sites;
+    languages = params.languages;
+    props = params.props;
+    format = params.format;
+  }
+
+  format = format || 'json';
+
+  // titles cant be let empty
+  if (!(titles && titles.length > 0)) throw new Error('no title provided');
+  // default to the English Wikipedia
+  if (!(sites && sites.length > 0)) sites = ['enwiki'];
+
+  // Properties can be either one property as a string
+  // or an array or properties;
+  // either case me just want to deal with arrays
+  titles = forceArray(titles);
+  sites = forceArray(sites).map(parseSite);
+  props = forceArray(props);
+
+  var query = {
+    action: 'wbgetentities',
+    titles: titles.join('|'),
+    sites: sites.join('|'),
+    format: format
+  };
+
+  // Normalizing only works if there is only one site and title
+  if (sites.length === 1 && titles.length === 1) {
+    query.normalize = true;
+  }
+
+  if (languages) {
+    languages = forceArray(languages).map(shortLang);
+    query.languages = languages.join('|');
+  }
+
+  if (props && props.length > 0) query.props = props.join('|');
+
+  return buildUrl(query);
+};
+
+// convert 2 letters language code to Wikipedia sitelinks code
+var parseSite = function parseSite(site) {
+  return site.length === 2 ? site + 'wiki' : site;
+};
+
+},{"../utils/build_url":17,"../utils/utils":19}],15:[function(require,module,exports){
+'use strict';
+
+var buildUrl = require('../utils/build_url');
+
+var _require = require('../utils/utils'),
+    isPlainObject = _require.isPlainObject;
+
+module.exports = function (search, language, limit, format, uselang) {
+  // polymorphism: arguments can be passed as an object keys
+  if (isPlainObject(search)) {
+    // Not using destructuring assigment there as it messes with both babel and standard
+    var params = search;
+    search = params.search;
+    language = params.language;
+    limit = params.limit;
+    format = params.format;
+    uselang = params.uselang;
+  }
+
+  if (!(search && search.length > 0)) throw new Error("search can't be empty");
+
+  language = language || 'en';
+  uselang = uselang || language;
+  limit = limit || '20';
+  format = format || 'json';
+
+  return buildUrl({
+    action: 'wbsearchentities',
+    search: search,
+    language: language,
+    limit: limit,
+    format: format,
+    uselang: uselang
+  });
+};
+
+},{"../utils/build_url":17,"../utils/utils":19}],16:[function(require,module,exports){
 'use strict';
 
 var _require = require('../utils/utils'),
@@ -904,8 +910,8 @@ module.exports = {
   }
 };
 
-var encodeCharacter = function encodeCharacter(c) {
-  return '%' + c.charCodeAt(0).toString(16);
+var encodeCharacter = function encodeCharacter(char) {
+  return '%' + char.charCodeAt(0).toString(16);
 };
 
 },{}],20:[function(require,module,exports){
@@ -1087,5 +1093,5 @@ var objectKeys = Object.keys || function (obj) {
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":20,"./encode":21}]},{},[8])(8)
+},{"./decode":20,"./encode":21}]},{},[9])(9)
 });
