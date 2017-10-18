@@ -41,4 +41,16 @@ describe('simplifyClaims', function () {
     should(url.match(/FILTER%20%28lcase%28%3Fvalue%29%20%3D%20%27bouletcorp%27%29/)).be.ok()
     done()
   })
+
+  it('should filter properties by default', function (done) {
+    const url = getReverseClaims('P50', 'Q535')
+    should(url.match(/FILTER%20NOT%20EXISTS/)).be.ok()
+    done()
+  })
+
+  it('should keep properties if requested', function (done) {
+    const url = getReverseClaims('P50', 'Q535', { keepProperties: true })
+    should(url.match(/FILTER%20NOT%20EXISTS/)).not.be.ok()
+    done()
+  })
 })

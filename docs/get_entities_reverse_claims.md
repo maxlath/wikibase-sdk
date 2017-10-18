@@ -2,7 +2,7 @@
 
 In wikidata API answers, you can only access claims on the entity's page, not claims pointing to this entity (what would be in the "what links here" page).
 
-Fortunatly, we can use [SPARQL queries](sparql_query.md) to get relations the other way around, answering the question "*what are the entities having this value for this property?*". This is `wdk.getReverseClaims``provides
+Fortunatly, we can use [SPARQL queries](sparql_query.md) to get relations the other way around, answering the question "*what are the entities having this value for this property?*". This is what `wdk.getReverseClaims` provides.
 
 For instance, let's say you want to find all the entities that have Leo Tolstoy ([Q7243](http://www.wikidata.org/entity/Q7243)) for author ([P50](http://www.wikidata.org/entity/P50))
 
@@ -33,7 +33,15 @@ Default value: `1000`
 const url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
 ```
 
+### keepProperties
+Default: `false`
+If you want to get not only items but also properties, set `keepProperties` to true:
+```js
+const url = wdk.getReverseClaims('P50', 'Q535', { keepProperties: true })
+```
+
 ### caseInsensitive
+Default: `false`
 Make the value case insensitive
 
 > :warning: use only when needed as it makes the query less perfomante
