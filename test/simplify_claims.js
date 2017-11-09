@@ -70,16 +70,16 @@ describe('simplifyClaims', function () {
   it('should return the correct value when called with keepQualifiers=true', function (done) {
     const simplified = simplifyClaims(Q571.claims)
     const simplifiedWithQualifiers = simplifyClaims(Q571.claims, { keepQualifiers: true })
-    for (let property in simplifiedWithQualifiers) {
+    Object.keys(simplifiedWithQualifiers).forEach(property => {
       let propertyValues = simplifiedWithQualifiers[property]
       propertyValues.should.be.an.Array()
-      for (let [index, valueObj] of propertyValues.entries()) {
+      propertyValues.forEach((valueObj, index) => {
         valueObj.should.be.an.Object()
         let value = simplified[property][index]
         valueObj.value.should.equal(value)
         valueObj.qualifiers.should.be.an.Object()
-      }
-    }
+      })
+    })
     done()
   })
 
@@ -125,12 +125,12 @@ describe('simplifyPropertyClaims', function () {
     const simplified = simplifyPropertyClaims(Q571.claims.P279)
     const simplifiedWithQualifiers = simplifyPropertyClaims(Q571.claims.P279, { keepQualifiers: true })
     simplifiedWithQualifiers.should.be.an.Array()
-    for (let [index, valueObj] of simplifiedWithQualifiers.entries()) {
+    simplifiedWithQualifiers.forEach((valueObj, index) => {
       valueObj.should.be.an.Object()
       let value = simplified[index]
       valueObj.value.should.equal(value)
       valueObj.qualifiers.should.be.an.Object()
-    }
+    })
     done()
   })
 
