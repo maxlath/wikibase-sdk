@@ -21,6 +21,11 @@ Applying all simplifiers at once: labels, descriptions, aliases, claims, sitelin
 ```js
 wdk.simplify.entity(entity)
 ```
+You can also pass options as a second argument, that will then be passed the subfunctions: currently only [simplify claims](simplify_claims.md).
+```js
+wdk.simplify.entity(entity, { keepQualifiers: true, keepIds: true })
+```
+
 ## Simplify claims
 That's a huge chunk so it got it's own doc page: [simplify claims](simplify_claims.md)
 
