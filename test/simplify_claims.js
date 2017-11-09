@@ -245,6 +245,32 @@ describe('simplifyClaim', function () {
     })
   })
 
+  describe('references', function () {
+    it('should return the correct value when called with keepReferences=true', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P214[0])
+      const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true })
+      simplifiedWithReferences.value.should.equal(simplified)
+      simplifiedWithReferences.references.should.be.an.Object()
+      done()
+    })
+
+    it('should include references when called with keepReferences=true', function (done) {
+      const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true })
+      simplifiedWithReferences.references[0].P248.should.be.an.Array()
+      simplifiedWithReferences.references[0].P248[0].should.equal('Q54919')
+      simplifiedWithReferences.references[0].P813.should.be.an.Array()
+      simplifiedWithReferences.references[0].P813[0].should.equal('2015-08-02T00:00:00.000Z')
+      done()
+    })
+
+    it('should include prefixes in references claims', function (done) {
+      const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { entityPrefix: 'wd', propertyPrefix: 'wdt', keepReferences: true })
+      simplifiedWithReferences.references[0]['wdt:P248'].should.be.an.Array()
+      simplifiedWithReferences.references[0]['wdt:P248'][0].should.equal('wd:Q54919')
+      done()
+    })
+  })
+
   describe('time converter', function () {
     it('should use a custom time converter when one is set', function (done) {
       const timeClaim = converter => {

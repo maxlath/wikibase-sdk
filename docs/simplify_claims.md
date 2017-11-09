@@ -16,6 +16,7 @@
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep qualifiers](#keep-qualifiers)
+  - [Keep references](#keep-references)
   - [Keep non-truthy statements](#keep-non-truthy-statements)
   - [Change time parser](#change-time-parser)
 
@@ -168,6 +169,36 @@ Results would then look something like
     {
       "value": "Q27887604",
       "qualifiers": { "P1545": ["10"], "P1416": ["Q640694"] }
+    }
+  ]
+}
+```
+
+### Keep references
+> `keepReferences`
+
+You can keep reference by passing `keepReferences: true` in the options:
+```js
+wdk.simplify.claims(entity.claims, { keepReferences: true })
+wdk.simplify.propertyClaims(entity.claims.P50, { keepReferences: true })
+wdk.simplify.claim(entity.claims.P50[0], { keepReferences: true })
+```
+Results would then look something like
+```json
+{
+  "P50": [
+    {
+      "value": "Q5111731",
+      "references": [
+        { "P854": [ "https://zuper.trustable/source" ], "P143": [ "Q191769" ] }
+        { "P248": [ "Q54919" ], "P813": [ "2015-08-02T00:00:00.000Z" ] }
+      ]
+    },
+    {
+      "value": "Q20895241",
+      "references": [
+        { "P854": ["https://zuper.trustable/source"]," P143": ["Q58255"] }
+      ]
     }
   ]
 }
