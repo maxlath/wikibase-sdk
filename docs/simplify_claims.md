@@ -18,6 +18,7 @@
   - [Keep qualifiers](#keep-qualifiers)
   - [Keep references](#keep-references)
   - [Keep ids](#keep-ids)
+  - [Keep hashes](#keep-hashes)
   - [Keep non-truthy statements](#keep-non-truthy-statements)
   - [Change time parser](#change-time-parser)
 
@@ -222,6 +223,39 @@ Results would then look something like
     { "value": "Q5111731", "id": "Q22002395$77572369-41bb-6e47-f1cc-83658005ae0d" },
     { "value": "Q20895241", "id": "Q22002395$2767c477-4ff4-cf8c-6ef0-33d6a759a8bc" },
     { "value": "Q27863244", "id": "Q22002395$620c1c3a-4d7d-0b0f-6d54-92fd1a13b00a" }
+  ]
+}
+```
+
+### Keep hashes
+> `keepHashes`
+
+You can keep references and qualifiers hashes by passing `keepHashes: true` in the options:
+
+```js
+wdk.simplify.claims(entity.claims, { keepHashes: true })
+wdk.simplify.propertyClaims(entity.claims.P50, { keepHashes: true })
+wdk.simplify.claim(entity.claims.P50[0], { keepHashes: true })
+```
+
+This option has no effect if neither `keepQualifiers` nor `keepReferences` is `true`.
+
+
+Results would then look something like
+```json
+{
+  "P50": [
+    {
+      "value": "Q474605",
+      "qualifiers": {
+        "P580": [
+          { "value": "1953-01-01T00:00:00.000Z", "hash": "3d22f4dffba1ac6f66f521ea6bea924e46df4129" }
+        ]
+      },
+      "references": [
+        { snaks: { P248: [ 'Q54919' ], P813: [ '2015-08-02T00:00:00.000Z' ] }, hash: 'd6b4bc80e47def2fab91836d81e1db62c640279c' }
+      ]
+    }
   ]
 }
 ```

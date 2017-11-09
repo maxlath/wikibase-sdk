@@ -283,7 +283,32 @@ describe('simplifyClaim', function () {
     it('should include ids when called with keepReferences=true', function (done) {
       const simplifiedWithIds = simplifyClaim(Q2112.claims.P214[0], { keepIds: true })
       simplifiedWithIds.id.should.equal('Q2112$ECB9E5BB-B2E1-4E77-8CEE-4E9F4938EB86')
-      console.log('simplifiedWithIds', simplifiedWithIds)
+      done()
+    })
+  })
+
+  describe('hashes', function () {
+    it('should return the correct value when called with keepHashes=true', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P214[0])
+      const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true, keepQualifiers: true, keepHashes: true })
+      simplifiedWithReferences.value.should.equal(simplified)
+      done()
+    })
+
+    it('should include references hashes when called with keepHashes=true', function (done) {
+      const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true, keepHashes: true })
+      simplifiedWithReferences.references[0].snaks.P248.should.be.an.Array()
+      simplifiedWithReferences.references[0].hash.should.equal('d6b4bc80e47def2fab91836d81e1db62c640279c')
+      simplifiedWithReferences.references[0].snaks.P248[0].should.equal('Q54919')
+      simplifiedWithReferences.references[0].snaks.P813.should.be.an.Array()
+      simplifiedWithReferences.references[0].snaks.P813[0].should.equal('2015-08-02T00:00:00.000Z')
+      done()
+    })
+
+    it('should include qualifiers hashes when called with keepHashes=true', function (done) {
+      const simplifiedWithQualifiers = simplifyPropertyClaims(Q2112.claims.P190, { keepQualifiers: true, keepHashes: true })
+      simplifiedWithQualifiers[1].qualifiers.P580[0].value.should.equal('1953-01-01T00:00:00.000Z')
+      simplifiedWithQualifiers[1].qualifiers.P580[0].hash.should.equal('3d22f4dffba1ac6f66f521ea6bea924e46df4129')
       done()
     })
   })
