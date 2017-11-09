@@ -272,7 +272,7 @@ var simplifyClaim = function simplifyClaim(claim) {
   }
 
   if (keepReferences) {
-    // Using a new object so that the original options object isn't modified
+    claim.references = claim.references || [];
     richValue.references = claim.references.map(function (refRecord) {
       var snaks = simplifyClaims(refRecord.snaks, subSnaksOptions);
       if (keepHashes) return { snaks: snaks, hash: refRecord.hash };else return snaks;
@@ -309,7 +309,7 @@ var _require = require('./simplify_claims'),
 
 var simplify = require('./simplify_text_attributes');
 
-module.exports = function (entity) {
+module.exports = function (entity, options) {
   return {
     id: entity.id,
     type: entity.type,
@@ -317,7 +317,7 @@ module.exports = function (entity) {
     labels: simplify.labels(entity.labels),
     descriptions: simplify.descriptions(entity.descriptions),
     aliases: simplify.aliases(entity.aliases),
-    claims: simplifyClaims(entity.claims),
+    claims: simplifyClaims(entity.claims, options),
     sitelinks: simplify.sitelinks(entity.sitelinks)
   };
 };
