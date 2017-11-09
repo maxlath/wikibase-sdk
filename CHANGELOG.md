@@ -1,6 +1,12 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.3.0 - 2017-11-09
+* Added new options to `simplifyClaims`:
+  * [keep references](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-references)
+  * [keep ids](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-ids)
+  * [keep hashes](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-hashes)
+
 ## 5.2.0 - 2017-06-10
 * Added [`getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md)
 * Added option `timeConverter` to [`simplify.claims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md) functions
@@ -26,7 +32,7 @@
 * Added `limit` and `caseInsensitive` options to [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities_reverse_claims.md)
 
 ## 4.2.0 - 2017-01-02
-* Added the option to [keep qualifiers](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-qualifiers) to simplifyClaims functions
+* Added the option to [keep qualifiers](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-qualifiers) to `simplifyClaims` functions
 
 ## 4.1.0 - 2016-11-08
 * [Simplify claims functions](https://github.com/maxlath/wikidata-sdk/blob/master/docs/#simplify-claims-results) now each accept a 2nd and 3rd optional arguments to [specify entity and property id prefixes](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#add-prefixes-to-entities-and-properties-ids)

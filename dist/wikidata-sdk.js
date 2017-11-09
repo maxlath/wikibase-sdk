@@ -185,9 +185,9 @@ var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims) {
 
   var _parseOptions2 = parseOptions(options),
       keepNonTruthy = _parseOptions2.keepNonTruthy,
-      areQualifiers = _parseOptions2.areQualifiers;
+      areSubSnaks = _parseOptions2.areSubSnaks;
 
-  if (!(keepNonTruthy || areQualifiers)) propClaims = filterOutNonTruthyClaims(propClaims);
+  if (!(keepNonTruthy || areSubSnaks)) propClaims = filterOutNonTruthyClaims(propClaims);
 
   return propClaims.map(function (claim) {
     return simplifyClaim.apply(undefined, [claim].concat(options));
@@ -221,15 +221,17 @@ var simplifyClaim = function simplifyClaim(claim) {
 
   options = parseOptions(options);
   var _options = options,
-      keepQualifiers = _options.keepQualifiers;
+      keepQualifiers = _options.keepQualifiers,
+      keepReferences = _options.keepReferences,
+      keepIds = _options.keepIds,
+      keepHashes = _options.keepHashes;
   // tries to replace wikidata deep claim object by a simple value
   // e.g. a string, an entity Qid or an epoch time number
 
-  var mainsnak = claim.mainsnak,
-      qualifiers = claim.qualifiers;
+  var mainsnak = claim.mainsnak;
 
 
-  var datatype, datavalue, isQualifier;
+  var datatype, datavalue, isQualifierSnak, isReferenceSnak;
   if (mainsnak) {
     datatype = mainsnak.datatype;
     datavalue = mainsnak.datavalue;
@@ -241,20 +243,45 @@ var simplifyClaim = function simplifyClaim(claim) {
     // Qualifiers have no mainsnak, and define datatype, datavalue on claim
     datavalue = claim.datavalue;
     datatype = claim.datatype;
-    isQualifier = true;
+    // Duck typing the sub-snak type
+    if (claim.hash) isQualifierSnak = true;else isReferenceSnak = true;
   }
 
   var value = parseClaim(datatype, datavalue, options);
 
-  // Qualifiers should not attempt to keep sub-qualifiers
-  if (!keepQualifiers || isQualifier) return value;
+  // Qualifiers should not attempt to keep sub-qualifiers or references
+  if (isQualifierSnak) {
+    if (keepHashes) return { value: value, hash: claim.hash };else return value;
+  }
+
+  if (isReferenceSnak) return value;
+
+  // No need to test keepHashes as it has no effect if neither
+  // keepQualifiers or keepReferences is true
+  if (!(keepQualifiers || keepReferences || keepIds)) return value;
+
+  // When keeping qualifiers or references, the value becomes an object
+  // instead of a direct value
+  var richValue = { value: value };
 
   // Using a new object so that the original options object isn't modified
-  var qualifiersOptions = Object.assign({}, options, { areQualifiers: true });
+  var subSnaksOptions = Object.assign({}, options, { areSubSnaks: true, keepHashes: keepHashes });
 
-  // When keeping qualifiers, the value becomes an object
-  // instead of a direct value
-  return { value: value, qualifiers: simplifyClaims(qualifiers, qualifiersOptions) };
+  if (keepQualifiers) {
+    richValue.qualifiers = simplifyClaims(claim.qualifiers, subSnaksOptions);
+  }
+
+  if (keepReferences) {
+    // Using a new object so that the original options object isn't modified
+    richValue.references = claim.references.map(function (refRecord) {
+      var snaks = simplifyClaims(refRecord.snaks, subSnaksOptions);
+      if (keepHashes) return { snaks: snaks, hash: refRecord.hash };else return snaks;
+    });
+  }
+
+  if (keepIds) richValue.id = claim.id;
+
+  return richValue;
 };
 
 var parseOptions = function parseOptions(options) {
