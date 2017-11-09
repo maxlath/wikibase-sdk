@@ -17,6 +17,7 @@
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep qualifiers](#keep-qualifiers)
   - [Keep references](#keep-references)
+  - [Keep ids](#keep-ids)
   - [Keep non-truthy statements](#keep-non-truthy-statements)
   - [Change time parser](#change-time-parser)
 
@@ -200,6 +201,27 @@ Results would then look something like
         { "P854": ["https://zuper.trustable/source"]," P143": ["Q58255"] }
       ]
     }
+  ]
+}
+```
+
+### Keep ids
+> `keepIds`
+
+You can keep claim ids (a.k.a. `guid`), references and qualifiers hashes by passing `keepIds: true` in the options:
+
+```js
+wdk.simplify.claims(entity.claims, { keepIds: true })
+wdk.simplify.propertyClaims(entity.claims.P50, { keepIds: true })
+wdk.simplify.claim(entity.claims.P50[0], { keepIds: true })
+```
+Results would then look something like
+```json
+{
+  "P50": [
+    { "value": "Q5111731", "id": "Q22002395$77572369-41bb-6e47-f1cc-83658005ae0d" },
+    { "value": "Q20895241", "id": "Q22002395$2767c477-4ff4-cf8c-6ef0-33d6a759a8bc" },
+    { "value": "Q27863244", "id": "Q22002395$620c1c3a-4d7d-0b0f-6d54-92fd1a13b00a" }
   ]
 }
 ```

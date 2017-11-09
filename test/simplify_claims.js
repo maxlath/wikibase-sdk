@@ -271,6 +271,23 @@ describe('simplifyClaim', function () {
     })
   })
 
+  describe('ids', function () {
+    it('should return the correct value when called with keepIds=true', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P214[0])
+      const simplifiedWithIds = simplifyClaim(Q2112.claims.P214[0], { keepIds: true })
+      simplifiedWithIds.value.should.equal(simplified)
+      simplifiedWithIds.id.should.be.a.String()
+      done()
+    })
+
+    it('should include ids when called with keepReferences=true', function (done) {
+      const simplifiedWithIds = simplifyClaim(Q2112.claims.P214[0], { keepIds: true })
+      simplifiedWithIds.id.should.equal('Q2112$ECB9E5BB-B2E1-4E77-8CEE-4E9F4938EB86')
+      console.log('simplifiedWithIds', simplifiedWithIds)
+      done()
+    })
+  })
+
   describe('time converter', function () {
     it('should use a custom time converter when one is set', function (done) {
       const timeClaim = converter => {
