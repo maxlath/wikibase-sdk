@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.4.0 - 2017-11-30
+* Added a new option to `simplifyClaims`:
+  * [keep rich-values](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-rich-values)
+
 ## 5.3.0 - 2017-11-09
 * Added new options to `simplifyClaims`:
   * [keep references](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-references)
