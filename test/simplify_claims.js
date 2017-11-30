@@ -324,6 +324,26 @@ describe('simplifyClaim', function () {
     })
   })
 
+  describe('rich values', function () {
+    it('should keep monolingual rich values', function (done) {
+      const options = { keepRichValues: true }
+      const simplified = simplifyClaim(Q328212.claims.P1477[0], options)
+      simplified.text.should.equal('Veronica Roth')
+      simplified.language.should.equal('es')
+      done()
+    })
+
+    it('should keep quantity rich values', function (done) {
+      const options = { keepRichValues: true }
+      const simplified = simplifyClaim(Q2112.claims.P2044[0], options)
+      simplified.amount.should.equal(118)
+      simplified.unit.should.equal('Q11573')
+      simplified.upperBound.should.equal(119)
+      simplified.lowerBound.should.equal(117)
+      done()
+    })
+  })
+
   describe('time converter', function () {
     it('should use a custom time converter when one is set', function (done) {
       const timeClaim = converter => {

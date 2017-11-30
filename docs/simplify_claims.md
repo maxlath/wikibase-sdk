@@ -15,6 +15,7 @@
 - [simplify.claim](#simplifyclaim)
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
+  - [Keep rich values](#keep-rich-values)
   - [Keep qualifiers](#keep-qualifiers)
   - [Keep references](#keep-references)
   - [Keep ids](#keep-ids)
@@ -142,6 +143,14 @@ Results would then look something like
   "wdt:P279": [ "wd:Q340169", "wd:Q2342494", "wd:Q386724" ]
 }
 ```
+
+### Keep rich values
+> `keepRichValues`
+
+By default, `simplify.claims` returns only the simpliest values, so just a string for `monolingualtext` values and just a number for `quantity` values.
+By setting `keepRichValues=true`,
+- `monolingualtext` values will be objects on the pattern `{ text, language }`
+- `quantity` values will be objects on the pattern `{ amount, unit, upperBound, lowerBound }`
 
 ### Keep qualifiers
 > `keepQualifiers`
