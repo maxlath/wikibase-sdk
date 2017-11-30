@@ -61,38 +61,55 @@ var _require = require('./helpers'),
 var simple = function simple(datavalue) {
   return datavalue.value;
 };
-var monolingualtext = function monolingualtext(datavalue) {
-  return datavalue.value.text;
+
+var monolingualtext = function monolingualtext(datavalue, options) {
+  return options.keepRichValues ? datavalue.value : datavalue.value.text;
 };
+
 var item = function item(datavalue, options) {
   return prefixedId(datavalue, options.entityPrefix);
 };
+
 var property = function property(datavalue, options) {
   return prefixedId(datavalue, options.propertyPrefix);
 };
-var entityLetter = {
-  item: 'Q',
-  property: 'P'
-};
+
+var entityLetter = { item: 'Q', property: 'P' };
 var prefixedId = function prefixedId(datavalue, prefix) {
   var value = datavalue.value;
 
   var id = value.id || entityLetter[value['entity-type']] + value['numeric-id'];
   return typeof prefix === 'string' ? prefix + ':' + id : id;
 };
-var quantity = function quantity(datavalue) {
-  return parseFloat(datavalue.value.amount);
+
+var quantity = function quantity(datavalue, options) {
+  var value = datavalue.value;
+
+  var amount = parseFloat(value.amount);
+  if (options.keepRichValues) {
+    var _amount = parseFloat(value.amount);
+    var unit = value.unit.replace('http://www.wikidata.org/entity/', '');
+    var upperBound = parseFloat(value.upperBound);
+    var lowerBound = parseFloat(value.lowerBound);
+    return { amount: _amount, unit: unit, upperBound: upperBound, lowerBound: lowerBound };
+  } else {
+    return amount;
+  }
 };
+
 var coordinate = function coordinate(datavalue) {
   return [datavalue.value.latitude, datavalue.value.longitude];
 };
+
 var time = function time(datavalue, options) {
   return getTimeConverter(options.timeConverter)(datavalue.value.time);
 };
+
 var getTimeConverter = function getTimeConverter() {
   var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'iso';
   return timeConverters[key];
 };
+
 var identity = function identity(arg) {
   return arg;
 };
@@ -155,8 +172,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var parseClaim = require('./parse_claim');
 
+var _require = require('../utils/utils'),
+    uniq = _require.uniq;
+
 // Expects an entity 'claims' object
 // Ex: entity.claims
+
+
 var simplifyClaims = function simplifyClaims(claims) {
   for (var _len = arguments.length, options = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     options[_key - 1] = arguments[_key];
@@ -187,11 +209,20 @@ var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims) {
       keepNonTruthy = _parseOptions2.keepNonTruthy,
       areSubSnaks = _parseOptions2.areSubSnaks;
 
-  if (!(keepNonTruthy || areSubSnaks)) propClaims = filterOutNonTruthyClaims(propClaims);
+  if (!(keepNonTruthy || areSubSnaks)) {
+    propClaims = filterOutNonTruthyClaims(propClaims);
+  }
 
-  return propClaims.map(function (claim) {
+  propClaims = propClaims.map(function (claim) {
     return simplifyClaim.apply(undefined, [claim].concat(options));
   }).filter(nonNull);
+
+  // Deduplicate values unless we return a rich value object
+  if (propClaims[0] && _typeof(propClaims[0]) !== 'object') {
+    return uniq(propClaims);
+  } else {
+    return propClaims;
+  }
 };
 
 var aggregatePerRank = function aggregatePerRank(aggregate, claim) {
@@ -301,7 +332,7 @@ var parseOptions = function parseOptions(options) {
 
 module.exports = { simplifyClaims: simplifyClaims, simplifyPropertyClaims: simplifyPropertyClaims, simplifyClaim: simplifyClaim };
 
-},{"./parse_claim":2}],5:[function(require,module,exports){
+},{"../utils/utils":19,"./parse_claim":2}],5:[function(require,module,exports){
 'use strict';
 
 var _require = require('./simplify_claims'),
@@ -934,6 +965,10 @@ module.exports = {
   // cf https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Description
   fixedEncodeURIComponent: function fixedEncodeURIComponent(str) {
     return encodeURIComponent(str).replace(/[!'()*]/g, encodeCharacter);
+  },
+
+  uniq: function uniq(array) {
+    return Array.from(new Set(array));
   }
 };
 
