@@ -113,6 +113,17 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
+  it('should deduplicated values', function (done) {
+    const { P50 } = Q22002395.claims
+    const claimsWithDuplicates = P50.concat(P50)
+    const simplified = simplifyPropertyClaims(claimsWithDuplicates)
+    while (simplified.length > 0) {
+      let nextValue = simplified.pop()
+      simplified.includes(nextValue).should.be.false()
+    }
+    done()
+  })
+
   it('should pass entity and property prefixes down', function (done) {
     const simplified = simplifyPropertyClaims(Q2112.claims.P190, { entityPrefix: 'wd' })
     simplified[0].should.equal('wd:Q207614')
