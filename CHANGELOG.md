@@ -1,12 +1,16 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.5.0 - 2017-12-04
+* Added new options to `simplify.sitelinks`:
+  * [add url](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#add-sitelinks-urls)
+
 ## 5.4.0 - 2017-11-30
-* Added a new option to `simplifyClaims`:
+* Added a new option to `simplify.claims`:
   * [keep rich-values](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-rich-values)
 
 ## 5.3.0 - 2017-11-09
-* Added new options to `simplifyClaims`:
+* Added new options to `simplify.claims`:
   * [keep references](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-references)
   * [keep ids](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-ids)
   * [keep hashes](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-hashes)
