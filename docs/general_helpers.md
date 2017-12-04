@@ -12,6 +12,7 @@
   - [isEntityId](#isentityid)
   - [isNumericId](#isnumericid)
   - [getNumericId](#getnumericid)
+- [Get a URL from a sitelink](#get-a-url-from-a-sitelink)
 - [Wikidata Time converters](#wikidata-time-converters)
   - [wikidataTimeToDateObject](#wikidatatimetodateobject)
   - [wikidataTimeToEpochTime](#wikidatatimetoepochtime)
@@ -33,6 +34,34 @@ Accepts both `P` and `Q` ids
 ### isNumericId
 
 ### getNumericId
+
+## Get a URL from a sitelink
+```js
+// multiple arguments interface
+wdk.getSitelinkUrl(site, title)
+
+wdk.getSitelinkUrl('commons', 'Lyon')
+// => 'https://commons.wikimedia.org/wiki/Lyon'
+
+wdk.getSitelinkUrl('frwiki', 'Septembre')
+// => 'https://fr.wikipedia.org/wiki/Septembre'
+
+wdk.getSitelinkUrl('zhwikiquote', '維克多·雨果')
+// => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
+```
+```js
+// object interface: allow you to directly pass the API sitelink object
+wdk.getSitelinkUrl({ site, title })
+
+wdk.getSitelinkUrl({ site: 'commons', title: 'Lyon' })
+// => 'https://commons.wikimedia.org/wiki/Lyon'
+
+wdk.getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
+// => 'https://fr.wikipedia.org/wiki/Septembre'
+
+wdk.getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
+// => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
+```
 
 ## Wikidata Time converters
 > See [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times)

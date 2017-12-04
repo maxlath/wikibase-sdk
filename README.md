@@ -72,6 +72,7 @@ A set of tools to **read** Wikidata from the [Wikidata API](https://www.wikidata
 
 ### General helpers
   * **[Work with ids](docs/general_helpers.md#work-with-ids)**
+  * **[Get a URL from a sitelink](docs/general_helpers.md#get-a-url-from-a-sitelink)**
   * **[Wikidata Time converters](docs/general_helpers.md#wikidata-time-converters)**
 
 ## Contributing
