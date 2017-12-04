@@ -12,6 +12,7 @@
 - [Simplify descriptions](#simplify-descriptions)
 - [Simplify aliases](#simplify-aliases)
 - [Simplify sitelinks](#simplify-sitelinks)
+  - [add sitelinks URLs](#add-sitelinks-urls)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -21,9 +22,21 @@ Applying all simplifiers at once: labels, descriptions, aliases, claims, sitelin
 ```js
 wdk.simplify.entity(entity)
 ```
-You can also pass options as a second argument, that will then be passed the subfunctions: currently only [simplify claims](simplify_claims.md).
+You can also pass options as a second argument, that will then be passed the subfunctions: currently only [simplify claims](simplify_claims.md) and [simplify sitelinks](#simplify-sitelinks).
 ```js
-wdk.simplify.entity(entity, { keepQualifiers: true, keepIds: true })
+wdk.simplify.entity(entity, {
+  // claims
+  entityPrefix: 'wd',
+  propertyPrefix: 'wdt',
+  keepRichValues: true,
+  keepQualifiers: true,
+  keepReferences: true,
+  keepIds: true,
+  keepHashes: true,
+  keepNonTruthy: true,
+  // sitelinks
+  addUrl: true
+})
 ```
 
 ## Simplify claims
@@ -56,3 +69,10 @@ wdk.simplify.sitelinks(entity.sitelinks)
 ```
 Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`<br>
 After: `{ plwiki: 'Książka' }`
+
+### add sitelinks URLs
+```js
+wdk.simplify.sitelinks(entity.sitelinks, { addUrl: true })
+```
+Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`<br>
+After: `{ plwiki: { title: 'Książka', url: 'https://pl.wikipedia.org/wiki/Książka' }`

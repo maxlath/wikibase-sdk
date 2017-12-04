@@ -1,11 +1,10 @@
 const should = require('should')
 const Q571 = require('./data/Q571.json')
-
+const { objLenght } = require('./lib/utils')
 const simplify = require('../lib/helpers/simplify_text_attributes')
 const simplifyLabels = simplify.labels
 const simplifyDescriptions = simplify.descriptions
 const simplifyAliases = simplify.aliases
-const simplifySitelinks = simplify.sitelinks
 
 describe('simplifyLabels', () => {
   it('should simplify labels', (done) => {
@@ -50,19 +49,3 @@ describe('simplifyAliases', () => {
     done()
   })
 })
-
-describe('simplifySitelinks', () => {
-  it('should simplify sitelinks', (done) => {
-    const simplifiedSitelinks = simplifySitelinks(Q571.sitelinks)
-    simplifiedSitelinks.enwiki.should.equal('Book')
-    simplifiedSitelinks.frwiki.should.equal('Livre (document)')
-    objLenght(simplifiedSitelinks).should.equal(objLenght(Q571.sitelinks))
-    done()
-  })
-  it('should create a different object', (done) => {
-    should(simplifySitelinks(Q571.sitelinks) === Q571.sitelinks).be.false()
-    done()
-  })
-})
-
-const objLenght = obj => Object.keys(obj).length
