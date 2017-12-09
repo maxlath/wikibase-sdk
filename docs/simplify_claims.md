@@ -262,7 +262,7 @@ Results would then look something like
         ]
       },
       "references": [
-        { snaks: { P248: [ 'Q54919' ], P813: [ '2015-08-02T00:00:00.000Z' ] }, hash: 'd6b4bc80e47def2fab91836d81e1db62c640279c' }
+        { "snaks": { "P248": [ "Q54919" ], "P813": [ "2015-08-02T00:00:00.000Z" ] }, "hash": "d6b4bc80e47def2fab91836d81e1db62c640279c" }
       ]
     }
   ]
