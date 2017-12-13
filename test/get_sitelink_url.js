@@ -2,7 +2,7 @@ require('should')
 
 const getSitelinkUrl = require('../lib/helpers/get_sitelink_url')
 
-describe('helpers', function () {
+describe('get_sitelink_url', function () {
   it('should be a function', function (done) {
     getSitelinkUrl.should.be.an.Function()
     done()
@@ -63,6 +63,10 @@ describe('helpers', function () {
     getSitelinkUrl({ site: 'enwikinews', title: 'Category:Lyon' })
     .should.equal('https://en.wikinews.org/wiki/Category%3ALyon')
 
+    done()
+  })
+  it('should reject invalid sitelinks', function (done) {
+    (() => getSitelinkUrl('frperlinpinpin', 'Lyon')).should.throw()
     done()
   })
 })
