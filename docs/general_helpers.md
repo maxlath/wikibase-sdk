@@ -57,11 +57,17 @@ wdk.getSitelinkUrl('zhwikiquote', '維克多·雨果')
 // object interface: allow you to directly pass the API sitelink object
 wdk.getSitelinkUrl({ site, title })
 
+wdk.getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
+// => 'https://fr.wikipedia.org/wiki/Septembre'
+
+wdk.getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
+// => 'https://es.wikiquote.org/wiki/Gilles_Deleuze'
+
 wdk.getSitelinkUrl({ site: 'commons', title: 'Lyon' })
 // => 'https://commons.wikimedia.org/wiki/Lyon'
 
-wdk.getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
-// => 'https://fr.wikipedia.org/wiki/Septembre'
+wdk.getSitelinkUrl({ site: 'wikidata', title: 'Q1' })
+// => 'https://wikidata.org/wiki/Q1'
 
 wdk.getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
 // => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
@@ -73,8 +79,12 @@ getSitelinkData('frwiki')
 // => { lang: 'fr', project: 'wikipedia' }
 getSitelinkData('dewikiquote')
 // => { lang: 'de', project: 'wikiquote' }
+
+// Using 'en' as placeholder lang for commons and wikidata
 getSitelinkData('commons')
 // => { lang: 'en', project: 'commons' }
+getSitelinkData('wikidata')
+// => { lang: 'en', project: 'wikidata' }
 ```
 
 ### isSitelinkKey
@@ -84,6 +94,9 @@ isSitelinkKey('frwiki')
 isSitelinkKey('dewikiquote')
 // => true
 isSitelinkKey('commons')
+// => true
+// Accepting wikidata as a valid sitelink for convenience
+isSitelinkKey('wikidata')
 // => true
 isSitelinkKey('frwikilinpinpin')
 // => false

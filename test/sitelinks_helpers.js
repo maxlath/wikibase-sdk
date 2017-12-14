@@ -34,6 +34,9 @@ describe('getSitelinkUrl', function () {
     getSitelinkUrl('enwikinews', 'Category:Lyon')
     .should.equal('https://en.wikinews.org/wiki/Category%3ALyon')
 
+    getSitelinkUrl('wikidata', 'Q1')
+    .should.equal('https://wikidata.org/wiki/Q1')
+
     done()
   })
   it('should accept a sitelink object as unique argument', function (done) {
@@ -63,8 +66,18 @@ describe('getSitelinkUrl', function () {
     getSitelinkUrl({ site: 'enwikinews', title: 'Category:Lyon' })
     .should.equal('https://en.wikinews.org/wiki/Category%3ALyon')
 
+    getSitelinkUrl({ site: 'wikidata', title: 'Q1' })
+    .should.equal('https://wikidata.org/wiki/Q1')
+
     done()
   })
+
+  it('should replace spaces by underscores', function (done) {
+    getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
+    .should.equal('https://es.wikiquote.org/wiki/Gilles_Deleuze')
+    done()
+  })
+
   it('should reject invalid sitelinks', function (done) {
     (() => getSitelinkUrl('frperlinpinpin', 'Lyon')).should.throw()
     done()
@@ -77,8 +90,11 @@ describe('getSitelinkData', function () {
     getSitelinkData('frwiki').project.should.equal('wikipedia')
     getSitelinkData('dewikiquote').lang.should.equal('de')
     getSitelinkData('dewikiquote').project.should.equal('wikiquote')
-    getSitelinkData('commons').lang.should.equal('en')
     getSitelinkData('commons').project.should.equal('commons')
+    getSitelinkData('wikidata').project.should.equal('wikidata')
+    // Using 'en' as placeholder
+    getSitelinkData('wikidata').lang.should.equal('en')
+    getSitelinkData('commons').lang.should.equal('en')
     // Known non-supported case
     getSitelinkData('imaginarylangwiki').lang.should.equal('imaginarylang')
     getSitelinkData('imaginarylangwiki').project.should.equal('wikipedia')
@@ -89,6 +105,9 @@ describe('getSitelinkData', function () {
 describe('isSitelinkKey', function () {
   it('should return true for valid sitelink keys', function (done) {
     isSitelinkKey('frwiki').should.be.true()
+    isSitelinkKey('commons').should.be.true()
+    // Tolerated to make things easy
+    isSitelinkKey('wikidata').should.be.true()
     done()
   })
   it('should return false for invalid sitelink keys', function (done) {
