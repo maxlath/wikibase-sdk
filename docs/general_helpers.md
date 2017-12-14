@@ -12,7 +12,10 @@
   - [isEntityId](#isentityid)
   - [isNumericId](#isnumericid)
   - [getNumericId](#getnumericid)
-- [Get a URL from a sitelink](#get-a-url-from-a-sitelink)
+- [sitelink helpers](#sitelink-helpers)
+  - [getSitelinkUrl](#getsitelinkurl)
+  - [getSitelinkData](#getsitelinkdata)
+  - [isSitelinkKey](#issitelinkkey)
 - [Wikidata Time converters](#wikidata-time-converters)
   - [wikidataTimeToDateObject](#wikidatatimetodateobject)
   - [wikidataTimeToEpochTime](#wikidatatimetoepochtime)
@@ -35,7 +38,8 @@ Accepts both `P` and `Q` ids
 
 ### getNumericId
 
-## Get a URL from a sitelink
+## sitelink helpers
+### getSitelinkUrl
 ```js
 // multiple arguments interface
 wdk.getSitelinkUrl(site, title)
@@ -61,6 +65,31 @@ wdk.getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
 
 wdk.getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
 // => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
+```
+
+### getSitelinkData
+```js
+getSitelinkData('frwiki')
+// => { lang: 'fr', project: 'wikipedia' }
+getSitelinkData('dewikiquote')
+// => { lang: 'de', project: 'wikiquote' }
+getSitelinkData('commons')
+// => { lang: 'en', project: 'commons' }
+```
+
+### isSitelinkKey
+```js
+isSitelinkKey('frwiki')
+// => true
+isSitelinkKey('dewikiquote')
+// => true
+isSitelinkKey('commons')
+// => true
+isSitelinkKey('frwikilinpinpin')
+// => false
+// /!\ langs are loosly validated
+isSitelinkKey('imaginarylangwiki')
+// => true
 ```
 
 ## Wikidata Time converters

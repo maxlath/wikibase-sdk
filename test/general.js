@@ -52,6 +52,9 @@ describe('general', function () {
     wdk.wikidataTimeToEpochTime.should.be.a.Function()
     wdk.wikidataTimeToISOString.should.be.a.Function()
     wdk.getSitelinkUrl.should.be.a.Function()
+    wdk.getSitelinkData.should.be.a.Function()
+    wdk.isSitelinkKey.should.be.a.Function()
+
     done()
   })
 })

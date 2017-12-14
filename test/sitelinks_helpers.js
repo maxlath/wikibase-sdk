@@ -1,8 +1,8 @@
 require('should')
 
-const getSitelinkUrl = require('../lib/helpers/get_sitelink_url')
+const { getSitelinkUrl, getSitelinkData, isSitelinkKey } = require('../lib/helpers/sitelinks_helpers')
 
-describe('get_sitelink_url', function () {
+describe('getSitelinkUrl', function () {
   it('should be a function', function (done) {
     getSitelinkUrl.should.be.an.Function()
     done()
@@ -67,6 +67,33 @@ describe('get_sitelink_url', function () {
   })
   it('should reject invalid sitelinks', function (done) {
     (() => getSitelinkUrl('frperlinpinpin', 'Lyon')).should.throw()
+    done()
+  })
+})
+
+describe('getSitelinkData', function () {
+  it('should return sitelinks data', function (done) {
+    getSitelinkData('frwiki').lang.should.equal('fr')
+    getSitelinkData('frwiki').project.should.equal('wikipedia')
+    getSitelinkData('dewikiquote').lang.should.equal('de')
+    getSitelinkData('dewikiquote').project.should.equal('wikiquote')
+    getSitelinkData('commons').lang.should.equal('en')
+    getSitelinkData('commons').project.should.equal('commons')
+    // Known non-supported case
+    getSitelinkData('imaginarylangwiki').lang.should.equal('imaginarylang')
+    getSitelinkData('imaginarylangwiki').project.should.equal('wikipedia')
+    done()
+  })
+})
+
+describe('isSitelinkKey', function () {
+  it('should return true for valid sitelink keys', function (done) {
+    isSitelinkKey('frwiki').should.be.true()
+    done()
+  })
+  it('should return false for invalid sitelink keys', function (done) {
+    isSitelinkKey('frperlinpinpin').should.be.false()
+    isSitelinkKey('frwikilinpinpin').should.be.false()
     done()
   })
 })
