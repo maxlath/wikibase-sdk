@@ -1,9 +1,13 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.6.0 - 2017-12-14
+* Added new sitelink helpers: [`getSitelinkData`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getsitelinkdata) and [`isSitelinkKey`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#issitelinkkey)
+
 ## 5.5.0 - 2017-12-04
 * Added new options to `simplify.sitelinks`:
   * [add url](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#add-sitelinks-urls)
+* Added new sitelink helper: [`getSitelinkUrl`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getsitelinkdata) and [`isSitelinkKey`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getsitelinkurl)
 
 ## 5.4.0 - 2017-11-30
 * Added a new option to `simplify.claims`:
