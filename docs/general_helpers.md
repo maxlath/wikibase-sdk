@@ -12,7 +12,7 @@
   - [isEntityId](#isentityid)
   - [isNumericId](#isnumericid)
   - [getNumericId](#getnumericid)
-- [sitelink helpers](#sitelink-helpers)
+- [Sitelink helpers](#sitelink-helpers)
   - [getSitelinkUrl](#getsitelinkurl)
   - [getSitelinkData](#getsitelinkdata)
   - [isSitelinkKey](#issitelinkkey)
@@ -38,7 +38,7 @@ Accepts both `P` and `Q` ids
 
 ### getNumericId
 
-## sitelink helpers
+## Sitelink helpers
 ### getSitelinkUrl
 ```js
 // multiple arguments interface
