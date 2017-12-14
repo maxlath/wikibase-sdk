@@ -1,47 +1,6 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.wdk = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _require = require('../utils/utils'),
-    fixedEncodeURIComponent = _require.fixedEncodeURIComponent,
-    replaceSpaceByUnderscores = _require.replaceSpaceByUnderscores,
-    isPlainObject = _require.isPlainObject;
-
-module.exports = function (site, title) {
-  if (isPlainObject(site)) {
-    title = site.title;
-    site = site.site;
-  }
-
-  if (site === 'commons') {
-    return 'https://commons.wikimedia.org/wiki/' + title;
-  }
-
-  var _site$split = site.split('wik'),
-      _site$split2 = _slicedToArray(_site$split, 2),
-      lang = _site$split2[0],
-      projectSuffix = _site$split2[1];
-
-  var project = projectsBySuffix[projectSuffix];
-  title = fixedEncodeURIComponent(replaceSpaceByUnderscores(title));
-  return 'https://' + lang + '.' + project + '.org/wiki/' + title;
-};
-
-var projectsBySuffix = {
-  i: 'wikipedia',
-  isource: 'wikisource',
-  iquote: 'wikiquote',
-  tionary: 'wiktionary',
-  ibooks: 'wikibooks',
-  iversity: 'wikiversity',
-  ivoyage: 'wikivoyage',
-  inews: 'wikinews'
-};
-
-},{"../utils/utils":21}],2:[function(require,module,exports){
-'use strict';
-
 var toDateObject = require('./wikidata_time_to_date_object');
 
 var helpers = {};
@@ -92,7 +51,7 @@ helpers.wikidataTimeToISOString = bestEffort(toISOString);
 
 module.exports = helpers;
 
-},{"./wikidata_time_to_date_object":10}],3:[function(require,module,exports){
+},{"./wikidata_time_to_date_object":10}],2:[function(require,module,exports){
 'use strict';
 
 var _require = require('./helpers'),
@@ -184,7 +143,7 @@ module.exports = function (datatype, datavalue, options) {
   return claimParsers[datatype](datavalue, options);
 };
 
-},{"./helpers":2}],4:[function(require,module,exports){
+},{"./helpers":1}],3:[function(require,module,exports){
 'use strict';
 
 var simplifyEntity = require('./simplify_entity');
@@ -204,7 +163,7 @@ module.exports = {
   }
 };
 
-},{"./simplify_entity":6}],5:[function(require,module,exports){
+},{"./simplify_entity":5}],4:[function(require,module,exports){
 'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -373,7 +332,7 @@ var parseOptions = function parseOptions(options) {
 
 module.exports = { simplifyClaims: simplifyClaims, simplifyPropertyClaims: simplifyPropertyClaims, simplifyClaim: simplifyClaim };
 
-},{"../utils/utils":21,"./parse_claim":3}],6:[function(require,module,exports){
+},{"../utils/utils":21,"./parse_claim":2}],5:[function(require,module,exports){
 'use strict';
 
 var _require = require('./simplify_claims'),
@@ -395,10 +354,11 @@ module.exports = function (entity, options) {
   };
 };
 
-},{"./simplify_claims":5,"./simplify_sitelinks":7,"./simplify_text_attributes":9}],7:[function(require,module,exports){
+},{"./simplify_claims":4,"./simplify_sitelinks":6,"./simplify_text_attributes":8}],6:[function(require,module,exports){
 'use strict';
 
-var getSitelinkUrl = require('./get_sitelink_url');
+var _require = require('./sitelinks_helpers'),
+    getSitelinkUrl = _require.getSitelinkUrl;
 
 module.exports = function (sitelinks) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -420,7 +380,7 @@ var aggregateValues = function aggregateValues(sitelinks, addUrl) {
   };
 };
 
-},{"./get_sitelink_url":1}],8:[function(require,module,exports){
+},{"./sitelinks_helpers":9}],7:[function(require,module,exports){
 'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -597,7 +557,7 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
   };
 };
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 var simplifyTextAttributes = function simplifyTextAttributes(multivalue) {
@@ -626,7 +586,74 @@ module.exports = {
   aliases: simplifyTextAttributes(true)
 };
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+'use strict';
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _require = require('../utils/utils'),
+    fixedEncodeURIComponent = _require.fixedEncodeURIComponent,
+    replaceSpaceByUnderscores = _require.replaceSpaceByUnderscores,
+    isPlainObject = _require.isPlainObject;
+
+var getSitelinkUrl = function getSitelinkUrl(site, title) {
+  if (isPlainObject(site)) {
+    title = site.title;
+    site = site.site;
+  }
+
+  if (!site) throw new Error('missing a site');
+  if (!title) throw new Error('missing a title');
+
+  if (site === 'commons') {
+    return 'https://commons.wikimedia.org/wiki/' + title;
+  }
+
+  var _getSitelinkData = getSitelinkData(site),
+      lang = _getSitelinkData.lang,
+      project = _getSitelinkData.project;
+
+  title = fixedEncodeURIComponent(replaceSpaceByUnderscores(title));
+  return 'https://' + lang + '.' + project + '.org/wiki/' + title;
+};
+
+var getSitelinkData = function getSitelinkData(site) {
+  if (site === 'commons') return { lang: 'en', project: 'commons' };
+
+  var _site$split = site.split('wik'),
+      _site$split2 = _slicedToArray(_site$split, 2),
+      lang = _site$split2[0],
+      projectSuffix = _site$split2[1];
+
+  var project = projectsBySuffix[projectSuffix];
+  if (!project) throw new Error('project not found');
+  return { lang: lang, project: project };
+};
+
+var isSitelinkKey = function isSitelinkKey(site) {
+  try {
+    // relies on getSitelinkData validation
+    getSitelinkData(site);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+var projectsBySuffix = {
+  i: 'wikipedia',
+  isource: 'wikisource',
+  iquote: 'wikiquote',
+  tionary: 'wiktionary',
+  ibooks: 'wikibooks',
+  iversity: 'wikiversity',
+  ivoyage: 'wikivoyage',
+  inews: 'wikinews'
+};
+
+module.exports = { getSitelinkUrl: getSitelinkUrl, getSitelinkData: getSitelinkData, isSitelinkKey: isSitelinkKey };
+
+},{"../utils/utils":21}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = function (wikidataTime) {
@@ -676,7 +703,6 @@ wdk.getReverseClaims = require('./queries/get_reverse_claims');
 wdk.getRevisions = require('./queries/get_revisions');
 
 wdk.parse = require('./helpers/parse_responses');
-wdk.getSitelinkUrl = require('../lib/helpers/get_sitelink_url');
 
 var claimsSimplifiers = require('./helpers/simplify_claims');
 var simplifySparqlResults = require('./helpers/simplify_sparql_results');
@@ -696,9 +722,11 @@ Object.assign(wdk, claimsSimplifiers);
 // Aliases
 wdk.getWikidataIdsFromWikipediaTitles = wdk.getWikidataIdsFromSitelinks;
 
-Object.assign(wdk, require('./helpers/helpers'));
+var helpers = require('../lib/helpers/helpers');
+var sitelinksHelpers = require('../lib/helpers/sitelinks_helpers');
+Object.assign(wdk, helpers, sitelinksHelpers);
 
-},{"../lib/helpers/get_sitelink_url":1,"../lib/helpers/simplify_entity":6,"../lib/helpers/simplify_sitelinks":7,"../lib/helpers/simplify_text_attributes":9,"./helpers/helpers":2,"./helpers/parse_responses":4,"./helpers/simplify_claims":5,"./helpers/simplify_sparql_results":8,"./queries/get_entities":12,"./queries/get_many_entities":13,"./queries/get_reverse_claims":14,"./queries/get_revisions":15,"./queries/get_wikidata_ids_from_sitelinks":16,"./queries/search_entities":17,"./queries/sparql_query":18}],12:[function(require,module,exports){
+},{"../lib/helpers/helpers":1,"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_sitelinks":6,"../lib/helpers/simplify_text_attributes":8,"../lib/helpers/sitelinks_helpers":9,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./helpers/simplify_sparql_results":7,"./queries/get_entities":12,"./queries/get_many_entities":13,"./queries/get_reverse_claims":14,"./queries/get_revisions":15,"./queries/get_wikidata_ids_from_sitelinks":16,"./queries/search_entities":17,"./queries/sparql_query":18}],12:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -828,7 +856,7 @@ function caseInsensitiveValueQuery(property, value, filter, limit) {
   return 'SELECT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n    ' + filter + '\n  }\n  LIMIT ' + limit;
 }
 
-},{"../helpers/helpers":2,"./sparql_query":18}],15:[function(require,module,exports){
+},{"../helpers/helpers":1,"./sparql_query":18}],15:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
