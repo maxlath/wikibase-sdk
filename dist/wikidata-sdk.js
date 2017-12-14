@@ -605,9 +605,8 @@ var getSitelinkUrl = function getSitelinkUrl(site, title) {
   if (!site) throw new Error('missing a site');
   if (!title) throw new Error('missing a title');
 
-  if (site === 'commons') {
-    return 'https://commons.wikimedia.org/wiki/' + title;
-  }
+  if (site === 'commons') return 'https://commons.wikimedia.org/wiki/' + title;
+  if (site === 'wikidata') return 'https://wikidata.org/wiki/' + title;
 
   var _getSitelinkData = getSitelinkData(site),
       lang = _getSitelinkData.lang,
@@ -619,6 +618,7 @@ var getSitelinkUrl = function getSitelinkUrl(site, title) {
 
 var getSitelinkData = function getSitelinkData(site) {
   if (site === 'commons') return { lang: 'en', project: 'commons' };
+  if (site === 'wikidata') return { lang: 'en', project: 'wikidata' };
 
   var _site$split = site.split('wik'),
       _site$split2 = _slicedToArray(_site$split, 2),
