@@ -96,8 +96,8 @@ describe('getSitelinkData', function () {
     getSitelinkData('wikidata').lang.should.equal('en')
     getSitelinkData('commons').lang.should.equal('en')
     // Known non-supported case
-    getSitelinkData('imaginarylangwiki').lang.should.equal('imaginarylang')
-    getSitelinkData('imaginarylangwiki').project.should.equal('wikipedia')
+    getSitelinkData('foowiki').lang.should.equal('foo')
+    getSitelinkData('foowiki').project.should.equal('wikipedia')
     done()
   })
 })
@@ -113,6 +113,7 @@ describe('isSitelinkKey', function () {
   it('should return false for invalid sitelink keys', function (done) {
     isSitelinkKey('frperlinpinpin').should.be.false()
     isSitelinkKey('frwikilinpinpin').should.be.false()
+    isSitelinkKey('imaginarylangwiki').should.be.false()
     done()
   })
 })
