@@ -596,6 +596,8 @@ var _require = require('../utils/utils'),
     replaceSpaceByUnderscores = _require.replaceSpaceByUnderscores,
     isPlainObject = _require.isPlainObject;
 
+var langPattern = /^[a-z]{2}[a-z_]{0,10}$/;
+
 var getSitelinkUrl = function getSitelinkUrl(site, title) {
   if (isPlainObject(site)) {
     title = site.title;
@@ -625,6 +627,7 @@ var getSitelinkData = function getSitelinkData(site) {
       lang = _site$split2[0],
       projectSuffix = _site$split2[1];
 
+  if (!langPattern.test(lang)) throw new Error('invalid project lang: ' + lang);
   var project = projectsBySuffix[projectSuffix];
   if (!project) throw new Error('project not found');
   return { lang: lang, project: project };
