@@ -598,6 +598,11 @@ var _require = require('../utils/utils'),
 
 var langPattern = /^[a-z]{2}[a-z_]{0,10}$/;
 
+var _require2 = require('./helpers'),
+    isPropertyId = _require2.isPropertyId;
+
+var wikidataBase = 'https://www.wikidata.org/wiki/';
+
 var getSitelinkUrl = function getSitelinkUrl(site, title) {
   if (isPlainObject(site)) {
     title = site.title;
@@ -608,7 +613,10 @@ var getSitelinkUrl = function getSitelinkUrl(site, title) {
   if (!title) throw new Error('missing a title');
 
   if (site === 'commons') return 'https://commons.wikimedia.org/wiki/' + title;
-  if (site === 'wikidata') return 'https://wikidata.org/wiki/' + title;
+  if (site === 'wikidata') {
+    if (isPropertyId(title)) return wikidataBase + 'Property:' + title;
+    return '' + wikidataBase + title;
+  }
 
   var _getSitelinkData = getSitelinkData(site),
       lang = _getSitelinkData.lang,
@@ -656,7 +664,7 @@ var projectsBySuffix = {
 
 module.exports = { getSitelinkUrl: getSitelinkUrl, getSitelinkData: getSitelinkData, isSitelinkKey: isSitelinkKey };
 
-},{"../utils/utils":21}],10:[function(require,module,exports){
+},{"../utils/utils":21,"./helpers":1}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = function (wikidataTime) {
