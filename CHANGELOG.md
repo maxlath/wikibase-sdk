@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.7.0 - 2017-12-20
+* [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities_reverse_claims.md): allow to request values for several properties at once
+
 ## 5.6.0 - 2017-12-14
 * Added new sitelink helpers: [`getSitelinkData`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getsitelinkdata) and [`isSitelinkKey`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#issitelinkkey)
 
