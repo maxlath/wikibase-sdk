@@ -53,4 +53,10 @@ describe('simplifyClaims', function () {
     should(url.match(/FILTER%20NOT%20EXISTS/)).not.be.ok()
     done()
   })
+
+  it('should allow to request values for several properties at once', function (done) {
+    const url = getReverseClaims([ 'P50', 'P110' ], 'Q281411')
+    url.should.match(/P50%7CP110/)
+    done()
+  })
 })

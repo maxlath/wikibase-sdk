@@ -24,6 +24,11 @@ It also work for string values: e.g. let's say you want to find which book as `9
 const url = wdk.getReverseClaims('P212', '978-0-465-06710-7')
 ```
 
+You can also pass several possible properties, by passing properties as an array:
+```js
+const url = wdk.getReverseClaims([ 'P50', 'P110' ], 'Q281411')
+```
+
 ## Options
 ### limit
 
