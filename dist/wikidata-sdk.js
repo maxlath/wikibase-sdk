@@ -860,8 +860,14 @@ module.exports = function (property, value) {
   var sparqlFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
   var valueString = getValueString(value);
   var filter = keepProperties ? '' : itemsOnly;
+
   // Allow to request values for several properties at once
-  if (property instanceof Array) property = property.join('|');
+  if (property instanceof Array) {
+    property = property.map(prefixifyProperty).join('|');
+  } else {
+    property = prefixifyProperty(property);
+  }
+
   var sparql = sparqlFn(property, valueString, filter, limit);
   return sparqlQuery(sparql);
 };
@@ -876,14 +882,18 @@ function getValueString(value) {
 }
 
 function directValueQuery(property, value, filter, limit) {
-  return 'SELECT DISTINCT ?subject WHERE {\n    ?subject wdt:' + property + ' ' + value + ' .\n    ' + filter + '\n  }\n  LIMIT ' + limit;
+  return 'SELECT DISTINCT ?subject WHERE {\n    ?subject ' + property + ' ' + value + ' .\n    ' + filter + '\n  }\n  LIMIT ' + limit;
 }
 
 // Discussion on how to make this query optimal:
 // http://stackoverflow.com/q/43073266/3324977
 function caseInsensitiveValueQuery(property, value, filter, limit) {
-  return 'SELECT DISTINCT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n    ' + filter + '\n  }\n  LIMIT ' + limit;
+  return 'SELECT DISTINCT ?subject WHERE {\n    ?subject ' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n    ' + filter + '\n  }\n  LIMIT ' + limit;
 }
+
+var prefixifyProperty = function prefixifyProperty(property) {
+  return 'wdt:' + property;
+};
 
 },{"../helpers/helpers":1,"./sparql_query":19}],16:[function(require,module,exports){
 'use strict';
