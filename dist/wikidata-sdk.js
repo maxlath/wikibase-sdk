@@ -634,7 +634,7 @@ var getSitelinkData = function getSitelinkData(site) {
       lang = _site$split2[0],
       projectSuffix = _site$split2[1];
 
-  if (!languages.includes(lang)) {
+  if (languages.indexOf(lang) === -1) {
     throw new Error('sitelink lang not found: ' + lang);
   }
 
