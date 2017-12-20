@@ -101,9 +101,11 @@ describe('getSitelinkData', function () {
     // Using 'en' as placeholder
     getSitelinkData('wikidata').lang.should.equal('en')
     getSitelinkData('commons').lang.should.equal('en')
-    // Known non-supported case
-    getSitelinkData('foowiki').lang.should.equal('foo')
-    getSitelinkData('foowiki').project.should.equal('wikipedia')
+    done()
+  })
+
+  it('should reject invalid sitelinks', function (done) {
+    getSitelinkData.bind(null, 'foowiki').should.throw()
     done()
   })
 })
