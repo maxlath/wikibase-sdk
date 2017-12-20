@@ -56,7 +56,7 @@ describe('simplifyClaims', function () {
 
   it('should allow to request values for several properties at once', function (done) {
     const url = getReverseClaims([ 'P50', 'P110' ], 'Q281411')
-    url.should.match(/P50%7CP110/)
+    url.should.match(/wdt%3AP50%7Cwdt%3AP110/)
     done()
   })
 })
