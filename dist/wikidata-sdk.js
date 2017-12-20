@@ -630,9 +630,15 @@ var getSitelinkData = function getSitelinkData(site) {
   if (site === 'wikidata') return { lang: 'en', project: 'wikidata' };
 
   var _site$split = site.split('wik'),
-      _site$split2 = _slicedToArray(_site$split, 2),
+      _site$split2 = _slicedToArray(_site$split, 3),
       lang = _site$split2[0],
-      projectSuffix = _site$split2[1];
+      projectSuffix = _site$split2[1],
+      rest = _site$split2[2];
+
+  // Detecting cases like 'frwikiwiki' that would return [ 'fr', 'i', 'i' ]
+
+
+  if (rest != null) throw new Error('invalid sitelink: ' + site);
 
   if (languages.indexOf(lang) === -1) {
     throw new Error('sitelink lang not found: ' + lang);
