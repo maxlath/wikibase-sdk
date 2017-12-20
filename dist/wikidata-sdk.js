@@ -51,7 +51,7 @@ helpers.wikidataTimeToISOString = bestEffort(toISOString);
 
 module.exports = helpers;
 
-},{"./wikidata_time_to_date_object":10}],2:[function(require,module,exports){
+},{"./wikidata_time_to_date_object":11}],2:[function(require,module,exports){
 'use strict';
 
 var _require = require('./helpers'),
@@ -332,7 +332,7 @@ var parseOptions = function parseOptions(options) {
 
 module.exports = { simplifyClaims: simplifyClaims, simplifyPropertyClaims: simplifyPropertyClaims, simplifyClaim: simplifyClaim };
 
-},{"../utils/utils":21,"./parse_claim":2}],5:[function(require,module,exports){
+},{"../utils/utils":22,"./parse_claim":2}],5:[function(require,module,exports){
 'use strict';
 
 var _require = require('./simplify_claims'),
@@ -596,12 +596,11 @@ var _require = require('../utils/utils'),
     replaceSpaceByUnderscores = _require.replaceSpaceByUnderscores,
     isPlainObject = _require.isPlainObject;
 
-var langPattern = /^[a-z]{2}[a-z_]{0,10}$/;
-
 var _require2 = require('./helpers'),
     isPropertyId = _require2.isPropertyId;
 
 var wikidataBase = 'https://www.wikidata.org/wiki/';
+var languages = require('./sitelinks_languages');
 
 var getSitelinkUrl = function getSitelinkUrl(site, title) {
   if (isPlainObject(site)) {
@@ -635,9 +634,13 @@ var getSitelinkData = function getSitelinkData(site) {
       lang = _site$split2[0],
       projectSuffix = _site$split2[1];
 
-  if (!langPattern.test(lang)) throw new Error('invalid project lang: ' + lang);
+  if (!languages.includes(lang)) {
+    throw new Error('sitelink lang not found: ' + lang);
+  }
+
   var project = projectsBySuffix[projectSuffix];
-  if (!project) throw new Error('project not found');
+  if (!project) throw new Error('sitelink project not found: ' + project);
+
   return { lang: lang, project: project };
 };
 
@@ -664,7 +667,14 @@ var projectsBySuffix = {
 
 module.exports = { getSitelinkUrl: getSitelinkUrl, getSitelinkData: getSitelinkData, isSitelinkKey: isSitelinkKey };
 
-},{"../utils/utils":21,"./helpers":1}],10:[function(require,module,exports){
+},{"../utils/utils":22,"./helpers":1,"./sitelinks_languages":10}],10:[function(require,module,exports){
+'use strict';
+
+// Taken from https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities
+// sites list, once removed their project suffix and eduplicates
+module.exports = ['aa', 'ab', 'ace', 'ady', 'af', 'ak', 'als', 'am', 'an', 'ang', 'ar', 'arc', 'arz', 'as', 'ast', 'atj', 'av', 'ay', 'az', 'azb', 'ba', 'bar', 'bat_smg', 'bcl', 'be', 'be_x_old', 'bg', 'bh', 'bi', 'bjn', 'bm', 'bn', 'bo', 'bpy', 'br', 'bs', 'bug', 'bxr', 'ca', 'cbk_zam', 'cdo', 'ce', 'ceb', 'ch', 'cho', 'chr', 'chy', 'ckb', 'co', 'commons', 'cr', 'crh', 'cs', 'csb', 'cu', 'cv', 'cy', 'da', 'de', 'din', 'diq', 'dsb', 'dty', 'dv', 'dz', 'ee', 'el', 'eml', 'en', 'eo', 'es', 'et', 'eu', 'ext', 'fa', 'ff', 'fi', 'fiu_vro', 'fj', 'fo', 'fr', 'frp', 'frr', 'fur', 'fy', 'ga', 'gag', 'gan', 'gd', 'gl', 'glk', 'gn', 'gom', 'got', 'gu', 'gv', 'ha', 'hak', 'haw', 'he', 'hi', 'hif', 'ho', 'hr', 'hsb', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'ilo', 'io', 'is', 'it', 'iu', 'ja', 'jam', 'jbo', 'jv', 'ka', 'kaa', 'kab', 'kbd', 'kbp', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'koi', 'kr', 'krc', 'ks', 'ksh', 'ku', 'kv', 'kw', 'ky', 'la', 'lad', 'lb', 'lbe', 'lez', 'lg', 'li', 'lij', 'lmo', 'ln', 'lo', 'lrc', 'lt', 'ltg', 'lv', 'mai', 'map_bms', 'mdf', 'mediawiki', 'meta', 'mg', 'mh', 'mhr', 'mi', 'min', 'mk', 'ml', 'mn', 'mo', 'mr', 'mrj', 'ms', 'mt', 'mus', 'mwl', 'my', 'myv', 'mzn', 'na', 'nah', 'nap', 'nds', 'nds_nl', 'ne', 'new', 'ng', 'nl', 'nn', 'no', 'nov', 'nrm', 'nso', 'nv', 'ny', 'oc', 'olo', 'om', 'or', 'os', 'pa', 'pag', 'pam', 'pap', 'pcd', 'pdc', 'pfl', 'pi', 'pih', 'pl', 'pms', 'pnb', 'pnt', 'ps', 'pt', 'qu', 'rm', 'rmy', 'rn', 'ro', 'roa_rup', 'roa_tara', 'ru', 'rue', 'rw', 'sa', 'sah', 'sc', 'scn', 'sco', 'sd', 'se', 'sg', 'sh', 'si', 'simple', 'sk', 'sl', 'sm', 'sn', 'so', 'species', 'sq', 'sr', 'srn', 'ss', 'st', 'stq', 'su', 'sv', 'sw', 'szl', 'ta', 'tcy', 'te', 'tet', 'tg', 'th', 'ti', 'tk', 'tl', 'tn', 'to', 'tpi', 'tr', 'ts', 'tt', 'tum', 'tw', 'ty', 'tyv', 'udm', 'ug', 'uk', 'ur', 'uz', 've', 'vec', 'vep', 'vi', 'vls', 'vo', 'wa', 'war', 'wo', 'wuu', 'xal', 'xh', 'xmf', 'yi', 'yo', 'za', 'zea', 'zh', 'zh_classical', 'zh_min_nan', 'zh_yue', 'zu'];
+
+},{}],11:[function(require,module,exports){
 'use strict';
 
 module.exports = function (wikidataTime) {
@@ -700,7 +710,7 @@ var parseInvalideDate = function parseInvalideDate(sign, rest) {
   return fullDateData(sign, year);
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var wdk = module.exports = {};
@@ -737,7 +747,7 @@ var helpers = require('../lib/helpers/helpers');
 var sitelinksHelpers = require('../lib/helpers/sitelinks_helpers');
 Object.assign(wdk, helpers, sitelinksHelpers);
 
-},{"../lib/helpers/helpers":1,"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_sitelinks":6,"../lib/helpers/simplify_text_attributes":8,"../lib/helpers/sitelinks_helpers":9,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./helpers/simplify_sparql_results":7,"./queries/get_entities":12,"./queries/get_many_entities":13,"./queries/get_reverse_claims":14,"./queries/get_revisions":15,"./queries/get_wikidata_ids_from_sitelinks":16,"./queries/search_entities":17,"./queries/sparql_query":18}],12:[function(require,module,exports){
+},{"../lib/helpers/helpers":1,"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_sitelinks":6,"../lib/helpers/simplify_text_attributes":8,"../lib/helpers/sitelinks_helpers":9,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./helpers/simplify_sparql_results":7,"./queries/get_entities":13,"./queries/get_many_entities":14,"./queries/get_reverse_claims":15,"./queries/get_revisions":16,"./queries/get_wikidata_ids_from_sitelinks":17,"./queries/search_entities":18,"./queries/sparql_query":19}],13:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -789,7 +799,7 @@ module.exports = function (ids, languages, props, format) {
   return buildUrl(query);
 };
 
-},{"../utils/build_url":19,"../utils/utils":21}],13:[function(require,module,exports){
+},{"../utils/build_url":20,"../utils/utils":22}],14:[function(require,module,exports){
 'use strict';
 
 var getEntities = require('./get_entities');
@@ -824,7 +834,7 @@ var getIdsGroups = function getIdsGroups(ids) {
   return groups;
 };
 
-},{"../utils/utils":21,"./get_entities":12}],14:[function(require,module,exports){
+},{"../utils/utils":22,"./get_entities":13}],15:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/helpers');
@@ -869,7 +879,7 @@ function caseInsensitiveValueQuery(property, value, filter, limit) {
   return 'SELECT DISTINCT ?subject WHERE {\n    ?subject wdt:' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n    ' + filter + '\n  }\n  LIMIT ' + limit;
 }
 
-},{"../helpers/helpers":1,"./sparql_query":18}],15:[function(require,module,exports){
+},{"../helpers/helpers":1,"./sparql_query":19}],16:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -904,7 +914,7 @@ var getEpochSeconds = function getEpochSeconds(date) {
 
 var earliestPointInMs = new Date('2000-01-01').getTime();
 
-},{"../utils/build_url":19,"../utils/utils":21}],16:[function(require,module,exports){
+},{"../utils/build_url":20,"../utils/utils":22}],17:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -967,7 +977,7 @@ var parseSite = function parseSite(site) {
   return site.length === 2 ? site + 'wiki' : site;
 };
 
-},{"../utils/build_url":19,"../utils/utils":21}],17:[function(require,module,exports){
+},{"../utils/build_url":20,"../utils/utils":22}],18:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -1004,7 +1014,7 @@ module.exports = function (search, language, limit, format, uselang) {
   });
 };
 
-},{"../utils/build_url":19,"../utils/utils":21}],18:[function(require,module,exports){
+},{"../utils/build_url":20,"../utils/utils":22}],19:[function(require,module,exports){
 'use strict';
 
 var _require = require('../utils/utils'),
@@ -1015,7 +1025,7 @@ module.exports = function (sparql) {
   return 'https://query.wikidata.org/sparql?format=json&query=' + query;
 };
 
-},{"../utils/utils":21}],19:[function(require,module,exports){
+},{"../utils/utils":22}],20:[function(require,module,exports){
 'use strict';
 
 var wikidataApiRoot = 'https://www.wikidata.org/w/api.php';
@@ -1029,7 +1039,7 @@ module.exports = function (queryObj) {
   return wikidataApiRoot + '?' + qs.stringify(queryObj);
 };
 
-},{"./querystring_lite":20,"querystring":24}],20:[function(require,module,exports){
+},{"./querystring_lite":21,"querystring":25}],21:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -1050,7 +1060,7 @@ module.exports = {
   }
 };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1093,7 +1103,7 @@ var encodeCharacter = function encodeCharacter(char) {
   return '%' + char.charCodeAt(0).toString(16);
 };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1179,7 +1189,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1266,11 +1276,11 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":22,"./encode":23}]},{},[11])(11)
+},{"./decode":23,"./encode":24}]},{},[12])(12)
 });
