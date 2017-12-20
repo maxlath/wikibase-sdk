@@ -85,7 +85,8 @@ describe('getSitelinkUrl', function () {
   })
 
   it('should reject invalid sitelinks', function (done) {
-    (() => getSitelinkUrl('frperlinpinpin', 'Lyon')).should.throw()
+    getSitelinkUrl.bind(null, 'frperlinpinpin', 'Lyon').should.throw()
+    getSitelinkUrl.bind(null, 'frwikiwiki', 'Lyon').should.throw()
     done()
   })
 })
@@ -122,6 +123,7 @@ describe('isSitelinkKey', function () {
     isSitelinkKey('frperlinpinpin').should.be.false()
     isSitelinkKey('frwikilinpinpin').should.be.false()
     isSitelinkKey('imaginarylangwiki').should.be.false()
+    isSitelinkKey('frwikiwiki').should.be.false()
     done()
   })
 })
