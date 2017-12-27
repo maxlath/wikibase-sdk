@@ -342,16 +342,31 @@ var simplify = require('./simplify_text_attributes');
 var simplifySitelinks = require('./simplify_sitelinks');
 
 module.exports = function (entity, options) {
-  return {
+  var simplified = {
     id: entity.id,
     type: entity.type,
-    modified: entity.modified,
-    labels: simplify.labels(entity.labels),
-    descriptions: simplify.descriptions(entity.descriptions),
-    aliases: simplify.aliases(entity.aliases),
-    claims: simplifyClaims(entity.claims, options),
-    sitelinks: simplifySitelinks(entity.sitelinks, options)
+    modified: entity.modified
   };
+
+  simplifyIfDefined(entity, simplified, 'labels');
+  simplifyIfDefined(entity, simplified, 'descriptions');
+  simplifyIfDefined(entity, simplified, 'aliases');
+
+  if (entity.claims != null) {
+    simplified.claims = simplifyClaims(entity.claims, options);
+  }
+
+  if (entity.sitelinks != null) {
+    simplified.sitelinks = simplifySitelinks(entity.sitelinks, options);
+  }
+
+  return simplified;
+};
+
+var simplifyIfDefined = function simplifyIfDefined(entity, simplified, attribute) {
+  if (entity[attribute] != null) {
+    simplified[attribute] = simplify[attribute](entity[attribute]);
+  }
 };
 
 },{"./simplify_claims":4,"./simplify_sitelinks":6,"./simplify_text_attributes":8}],6:[function(require,module,exports){
