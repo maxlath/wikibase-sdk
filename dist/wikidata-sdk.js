@@ -205,6 +205,11 @@ var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims) {
     options[_key2 - 1] = arguments[_key2];
   }
 
+  // Avoid to throw on empty inputs to allow to simplify claims array
+  // without having to know if the entity as claims for this property
+  // Ex: simplifyPropertyClaims(entity.claims.P124211616)
+  if (propClaims == null || propClaims.length === 0) return [];
+
   var _parseOptions2 = parseOptions(options),
       keepNonTruthy = _parseOptions2.keepNonTruthy,
       areSubSnaks = _parseOptions2.areSubSnaks;
