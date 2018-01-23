@@ -173,6 +173,16 @@ describe('simplifyPropertyClaims', function () {
     simplified[1].should.equal('P123')
     done()
   })
+
+  it('should tolerate empty inputs', function (done) {
+    const simplified = simplifyPropertyClaims()
+    simplified.should.be.an.Array()
+    simplified.length.should.equal(0)
+    const simplified2 = simplifyPropertyClaims([])
+    simplified2.should.be.an.Array()
+    simplified2.length.should.equal(0)
+    done()
+  })
 })
 
 describe('simplifyClaim', function () {
