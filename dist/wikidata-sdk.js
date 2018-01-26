@@ -34,6 +34,7 @@ var bestEffort = function bestEffort(fn) {
     try {
       return fn(value);
     } catch (err) {
+      console.error('wikidata-sdk time conversion error:', err);
       return value;
     }
   };
@@ -46,8 +47,21 @@ var toISOString = function toISOString(wikidataTime) {
   return toDateObject(wikidataTime).toISOString();
 };
 
+// A date format that knows just three precisions:
+// 'yyyy', 'yyyy-mm', and 'yyyy-mm-dd' (including negative and non-4 digit years)
+var toSimpleDay = function toSimpleDay(wikidataTime) {
+  return wikidataTime.split('T')[0]
+  // Remove positive years sign
+  .replace(/^\+/, '')
+  // Remove days if not included in the Wikidata date precision
+  .replace(/-00$/, '')
+  // Remove months if not included in the Wikidata date precision
+  .replace(/-00$/, '');
+};
+
 helpers.wikidataTimeToEpochTime = bestEffort(toEpochTime);
 helpers.wikidataTimeToISOString = bestEffort(toISOString);
+helpers.wikidataTimeToSimpleDay = bestEffort(toSimpleDay);
 
 module.exports = helpers;
 
@@ -56,7 +70,8 @@ module.exports = helpers;
 
 var _require = require('./helpers'),
     wikidataTimeToISOString = _require.wikidataTimeToISOString,
-    wikidataTimeToEpochTime = _require.wikidataTimeToEpochTime;
+    wikidataTimeToEpochTime = _require.wikidataTimeToEpochTime,
+    wikidataTimeToSimpleDay = _require.wikidataTimeToSimpleDay;
 
 var simple = function simple(datavalue) {
   return datavalue.value;
@@ -117,6 +132,7 @@ var identity = function identity(arg) {
 var timeConverters = {
   iso: wikidataTimeToISOString,
   epoch: wikidataTimeToEpochTime,
+  'simple-day': wikidataTimeToSimpleDay,
   none: identity
 };
 
