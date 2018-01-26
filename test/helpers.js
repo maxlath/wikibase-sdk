@@ -1,13 +1,8 @@
 require('should')
 
-const helpers = require('../lib/helpers/helpers')
+const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDay, isEntityId, isItemId, isPropertyId } = require('../lib/helpers/helpers')
 
 describe('helpers', function () {
-  it('env', function (done) {
-    helpers.should.be.an.Object()
-    done()
-  })
-
   const ISOtime = '2014-05-14T00:00:00.000Z'
   const wdTime = '+2014-05-14T00:00:00Z'
   const epoch = 1400025600000
@@ -23,89 +18,109 @@ describe('helpers', function () {
     })
 
     it('should return a number (epoch time)', function (done) {
-      helpers.wikidataTimeToEpochTime(wdTime).should.be.a.Number()
+      wikidataTimeToEpochTime(wdTime).should.be.a.Number()
       done()
     })
 
     it('should return a number for negative time', function (done) {
-      helpers.wikidataTimeToEpochTime(negativeWdTime).should.be.a.Number()
+      wikidataTimeToEpochTime(negativeWdTime).should.be.a.Number()
       done()
     })
 
     it('should return the right number', function (done) {
-      helpers.wikidataTimeToEpochTime(wdTime).should.equal(epoch)
+      wikidataTimeToEpochTime(wdTime).should.equal(epoch)
       done()
     })
 
     it('should return the right number for negative time too', function (done) {
-      helpers.wikidataTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
+      wikidataTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
       done()
     })
   })
+
   describe('wikidataTimeToISOString', function () {
     it('should convert wikidata date to ISO date', function (done) {
-      helpers.wikidataTimeToISOString('+1885-05-22T00:00:00Z')
+      wikidataTimeToISOString('+1885-05-22T00:00:00Z')
       .should.equal('1885-05-22T00:00:00.000Z')
 
-      helpers.wikidataTimeToISOString('+0180-03-17T00:00:00Z')
+      wikidataTimeToISOString('+0180-03-17T00:00:00Z')
       .should.equal('0180-03-17T00:00:00.000Z')
 
-      helpers.wikidataTimeToISOString('-0398-00-00T00:00:00Z')
+      wikidataTimeToISOString('-0398-00-00T00:00:00Z')
       .should.equal('-000398-01-01T00:00:00.000Z')
       done()
     })
 
     it('should return a valid time for possible invalid dates', function (done) {
-      helpers.wikidataTimeToISOString('+1953-00-00T00:00:00Z')
+      wikidataTimeToISOString('+1953-00-00T00:00:00Z')
       .should.equal('1953-01-01T00:00:00.000Z')
       done()
     })
 
     it('should return a valid time even for possible invalid negative date', function (done) {
-      helpers.wikidataTimeToISOString('-1953-00-00T00:00:00Z')
+      wikidataTimeToISOString('-1953-00-00T00:00:00Z')
       .should.equal('-001953-01-01T00:00:00.000Z')
       done()
     })
 
     it('should return a valid time for dates far in the past', function (done) {
-      helpers.wikidataTimeToISOString('-13798000000-00-00T00:00:00Z')
+      wikidataTimeToISOString('-13798000000-00-00T00:00:00Z')
       .should.equal('-13798000000-00-00T00:00:00Z')
       done()
     })
   })
+
+  describe('wikidataTimeToSimpleDay', function () {
+    it('should convert wikidata date to ISO date', function (done) {
+      wikidataTimeToSimpleDay('+1953-01-01T00:00:00Z').should.equal('1953-01-01')
+      wikidataTimeToSimpleDay('-1953-01-01T00:00:00Z').should.equal('-1953-01-01')
+      wikidataTimeToSimpleDay('+1953-00-00T00:00:00Z').should.equal('1953')
+      wikidataTimeToSimpleDay('-1953-00-00T00:00:00Z').should.equal('-1953')
+      wikidataTimeToSimpleDay('+1953-01-00T00:00:00Z').should.equal('1953-01')
+      wikidataTimeToSimpleDay('-1953-01-00T00:00:00Z').should.equal('-1953-01')
+      wikidataTimeToSimpleDay('+13-01-00T00:00:00Z').should.equal('13-01')
+      wikidataTimeToSimpleDay('-13-01-00T00:00:00Z').should.equal('-13-01')
+      wikidataTimeToSimpleDay('+13-00-00T00:00:00Z').should.equal('13')
+      wikidataTimeToSimpleDay('-13-00-00T00:00:00Z').should.equal('-13')
+      done()
+    })
+  })
+
   describe('isEntityId', function () {
     it('should accept both item and property ids', function (done) {
-      helpers.isEntityId('Q571').should.be.true()
-      helpers.isEntityId('P31').should.be.true()
-      helpers.isEntityId('31').should.be.false()
-      helpers.isEntityId(31).should.be.false()
-      helpers.isEntityId('Z31').should.be.false()
-      helpers.isEntityId('q31').should.be.false()
-      helpers.isEntityId('p31').should.be.false()
+      isEntityId('Q571').should.be.true()
+      isEntityId('P31').should.be.true()
+      isEntityId('31').should.be.false()
+      isEntityId(31).should.be.false()
+      isEntityId('Z31').should.be.false()
+      isEntityId('q31').should.be.false()
+      isEntityId('p31').should.be.false()
       done()
     })
   })
+
   describe('isItemId', function () {
     it('should accept both item and property ids', function (done) {
-      helpers.isItemId('Q571').should.be.true()
-      helpers.isItemId('P31').should.be.false()
-      helpers.isItemId('31').should.be.false()
-      helpers.isItemId(31).should.be.false()
-      helpers.isItemId('Z31').should.be.false()
-      helpers.isItemId('q31').should.be.false()
-      helpers.isItemId('p31').should.be.false()
+      isItemId('Q571').should.be.true()
+      isItemId('P31').should.be.false()
+      isItemId('31').should.be.false()
+      isItemId(31).should.be.false()
+      isItemId('Z31').should.be.false()
+      isItemId('q31').should.be.false()
+      isItemId('p31').should.be.false()
       done()
     })
   })
+
   describe('isPropertyId', function () {
     it('should accept both item and property ids', function (done) {
-      helpers.isPropertyId('P31').should.be.true()
-      helpers.isPropertyId('Q571').should.be.false()
-      helpers.isPropertyId('31').should.be.false()
-      helpers.isPropertyId(31).should.be.false()
-      helpers.isPropertyId('Z31').should.be.false()
-      helpers.isPropertyId('q31').should.be.false()
-      helpers.isPropertyId('p31').should.be.false()
+      isPropertyId('P31').should.be.true()
+      isPropertyId('Q571').should.be.false()
+      isPropertyId('31').should.be.false()
+      isPropertyId(31).should.be.false()
+      isPropertyId('Z31').should.be.false()
+      isPropertyId('q31').should.be.false()
+      isPropertyId('p31').should.be.false()
       done()
     })
   })

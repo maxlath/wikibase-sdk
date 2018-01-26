@@ -362,6 +362,7 @@ describe('simplifyClaim', function () {
       timeClaim().should.equal('1939-11-08T00:00:00.000Z')
       timeClaim('iso').should.equal('1939-11-08T00:00:00.000Z')
       timeClaim('epoch').should.equal(-951436800000)
+      timeClaim('simple-day').should.equal('1939-11-08')
       timeClaim('none').should.equal('+1939-11-08T00:00:00Z')
       done()
     })

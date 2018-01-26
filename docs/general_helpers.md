@@ -20,6 +20,7 @@
   - [wikidataTimeToDateObject](#wikidatatimetodateobject)
   - [wikidataTimeToEpochTime](#wikidatatimetoepochtime)
   - [wikidataTimeToISOString](#wikidatatimetoisostring)
+  - [wikidataTimeToSimpleDay](#wikidatatimetosimpleday)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -136,3 +137,6 @@ wdk.wikidataTimeToISOString(wikidataTime)
 
 ```
 This is the time normalizer used by `simplify.claims` functions
+
+### wikidataTimeToSimpleDay
+Returns dates on the format 'yyyy-mm-dd', 'yyyy-mm', 'yyyy' depending on the date precision. The benefit over the iso or the epoch format is that it preserves the precision.
