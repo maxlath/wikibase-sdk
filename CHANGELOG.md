@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.8.0 - 2018-01-27
+* Added [`wikidataTimeToSimpleDay`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidataTimeToSimpleDay)
+
 ## 5.7.0 - 2017-12-20
 * [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities_reverse_claims.md): allow to request values for several properties at once
 
