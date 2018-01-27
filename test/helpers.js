@@ -71,17 +71,30 @@ describe('helpers', function () {
   })
 
   describe('wikidataTimeToSimpleDay', function () {
-    it('should convert wikidata date to ISO date', function (done) {
-      wikidataTimeToSimpleDay('+1953-01-01T00:00:00Z').should.equal('1953-01-01')
-      wikidataTimeToSimpleDay('-1953-01-01T00:00:00Z').should.equal('-1953-01-01')
+    it('should convert wikidata date with year precision to simple-day', function (done) {
       wikidataTimeToSimpleDay('+1953-00-00T00:00:00Z').should.equal('1953')
       wikidataTimeToSimpleDay('-1953-00-00T00:00:00Z').should.equal('-1953')
+      wikidataTimeToSimpleDay('+13-00-00T00:00:00Z').should.equal('13')
+      wikidataTimeToSimpleDay('-13-00-00T00:00:00Z').should.equal('-13')
+      wikidataTimeToSimpleDay('-0100-00-00T00:00:00Z').should.equal('-100')
+      done()
+    })
+
+    it('should convert wikidata date with month precision to simple-day', function (done) {
       wikidataTimeToSimpleDay('+1953-01-00T00:00:00Z').should.equal('1953-01')
       wikidataTimeToSimpleDay('-1953-01-00T00:00:00Z').should.equal('-1953-01')
       wikidataTimeToSimpleDay('+13-01-00T00:00:00Z').should.equal('13-01')
       wikidataTimeToSimpleDay('-13-01-00T00:00:00Z').should.equal('-13-01')
-      wikidataTimeToSimpleDay('+13-00-00T00:00:00Z').should.equal('13')
-      wikidataTimeToSimpleDay('-13-00-00T00:00:00Z').should.equal('-13')
+      wikidataTimeToSimpleDay('-0044-03-00T00:00:00Z').should.equal('-44-03')
+      done()
+    })
+
+    it('should convert wikidata date with day precision or finer to simple-day', function (done) {
+      wikidataTimeToSimpleDay('+1953-01-01T00:00:00Z').should.equal('1953-01-01')
+      wikidataTimeToSimpleDay('-1953-01-01T00:00:00Z').should.equal('-1953-01-01')
+      wikidataTimeToSimpleDay('+1953-01-01T13:45:00Z').should.equal('1953-01-01')
+      wikidataTimeToSimpleDay('-1953-01-01T13:45:00Z').should.equal('-1953-01-01')
+      wikidataTimeToSimpleDay('-0044-03-01T00:00:00Z').should.equal('-44-03-01')
       done()
     })
   })
