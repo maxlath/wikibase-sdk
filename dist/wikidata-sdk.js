@@ -53,6 +53,8 @@ var toSimpleDay = function toSimpleDay(wikidataTime) {
   return wikidataTime.split('T')[0]
   // Remove positive years sign
   .replace(/^\+/, '')
+  // Remove years padding zeros
+  .replace(/^(-?)0+/, '$1')
   // Remove days if not included in the Wikidata date precision
   .replace(/-00$/, '')
   // Remove months if not included in the Wikidata date precision
