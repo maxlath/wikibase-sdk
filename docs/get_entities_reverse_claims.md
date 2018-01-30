@@ -9,7 +9,7 @@ For instance, let's say you want to find all the entities that have Leo Tolstoy 
 ```js
 const url = wdk.getReverseClaims('P50', 'Q7243')
 
-# And you can then query the obtained entities ids
+// And you can then query the obtained entities ids
 request(url)
 .then(body => {
   const entitiesIds = wdk.simplifySparqlResults(body)
