@@ -1,6 +1,8 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.wdk = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var toDateObject = require('./wikidata_time_to_date_object');
 
 var helpers = {};
@@ -49,7 +51,25 @@ var toISOString = function toISOString(wikidataTime) {
 
 // A date format that knows just three precisions:
 // 'yyyy', 'yyyy-mm', and 'yyyy-mm-dd' (including negative and non-4 digit years)
+// Should be able to handle the old and the new Wikidata time:
+// - in the old one, units below the precision where set to 00
+// - in the new one, those months and days are set to 01 in those cases,
+//   so when we can access the full claim object, we check the precision
+//   to recover the old format
 var toSimpleDay = function toSimpleDay(wikidataTime) {
+  // Also accept claim datavalue.value objects, and actually prefer those,
+  // as we can check the precision
+  if ((typeof wikidataTime === 'undefined' ? 'undefined' : _typeof(wikidataTime)) === 'object') {
+    var _wikidataTime = wikidataTime,
+        time = _wikidataTime.time,
+        precision = _wikidataTime.precision;
+    // Year precision
+
+    if (precision === 9) wikidataTime = time.replace('-01-01T', '-00-00T');
+    // Month precision
+    else if (precision === 10) wikidataTime = time.replace('-01T', '-00T');else wikidataTime = time;
+  }
+
   return wikidataTime.split('T')[0]
   // Remove positive years sign
   .replace(/^\+/, '')
@@ -119,7 +139,7 @@ var coordinate = function coordinate(datavalue) {
 };
 
 var time = function time(datavalue, options) {
-  return getTimeConverter(options.timeConverter)(datavalue.value.time);
+  return getTimeConverter(options.timeConverter)(datavalue.value);
 };
 
 var getTimeConverter = function getTimeConverter() {
@@ -127,15 +147,16 @@ var getTimeConverter = function getTimeConverter() {
   return timeConverters[key];
 };
 
-var identity = function identity(arg) {
-  return arg;
-};
-
+// Each time converter should be able to accept 2 keys of arguments:
+// - either datavalue.value objects (prefered as it gives access to the precision)
+// - or the time string (datavalue.value.time)
 var timeConverters = {
   iso: wikidataTimeToISOString,
   epoch: wikidataTimeToEpochTime,
   'simple-day': wikidataTimeToSimpleDay,
-  none: identity
+  none: function none(wikidataTime) {
+    return wikidataTime.time || wikidataTime;
+  }
 };
 
 var claimParsers = {
@@ -721,7 +742,14 @@ module.exports = ['aa', 'ab', 'ace', 'ady', 'af', 'ak', 'als', 'am', 'an', 'ang'
 },{}],11:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 module.exports = function (wikidataTime) {
+  // Also accept claim datavalue.value objects
+  if ((typeof wikidataTime === 'undefined' ? 'undefined' : _typeof(wikidataTime)) === 'object') {
+    wikidataTime = wikidataTime.time;
+  }
+
   var sign = wikidataTime[0];
   var rest = wikidataTime.slice(1);
   var date = fullDateData(sign, rest);
