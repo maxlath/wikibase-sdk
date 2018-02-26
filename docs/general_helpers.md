@@ -140,3 +140,42 @@ This is the time normalizer used by `simplify.claims` functions
 
 ### wikidataTimeToSimpleDay
 Returns dates on the format 'yyyy-mm-dd', 'yyyy-mm', 'yyyy' depending on the date precision. The benefit over the iso or the epoch format is that it preserves the precision.
+
+It is thus possible, and prefered, to pass it the full datavalue value object to let it take the precision in account:
+```js
+const claims = {
+  "P569": [
+    {
+      "mainsnak": {
+        "snaktype": "value",
+        "property": "P569",
+        "hash": "4a6b80ab71c1ba78cb3a14aacd4e2f68690ab2e8",
+        "datavalue": {
+          "value": {
+            "time": "+1869-11-01T00:00:00Z",
+            "timezone": 0,
+            "before": 0,
+            "after": 0,
+            "precision": 10,
+            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+          },
+          "type": "time"
+        },
+        "datatype": "time"
+      },
+      "type": "statement",
+      "id": "Q970917$D52C5A12-C810-4B5E-A3C1-0FAB8808F902",
+      "rank": "normal"
+    }
+  ]
+}
+
+// Passing only the time string: the result misses the month precision
+// and thus wrongly returns the day set to '01'
+wdk.wikidataTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
+// => '1869-11-01'
+
+// Passing the whole value object, the function can
+wdk.wikidataTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
+// => '1869-11'
+```

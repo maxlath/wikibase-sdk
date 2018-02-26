@@ -9,6 +9,7 @@ const Q2112 = require('./data/Q2112.json')
 const Q217447 = require('./data/Q217447.json')
 const Q271094 = require('./data/Q271094.json')
 const Q4115189 = require('./data/Q4115189.json')
+const Q970917 = require('./data/Q970917.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
@@ -356,14 +357,20 @@ describe('simplifyClaim', function () {
 
   describe('time converter', function () {
     it('should use a custom time converter when one is set', function (done) {
-      const timeClaim = converter => {
-        return simplifyClaim(Q646148.claims.P569[0], { timeConverter: converter })
+      const timeClaim = (entity, converter) => {
+        return simplifyClaim(entity.claims.P569[0], { timeConverter: converter })
       }
-      timeClaim().should.equal('1939-11-08T00:00:00.000Z')
-      timeClaim('iso').should.equal('1939-11-08T00:00:00.000Z')
-      timeClaim('epoch').should.equal(-951436800000)
-      timeClaim('simple-day').should.equal('1939-11-08')
-      timeClaim('none').should.equal('+1939-11-08T00:00:00Z')
+      timeClaim(Q646148).should.equal('1939-11-08T00:00:00.000Z')
+      timeClaim(Q646148, 'iso').should.equal('1939-11-08T00:00:00.000Z')
+      timeClaim(Q646148, 'epoch').should.equal(-951436800000)
+      timeClaim(Q646148, 'simple-day').should.equal('1939-11-08')
+      timeClaim(Q646148, 'none').should.equal('+1939-11-08T00:00:00Z')
+      // New date format: missing precision units use 01 instead of 00
+      timeClaim(Q970917).should.equal('1869-11-01T00:00:00.000Z')
+      timeClaim(Q970917, 'iso').should.equal('1869-11-01T00:00:00.000Z')
+      timeClaim(Q970917, 'epoch').should.equal(-3160944000000)
+      timeClaim(Q970917, 'simple-day').should.equal('1869-11')
+      timeClaim(Q970917, 'none').should.equal('+1869-11-01T00:00:00Z')
       done()
     })
   })

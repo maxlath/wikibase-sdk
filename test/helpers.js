@@ -2,6 +2,8 @@ require('should')
 
 const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDay, isEntityId, isItemId, isPropertyId } = require('../lib/helpers/helpers')
 
+const Q970917 = require('./data/Q970917.json')
+
 describe('helpers', function () {
   const ISOtime = '2014-05-14T00:00:00.000Z'
   const wdTime = '+2014-05-14T00:00:00Z'
@@ -36,6 +38,12 @@ describe('helpers', function () {
       wikidataTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
       done()
     })
+
+    it('should accept a value object', function (done) {
+      wikidataTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)
+      .should.equal(-3160944000000)
+      done()
+    })
   })
 
   describe('wikidataTimeToISOString', function () {
@@ -68,6 +76,12 @@ describe('helpers', function () {
       .should.equal('-13798000000-00-00T00:00:00Z')
       done()
     })
+
+    it('should accept a value object', function (done) {
+      wikidataTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)
+      .should.equal('1869-11-01T00:00:00.000Z')
+      done()
+    })
   })
 
   describe('wikidataTimeToSimpleDay', function () {
@@ -95,6 +109,12 @@ describe('helpers', function () {
       wikidataTimeToSimpleDay('+1953-01-01T13:45:00Z').should.equal('1953-01-01')
       wikidataTimeToSimpleDay('-1953-01-01T13:45:00Z').should.equal('-1953-01-01')
       wikidataTimeToSimpleDay('-0044-03-01T00:00:00Z').should.equal('-44-03-01')
+      done()
+    })
+
+    it('should accept a value object', function (done) {
+      wikidataTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)
+      .should.equal('1869-11')
       done()
     })
   })
