@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.9.0 - 2018-02-26
+* [`Wikidata Time converters`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidata-time-converters) now also accept a time value object to take in account the precision, which only makes a difference in the result for [`wikidataTimeToSimpleDay`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidataTimeToSimpleDay)
+
 ## 5.8.0 - 2018-01-27
 * Added [`wikidataTimeToSimpleDay`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidataTimeToSimpleDay)
 
