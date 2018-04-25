@@ -10,6 +10,7 @@ const Q217447 = require('./data/Q217447.json')
 const Q271094 = require('./data/Q271094.json')
 const Q4115189 = require('./data/Q4115189.json')
 const Q970917 = require('./data/Q970917.json')
+const Q1 = require('./data/Q1.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
@@ -357,8 +358,8 @@ describe('simplifyClaim', function () {
 
   describe('time converter', function () {
     it('should use a custom time converter when one is set', function (done) {
-      const timeClaim = (entity, converter) => {
-        return simplifyClaim(entity.claims.P569[0], { timeConverter: converter })
+      const timeClaim = (entity, timeConverter) => {
+        return simplifyClaim(entity.claims.P569[0], { timeConverter })
       }
       timeClaim(Q646148).should.equal('1939-11-08T00:00:00.000Z')
       timeClaim(Q646148, 'iso').should.equal('1939-11-08T00:00:00.000Z')
@@ -371,6 +372,20 @@ describe('simplifyClaim', function () {
       timeClaim(Q970917, 'epoch').should.equal(-3160944000000)
       timeClaim(Q970917, 'simple-day').should.equal('1869-11')
       timeClaim(Q970917, 'none').should.equal('+1869-11-01T00:00:00Z')
+      done()
+    })
+
+    it('should be able to parse long dates', function (done) {
+      const timeClaim = timeConverter => {
+        return simplifyClaim(Q1.claims.P580[0], { timeConverter })
+      }
+      timeClaim().should.equal('-13798000000-00-00T00:00:00Z')
+      timeClaim('none').should.equal('-13798000000-00-00T00:00:00Z')
+      timeClaim('iso').should.equal('-13798000000-00-00T00:00:00Z')
+      timeClaim('simple-day').should.equal('-13798000000')
+      // Can't be supported due to JS large numbers limitations;
+      // 13798000000*365.25*24*60*60*1000 is too big
+      // timeClaim('epoch').should.equal('-13798000000-00-00T00:00:00Z')
       done()
     })
   })
