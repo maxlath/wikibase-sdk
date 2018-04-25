@@ -36,7 +36,8 @@ var bestEffort = function bestEffort(fn) {
     try {
       return fn(value);
     } catch (err) {
-      console.error('wikidata-sdk time conversion error:', err);
+      value = value.time || value;
+      console.warn('wikidata-sdk time conversion error:', err.message, value);
       return value;
     }
   };
