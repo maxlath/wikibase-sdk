@@ -159,7 +159,7 @@ var timeConverters = {
   }
 };
 
-var claimParsers = {
+var parsers = {
   string: simple,
   commonsMedia: simple,
   url: simple,
@@ -175,11 +175,18 @@ var claimParsers = {
   'tabular-data': simple
 };
 
-module.exports = function (datatype, datavalue, options) {
-  // If you get an error like 'TypeError: claimParsers[datatype] is not a function'
-  // it means that the current datatype isn't supported yet:
-  // please report to https://github.com/maxlath/wikidata-sdk/issues
-  return claimParsers[datatype](datavalue, options);
+module.exports = {
+  parsers: parsers,
+  parse: function parse(datatype, datavalue, options, claimId) {
+    try {
+      return parsers[datatype](datavalue, options);
+    } catch (err) {
+      if (err.message === 'parsers[datatype] is not a function') {
+        err.message = datatype + ' claim parser isn\'t implemented\n        Claim id: ' + claimId + '\n        Please report to https://github.com/maxlath/wikidata-sdk/issues';
+      }
+      throw err;
+    }
+  }
 };
 
 },{"./helpers":1}],3:[function(require,module,exports){
@@ -209,10 +216,11 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var parseClaim = require('./parse_claim');
+var _require = require('./parse_claim'),
+    parseClaim = _require.parse;
 
-var _require = require('../utils/utils'),
-    uniq = _require.uniq;
+var _require2 = require('../utils/utils'),
+    uniq = _require2.uniq;
 
 // Expects an entity 'claims' object
 // Ex: entity.claims
@@ -322,7 +330,7 @@ var simplifyClaim = function simplifyClaim(claim) {
     if (claim.hash) isQualifierSnak = true;else isReferenceSnak = true;
   }
 
-  var value = parseClaim(datatype, datavalue, options);
+  var value = parseClaim(datatype, datavalue, options, claim.id);
 
   // Qualifiers should not attempt to keep sub-qualifiers or references
   if (isQualifierSnak) {
