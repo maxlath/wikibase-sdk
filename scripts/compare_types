@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+const { kebabCase } = require('lodash')
+const { red, green } = require('chalk')
+const supportedTypes = Object.keys(require('../lib/helpers/claim_parsers'))
+
+require('/tmp/all_wikidata_types.json')
+.map(typeUri => {
+  const typeName = typeUri.split('#')[1]
+  // Case inconsistency: commonsMedia is camel cased
+  if (typeName === 'CommonsMedia') return 'commonsMedia'
+  return kebabCase(typeName)
+})
+.forEach(type => {
+  if (supportedTypes.includes(type)) {
+    console.log(green('ok'), type)
+  } else {
+    console.error(red('unsupported type'), type)
+  }
+})

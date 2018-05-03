@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+wd sparql ./scripts/queries/all_properties_types.rq --json > /tmp/all_wikidata_types.json
+
+./scripts/compare_types
