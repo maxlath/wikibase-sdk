@@ -178,6 +178,12 @@ var parsers = {
 module.exports = {
   parsers: parsers,
   parse: function parse(datatype, datavalue, options, claimId) {
+    if (!datatype) {
+      // Ex: https://www.wikidata.org/w/index.php?title=Q2105758&oldid=630350590
+      console.error('invalid claim', claimId);
+      return null;
+    }
+
     try {
       return parsers[datatype](datavalue, options);
     } catch (err) {
