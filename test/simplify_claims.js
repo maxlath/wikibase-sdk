@@ -379,9 +379,9 @@ describe('simplifyClaim', function () {
       const timeClaim = timeConverter => {
         return simplifyClaim(Q1.claims.P580[0], { timeConverter })
       }
-      timeClaim().should.equal('-13798000000-00-00T00:00:00Z')
+      timeClaim().should.equal('-13798000000-01-01T00:00:00Z')
       timeClaim('none').should.equal('-13798000000-00-00T00:00:00Z')
-      timeClaim('iso').should.equal('-13798000000-00-00T00:00:00Z')
+      timeClaim('iso').should.equal('-13798000000-01-01T00:00:00Z')
       timeClaim('simple-day').should.equal('-13798000000')
       // Can't be supported due to JS large numbers limitations;
       // 13798000000*365.25*24*60*60*1000 is too big

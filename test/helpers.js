@@ -77,7 +77,10 @@ describe('helpers', function () {
 
     it('should return a valid time for dates far in the past', function (done) {
       wikidataTimeToISOString('-13798000000-00-00T00:00:00Z')
-      .should.equal('-13798000000-00-00T00:00:00Z')
+      .should.equal('-13798000000-01-01T00:00:00Z')
+
+      wikidataTimeToISOString('-13798000000-02-07T15:00:00Z')
+      .should.equal('-13798000000-02-07T15:00:00Z')
       done()
     })
 
