@@ -56,6 +56,10 @@ describe('helpers', function () {
 
       wikidataTimeToISOString('-0398-00-00T00:00:00Z')
       .should.equal('-000398-01-01T00:00:00.000Z')
+
+      wikidataTimeToISOString('-34000-00-00T00:00:00Z')
+      .should.equal('-034000-01-01T00:00:00.000Z')
+
       done()
     })
 
