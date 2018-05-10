@@ -129,11 +129,11 @@ wdk.wikidataTimeToISOString(wikidataTime)
 // => '-000398-01-01T00:00:00.000Z'
 
 ```
-until it can't: when the date are too far in the past or the future, it will simply return the Wikidata time
+that should also work for dates far in the past or the future:
 ```js
 wikidataTime = '-13798000000-00-00T00:00:00Z'
 wdk.wikidataTimeToISOString(wikidataTime)
-// => '-13798000000-00-00T00:00:00Z'
+// => '-13798000000-01-01T00:00:00Z'
 
 ```
 This is the time normalizer used by `simplify.claims` functions
