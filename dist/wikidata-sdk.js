@@ -37,7 +37,7 @@ var bestEffort = function bestEffort(fn) {
       return fn(value);
     } catch (err) {
       value = value.time || value;
-      return value;
+      return value.replace('-00-00', '-01-01');
     }
   };
 };
