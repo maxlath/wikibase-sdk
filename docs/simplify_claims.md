@@ -16,6 +16,7 @@
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep rich values](#keep-rich-values)
+  - [Keep types](#keep-types)
   - [Keep qualifiers](#keep-qualifiers)
   - [Keep references](#keep-references)
   - [Keep ids](#keep-ids)
@@ -151,6 +152,43 @@ By default, `simplify.claims` returns only the simpliest values, so just a strin
 By setting `keepRichValues=true`,
 - `monolingualtext` values will be objects on the pattern `{ text, language }`
 - `quantity` values will be objects on the pattern `{ amount, unit, upperBound, lowerBound }`
+
+### Keep types
+> `keepTypes`
+
+You can keep the value's types by passing `keepTypes: true` in the options:
+```js
+wdk.simplify.claims(entity.claims, { keepTypes: true })
+wdk.simplify.propertyClaims(entity.claims.P50, { keepTypes: true })
+wdk.simplify.claim(entity.claims.P50[0], { keepTypes: true })
+```
+Results would then look something like
+```json
+{
+  "P1365": [
+    {
+      "value": "Q312881",
+      "type": "wikibase-item"
+    }
+  ]
+}
+```
+
+Here is a list with all the supported types:
+
+ - `"string"`
+ - `"commonsMedia"`
+ - `"url"`
+ - `"external-id"`
+ - `"math"`
+ - `"monolingualtext"`
+ - `"wikibase-item"`
+ - `"wikibase-property"`
+ - `"time"`
+ - `"quantity"`
+ - `"globe-coordinate"`
+ - `"geo-shape"`
+ - `"tabular-data"`
 
 ### Keep qualifiers
 > `keepQualifiers`
