@@ -313,7 +313,8 @@ var simplifyClaim = function simplifyClaim(claim) {
       keepQualifiers = _options.keepQualifiers,
       keepReferences = _options.keepReferences,
       keepIds = _options.keepIds,
-      keepHashes = _options.keepHashes;
+      keepHashes = _options.keepHashes,
+      keepTypes = _options.keepTypes;
   // tries to replace wikidata deep claim object by a simple value
   // e.g. a string, an entity Qid or an epoch time number
 
@@ -340,18 +341,33 @@ var simplifyClaim = function simplifyClaim(claim) {
 
   // Qualifiers should not attempt to keep sub-qualifiers or references
   if (isQualifierSnak) {
-    if (keepHashes) return { value: value, hash: claim.hash };else return value;
+    if (!(keepHashes || keepTypes)) return value;
+
+    var _richValue = { value: value };
+
+    if (keepHashes) _richValue.hash = claim.hash;
+    if (keepTypes) _richValue.type = datatype;
+
+    return _richValue;
   }
 
-  if (isReferenceSnak) return value;
+  if (isReferenceSnak) {
+    if (!keepTypes) return value;
+
+    return { type: datatype, value: value };
+  }
 
   // No need to test keepHashes as it has no effect if neither
   // keepQualifiers or keepReferences is true
-  if (!(keepQualifiers || keepReferences || keepIds)) return value;
+  if (!(keepQualifiers || keepReferences || keepIds || keepTypes)) return value;
 
   // When keeping qualifiers or references, the value becomes an object
   // instead of a direct value
   var richValue = { value: value };
+
+  if (keepTypes) {
+    richValue.type = datatype;
+  }
 
   // Using a new object so that the original options object isn't modified
   var subSnaksOptions = Object.assign({}, options, { areSubSnaks: true, keepHashes: keepHashes });
