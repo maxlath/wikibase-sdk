@@ -242,6 +242,14 @@ describe('simplifyClaim', function () {
     })
   })
 
+  describe('keepTypes', function () {
+    it('should return the correct value when called with keepQualifiers=true', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P190[0], { keepTypes: true })
+      simplified.should.deepEqual({ value: 'Q207614', type: 'wikibase-item' })
+      done()
+    })
+  })
+
   describe('qualifiers', function () {
     it('should return the correct value when called with keepQualifiers=true', function (done) {
       const simplified = simplifyClaim(Q571.claims.P279[0])
@@ -264,6 +272,13 @@ describe('simplifyClaim', function () {
       const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { entityPrefix: 'wd', propertyPrefix: 'wdt', keepQualifiers: true })
       simplifiedWithQualifiers.qualifiers['wdt:P1365'].should.be.an.Array()
       simplifiedWithQualifiers.qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
+      done()
+    })
+
+    it('should include types in qualifiers claims', function (done) {
+      const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { keepTypes: true, keepQualifiers: true })
+      simplifiedWithQualifiers.qualifiers['P1365'].should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers['P1365'][0].should.deepEqual({ value: 'Q312881', type: 'wikibase-item' })
       done()
     })
   })
