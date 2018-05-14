@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.10.0 - 2018-05-14
+* Added new option to `simplify.claims`:
+  * [keep types](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-types) (thanks @moshest!)
+
 ## 5.9.0 - 2018-02-26
 * [`Wikidata Time converters`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidata-time-converters) now also accept a time value object to take in account the precision, which only makes a difference in the result for [`wikidataTimeToSimpleDay`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidataTimeToSimpleDay)
 
