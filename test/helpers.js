@@ -1,6 +1,6 @@
 require('should')
 
-const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDay, isEntityId, isItemId, isPropertyId } = require('../lib/helpers/helpers')
+const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDay, isEntityId, isItemId, isPropertyId, getImageUrl } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -161,6 +161,17 @@ describe('helpers', function () {
       isPropertyId('Z31').should.be.false()
       isPropertyId('q31').should.be.false()
       isPropertyId('p31').should.be.false()
+      done()
+    })
+  })
+
+  describe('getImageUrl', function () {
+    it('should build a commons FilePath Url', function (done) {
+      getImageUrl('Peredot.jpg')
+      .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg')
+
+      getImageUrl('Peredot.jpg', 250)
+      .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250')
       done()
     })
   })

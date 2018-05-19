@@ -21,6 +21,7 @@
   - [wikidataTimeToEpochTime](#wikidatatimetoepochtime)
   - [wikidataTimeToISOString](#wikidatatimetoisostring)
   - [wikidataTimeToSimpleDay](#wikidatatimetosimpleday)
+  - [getImageUrl](#getimageurl)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -178,4 +179,13 @@ wdk.wikidataTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
 // Passing the whole value object, the function can
 wdk.wikidataTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
 // => '1869-11'
+```
+
+### getImageUrl
+Get an image URL from a Wikimedia Commons filename:
+```js
+wdk.getImageUrl('Peredot.jpg')
+// => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg
+wdk.getImageUrl('Peredot.jpg', 250)
+// => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250
 ```
