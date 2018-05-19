@@ -85,6 +85,12 @@ helpers.wikidataTimeToEpochTime = bestEffort(toEpochTime);
 helpers.wikidataTimeToISOString = bestEffort(toISOString);
 helpers.wikidataTimeToSimpleDay = bestEffort(toSimpleDay);
 
+helpers.getImageUrl = function (filename, width) {
+  var url = 'https://commons.wikimedia.org/wiki/Special:FilePath/' + filename;
+  if (typeof width === 'number') url += '?width=' + width;
+  return url;
+};
+
 module.exports = helpers;
 
 },{"./wikidata_time_to_date_object":11}],2:[function(require,module,exports){
