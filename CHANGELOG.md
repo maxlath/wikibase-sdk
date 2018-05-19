@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.11.0 - 2018-05-19
+* Added [`getImageUrl`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getimageurl) helper
+
 ## 5.10.0 - 2018-05-14
 * Added new option to `simplify.claims`:
   * [keep types](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-types) (thanks @moshest!)
