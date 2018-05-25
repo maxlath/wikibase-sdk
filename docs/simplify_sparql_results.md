@@ -54,6 +54,9 @@ or for a more complete example (using [promises](https://www.promisejs.org))
 ```js
 // see the "SPARQL Query" section above
 const url = wdk.sparqlQuery(SPARQL)
+
+// If you aren't familiar with Promise requests
+// see https://github.com/maxlath/wikidata-sdk/issues/31
 promiseRequest(url)
 .then(wdk.simplifySparqlResults)
 .then(simplifiedResults => { // do awesome stuffs here })
