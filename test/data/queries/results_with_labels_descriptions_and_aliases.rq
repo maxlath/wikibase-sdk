@@ -1,0 +1,5 @@
+SELECT ?item ?pseudonyme ?itemLabel ?itemDescription ?itemAltLabel WHERE {
+  ?item wdt:P742 ?pseudonyme .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+LIMIT 50

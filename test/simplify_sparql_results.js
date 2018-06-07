@@ -6,6 +6,8 @@ const singleVarData = require('./data/single_var_sparql_results.json')
 const multiVarsData = require('./data/multi_vars_sparql_results.json')
 const noDatatypeData = require('./data/no_datatype_sparql_results.json')
 const sparqlResultsWithOptionalValues = require('./data/sparql_results_with_optional_values.json')
+const resultsWithLabelsDescriptionsAndAliases = require('./data/results_with_labels_descriptions_and_aliases.json')
+const { cloneDeep } = require('lodash')
 
 describe('wikidata simplify SPARQL results', function () {
   describe('common', function () {
@@ -50,10 +52,44 @@ describe('wikidata simplify SPARQL results', function () {
     })
 
     it('should not throw when an optional variable has no result', function (done) {
-      simplify.bind(null, sparqlResultsWithOptionalValues).should.not.throw()
       const result = simplify(sparqlResultsWithOptionalValues)[0]
       result.composer.should.be.an.Object()
       should(result.genre).not.be.ok()
+      done()
+    })
+  })
+
+  describe('with labels, descriptions and aliases', function () {
+    it('should group values', function (done) {
+      const results = simplify(resultsWithLabelsDescriptionsAndAliases)
+      resultsWithLabelsDescriptionsAndAliases.results.bindings.forEach((rawResult, i) => {
+        const simplified = results[i]
+        simplified.item.should.be.an.Object()
+        simplified.item.value.should.be.a.String()
+        if (rawResult.itemLabel) simplified.item.label.should.be.a.String()
+        if (rawResult.itemDescription) simplified.item.description.should.be.a.String()
+        if (rawResult.itemAltLabel) simplified.item.aliases.should.be.a.String()
+        simplified.pseudonyme.should.a.String()
+      })
+      done()
+    })
+
+    it('should should work without labels', function (done) {
+      const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
+      rawResults.results.bindings = rawResults.results.bindings
+        .map(rawResult => {
+          delete rawResult.itemLabel
+          return rawResult
+        })
+      const results = simplify(rawResults)
+      rawResults.results.bindings.forEach((rawResult, i) => {
+        const simplified = results[i]
+        simplified.item.should.be.an.Object()
+        simplified.item.value.should.be.a.String()
+        if (rawResult.itemDescription) simplified.item.description.should.be.a.String()
+        if (rawResult.itemAltLabel) simplified.item.aliases.should.be.a.String()
+        simplified.pseudonyme.should.a.String()
+      })
       done()
     })
   })
