@@ -1,0 +1,5 @@
+SELECT ?author ?authorLabel ?authorDescription ?authorAltLabel ?birth WHERE {
+  wd:Q1451094 wdt:P50 ?author .
+  ?author wdt:P569 ?birth .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
