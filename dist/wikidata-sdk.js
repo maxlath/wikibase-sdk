@@ -499,10 +499,10 @@ module.exports = function (input) {
   } else {
     var _identifyVars = identifyVars(vars),
         _identifyVars2 = _slicedToArray(_identifyVars, 2),
-        varsWithLabel = _identifyVars2[0],
-        varsWithout = _identifyVars2[1];
+        richVars = _identifyVars2[0],
+        standaloneVars = _identifyVars2[1];
 
-    return results.map(getSimplifiedResult(varsWithLabel, varsWithout));
+    return results.map(getSimplifiedResult(richVars, standaloneVars));
   }
 };
 
@@ -553,8 +553,8 @@ var parseUri = function parseUri(uri) {
 };
 
 var identifyVars = function identifyVars(vars) {
-  var varsWithLabel = [];
-  var varsWithoutLabel = [];
+  var richVars = [];
+  var standaloneVars = [];
 
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -564,13 +564,13 @@ var identifyVars = function identifyVars(vars) {
     for (var _iterator = vars[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var varName = _step.value;
 
-      if (vars.indexOf(varName + 'Label') > -1) {
-        varsWithLabel.push(varName);
-      } else if (!/^\w+Label$/.test(varName)) {
-        varsWithoutLabel.push(varName);
+      if (vars.some(isAssociatedVar(varName))) {
+        richVars.push(varName);
+        // letting aside associated vars (`${varName}Label`, etc)
+        // as they will simply be embedded in varName results
+      } else if (!associatedVarPattern.test(varName)) {
+        standaloneVars.push(varName);
       }
-      // letting aside `${varName}Label` vars
-      // as they will simply be embedded in varName results
     }
   } catch (err) {
     _didIteratorError = true;
@@ -587,10 +587,21 @@ var identifyVars = function identifyVars(vars) {
     }
   }
 
-  return [varsWithLabel, varsWithoutLabel];
+  return [richVars, standaloneVars];
 };
 
-var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithout) {
+var associatedVarPattern = /^\w+(Label|Description|AltLabel)$/;
+
+var isAssociatedVar = function isAssociatedVar(varNameA) {
+  return function (varNameB) {
+    if (varNameA + 'Label' === varNameB) return true;
+    if (varNameA + 'Description' === varNameB) return true;
+    if (varNameA + 'AltLabel' === varNameB) return true;
+    return false;
+  };
+};
+
+var getSimplifiedResult = function getSimplifiedResult(richVars, standaloneVars) {
   return function (result) {
     var simplifiedResult = {};
     var _iteratorNormalCompletion2 = true;
@@ -598,13 +609,15 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
     var _iteratorError2 = undefined;
 
     try {
-      for (var _iterator2 = varsWithLabel[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      for (var _iterator2 = richVars[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var varName = _step2.value;
 
         var value = parseValue(result[varName]);
         if (value != null) {
-          var label = result[varName + 'Label'] && result[varName + 'Label'].value;
-          simplifiedResult[varName] = { value: value, label: label };
+          simplifiedResult[varName] = { value: value };
+          addAssociatedValue(result, varName, 'label', simplifiedResult[varName]);
+          addAssociatedValue(result, varName, 'description', simplifiedResult[varName]);
+          addAssociatedValue(result, varName, 'aliases', simplifiedResult[varName]);
         }
       }
     } catch (err) {
@@ -627,7 +640,7 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
     var _iteratorError3 = undefined;
 
     try {
-      for (var _iterator3 = varsWithout[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+      for (var _iterator3 = standaloneVars[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
         var _varName = _step3.value;
 
         simplifiedResult[_varName] = parseValue(result[_varName]);
@@ -649,6 +662,20 @@ var getSimplifiedResult = function getSimplifiedResult(varsWithLabel, varsWithou
 
     return simplifiedResult;
   };
+};
+
+var addAssociatedValue = function addAssociatedValue(result, varName, associatedVarName, varData) {
+  var fullAssociatedVarName = varName + varNameSuffixMap[associatedVarName];
+  var fullAssociatedVarData = result[fullAssociatedVarName];
+  if (fullAssociatedVarData != null) {
+    varData[associatedVarName] = fullAssociatedVarData.value;
+  }
+};
+
+var varNameSuffixMap = {
+  label: 'Label',
+  description: 'Description',
+  aliases: 'AltLabel'
 };
 
 },{}],8:[function(require,module,exports){
