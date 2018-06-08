@@ -69,18 +69,18 @@ describe('wikidata simplify SPARQL results', function () {
         if (rawResult.itemLabel) simplified.item.label.should.be.a.String()
         if (rawResult.itemDescription) simplified.item.description.should.be.a.String()
         if (rawResult.itemAltLabel) simplified.item.aliases.should.be.a.String()
+        should(simplified.itemLabel).not.be.ok()
+        should(simplified.itemDescription).not.be.ok()
+        should(simplified.itemAltLabel).not.be.ok()
         simplified.pseudonyme.should.a.String()
       })
       done()
     })
 
-    it('should should work without labels', function (done) {
+    it('should work without labels', function (done) {
       const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
-      rawResults.results.bindings = rawResults.results.bindings
-        .map(rawResult => {
-          delete rawResult.itemLabel
-          return rawResult
-        })
+      rawResults.head.vars = rawResults.head.vars
+        .filter(varName => varName !== 'itemLabel')
       const results = simplify(rawResults)
       rawResults.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
@@ -88,6 +88,23 @@ describe('wikidata simplify SPARQL results', function () {
         simplified.item.value.should.be.a.String()
         if (rawResult.itemDescription) simplified.item.description.should.be.a.String()
         if (rawResult.itemAltLabel) simplified.item.aliases.should.be.a.String()
+        simplified.pseudonyme.should.a.String()
+      })
+      done()
+    })
+
+    it("should be ignored when the associated variable isn't selected", function (done) {
+      const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
+      rawResults.head.vars = rawResults.head.vars
+        .filter(varName => varName !== 'item')
+      const results = simplify(rawResults)
+      rawResults.results.bindings.forEach((rawResult, i) => {
+        const simplified = results[i]
+        simplified.pseudonyme.should.be.a.String()
+        should(simplified.item).not.be.ok()
+        if (rawResult.itemLabel) simplified.itemLabel.should.be.a.String()
+        if (rawResult.itemDescription) simplified.itemDescription.should.be.a.String()
+        if (rawResult.itemAltLabel) simplified.itemAltLabel.should.be.a.String()
         simplified.pseudonyme.should.a.String()
       })
       done()
