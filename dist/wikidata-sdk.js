@@ -478,8 +478,6 @@ var aggregateValues = function aggregateValues(sitelinks, addUrl) {
 },{"./sitelinks_helpers":9}],7:[function(require,module,exports){
 'use strict';
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 module.exports = function (input) {
   if (typeof input === 'string') input = JSON.parse(input);
 
@@ -496,14 +494,13 @@ module.exports = function (input) {
     .filter(function (result) {
       return result != null;
     });
-  } else {
-    var _identifyVars = identifyVars(vars),
-        _identifyVars2 = _slicedToArray(_identifyVars, 2),
-        richVars = _identifyVars2[0],
-        standaloneVars = _identifyVars2[1];
-
-    return results.map(getSimplifiedResult(richVars, standaloneVars));
   }
+
+  var _identifyVars = identifyVars(vars),
+      richVars = _identifyVars.richVars,
+      standaloneVars = _identifyVars.standaloneVars;
+
+  return results.map(getSimplifiedResult(richVars, standaloneVars));
 };
 
 var parseValue = function parseValue(valueObj) {
@@ -553,44 +550,36 @@ var parseUri = function parseUri(uri) {
 };
 
 var identifyVars = function identifyVars(vars) {
-  var richVars = [];
-  var standaloneVars = [];
-
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = vars[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var varName = _step.value;
-
-      if (vars.some(isAssociatedVar(varName))) {
-        richVars.push(varName);
-        // letting aside associated vars (`${varName}Label`, etc)
-        // as they will simply be embedded in varName results
-      } else if (!associatedVarPattern.test(varName)) {
-        standaloneVars.push(varName);
-      }
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-
-  return [richVars, standaloneVars];
+  var data = { richVars: [], standaloneVars: [] };
+  return vars.reduce(spreadVars(vars), data);
 };
 
-var associatedVarPattern = /^\w+(Label|Description|AltLabel)$/;
+var spreadVars = function spreadVars(vars) {
+  return function (data, varName) {
+    if (vars.some(isAssociatedVar(varName))) {
+      data.richVars.push(varName);
+      return data;
+    }
+
+    if (!associatedVarPattern.test(varName)) {
+      data.standaloneVars.push(varName);
+      return data;
+    }
+
+    var associatedVar = varName.replace(associatedVarPattern, '$1')
+    // The pattern regex fails to capture AltLabel prefixes alone,
+    // due to the comflict with Label
+    .replace(/Alt$/, '');
+
+    if (!vars.includes(associatedVar)) {
+      data.standaloneVars.push(varName);
+    }
+
+    return data;
+  };
+};
+
+var associatedVarPattern = /^(\w+)(Label|Description|AltLabel)$/;
 
 var isAssociatedVar = function isAssociatedVar(varNameA) {
   return function (varNameB) {
@@ -604,13 +593,13 @@ var isAssociatedVar = function isAssociatedVar(varNameA) {
 var getSimplifiedResult = function getSimplifiedResult(richVars, standaloneVars) {
   return function (result) {
     var simplifiedResult = {};
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
     try {
-      for (var _iterator2 = richVars[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        var varName = _step2.value;
+      for (var _iterator = richVars[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var varName = _step.value;
 
         var value = parseValue(result[varName]);
         if (value != null) {
@@ -619,6 +608,31 @@ var getSimplifiedResult = function getSimplifiedResult(richVars, standaloneVars)
           addAssociatedValue(result, varName, 'description', simplifiedResult[varName]);
           addAssociatedValue(result, varName, 'aliases', simplifiedResult[varName]);
         }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = standaloneVars[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var _varName = _step2.value;
+
+        simplifiedResult[_varName] = parseValue(result[_varName]);
       }
     } catch (err) {
       _didIteratorError2 = true;
@@ -631,31 +645,6 @@ var getSimplifiedResult = function getSimplifiedResult(richVars, standaloneVars)
       } finally {
         if (_didIteratorError2) {
           throw _iteratorError2;
-        }
-      }
-    }
-
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
-
-    try {
-      for (var _iterator3 = standaloneVars[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var _varName = _step3.value;
-
-        simplifiedResult[_varName] = parseValue(result[_varName]);
-      }
-    } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion3 && _iterator3.return) {
-          _iterator3.return();
-        }
-      } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
         }
       }
     }
