@@ -12,6 +12,9 @@
   - [isEntityId](#isentityid)
   - [isNumericId](#isnumericid)
   - [getNumericId](#getnumericid)
+- [Claims helpers](#claims-helpers)
+  - [truthyClaims](#truthyclaims)
+  - [truthyPropertyClaims](#truthypropertyclaims)
 - [Sitelink helpers](#sitelink-helpers)
   - [getSitelinkUrl](#getsitelinkurl)
   - [getSitelinkData](#getsitelinkdata)
@@ -39,6 +42,19 @@ Accepts both `P` and `Q` ids
 ### isNumericId
 
 ### getNumericId
+
+## Claims helpers
+### truthyClaims
+Filter-out non-[truthy](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) claims from an `entity.claims` object
+```js
+const entityTruthyClaims = wdk.truthyClaims(entity.claims)
+```
+
+### truthyPropertyClaims
+Filter-out non-[truthy](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) claims from an `entity.claims[prop]` array
+```js
+const entityP135TruthyClaims = wdk.truthyPropertyClaims(entity.claims.P135)
+```
 
 ## Sitelink helpers
 ### getSitelinkUrl

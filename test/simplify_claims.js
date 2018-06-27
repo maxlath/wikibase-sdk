@@ -13,7 +13,7 @@ const Q970917 = require('./data/Q970917.json')
 const Q1 = require('./data/Q1.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 
-const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
+const { simplifyClaim, simplifyPropertyClaims, simplifyClaims, truthyClaims, truthyPropertyClaims } = require('../lib/helpers/simplify_claims')
 
 describe('simplifyClaims', function () {
   it('env', function (done) {
@@ -403,5 +403,27 @@ describe('simplifyClaim', function () {
       // timeClaim('epoch').should.equal('-13798000000-00-00T00:00:00Z')
       done()
     })
+  })
+})
+
+describe('truthyClaims', function () {
+  it('should filter-out non-truthy claims', function (done) {
+    const Q4115189Claims = _.cloneDeep(Q4115189.claims)
+    Q4115189Claims.P135.length.should.equal(3)
+    const truthyOnly = truthyClaims(Q4115189Claims)
+    truthyOnly.P135.length.should.equal(1)
+    truthyOnly.P135[0].mainsnak.datavalue.value.id.should.equal('Q2044250')
+    done()
+  })
+})
+
+describe('truthyPropertyClaims', function () {
+  it('should filter-out non-truthy property claims', function (done) {
+    const Q4115189Claims = _.cloneDeep(Q4115189.claims)
+    Q4115189Claims.P135.length.should.equal(3)
+    const truthyOnly = truthyPropertyClaims(Q4115189Claims.P135)
+    truthyOnly.length.should.equal(1)
+    truthyOnly[0].mainsnak.datavalue.value.id.should.equal('Q2044250')
+    done()
   })
 })

@@ -23,6 +23,8 @@ describe('general', function () {
     wdk.simplify.propertyClaims.should.be.a.Function()
     wdk.simplify.claims.should.be.a.Function()
     wdk.simplify.sparqlResults.should.be.a.Function()
+    wdk.truthyClaims.should.be.a.Function()
+    wdk.truthyPropertyClaims.should.be.a.Function()
 
     // Legacy
     wdk.simplifyClaim.should.be.a.Function()
