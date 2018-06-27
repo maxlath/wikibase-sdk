@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.12.0 - 2018-06-27
+* Added [`truthyClaims`](`https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#truthyclaims`) and [`truthyPropertyClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#truthyPropertyClaims) functions
+* Added [`simplify.entities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-entities)
+
 ## 5.11.0 - 2018-05-19
 * Added [`getImageUrl`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getimageurl) helper
 
