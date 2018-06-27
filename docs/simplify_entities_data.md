@@ -24,7 +24,7 @@ wdk.simplify.entity(entity)
 ```
 You can also pass options as a second argument, that will then be passed the subfunctions: currently only [simplify claims](simplify_claims.md) and [simplify sitelinks](#simplify-sitelinks).
 ```js
-wdk.simplify.entity(entity, {
+const simplificationOptions = {
   // claims
   entityPrefix: 'wd',
   propertyPrefix: 'wdt',
@@ -36,6 +36,19 @@ wdk.simplify.entity(entity, {
   keepNonTruthy: true,
   // sitelinks
   addUrl: true
+}
+wdk.simplify.entity(entity, simplificationOptions)
+```
+
+## Simplify entities
+Same as [`wdk.simplify.entity`](#simplify-entity), but accepts the all the entities sent by the Wikidata API at once:
+```js
+const url = wdk.getEntities(['Q1', 'Q2', 'Q3'])
+fetch(url)
+.then(res => {
+  const { entities } = res.json()
+  # simplificationOptions: see wdk.simplify.entity doc above
+  const simplifiedEntities = wdk.simplify.entity(entities, simplificationOptions)
 })
 ```
 
