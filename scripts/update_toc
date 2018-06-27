@@ -1,3 +1,6 @@
 #!/usr/bin/env sh
 docs_with_doctoc=$(grep -r 'Summary' docs | sed 's/:.*//')
 doctoc README.md $docs_with_doctoc
+
+# Override summuries to directly link to the right doc
+sed -i 's/#simplify-claims/simplify_claims.md/' ./docs/simplify_entities_data.md
