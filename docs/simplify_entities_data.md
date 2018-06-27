@@ -7,6 +7,7 @@
 
 
 - [Simplify entity](#simplify-entity)
+- [Simplify entities](#simplify-entities)
 - [Simplify claims](simplify_claims.md)
 - [Simplify labels](#simplify-labels)
 - [Simplify descriptions](#simplify-descriptions)
