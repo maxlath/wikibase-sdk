@@ -274,7 +274,7 @@ var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims) {
       areSubSnaks = _parseOptions2.areSubSnaks;
 
   if (!(keepNonTruthy || areSubSnaks)) {
-    propClaims = filterOutNonTruthyClaims(propClaims);
+    propClaims = truthyPropertyClaims(propClaims);
   }
 
   propClaims = propClaims.map(function (claim) {
@@ -297,10 +297,18 @@ var aggregatePerRank = function aggregatePerRank(aggregate, claim) {
   return aggregate;
 };
 
-var filterOutNonTruthyClaims = function filterOutNonTruthyClaims(claims) {
-  var aggregate = claims.reduce(aggregatePerRank, {});
+var truthyPropertyClaims = function truthyPropertyClaims(propClaims) {
+  var aggregate = propClaims.reduce(aggregatePerRank, {});
   // on truthyness: https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements
   return aggregate.preferred || aggregate.normal || [];
+};
+
+var truthyClaims = function truthyClaims(claims) {
+  var truthClaimsOnly = {};
+  Object.keys(claims).forEach(function (property) {
+    truthClaimsOnly[property] = truthyPropertyClaims(claims[property]);
+  });
+  return truthClaimsOnly;
 };
 
 var nonNull = function nonNull(obj) {
@@ -410,7 +418,7 @@ var parseOptions = function parseOptions(options) {
   return { entityPrefix: entityPrefix, propertyPrefix: propertyPrefix, keepQualifiers: keepQualifiers };
 };
 
-module.exports = { simplifyClaims: simplifyClaims, simplifyPropertyClaims: simplifyPropertyClaims, simplifyClaim: simplifyClaim };
+module.exports = { simplifyClaims: simplifyClaims, simplifyPropertyClaims: simplifyPropertyClaims, simplifyClaim: simplifyClaim, truthyClaims: truthyClaims, truthyPropertyClaims: truthyPropertyClaims };
 
 },{"../utils/utils":22,"./parse_claim":2}],5:[function(require,module,exports){
 'use strict';
@@ -421,7 +429,7 @@ var _require = require('./simplify_claims'),
 var simplify = require('./simplify_text_attributes');
 var simplifySitelinks = require('./simplify_sitelinks');
 
-module.exports = function (entity, options) {
+var simplifyEntity = function simplifyEntity(entity, options) {
   var simplified = {
     id: entity.id,
     type: entity.type,
@@ -448,6 +456,15 @@ var simplifyIfDefined = function simplifyIfDefined(entity, simplified, attribute
     simplified[attribute] = simplify[attribute](entity[attribute]);
   }
 };
+
+var simplifyEntities = function simplifyEntities(entities, options) {
+  return Object.keys(entities).reduce(function (obj, key) {
+    obj[key] = simplifyEntity(entities[key], options);
+    return obj;
+  }, {});
+};
+
+module.exports = { simplifyEntity: simplifyEntity, simplifyEntities: simplifyEntities };
 
 },{"./simplify_claims":4,"./simplify_sitelinks":6,"./simplify_text_attributes":8}],6:[function(require,module,exports){
 'use strict';
@@ -862,7 +879,13 @@ var claimsSimplifiers = require('./helpers/simplify_claims');
 var simplifySparqlResults = require('./helpers/simplify_sparql_results');
 
 wdk.simplify = require('../lib/helpers/simplify_text_attributes');
-wdk.simplify.entity = require('../lib/helpers/simplify_entity');
+
+var _require = require('../lib/helpers/simplify_entity'),
+    simplifyEntity = _require.simplifyEntity,
+    simplifyEntities = _require.simplifyEntities;
+
+wdk.simplify.entity = simplifyEntity;
+wdk.simplify.entities = simplifyEntities;
 wdk.simplify.claim = claimsSimplifiers.simplifyClaim;
 wdk.simplify.propertyClaims = claimsSimplifiers.simplifyPropertyClaims;
 wdk.simplify.claims = claimsSimplifiers.simplifyClaims;
@@ -871,6 +894,7 @@ wdk.simplify.sparqlResults = simplifySparqlResults;
 
 // Legacy
 wdk.simplifySparqlResults = require('./helpers/simplify_sparql_results');
+// Legacy + truthyClaims + truthyPropertyClaims
 Object.assign(wdk, claimsSimplifiers);
 
 // Aliases
