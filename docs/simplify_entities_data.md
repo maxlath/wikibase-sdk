@@ -49,7 +49,7 @@ fetch(url)
 .then(res => {
   const { entities } = res.json()
   # simplificationOptions: see wdk.simplify.entity doc above
-  const simplifiedEntities = wdk.simplify.entity(entities, simplificationOptions)
+  const simplifiedEntities = wdk.simplify.entities(entities, simplificationOptions)
 })
 ```
 
