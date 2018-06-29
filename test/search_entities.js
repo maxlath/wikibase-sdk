@@ -74,4 +74,12 @@ describe('wikidata searchEntities', function () {
       done()
     })
   })
+
+  describe('encoding', function () {
+    it('should url encode the query', function (done) {
+      const url = searchEntities('C#')
+      url.should.containEql('C%23')
+      done()
+    })
+  })
 })
