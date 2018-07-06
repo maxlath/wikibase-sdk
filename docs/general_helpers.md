@@ -11,6 +11,7 @@
   - [isPropertyId](#ispropertyid)
   - [isEntityId](#isentityid)
   - [isNumericId](#isnumericid)
+  - [isGuid](#isguid)
   - [getNumericId](#getnumericid)
 - [Claims helpers](#claims-helpers)
   - [truthyClaims](#truthyclaims)
@@ -40,6 +41,8 @@ Property ids a.k.a. `P` ids
 Accepts both `P` and `Q` ids
 
 ### isNumericId
+
+### isGuid
 
 ### getNumericId
 
