@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.13.0 - 2018-07-06
+* Added [`isGuid`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isguid) helper function
+* Make [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) format statement URIs as claims GUIDs
+
 ## 5.12.0 - 2018-06-27
 * Added [`truthyClaims`](`https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#truthyclaims`) and [`truthyPropertyClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#truthyPropertyClaims) functions
 * Added [`simplify.entities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-entities)
