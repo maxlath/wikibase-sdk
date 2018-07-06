@@ -22,6 +22,10 @@ helpers.isPropertyId = function (id) {
   return (/^P[0-9]+$/.test(id)
   );
 };
+helpers.isGuid = function (guid) {
+  return (/^(Q|P|L)\d+\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  );
+};
 
 helpers.getNumericId = function (id) {
   if (!helpers.isEntityId(id)) throw new Error('invalid wikidata id: ' + id);
@@ -563,7 +567,17 @@ var datatypesParsers = {
 };
 
 var parseUri = function parseUri(uri) {
+  if (uri.startsWith('http://www.wikidata.org/entity/statement/')) {
+    return convertStatementUriToGuid(uri);
+  }
+
   return uri.replace('http://www.wikidata.org/entity/', '').replace('http://www.wikidata.org/prop/direct/', '');
+};
+
+var convertStatementUriToGuid = function convertStatementUriToGuid(uri) {
+  uri = uri.replace('http://www.wikidata.org/entity/statement/', '');
+  var parts = uri.split('-');
+  return parts[0].toUpperCase() + '$' + parts.slice(1).join('-');
 };
 
 var identifyVars = function identifyVars(vars) {
