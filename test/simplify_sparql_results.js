@@ -6,8 +6,10 @@ const singleVarData = require('./data/single_var_sparql_results.json')
 const multiVarsData = require('./data/multi_vars_sparql_results.json')
 const noDatatypeData = require('./data/no_datatype_sparql_results.json')
 const sparqlResultsWithOptionalValues = require('./data/sparql_results_with_optional_values.json')
+const sparqlResultsWithStatements = require('./data/sparql_results_with_statements.json')
 const resultsWithLabelsDescriptionsAndAliases = require('./data/results_with_labels_descriptions_and_aliases.json')
 const { cloneDeep } = require('lodash')
+const guidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
 describe('wikidata simplify SPARQL results', function () {
   describe('common', function () {
@@ -106,6 +108,19 @@ describe('wikidata simplify SPARQL results', function () {
         if (rawResult.itemDescription) simplified.itemDescription.should.be.a.String()
         if (rawResult.itemAltLabel) simplified.itemAltLabel.should.be.a.String()
         simplified.pseudonyme.should.a.String()
+      })
+      done()
+    })
+  })
+
+  describe('statements', function () {
+    it('should convert statement URIs into claims GUIDs', done => {
+      const rawResults = cloneDeep(sparqlResultsWithStatements)
+      const results = simplify(rawResults)
+      results.forEach(result => {
+        const [ qid, rest ] = result.split('$')
+        helpers.isItemId(qid).should.be.true()
+        guidPattern.test(rest.toLowerCase()).should.be.true()
       })
       done()
     })
