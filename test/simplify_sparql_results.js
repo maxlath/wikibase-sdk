@@ -119,7 +119,7 @@ describe('wikidata simplify SPARQL results', function () {
       const results = simplify(rawResults)
       results.forEach(result => {
         const [ qid, rest ] = result.split('$')
-        helpers.isItemId(qid).should.be.true()
+        helpers.isItemId(qid.toUpperCase()).should.be.true()
         guidPattern.test(rest.toLowerCase()).should.be.true()
       })
       done()
