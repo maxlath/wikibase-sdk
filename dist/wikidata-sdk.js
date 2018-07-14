@@ -387,8 +387,8 @@ var simplifyClaim = function simplifyClaim(claim) {
     richValue.type = datatype;
   }
 
-  // Using a new object so that the original options object isn't modified
-  var subSnaksOptions = Object.assign({}, options, { areSubSnaks: true, keepHashes: keepHashes });
+  var subSnaksOptions = getSubSnakOptions(options);
+  subSnaksOptions.keepHashes = keepHashes;
 
   if (keepQualifiers) {
     richValue.qualifiers = simplifyClaims(claim.qualifiers, subSnaksOptions);
@@ -422,7 +422,29 @@ var parseOptions = function parseOptions(options) {
   return { entityPrefix: entityPrefix, propertyPrefix: propertyPrefix, keepQualifiers: keepQualifiers };
 };
 
-module.exports = { simplifyClaims: simplifyClaims, simplifyPropertyClaims: simplifyPropertyClaims, simplifyClaim: simplifyClaim, truthyClaims: truthyClaims, truthyPropertyClaims: truthyPropertyClaims };
+var simplifyQualifiers = function simplifyQualifiers(claims, options) {
+  return simplifyClaims(claims, getSubSnakOptions(options));
+};
+
+var simplifyPropertyQualifiers = function simplifyPropertyQualifiers(propClaims, options) {
+  return simplifyPropertyClaims(propClaims, getSubSnakOptions(options));
+};
+
+// Using a new object so that the original options object isn't modified
+var getSubSnakOptions = function getSubSnakOptions(options) {
+  return Object.assign({}, options, { areSubSnaks: true });
+};
+
+module.exports = {
+  simplifyClaims: simplifyClaims,
+  simplifyPropertyClaims: simplifyPropertyClaims,
+  simplifyClaim: simplifyClaim,
+  truthyClaims: truthyClaims,
+  truthyPropertyClaims: truthyPropertyClaims,
+  simplifyQualifiers: simplifyQualifiers,
+  simplifyPropertyQualifiers: simplifyPropertyQualifiers,
+  simplifyQualifier: simplifyClaim
+};
 
 },{"../utils/utils":22,"./parse_claim":2}],5:[function(require,module,exports){
 'use strict';
@@ -900,9 +922,14 @@ var _require = require('../lib/helpers/simplify_entity'),
 
 wdk.simplify.entity = simplifyEntity;
 wdk.simplify.entities = simplifyEntities;
+
 wdk.simplify.claim = claimsSimplifiers.simplifyClaim;
 wdk.simplify.propertyClaims = claimsSimplifiers.simplifyPropertyClaims;
 wdk.simplify.claims = claimsSimplifiers.simplifyClaims;
+wdk.simplify.qualifier = claimsSimplifiers.simplifyQualifiers;
+wdk.simplify.propertyQualifiers = claimsSimplifiers.simplifyPropertyQualifiers;
+wdk.simplify.qualifiers = claimsSimplifiers.simplifyQualifier;
+
 wdk.simplify.sitelinks = require('../lib/helpers/simplify_sitelinks');
 wdk.simplify.sparqlResults = simplifySparqlResults;
 
