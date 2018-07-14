@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.14.0 - 2018-07-14
+* Added [simplify.qualifier](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplifyqualifier), [simplify.propertyQualifiers](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplifypropertyqualifiers), [simplify.qualifiers](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplifyqualifiers) functions
+
 ## 5.13.0 - 2018-07-06
 * Added [`isGuid`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isguid) helper function
 * Make [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) format statement URIs as claims GUIDs
