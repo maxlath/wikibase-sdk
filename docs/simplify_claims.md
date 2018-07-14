@@ -13,6 +13,9 @@
 - [simplify.claims](#simplifyclaims)
 - [simplify.propertyClaims](#simplifypropertyclaims)
 - [simplify.claim](#simplifyclaim)
+- [simplify.qualifier](#simplifyqualifier)
+- [simplify.propertyQualifiers](#simplifypropertyqualifiers)
+- [simplify.qualifiers](#simplifyqualifiers)
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep rich values](#keep-rich-values)
@@ -125,6 +128,14 @@ Same as simplify.claims but expects a unique claim
 const simplifiedP31Claim = wdk.simplify.claim(entity.claims.P31[0])
 ```
 
+## simplify.qualifier
+Same interface as [simplify.claims](#simplifyclaims) but taking a qualifiers object
+
+## simplify.propertyQualifiers
+Same interface as [simplify.propertyClaims](#simplifypropertyclaims) but taking an array of qualifiers
+
+## simplify.qualifiers
+Same interface as [simplify.claim](#simplifyclaim) but taking a qualifier object
 
 ## Options
 
