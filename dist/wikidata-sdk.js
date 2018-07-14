@@ -577,7 +577,7 @@ var parseUri = function parseUri(uri) {
 var convertStatementUriToGuid = function convertStatementUriToGuid(uri) {
   uri = uri.replace('http://www.wikidata.org/entity/statement/', '');
   var parts = uri.split('-');
-  return parts[0].toUpperCase() + '$' + parts.slice(1).join('-');
+  return parts[0] + '$' + parts.slice(1).join('-');
 };
 
 var identifyVars = function identifyVars(vars) {
