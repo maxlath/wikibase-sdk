@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.15.0 - 2018-07-21
+* [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities_reverse_claims.md): Added ability to query entities by multiple property values
+
 ## 5.14.0 - 2018-07-14
 * Added [simplify.qualifier](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplifyqualifier), [simplify.propertyQualifiers](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplifypropertyqualifiers), [simplify.qualifiers](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplifyqualifiers) functions
 
