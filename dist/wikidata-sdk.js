@@ -1049,8 +1049,7 @@ module.exports = function (property, value) {
       keepProperties = options.keepProperties;
 
   limit = limit || 1000;
-  var sparqlFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
-  var valueString = getValueString(value);
+  var valueFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
   var filter = keepProperties ? '' : itemsOnly;
 
   // Allow to request values for several properties at once
@@ -1060,9 +1059,22 @@ module.exports = function (property, value) {
     property = prefixifyProperty(property);
   }
 
-  var sparql = sparqlFn(property, valueString, filter, limit);
+  var valueBlock = getValueBlock(value, valueFn, property, filter);
+  var sparql = 'SELECT DISTINCT ?subject WHERE { ' + valueBlock + ' } LIMIT ' + limit;
   return sparqlQuery(sparql);
 };
+
+function getValueBlock(value, valueFn, property, filter) {
+  if (!(value instanceof Array)) {
+    return valueFn(property, getValueString(value), filter);
+  }
+
+  var valuesBlocks = value.map(getValueString).map(function (valStr) {
+    return valueFn(property, valStr, filter);
+  });
+
+  return '{ ' + valuesBlocks.join('} UNION {') + ' }';
+}
 
 function getValueString(value) {
   if (helpers.isItemId(value)) {
@@ -1074,13 +1086,13 @@ function getValueString(value) {
 }
 
 function directValueQuery(property, value, filter, limit) {
-  return 'SELECT DISTINCT ?subject WHERE {\n    ?subject ' + property + ' ' + value + ' .\n    ' + filter + '\n  }\n  LIMIT ' + limit;
+  return '?subject ' + property + ' ' + value + ' .\n    ' + filter;
 }
 
 // Discussion on how to make this query optimal:
 // http://stackoverflow.com/q/43073266/3324977
 function caseInsensitiveValueQuery(property, value, filter, limit) {
-  return 'SELECT DISTINCT ?subject WHERE {\n    ?subject ' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n    ' + filter + '\n  }\n  LIMIT ' + limit;
+  return '?subject ' + property + ' ?value .\n    FILTER (lcase(?value) = ' + value.toLowerCase() + ')\n    ' + filter;
 }
 
 var prefixifyProperty = function prefixifyProperty(property) {
