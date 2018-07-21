@@ -50,11 +50,11 @@ You can use `wdk.getManyEntities` instead to generate several request urls to wo
 
 The arguments API is the same as getEntities:
 ```js
-const urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
+const urls = wdk.getManyEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
 // or
-const urls = wdk.getEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json')
+const urls = wdk.getManyEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json')
 // or
-const urls = wdk.getEntities({
+const urls = wdk.getManyEntities({
   ids: ['Q1', 'Q2', 'Q3', ..., 'Q123'],
   languages: ['en', 'fr', 'de'],
   props: ['info', 'claims'],
