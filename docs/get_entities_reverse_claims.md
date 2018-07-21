@@ -29,6 +29,13 @@ You can also pass several possible properties, by passing properties as an array
 const url = wdk.getReverseClaims([ 'P50', 'P110' ], 'Q281411')
 ```
 
+or several values by passing values as an array.
+```js
+const url = wdk.getReverseClaims('P212', [ '978-0-465-06710-7', '978-2-267-02700-6' ])
+```
+
+You can also generate URLs that try to query both several properties and values at once, but queries seem to fail :/
+
 ## Options
 ### limit
 
