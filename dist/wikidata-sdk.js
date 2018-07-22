@@ -483,9 +483,14 @@ var simplifyIfDefined = function simplifyIfDefined(entity, simplified, attribute
   }
 };
 
-var simplifyEntities = function simplifyEntities(entities, options) {
+var simplifyEntities = function simplifyEntities(entities) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var entityPrefix = options.entityPrefix;
+
   return Object.keys(entities).reduce(function (obj, key) {
-    obj[key] = simplifyEntity(entities[key], options);
+    var entity = entities[key];
+    if (entityPrefix) key = entityPrefix + ':' + key;
+    obj[key] = simplifyEntity(entity, options);
     return obj;
   }, {});
 };
