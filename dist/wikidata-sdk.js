@@ -904,10 +904,12 @@ var wdk = module.exports = {};
 wdk.searchEntities = require('./queries/search_entities');
 wdk.getEntities = require('./queries/get_entities');
 wdk.getManyEntities = require('./queries/get_many_entities');
-wdk.getWikidataIdsFromSitelinks = require('./queries/get_wikidata_ids_from_sitelinks');
 wdk.sparqlQuery = require('./queries/sparql_query');
 wdk.getReverseClaims = require('./queries/get_reverse_claims');
 wdk.getRevisions = require('./queries/get_revisions');
+wdk.getEntitiesFromSitelinks = require('./queries/get_entities_from_sitelinks');
+// Legacy
+wdk.getWikidataIdsFromSitelinks = wdk.getEntitiesFromSitelinks;
 
 wdk.parse = require('./helpers/parse_responses');
 
@@ -945,7 +947,7 @@ var helpers = require('../lib/helpers/helpers');
 var sitelinksHelpers = require('../lib/helpers/sitelinks_helpers');
 Object.assign(wdk, helpers, sitelinksHelpers);
 
-},{"../lib/helpers/helpers":1,"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_sitelinks":6,"../lib/helpers/simplify_text_attributes":8,"../lib/helpers/sitelinks_helpers":9,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./helpers/simplify_sparql_results":7,"./queries/get_entities":13,"./queries/get_many_entities":14,"./queries/get_reverse_claims":15,"./queries/get_revisions":16,"./queries/get_wikidata_ids_from_sitelinks":17,"./queries/search_entities":18,"./queries/sparql_query":19}],13:[function(require,module,exports){
+},{"../lib/helpers/helpers":1,"../lib/helpers/simplify_entity":5,"../lib/helpers/simplify_sitelinks":6,"../lib/helpers/simplify_text_attributes":8,"../lib/helpers/sitelinks_helpers":9,"./helpers/parse_responses":3,"./helpers/simplify_claims":4,"./helpers/simplify_sparql_results":7,"./queries/get_entities":13,"./queries/get_entities_from_sitelinks":14,"./queries/get_many_entities":15,"./queries/get_reverse_claims":16,"./queries/get_revisions":17,"./queries/search_entities":18,"./queries/sparql_query":19}],13:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -1000,6 +1002,68 @@ module.exports = function (ids, languages, props, format) {
 },{"../utils/build_url":20,"../utils/utils":22}],14:[function(require,module,exports){
 'use strict';
 
+var buildUrl = require('../utils/build_url');
+
+var _require = require('../utils/utils'),
+    isPlainObject = _require.isPlainObject,
+    forceArray = _require.forceArray,
+    shortLang = _require.shortLang;
+
+module.exports = function (titles, sites, languages, props, format) {
+  // polymorphism: arguments can be passed as an object keys
+  if (isPlainObject(titles)) {
+    // Not using destructuring assigment there as it messes with both babel and standard
+    var params = titles;
+    titles = params.titles;
+    sites = params.sites;
+    languages = params.languages;
+    props = params.props;
+    format = params.format;
+  }
+
+  format = format || 'json';
+
+  // titles cant be let empty
+  if (!(titles && titles.length > 0)) throw new Error('no title provided');
+  // default to the English Wikipedia
+  if (!(sites && sites.length > 0)) sites = ['enwiki'];
+
+  // Properties can be either one property as a string
+  // or an array or properties;
+  // either case me just want to deal with arrays
+  titles = forceArray(titles);
+  sites = forceArray(sites).map(parseSite);
+  props = forceArray(props);
+
+  var query = {
+    action: 'wbgetentities',
+    titles: titles.join('|'),
+    sites: sites.join('|'),
+    format: format
+
+    // Normalizing only works if there is only one site and title
+  };if (sites.length === 1 && titles.length === 1) {
+    query.normalize = true;
+  }
+
+  if (languages) {
+    languages = forceArray(languages).map(shortLang);
+    query.languages = languages.join('|');
+  }
+
+  if (props && props.length > 0) query.props = props.join('|');
+
+  return buildUrl(query);
+};
+
+// convert 2 letters language code to Wikipedia sitelinks code
+var parseSite = function parseSite(site) {
+  return site.length === 2 ? site + 'wiki' : site;
+};
+
+},{"../utils/build_url":20,"../utils/utils":22}],15:[function(require,module,exports){
+'use strict';
+
 var getEntities = require('./get_entities');
 
 var _require = require('../utils/utils'),
@@ -1032,7 +1096,7 @@ var getIdsGroups = function getIdsGroups(ids) {
   return groups;
 };
 
-},{"../utils/utils":22,"./get_entities":13}],15:[function(require,module,exports){
+},{"../utils/utils":22,"./get_entities":13}],16:[function(require,module,exports){
 'use strict';
 
 var helpers = require('../helpers/helpers');
@@ -1099,7 +1163,7 @@ var prefixifyProperty = function prefixifyProperty(property) {
   return 'wdt:' + property;
 };
 
-},{"../helpers/helpers":1,"./sparql_query":19}],16:[function(require,module,exports){
+},{"../helpers/helpers":1,"./sparql_query":19}],17:[function(require,module,exports){
 'use strict';
 
 var buildUrl = require('../utils/build_url');
@@ -1133,68 +1197,6 @@ var getEpochSeconds = function getEpochSeconds(date) {
 };
 
 var earliestPointInMs = new Date('2000-01-01').getTime();
-
-},{"../utils/build_url":20,"../utils/utils":22}],17:[function(require,module,exports){
-'use strict';
-
-var buildUrl = require('../utils/build_url');
-
-var _require = require('../utils/utils'),
-    isPlainObject = _require.isPlainObject,
-    forceArray = _require.forceArray,
-    shortLang = _require.shortLang;
-
-module.exports = function (titles, sites, languages, props, format) {
-  // polymorphism: arguments can be passed as an object keys
-  if (isPlainObject(titles)) {
-    // Not using destructuring assigment there as it messes with both babel and standard
-    var params = titles;
-    titles = params.titles;
-    sites = params.sites;
-    languages = params.languages;
-    props = params.props;
-    format = params.format;
-  }
-
-  format = format || 'json';
-
-  // titles cant be let empty
-  if (!(titles && titles.length > 0)) throw new Error('no title provided');
-  // default to the English Wikipedia
-  if (!(sites && sites.length > 0)) sites = ['enwiki'];
-
-  // Properties can be either one property as a string
-  // or an array or properties;
-  // either case me just want to deal with arrays
-  titles = forceArray(titles);
-  sites = forceArray(sites).map(parseSite);
-  props = forceArray(props);
-
-  var query = {
-    action: 'wbgetentities',
-    titles: titles.join('|'),
-    sites: sites.join('|'),
-    format: format
-
-    // Normalizing only works if there is only one site and title
-  };if (sites.length === 1 && titles.length === 1) {
-    query.normalize = true;
-  }
-
-  if (languages) {
-    languages = forceArray(languages).map(shortLang);
-    query.languages = languages.join('|');
-  }
-
-  if (props && props.length > 0) query.props = props.join('|');
-
-  return buildUrl(query);
-};
-
-// convert 2 letters language code to Wikipedia sitelinks code
-var parseSite = function parseSite(site) {
-  return site.length === 2 ? site + 'wiki' : site;
-};
 
 },{"../utils/build_url":20,"../utils/utils":22}],18:[function(require,module,exports){
 'use strict';
