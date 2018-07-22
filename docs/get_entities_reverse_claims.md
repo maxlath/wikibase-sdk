@@ -12,7 +12,7 @@ const url = wdk.getReverseClaims('P50', 'Q7243')
 // And you can then query the obtained entities ids
 request(url)
 .then(body => {
-  const entitiesIds = wdk.simplifySparqlResults(body)
+  const entitiesIds = wdk.simplify.sparqlResults(body)
   const url2 = wdk.getEntities(entitiesIds)
   request(url2) ....
 })

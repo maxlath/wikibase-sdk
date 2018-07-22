@@ -44,7 +44,7 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
   }
 }
 ```
-`simplifySparqlResults` converts it to a way simpler:
+`wdk.simplify.sparqlResults` converts it to a way simpler:
 ```json
 [
   {
@@ -59,7 +59,7 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
 ]
 ```
 That's still hairy, because we requested 3 variables, but this gets even simpler if there is only one variable!
-Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`, the output of `simplifySparqlResults` will be:
+Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`, the output of `simplify.sparqlResults` will be:
 ```json
 ["Q3731207"]
 ```
@@ -67,7 +67,7 @@ And then to make it even more simpler, we can... hum no, that's all we got.
 
 Use it like so:
 ```js
-const simplifiedResults = wdk.simplifySparqlResults(results)
+const simplifiedResults = wdk.simplify.sparqlResults(results)
 ```
 or for a more complete example (using [promises](https://www.promisejs.org))
 ```js
@@ -77,6 +77,6 @@ const url = wdk.sparqlQuery(SPARQL)
 // If you aren't familiar with Promise requests
 // see https://github.com/maxlath/wikidata-sdk/issues/31
 promiseRequest(url)
-.then(wdk.simplifySparqlResults)
+.then(wdk.simplify.sparqlResults)
 .then(simplifiedResults => { // do awesome stuffs here })
 ```
