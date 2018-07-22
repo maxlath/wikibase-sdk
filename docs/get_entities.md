@@ -103,14 +103,14 @@ const url = wdk.getWikidataIdsFromWikipediaTitles({
 This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
 
 ```js
-const url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwikisource')
+const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'frwikisource')
 ```
 
-Actually, `getWikidataIdsFromWikipediaTitles` is just an alias of `getWikidataIdsFromSitelinks`, so you can use it for Wikipedia too:
+Actually, `getWikidataIdsFromWikipediaTitles` is just an alias of `getEntitiesFromSitelinks`, so you can use it for Wikipedia too:
 ```js
-const url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'frwiki')
+const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'frwiki')
 // or given it defauts to the Wikipedia project:
-const url = wdk.getWikidataIdsFromSitelinks('Victor Hugo', 'fr')
+const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'fr')
 ```
 
 # Examples

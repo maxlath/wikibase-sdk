@@ -1,8 +1,8 @@
 require('should')
 const qs = require('querystring')
-const getIds = require('../lib/queries/get_wikidata_ids_from_sitelinks')
+const getIds = require('../lib/queries/get_entities_from_sitelinks')
 
-describe('wikidata getWikidataIdsFromSitelinks', function () {
+describe('wikidata getEntitiesFromSitelinks', function () {
   describe('polymorphism', function () {
     it('accepts parameters as multiple arguments', function (done) {
       const url = getIds('Lyon', 'dewiki', 'en', 'info', 'json')
