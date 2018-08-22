@@ -23,7 +23,7 @@ helpers.isPropertyId = function (id) {
   );
 };
 helpers.isGuid = function (guid) {
-  return (/^(Q|P|L)\d+\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  return (/^(Q|P|L)\d+\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(guid)
   );
 };
 
