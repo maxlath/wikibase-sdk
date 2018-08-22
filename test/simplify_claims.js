@@ -57,7 +57,7 @@ describe('simplifyClaims', function () {
     const simplified = simplifyClaims(Q2112.claims, { entityPrefix: 'wd' })
     simplified.P190[0].should.equal('wd:Q207614')
     const simplified2 = simplifyClaims(Q2112.claims, { propertyPrefix: 'wdt' })
-    simplified2['wdt:P123456789'][0].should.equal('wdt:P207614')
+    simplified2['wdt:P123456789'][0].should.equal('P207614')
     done()
   })
 
@@ -66,7 +66,7 @@ describe('simplifyClaims', function () {
     simplified['wdt:P190'].should.be.an.Array()
     simplified['wdt:P190'][0].should.equal('wd:Q207614')
     const simplified2 = simplifyClaims(Q2112.claims, { propertyPrefix: 'wdt' })
-    simplified2['wdt:P123456789'][0].should.equal('wdt:P207614')
+    simplified2['wdt:P123456789'][0].should.equal('P207614')
     done()
   })
 
@@ -130,8 +130,8 @@ describe('simplifyPropertyClaims', function () {
   it('should pass entity and property prefixes down', function (done) {
     const simplified = simplifyPropertyClaims(Q2112.claims.P190, { entityPrefix: 'wd' })
     simplified[0].should.equal('wd:Q207614')
-    const simplified2 = simplifyPropertyClaims(Q2112.claims.P123456789, { propertyPrefix: 'wdt' })
-    simplified2[0].should.equal('wdt:P207614')
+    const simplified2 = simplifyPropertyClaims(Q2112.claims.P123456789, { entityPrefix: 'a', propertyPrefix: 'b' })
+    simplified2[0].should.equal('a:P207614')
     done()
   })
 
@@ -213,32 +213,33 @@ describe('simplifyClaim', function () {
       simplifyClaim(Q271094.claims.P4179[0]).should.equal('Data:Taipei Neihu District Population.tab')
       done()
     })
+
+    it('should support lexemes', function (done) {
+      simplifyClaim(lexemeClaim).should.equal('L397')
+      done()
+    })
   })
 
   describe('prefixes', function () {
     it('should return prefixed entity ids if passed an entity prefix', function (done) {
-      const simplified = simplifyClaim(Q2112.claims.P190[0])
-      simplified.should.equal('Q207614')
-      const simplified2 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wd' })
-      simplified2.should.equal('wd:Q207614')
-      const simplified3 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wd:' })
-      simplified3.should.equal('wd::Q207614')
-      const simplified4 = simplifyClaim(Q2112.claims.P190[0], { entityPrefix: 'wdbla' })
-      simplified4.should.equal('wdbla:Q207614')
+      const claim = Q2112.claims.P190[0]
+      simplifyClaim(claim).should.equal('Q207614')
+      simplifyClaim(claim, { entityPrefix: 'wd' }).should.equal('wd:Q207614')
+      simplifyClaim(claim, { entityPrefix: 'wd:' }).should.equal('wd::Q207614')
+      simplifyClaim(claim, { entityPrefix: 'wdbla' }).should.equal('wdbla:Q207614')
       done()
     })
 
-    it('should return prefixed property ids if passed a property prefix', function (done) {
-      const simplified = simplifyClaim(Q2112.claims.P123456789[0])
-      simplified.should.equal('P207614')
-      const simplified2 = simplifyClaim(Q2112.claims.P123456789[0], { entityPrefix: null })
-      simplified2.should.equal('P207614')
-      const simplified3 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdt' })
-      simplified3.should.equal('wdt:P207614')
-      const simplified4 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdt:' })
-      simplified4.should.equal('wdt::P207614')
-      const simplified5 = simplifyClaim(Q2112.claims.P123456789[0], { propertyPrefix: 'wdtbla' })
-      simplified5.should.equal('wdtbla:P207614')
+    it('should not apply property prefixes to property claim values', function (done) {
+      const claim = Q2112.claims.P123456789[0]
+      simplifyClaim(claim).should.equal('P207614')
+      simplifyClaim(claim, { entityPrefix: null }).should.equal('P207614')
+      simplifyClaim(claim, { propertyPrefix: 'wdt' }).should.equal('P207614')
+      simplifyClaim(claim, { propertyPrefix: 'wdt:' }).should.equal('P207614')
+      simplifyClaim(claim, { propertyPrefix: 'wdtbla' }).should.equal('P207614')
+      simplifyClaim(claim, { entityPrefix: 'wd' }).should.equal('wd:P207614')
+      simplifyClaim(claim, { entityPrefix: 'wd:' }).should.equal('wd::P207614')
+      simplifyClaim(claim, { entityPrefix: 'wdbla' }).should.equal('wdbla:P207614')
       done()
     })
   })

@@ -8,10 +8,8 @@ const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../li
 describe('simplify claims functions legacy options interface', function () {
   describe('simplifyClaims', function () {
     it('should pass entity and property prefixes down', function (done) {
-      const simplified = simplifyClaims(Q2112.claims, 'wd')
-      simplified.P190[0].should.equal('wd:Q207614')
-      const simplified2 = simplifyClaims(Q2112.claims, null, 'wdt')
-      simplified2['wdt:P123456789'][0].should.equal('wdt:P207614')
+      simplifyClaims(Q2112.claims, 'wd').P190[0].should.equal('wd:Q207614')
+      simplifyClaims(Q2112.claims, null, 'wdt')['wdt:P123456789'][0].should.equal('P207614')
       done()
     })
 
@@ -20,7 +18,7 @@ describe('simplify claims functions legacy options interface', function () {
       simplified['wdt:P190'].should.be.an.Array()
       simplified['wdt:P190'][0].should.equal('wd:Q207614')
       const simplified2 = simplifyClaims(Q2112.claims, null, 'wdt')
-      simplified2['wdt:P123456789'][0].should.equal('wdt:P207614')
+      simplified2['wdt:P123456789'][0].should.equal('P207614')
       done()
     })
 
@@ -50,10 +48,8 @@ describe('simplify claims functions legacy options interface', function () {
 
   describe('simplifyPropertyClaims', function () {
     it('should pass entity and property prefixes down', function (done) {
-      const simplified = simplifyPropertyClaims(Q2112.claims.P190, 'wd')
-      simplified[0].should.equal('wd:Q207614')
-      const simplified2 = simplifyPropertyClaims(Q2112.claims.P123456789, null, 'wdt')
-      simplified2[0].should.equal('wdt:P207614')
+      simplifyPropertyClaims(Q2112.claims.P190, 'wd')[0].should.equal('wd:Q207614')
+      simplifyPropertyClaims(Q2112.claims.P123456789, null, 'wdt')[0].should.equal('P207614')
       done()
     })
 
@@ -92,16 +88,9 @@ describe('simplify claims functions legacy options interface', function () {
     })
 
     it('should return prefixed property ids if passed a property prefix', function (done) {
-      const simplified = simplifyClaim(Q2112.claims.P123456789[0])
-      simplified.should.equal('P207614')
-      const simplified2 = simplifyClaim(Q2112.claims.P123456789[0], null)
-      simplified2.should.equal('P207614')
-      const simplified3 = simplifyClaim(Q2112.claims.P123456789[0], null, 'wdt')
-      simplified3.should.equal('wdt:P207614')
-      const simplified4 = simplifyClaim(Q2112.claims.P123456789[0], null, 'wdt:')
-      simplified4.should.equal('wdt::P207614')
-      const simplified5 = simplifyClaim(Q2112.claims.P123456789[0], null, 'wdtbla')
-      simplified5.should.equal('wdtbla:P207614')
+      simplifyClaim(Q2112.claims.P123456789[0]).should.equal('P207614')
+      simplifyClaim(Q2112.claims.P123456789[0], null).should.equal('P207614')
+      simplifyClaim(Q2112.claims.P123456789[0], null, 'wdt').should.equal('P207614')
       done()
     })
 
