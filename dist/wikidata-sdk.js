@@ -113,15 +113,16 @@ var monolingualtext = function monolingualtext(datavalue, options) {
   return options.keepRichValues ? datavalue.value : datavalue.value.text;
 };
 
-var item = function item(datavalue, options) {
+var entity = function entity(datavalue, options) {
   return prefixedId(datavalue, options.entityPrefix);
 };
 
-var property = function property(datavalue, options) {
-  return prefixedId(datavalue, options.propertyPrefix);
+var entityLetter = {
+  item: 'Q',
+  lexeme: 'L',
+  property: 'P'
 };
 
-var entityLetter = { item: 'Q', property: 'P' };
 var prefixedId = function prefixedId(datavalue, prefix) {
   var value = datavalue.value;
 
@@ -176,8 +177,9 @@ var parsers = {
   'external-id': simple,
   math: simple,
   monolingualtext: monolingualtext,
-  'wikibase-item': item,
-  'wikibase-property': property,
+  'wikibase-item': entity,
+  'wikibase-lexeme': entity,
+  'wikibase-property': entity,
   time: time,
   quantity: quantity,
   'globe-coordinate': coordinate,
