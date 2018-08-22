@@ -1,6 +1,6 @@
 require('should')
 
-const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDay, isEntityId, isItemId, isPropertyId, getImageUrl } = require('../lib/helpers/helpers')
+const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDay, isEntityId, isItemId, isPropertyId, getImageUrl, isGuid } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -172,6 +172,18 @@ describe('helpers', function () {
 
       getImageUrl('Peredot.jpg', 250)
       .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250')
+      done()
+    })
+  })
+
+  describe('isGuid', function () {
+    it('should accept both item and property ids', function (done) {
+      isGuid('q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C').should.be.true()
+      isGuid('Q520$91F0CCEA-19E4-4CEB-97D9-74B014C14686').should.be.true()
+      isGuid('q520$7f95c04f-4cb6-b018-80eb-fefe0e0bf377').should.be.true()
+      isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec6').should.be.true()
+      isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec').should.be.false()
+      isGuid('Q520').should.be.false()
       done()
     })
   })
