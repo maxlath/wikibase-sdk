@@ -12,6 +12,7 @@ const Q4115189 = require('./data/Q4115189.json')
 const Q970917 = require('./data/Q970917.json')
 const Q1 = require('./data/Q1.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
+const lexemeClaim = require('./data/lexeme_claim.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims, truthyClaims, truthyPropertyClaims, simplifyQualifier, simplifyPropertyQualifiers,
 simplifyQualifiers } = require('../lib/helpers/simplify_claims')
