@@ -1144,7 +1144,6 @@ module.exports = function (property, value) {
       caseInsensitive = options.caseInsensitive,
       keepProperties = options.keepProperties;
 
-  limit = limit || 1000;
   var valueFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery;
   var filter = keepProperties ? '' : itemsOnly;
 
@@ -1156,7 +1155,8 @@ module.exports = function (property, value) {
   }
 
   var valueBlock = getValueBlock(value, valueFn, property, filter);
-  var sparql = 'SELECT DISTINCT ?subject WHERE { ' + valueBlock + ' } LIMIT ' + limit;
+  var sparql = 'SELECT DISTINCT ?subject WHERE { ' + valueBlock + ' }';
+  if (limit) sparql += ' LIMIT ' + limit;
   return sparqlQuery(sparql);
 };
 
