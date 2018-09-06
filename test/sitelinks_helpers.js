@@ -97,11 +97,11 @@ describe('getSitelinkData', function () {
     getSitelinkData('frwiki').project.should.equal('wikipedia')
     getSitelinkData('dewikiquote').lang.should.equal('de')
     getSitelinkData('dewikiquote').project.should.equal('wikiquote')
-    getSitelinkData('commons').project.should.equal('commons')
-    getSitelinkData('wikidata').project.should.equal('wikidata')
+    getSitelinkData('commonswiki').project.should.equal('commons')
+    getSitelinkData('wikidatawiki').project.should.equal('wikidata')
     // Using 'en' as placeholder
-    getSitelinkData('wikidata').lang.should.equal('en')
-    getSitelinkData('commons').lang.should.equal('en')
+    getSitelinkData('wikidatawiki').lang.should.equal('en')
+    getSitelinkData('commonswiki').lang.should.equal('en')
     done()
   })
 
@@ -114,9 +114,10 @@ describe('getSitelinkData', function () {
 describe('isSitelinkKey', function () {
   it('should return true for valid sitelink keys', function (done) {
     isSitelinkKey('frwiki').should.be.true()
-    isSitelinkKey('commons').should.be.true()
-    // Tolerated to make things easy
-    isSitelinkKey('wikidata').should.be.true()
+    isSitelinkKey('commonswiki').should.be.true()
+    isSitelinkKey('wikidatawiki').should.be.true()
+    isSitelinkKey('commons').should.be.false()
+    isSitelinkKey('wikidata').should.be.false()
     done()
   })
   it('should return false for invalid sitelink keys', function (done) {
