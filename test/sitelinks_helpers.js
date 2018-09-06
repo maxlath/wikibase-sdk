@@ -37,6 +37,9 @@ describe('getSitelinkUrl', function () {
     getSitelinkUrl('wikidata', 'Q1')
     .should.equal('https://www.wikidata.org/wiki/Q1')
 
+    getSitelinkUrl('wikidatawiki', 'Q1')
+    .should.equal('https://www.wikidata.org/wiki/Q1')
+
     getSitelinkUrl('wikidata', 'P50')
     .should.equal('https://www.wikidata.org/wiki/Property:P50')
 
@@ -70,6 +73,9 @@ describe('getSitelinkUrl', function () {
     .should.equal('https://en.wikinews.org/wiki/Category%3ALyon')
 
     getSitelinkUrl({ site: 'wikidata', title: 'Q1' })
+    .should.equal('https://www.wikidata.org/wiki/Q1')
+
+    getSitelinkUrl({ site: 'wikidatawiki', title: 'Q1' })
     .should.equal('https://www.wikidata.org/wiki/Q1')
 
     getSitelinkUrl({ site: 'wikidata', title: 'P50' })
