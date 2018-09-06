@@ -781,7 +781,8 @@ var getSitelinkUrl = function getSitelinkUrl(site, title) {
   if (!site) throw new Error('missing a site');
   if (!title) throw new Error('missing a title');
 
-  var specialUrlBuilder = siteUrlBuilders[site] || siteUrlBuilders[site + 'wiki'];
+  var shortSiteKey = site.replace(/wiki$/, '');
+  var specialUrlBuilder = siteUrlBuilders[shortSiteKey] || siteUrlBuilders[site];
   if (specialUrlBuilder) return specialUrlBuilder(title);
 
   var _getSitelinkData = getSitelinkData(site),
