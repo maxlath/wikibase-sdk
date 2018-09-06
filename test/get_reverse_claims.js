@@ -13,15 +13,8 @@ describe('simplifyClaims', function () {
     url.startsWith('https://query.wikidata.org').should.be.exactly(true)
     should(url.match(/SELECT/)).be.ok()
     should(url.match(/WHERE/)).be.ok()
-    should(url.match(/LIMIT/)).be.ok()
+    should(url.match(/LIMIT/)).not.be.ok()
     should(url.match(/subject%20wdt%3AP50%20wd%3AQ535/)).be.ok()
-    should(url.match(/LIMIT%201000/)).be.ok()
-    done()
-  })
-
-  it('should default to limit=1000', function (done) {
-    const url = getReverseClaims('P50', 'Q535')
-    should(url.match(/LIMIT%201000/)).be.ok()
     done()
   })
 
@@ -37,7 +30,7 @@ describe('simplifyClaims', function () {
     url.startsWith('https://query.wikidata.org').should.be.exactly(true)
     should(url.match(/SELECT/)).be.ok()
     should(url.match(/WHERE/)).be.ok()
-    should(url.match(/LIMIT/)).be.ok()
+    should(url.match(/LIMIT/)).not.be.ok()
     should(url.match(/FILTER%20%28lcase%28%3Fvalue%29%20%3D%20%27bouletcorp%27%29/)).be.ok()
     done()
   })

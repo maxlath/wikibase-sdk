@@ -39,7 +39,7 @@ You can also generate URLs that try to query both several properties and values 
 ## Options
 ### limit
 
-Default value: `1000`
+Default value: no limit
 ```js
 // Find only 10 works of Victor Hugo
 const url = wdk.getReverseClaims('P50', 'Q535', { limit: 10 })
