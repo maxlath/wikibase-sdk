@@ -781,11 +781,8 @@ var getSitelinkUrl = function getSitelinkUrl(site, title) {
   if (!site) throw new Error('missing a site');
   if (!title) throw new Error('missing a title');
 
-  if (site === 'commons') return 'https://commons.wikimedia.org/wiki/' + title;
-  if (site === 'wikidata') {
-    if (isPropertyId(title)) return wikidataBase + 'Property:' + title;
-    return '' + wikidataBase + title;
-  }
+  var specialUrlBuilder = siteUrlBuilders[site] || siteUrlBuilders[site + 'wiki'];
+  if (specialUrlBuilder) return specialUrlBuilder(title);
 
   var _getSitelinkData = getSitelinkData(site),
       lang = _getSitelinkData.lang,
@@ -793,6 +790,25 @@ var getSitelinkUrl = function getSitelinkUrl(site, title) {
 
   title = fixedEncodeURIComponent(replaceSpaceByUnderscores(title));
   return 'https://' + lang + '.' + project + '.org/wiki/' + title;
+};
+
+var wikimediaSite = function wikimediaSite(subdomain) {
+  return function (title) {
+    return 'https://' + subdomain + '.wikimedia.org/wiki/' + title;
+  };
+};
+
+var siteUrlBuilders = {
+  commons: wikimediaSite('commons'),
+  mediawiki: function mediawiki(title) {
+    return 'https://www.mediawiki.org/wiki/' + title;
+  },
+  meta: wikimediaSite('meta'),
+  species: wikimediaSite('species'),
+  wikidata: function wikidata(title) {
+    if (isPropertyId(title)) return wikidataBase + 'Property:' + title;
+    return '' + wikidataBase + title;
+  }
 };
 
 var getSitelinkData = function getSitelinkData(site) {
@@ -822,10 +838,10 @@ var getSitelinkData = function getSitelinkData(site) {
 
 var specialSites = {
   commonswiki: 'commons',
-  wikidatawiki: 'wikidata',
-  metawiki: 'meta',
   mediawikiwiki: 'mediawiki',
-  specieswiki: 'specieswiki'
+  metawiki: 'meta',
+  specieswiki: 'specieswiki',
+  wikidatawiki: 'wikidata'
 };
 
 var isSitelinkKey = function isSitelinkKey(site) {
