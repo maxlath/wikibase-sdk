@@ -7,19 +7,19 @@ var toDateObject = require('./wikidata_time_to_date_object');
 
 var helpers = {};
 helpers.isNumericId = function (id) {
-  return (/^[0-9]+$/.test(id)
+  return (/^[1-9][0-9]*$/.test(id)
   );
 };
 helpers.isEntityId = function (id) {
-  return (/^(Q|P)[0-9]+$/.test(id)
+  return (/^(Q|P)[1-9][0-9]*$/.test(id)
   );
 };
 helpers.isItemId = function (id) {
-  return (/^Q[0-9]+$/.test(id)
+  return (/^Q[1-9][0-9]*$/.test(id)
   );
 };
 helpers.isPropertyId = function (id) {
-  return (/^P[0-9]+$/.test(id)
+  return (/^P[1-9][0-9]*$/.test(id)
   );
 };
 helpers.isGuid = function (guid) {
