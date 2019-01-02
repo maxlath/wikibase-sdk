@@ -1,4 +1,4 @@
-require('should')
+const should = require('should')
 const _ = require('lodash')
 const Q571 = require('./data/Q571.json')
 const Q646148 = require('./data/Q646148.json')
@@ -13,6 +13,7 @@ const Q970917 = require('./data/Q970917.json')
 const Q1 = require('./data/Q1.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 const lexemeClaim = require('./data/lexeme_claim.json')
+const emptyValues = require('./data/empty_values.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims, truthyClaims, truthyPropertyClaims, simplifyQualifier, simplifyPropertyQualifiers,
 simplifyQualifiers } = require('../lib/helpers/simplify_claims')
@@ -186,6 +187,19 @@ describe('simplifyPropertyClaims', function () {
     simplified2.should.be.an.Array()
     simplified2.length.should.equal(0)
     done()
+  })
+
+  describe('empty values', function () {
+    it('should not filter-out null values if its novalueValue or somevalueValue', function (done) {
+      simplifyPropertyClaims(emptyValues.claims.P3984).length.should.equal(1)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-' }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: null }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { somevalueValue: '?' }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { somevalueValue: null }).length.should.equal(2)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: null, somevalueValue: null }).length.should.equal(3)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-', somevalueValue: '?' }).length.should.equal(3)
+      done()
+    })
   })
 })
 
@@ -404,6 +418,28 @@ describe('simplifyClaim', function () {
       // Can't be supported due to JS large numbers limitations;
       // 13798000000*365.25*24*60*60*1000 is too big
       // timeClaim('epoch').should.equal('-13798000000-00-00T00:00:00Z')
+      done()
+    })
+  })
+
+  describe('empty values', function () {
+    it('should return the desired novalueValue', function (done) {
+      const noValueClaim = emptyValues.claims.P3984[0]
+      should(simplifyClaim(noValueClaim)).not.be.ok()
+      simplifyClaim(noValueClaim, { novalueValue: '-' }).should.equal('-')
+      simplifyClaim(noValueClaim, { novalueValue: '' }).should.equal('')
+      done()
+    })
+    it('should return the desired somevalueValue', function (done) {
+      const someValueClaim = emptyValues.claims.P3984[1]
+      should(simplifyClaim(someValueClaim)).not.be.ok()
+      simplifyClaim(someValueClaim, { somevalueValue: '?' }).should.equal('?')
+      simplifyClaim(someValueClaim, { somevalueValue: '' }).should.equal('')
+      done()
+    })
+    it('should accept null as a possible value', function (done) {
+      const noValueClaim = emptyValues.claims.P3984[0]
+      should(simplifyClaim(noValueClaim, { novalueValue: null }) === null).be.true()
       done()
     })
   })
