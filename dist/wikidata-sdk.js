@@ -285,7 +285,10 @@ var simplifyPropertyClaims = function simplifyPropertyClaims(propClaims) {
 
   propClaims = propClaims.map(function (claim) {
     return simplifyClaim.apply(undefined, [claim].concat(options));
-  }).filter(nonNull);
+  })
+  // Filter-out novalue and somevalue claims,
+  // unless a novalueValue or a somevalueValue is passed in options
+  .filter(defined);
 
   // Deduplicate values unless we return a rich value object
   if (propClaims[0] && _typeof(propClaims[0]) !== 'object') {
@@ -317,8 +320,9 @@ var truthyClaims = function truthyClaims(claims) {
   return truthClaimsOnly;
 };
 
-var nonNull = function nonNull(obj) {
-  return obj != null;
+// Considers null as defined
+var defined = function defined(obj) {
+  return obj !== undefined;
 };
 
 // Expects a single claim object
@@ -345,11 +349,10 @@ var simplifyClaim = function simplifyClaim(claim) {
   if (mainsnak) {
     datatype = mainsnak.datatype;
     datavalue = mainsnak.datavalue;
-    // Known case: snaktype set to `somevalue`
-    if (!datavalue) return null;
+    if (!datavalue) {
+      if (mainsnak.snaktype === 'somevalue') return options.somevalueValue;else return options.novalueValue;
+    }
   } else {
-    // Should only happen in snaktype: `novalue` cases or alikes
-    if (!(claim && claim.datavalue)) return null;
     // Qualifiers have no mainsnak, and define datatype, datavalue on claim
     datavalue = claim.datavalue;
     datatype = claim.datatype;
