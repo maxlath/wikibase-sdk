@@ -199,6 +199,13 @@ describe('simplifyPropertyClaims', function () {
       simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-', somevalueValue: '?' }).length.should.equal(3)
       done()
     })
+    it('should return rich values for null values if requested', function (done) {
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepQualifiers: true }).length.should.equal(3)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepReferences: true }).length.should.equal(3)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepIds: true }).length.should.equal(3)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepTypes: true }).length.should.equal(3)
+      done()
+    })
   })
 })
 
@@ -439,6 +446,13 @@ describe('simplifyClaim', function () {
     it('should accept null as a possible value', function (done) {
       const noValueClaim = emptyValues.claims.P3984[0]
       should(simplifyClaim(noValueClaim, { novalueValue: null }) === null).be.true()
+      done()
+    })
+    it('should return rich values for null values if requested', function (done) {
+      simplifyClaim(emptyValues.claims.P3984[0], { keepQualifiers: true }).should.have.property('qualifiers')
+      simplifyClaim(emptyValues.claims.P3984[0], { keepReferences: true }).should.have.property('references')
+      simplifyClaim(emptyValues.claims.P3984[0], { keepIds: true }).should.have.property('id')
+      simplifyClaim(emptyValues.claims.P3984[0], { keepTypes: true }).should.have.property('type')
       done()
     })
   })
