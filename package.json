@@ -17,6 +17,7 @@
     "update-bower": "./scripts/update_bower",
     "bump-version": "./scripts/bump_version",
     "update-toc": "./scripts/update_toc",
+    "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
     "add-fixture-entity": "./scripts/add_fixture_entity",
     "check-supported-types": "./scripts/check_supported_types"
   },
