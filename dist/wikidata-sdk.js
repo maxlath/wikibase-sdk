@@ -1240,7 +1240,11 @@ var buildUrl = require('../utils/build_url');
 var _require = require('../utils/utils'),
     isPlainObject = _require.isPlainObject;
 
+var types = ['item', 'property', 'lexeme', 'form', 'sense'];
+
 module.exports = function (search, language, limit, format, uselang) {
+  var type;
+
   // polymorphism: arguments can be passed as an object keys
   if (isPlainObject(search)) {
     // Not using destructuring assigment there as it messes with both babel and standard
@@ -1250,6 +1254,7 @@ module.exports = function (search, language, limit, format, uselang) {
     limit = params.limit;
     format = params.format;
     uselang = params.uselang;
+    type = params.type;
   }
 
   if (!(search && search.length > 0)) throw new Error("search can't be empty");
@@ -1258,6 +1263,9 @@ module.exports = function (search, language, limit, format, uselang) {
   uselang = uselang || language;
   limit = limit || '20';
   format = format || 'json';
+  type = type || 'item';
+
+  if (!types.includes(type)) throw new Error('invalid type: ' + type);
 
   return buildUrl({
     action: 'wbsearchentities',
@@ -1265,7 +1273,8 @@ module.exports = function (search, language, limit, format, uselang) {
     language: language,
     limit: limit,
     format: format,
-    uselang: uselang
+    uselang: uselang,
+    type: type
   });
 };
 
