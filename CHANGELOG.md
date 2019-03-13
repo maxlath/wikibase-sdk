@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 5.16.0 - 2019-03-13
+* [`searchEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/search_entities.md): accept a `type` parameter
+
 ## 5.15.0 - 2018-07-21
 * [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities_reverse_claims.md): Added ability to query entities by multiple property values
 
