@@ -1,2 +1,3 @@
 node_modules
 scripts/sitelinks_languages/sites.json
+types/**/*.js
