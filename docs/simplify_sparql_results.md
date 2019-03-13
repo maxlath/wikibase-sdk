@@ -58,10 +58,13 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
   }
 ]
 ```
-That's still hairy, because we requested 3 variables, but this gets even simpler if there is only one variable!
-Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`, the output of `simplify.sparqlResults` will be:
-```json
-["Q3731207"]
+That's still hairy, because we requested 3 variables, but that can get even simpler if there is only one variable!
+Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`:
+```js
+simplify.sparqlResults(results)
+// => [ { "author": "Q3731207" } ]
+simplify.sparqlResults(results, { minimize: true })
+// => [ "Q3731207" ]
 ```
 And then to make it even more simpler, we can... hum no, that's all we got.
 
@@ -79,4 +82,18 @@ const url = wdk.sparqlQuery(SPARQL)
 promiseRequest(url)
 .then(wdk.simplify.sparqlResults)
 .then(simplifiedResults => { // do awesome stuffs here })
+```
+
+## options
+
+### minimize
+> Default: `false`
+
+When only one variable is requested, set minimize to `true`, the simplified results will consist of an array of this variable values, instead of an array of objects.
+```js
+wdk.simplify.sparqlResults(results, { minimize: true })
+// => [ "Q112983", "Q185598", "Q3879286" ]
+
+wdk.simplify.sparqlResults(results, { minimize: false })
+// => [ { item: "Q112983" }, { item: "Q185598" }, { item: "Q3879286" } ]
 ```

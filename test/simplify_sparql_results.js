@@ -9,7 +9,6 @@ const sparqlResultsWithOptionalValues = require('./data/sparql_results_with_opti
 const sparqlResultsWithStatements = require('./data/sparql_results_with_statements.json')
 const resultsWithLabelsDescriptionsAndAliases = require('./data/results_with_labels_descriptions_and_aliases.json')
 const { cloneDeep } = require('lodash')
-const guidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
 describe('wikidata simplify SPARQL results', function () {
   describe('common', function () {
@@ -28,35 +27,43 @@ describe('wikidata simplify SPARQL results', function () {
     })
   })
 
-  describe('single var', function () {
+  it('should return an array of results objects', function (done) {
+    const output = simplify(multiVarsData)
+    output[0].should.be.an.Object()
+    output[0].entity.value.should.equal('Q3731207')
+    output[0].entity.label.should.equal('Ercole Patti')
+    output[0].year.should.equal(1903)
+    done()
+  })
+
+  it('should not throw when the datatype is missing', function (done) {
+    const output = simplify(noDatatypeData)
+    output[0].year.should.equal('1937')
+    done()
+  })
+
+  it('should not throw when an optional variable has no result', function (done) {
+    const result = simplify(sparqlResultsWithOptionalValues)[0]
+    result.composer.should.be.an.Object()
+    should(result.genre).not.be.ok()
+    done()
+  })
+
+  describe('minimize', function () {
     it('should return an array of results values, filtering out blank nodes', function (done) {
-      const output = simplify(singleVarData)
+      const output = simplify(singleVarData, { minimize: true })
       output[0].should.equal('Q112983')
       output.forEach(result => helpers.isEntityId(result).should.be.true())
       done()
     })
-  })
 
-  describe('multi vars', function () {
-    it('should return an array of results objects', function (done) {
-      const output = simplify(multiVarsData)
-      output[0].should.be.an.Object()
-      output[0].entity.value.should.equal('Q3731207')
-      output[0].entity.label.should.equal('Ercole Patti')
-      output[0].year.should.equal(1903)
-      done()
-    })
-
-    it('should not throw when the datatype is missing', function (done) {
-      const output = simplify(noDatatypeData)
-      output[0].year.should.equal('1937')
-      done()
-    })
-
-    it('should not throw when an optional variable has no result', function (done) {
-      const result = simplify(sparqlResultsWithOptionalValues)[0]
-      result.composer.should.be.an.Object()
-      should(result.genre).not.be.ok()
+    it('should return an array of results value object', function (done) {
+      const output = simplify(singleVarData, { minimize: false })
+      output[0].should.deepEqual({ genre: 'Q112983' })
+      output.forEach(result => {
+        result.should.be.an.Object()
+        if (result.genre) helpers.isEntityId(result.genre).should.be.true()
+      })
       done()
     })
   })
@@ -116,12 +123,8 @@ describe('wikidata simplify SPARQL results', function () {
   describe('statements', function () {
     it('should convert statement URIs into claims GUIDs', done => {
       const rawResults = cloneDeep(sparqlResultsWithStatements)
-      const results = simplify(rawResults)
-      results.forEach(result => {
-        const [ qid, rest ] = result.split('$')
-        helpers.isItemId(qid.toUpperCase()).should.be.true()
-        guidPattern.test(rest.toLowerCase()).should.be.true()
-      })
+      const results = simplify(rawResults, { minimize: true })
+      results.forEach(result => helpers.isGuid(result).should.be.true())
       done()
     })
   })
