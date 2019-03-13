@@ -44,3 +44,10 @@ const url = wdk.searchEntities({
 })
 ```
 If the values aren't available in the desired language, it will fallback to the English value if available.
+
+## entities type
+You can request a specific type of entity by setting the `type` parameter to either `item` (default), `property`, `lexeme`, `form`, or `sense`:
+which can also be passed as an object:
+```js
+const url = wdk.searchEntities({ search: 'alphabet', type: 'property' })
+```

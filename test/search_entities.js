@@ -82,4 +82,12 @@ describe('wikidata searchEntities', function () {
       done()
     })
   })
+
+  describe('format', function () {
+    it('should accept a valid type parameter', function (done) {
+      const url = searchEntities({ search: 'alphabet', type: 'property' })
+      url.should.match(/type=property/)
+      done()
+    })
+  })
 })
