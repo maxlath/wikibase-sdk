@@ -89,5 +89,10 @@ describe('wikidata searchEntities', function () {
       url.should.match(/type=property/)
       done()
     })
+
+    it('should reject an invalid type parameter', function (done) {
+      (() => searchEntities({ search: 'alphabet', type: 'foo' })).should.throw()
+      done()
+    })
   })
 })
