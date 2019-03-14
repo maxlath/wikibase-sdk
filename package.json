@@ -14,6 +14,7 @@
     "minify": "uglifyjs dist/wikidata-sdk.js -c -m > dist/wikidata-sdk.min.js",
     "dist": "npm run build && npm run minify",
     "prepublishOnly": "./scripts/prepublish",
+    "postpublish": "git push --tags",
     "update-bower": "./scripts/update_bower",
     "bump-version": "./scripts/bump_version",
     "update-toc": "./scripts/update_toc",
