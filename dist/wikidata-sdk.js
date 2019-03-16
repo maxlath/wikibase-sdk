@@ -349,15 +349,17 @@ var simplifyClaim = function simplifyClaim(claim) {
   if (mainsnak) {
     datatype = mainsnak.datatype;
     datavalue = mainsnak.datavalue;
-    if (!datavalue) {
-      if (mainsnak.snaktype === 'somevalue') return options.somevalueValue;else return options.novalueValue;
-    }
   } else {
     // Qualifiers have no mainsnak, and define datatype, datavalue on claim
     datavalue = claim.datavalue;
     datatype = claim.datatype;
     // Duck typing the sub-snak type
     if (claim.hash) isQualifierSnak = true;else isReferenceSnak = true;
+  }
+
+  if (!datavalue) {
+    var snaktype = isQualifierSnak || isReferenceSnak ? claim.snaktype : mainsnak.snaktype;
+    if (snaktype === 'somevalue') return options.somevalueValue;else if (snaktype === 'novalue') return options.novalueValue;else throw new Error('no datavalue or special snaktype found');
   }
 
   var value = parseClaim(datatype, datavalue, options, claim.id);
@@ -962,9 +964,9 @@ wdk.simplify.entities = simplifyEntities;
 wdk.simplify.claim = claimsSimplifiers.simplifyClaim;
 wdk.simplify.propertyClaims = claimsSimplifiers.simplifyPropertyClaims;
 wdk.simplify.claims = claimsSimplifiers.simplifyClaims;
-wdk.simplify.qualifier = claimsSimplifiers.simplifyQualifiers;
+wdk.simplify.qualifier = claimsSimplifiers.simplifyQualifier;
 wdk.simplify.propertyQualifiers = claimsSimplifiers.simplifyPropertyQualifiers;
-wdk.simplify.qualifiers = claimsSimplifiers.simplifyQualifier;
+wdk.simplify.qualifiers = claimsSimplifiers.simplifyQualifiers;
 
 wdk.simplify.sitelinks = require('../lib/helpers/simplify_sitelinks');
 wdk.simplify.sparqlResults = simplifySparqlResults;
