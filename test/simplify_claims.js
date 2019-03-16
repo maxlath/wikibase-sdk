@@ -15,8 +15,7 @@ const oldClaimFormat = require('./data/old_claim_format.json')
 const lexemeClaim = require('./data/lexeme_claim.json')
 const emptyValues = require('./data/empty_values.json')
 
-const { simplifyClaim, simplifyPropertyClaims, simplifyClaims, truthyClaims, truthyPropertyClaims, simplifyQualifier, simplifyPropertyQualifiers,
-simplifyQualifiers } = require('../lib/helpers/simplify_claims')
+const { simplifyClaim, simplifyPropertyClaims, simplifyClaims, truthyClaims, truthyPropertyClaims } = require('../lib/helpers/simplify_claims')
 
 describe('simplifyClaims', function () {
   it('env', function (done) {
@@ -463,33 +462,6 @@ describe('truthyPropertyClaims', function () {
     const truthyOnly = truthyPropertyClaims(Q4115189Claims.P135)
     truthyOnly.length.should.equal(1)
     truthyOnly[0].mainsnak.datavalue.value.id.should.equal('Q2044250')
-    done()
-  })
-})
-
-describe('simplifyQualifier', function () {
-  it('should simplify a qualifier', done => {
-    const qualifier = Q2112.claims.P190[1].qualifiers.P580[0]
-    const simplified = simplifyQualifier(qualifier)
-    simplified.should.equal('1953-01-01T00:00:00.000Z')
-    done()
-  })
-})
-
-describe('simplifyPropertyQualifiers', function () {
-  it('should simplify propertyQualifiers', done => {
-    const propertyQualifiers = Q2112.claims.P190[1].qualifiers.P580
-    const simplified = simplifyPropertyQualifiers(propertyQualifiers)
-    simplified.should.deepEqual([ '1953-01-01T00:00:00.000Z' ])
-    done()
-  })
-})
-
-describe('simplifyQualifiers', function () {
-  it('should simplify qualifiers', done => {
-    const qualifiers = Q2112.claims.P190[1].qualifiers
-    const simplified = simplifyQualifiers(qualifiers)
-    simplified.P580.should.deepEqual([ '1953-01-01T00:00:00.000Z' ])
     done()
   })
 })
