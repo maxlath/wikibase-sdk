@@ -128,13 +128,13 @@ Same as simplify.claims but expects a unique claim
 const simplifiedP31Claim = wdk.simplify.claim(entity.claims.P31[0])
 ```
 
-## simplify.qualifier
+## simplify.qualifiers
 Same interface as [simplify.claims](#simplifyclaims) but taking a qualifiers object
 
 ## simplify.propertyQualifiers
 Same interface as [simplify.propertyClaims](#simplifypropertyclaims) but taking an array of qualifiers
 
-## simplify.qualifiers
+## simplify.qualifier
 Same interface as [simplify.claim](#simplifyclaim) but taking a qualifier object
 
 ## Options
