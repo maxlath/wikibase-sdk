@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const { kebabCase } = require('lodash')
 const { red, green } = require('chalk')
-const supportedTypes = Object.keys(require('../lib/helpers/claim_parsers'))
+const supportedTypes = Object.keys(require('../lib/helpers/parse_claim').parsers)
 
 require('/tmp/all_wikidata_types.json')
 .map(typeUri => {
