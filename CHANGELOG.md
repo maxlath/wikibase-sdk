@@ -1,6 +1,11 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.0.0 - 2019-03-17
+**BREAKING CHANGE**
+* swapping `wdk.simplify.qualifier` and `wdk.simplify.qualifiers` that were mistakenly inverted (fixed [#47](https://github.com/maxlath/wikidata-sdk/issues/47)) ((([ed0e7a4](https://github.com/maxlath/wikidata-sdk/commit/ed0e7a4))))
+* Make [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) consistently outputs an array of objects, unless the option `minimize` is set to `true`, in which case direct, requests with a single variable will return an array of those variables values (([ddba9e2](https://github.com/maxlath/wikidata-sdk/commit/ddba9e2))). The easy migration from `v5.x.x` is to replace `wdk.simplifySparqlResults(results)` by `wdk.simplifySparqlResults(results, { minimize: true })` (This doesn't affect requests with several variables `SELECT`ed)
+
 ## 5.16.0 - 2019-03-13
 * [`searchEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/search_entities.md): accept a `type` parameter
 
