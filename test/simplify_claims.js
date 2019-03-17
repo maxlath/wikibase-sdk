@@ -189,7 +189,7 @@ describe('simplifyPropertyClaims', function () {
   })
 
   describe('empty values', function () {
-    it('should not filter-out null values if its novalueValue or somevalueValue', function (done) {
+    it('should not filter-out empty values if given a placeholder value', function (done) {
       simplifyPropertyClaims(emptyValues.claims.P3984).length.should.equal(1)
       simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-' }).length.should.equal(2)
       simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: null }).length.should.equal(2)
@@ -197,15 +197,47 @@ describe('simplifyPropertyClaims', function () {
       simplifyPropertyClaims(emptyValues.claims.P3984, { somevalueValue: null }).length.should.equal(2)
       simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: null, somevalueValue: null }).length.should.equal(3)
       simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-', somevalueValue: '?' }).length.should.equal(3)
+      simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-', somevalueValue: '?' }).should.deepEqual([ '-', '?', 'bacasable' ])
       done()
     })
-    it('should return rich values for null values if requested', function (done) {
-      simplifyPropertyClaims(emptyValues.claims.P3984, { keepQualifiers: true }).length.should.equal(3)
-      simplifyPropertyClaims(emptyValues.claims.P3984, { keepReferences: true }).length.should.equal(3)
-      simplifyPropertyClaims(emptyValues.claims.P3984, { keepIds: true }).length.should.equal(3)
-      simplifyPropertyClaims(emptyValues.claims.P3984, { keepTypes: true }).length.should.equal(3)
+
+    it('should not filter-out empty values if given requested as object values', function (done) {
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepQualifiers: true }).should.deepEqual([
+        { value: undefined, qualifiers: {} },
+        { value: undefined, qualifiers: {} },
+        { value: 'bacasable', qualifiers: {} }
+      ])
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepReferences: true }).should.deepEqual([
+        { value: undefined, references: [] },
+        { value: undefined, references: [] },
+        { value: 'bacasable', references: [] }
+      ])
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepIds: true }).should.deepEqual([
+        { value: undefined, id: 'Q4115189$c973aadc-48d3-5ac2-45fc-9f34a51ebdf6' },
+        { value: undefined, id: 'Q4115189$db1940f1-41bd-ad24-8fbc-20bc6465a35f' },
+        { value: 'bacasable', id: 'Q4115189$5c85ec5e-48f5-716d-8944-c4364693e406' }
+      ])
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepTypes: true }).should.deepEqual([
+        { value: undefined, type: 'external-id' },
+        { value: undefined, type: 'external-id' },
+        { value: 'bacasable', type: 'external-id' }
+      ])
       done()
     })
+  })
+
+  it('should use the placeholder value for empty values in object values', function (done) {
+    simplifyPropertyClaims(emptyValues.claims.P3984, {
+      keepQualifiers: true,
+      novalueValue: '-',
+      somevalueValue: '?'
+    })
+    .should.deepEqual([
+      { value: '-', qualifiers: {} },
+      { value: '?', qualifiers: {} },
+      { value: 'bacasable', qualifiers: {} }
+    ])
+    done()
   })
 })
 
@@ -436,6 +468,7 @@ describe('simplifyClaim', function () {
       simplifyClaim(noValueClaim, { novalueValue: '' }).should.equal('')
       done()
     })
+
     it('should return the desired somevalueValue', function (done) {
       const someValueClaim = emptyValues.claims.P3984[1]
       should(simplifyClaim(someValueClaim)).not.be.ok()
@@ -443,11 +476,13 @@ describe('simplifyClaim', function () {
       simplifyClaim(someValueClaim, { somevalueValue: '' }).should.equal('')
       done()
     })
+
     it('should accept null as a possible value', function (done) {
       const noValueClaim = emptyValues.claims.P3984[0]
       should(simplifyClaim(noValueClaim, { novalueValue: null }) === null).be.true()
       done()
     })
+
     it('should return rich values for null values if requested', function (done) {
       simplifyClaim(emptyValues.claims.P3984[0], { keepQualifiers: true }).should.have.property('qualifiers')
       simplifyClaim(emptyValues.claims.P3984[0], { keepReferences: true }).should.have.property('references')
