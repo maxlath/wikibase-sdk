@@ -1,6 +1,6 @@
 {
   "name": "wikidata-sdk",
-  "version": "5.16.1",
+  "version": "5.16.2",
   "homepage": "https://github.com/maxlath/wikidata-sdk",
   "authors": [
     "maxlath <k@maxlath.eu>"
