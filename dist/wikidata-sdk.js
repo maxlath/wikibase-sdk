@@ -210,7 +210,8 @@ module.exports = {
 },{"./helpers":1}],3:[function(require,module,exports){
 'use strict';
 
-var simplifyEntity = require('./simplify_entity');
+var _require = require('./simplify_entity'),
+    simplifyEntity = _require.simplifyEntity;
 
 module.exports = {
   wd: {
@@ -345,24 +346,25 @@ var simplifyClaim = function simplifyClaim(claim) {
   var mainsnak = claim.mainsnak;
 
 
-  var datatype, datavalue, isQualifierSnak, isReferenceSnak;
+  var value, datatype, datavalue, snaktype, isQualifierSnak, isReferenceSnak;
   if (mainsnak) {
     datatype = mainsnak.datatype;
     datavalue = mainsnak.datavalue;
+    snaktype = mainsnak.snaktype;
   } else {
     // Qualifiers have no mainsnak, and define datatype, datavalue on claim
     datavalue = claim.datavalue;
     datatype = claim.datatype;
+    snaktype = claim.snaktype;
     // Duck typing the sub-snak type
     if (claim.hash) isQualifierSnak = true;else isReferenceSnak = true;
   }
 
-  if (!datavalue) {
-    var snaktype = isQualifierSnak || isReferenceSnak ? claim.snaktype : mainsnak.snaktype;
-    if (snaktype === 'somevalue') return options.somevalueValue;else if (snaktype === 'novalue') return options.novalueValue;else throw new Error('no datavalue or special snaktype found');
+  if (datavalue) {
+    value = parseClaim(datatype, datavalue, options, claim.id);
+  } else {
+    if (snaktype === 'somevalue') value = options.somevalueValue;else if (snaktype === 'novalue') value = options.novalueValue;else throw new Error('no datavalue or special snaktype found');
   }
-
-  var value = parseClaim(datatype, datavalue, options, claim.id);
 
   // Qualifiers should not attempt to keep sub-qualifiers or references
   if (isQualifierSnak) {
@@ -534,13 +536,15 @@ var aggregateValues = function aggregateValues(sitelinks, addUrl) {
 'use strict';
 
 module.exports = function (input) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   if (typeof input === 'string') input = JSON.parse(input);
 
   var vars = input.head.vars;
 
   var results = input.results.bindings;
 
-  if (vars.length === 1) {
+  if (vars.length === 1 && options.minimize === true) {
     var varName = vars[0];
     return results.map(function (result) {
       return parseValue(result[varName]);
