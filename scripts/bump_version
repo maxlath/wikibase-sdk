@@ -1,12 +1,14 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-[ -z $1 ] && echo "missing version type: major, minor, or patch" && exit 1
+set -e
+
+[[ "$1" == "" ]] && echo "missing version type: major, minor, or patch" && exit 1
 
 # exit if npm version returned nothing on stdout
 echo "npm version $1"
 npm version $1
 
-tag=$(cat package.json |jd version |sed -e "s/'//g" |sed -e "s/^/v/")
+tag=$(cat package.json | jd version | sed -e "s/'//g" | sed -e "s/^/v/")
 echo "version: $tag"
 
 echo "updating bower..."

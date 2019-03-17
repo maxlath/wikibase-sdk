@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 docs_with_doctoc=$(grep -r 'Summary' docs | sed 's/:.*//')
 doctoc README.md $docs_with_doctoc
 
