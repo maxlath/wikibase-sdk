@@ -4,6 +4,7 @@ To get JSON results from a SPARQL query you can [make a HTTP request to https://
 ```js
 const url = wdk.sparqlQuery(SPARQL)
 // request the generated URL with your favorite HTTP request library
+request({ method: 'GET', url })
 ```
 You can then simplify the response using [`wdk.simplifySparqlResults`](simplify_sparql_results.md).
 
@@ -28,3 +29,10 @@ Querying this url should return a big collection of objects with `work` and `dat
 
 ### Pre-baked queries
 * [Get entities reverse claims](get_entities_reverse_claims.md)
+
+### POST request
+If the generated request URL gets too long, you can make a POST request instead
+```js
+const [ url, body ]  = wdk.sparqlQuery(sparql).split('?')
+request({ method: 'POST', url, body })
+```
