@@ -64,18 +64,27 @@ describe('helpers', function () {
       wikidataTimeToISOString('-34000-00-00T00:00:00Z')
       .should.equal('-034000-01-01T00:00:00.000Z')
 
+      wikidataTimeToISOString('+34000-00-00T00:00:00Z')
+      .should.equal('+034000-01-01T00:00:00.000Z')
+
       done()
     })
 
     it('should return a valid time for possible invalid dates', function (done) {
       wikidataTimeToISOString('+1953-00-00T00:00:00Z')
       .should.equal('1953-01-01T00:00:00.000Z')
+
+      wikidataTimeToISOString('+1953-11-00T00:00:00Z')
+      .should.equal('1953-11-01T00:00:00.000Z')
       done()
     })
 
     it('should return a valid time even for possible invalid negative date', function (done) {
       wikidataTimeToISOString('-1953-00-00T00:00:00Z')
       .should.equal('-001953-01-01T00:00:00.000Z')
+
+      wikidataTimeToISOString('-1953-11-00T00:00:00Z')
+      .should.equal('-001953-11-01T00:00:00.000Z')
       done()
     })
 
@@ -83,8 +92,23 @@ describe('helpers', function () {
       wikidataTimeToISOString('-13798000000-00-00T00:00:00Z')
       .should.equal('-13798000000-01-01T00:00:00Z')
 
+      wikidataTimeToISOString('-13798000000-02-00T00:00:00Z')
+      .should.equal('-13798000000-02-01T00:00:00Z')
+
       wikidataTimeToISOString('-13798000000-02-07T15:00:00Z')
       .should.equal('-13798000000-02-07T15:00:00Z')
+      done()
+    })
+
+    it('should return a valid time for dates far in the future', function (done) {
+      wikidataTimeToISOString('+13798000000-00-00T00:00:00Z')
+      .should.equal('+13798000000-01-01T00:00:00Z')
+
+      wikidataTimeToISOString('+13798000000-02-00T00:00:00Z')
+      .should.equal('+13798000000-02-01T00:00:00Z')
+
+      wikidataTimeToISOString('+13798000000-02-07T15:00:00Z')
+      .should.equal('+13798000000-02-07T15:00:00Z')
       done()
     })
 
