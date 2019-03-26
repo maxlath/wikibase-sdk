@@ -42,6 +42,10 @@ describe('helpers', function () {
     it('should accept a value object', function (done) {
       wikidataTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal(-3160944000000)
+      wikidataTimeToEpochTime(Q970917.claims.P569[1].mainsnak.datavalue.value)
+      .should.equal(657417600000)
+      wikidataTimeToEpochTime(Q970917.claims.P569[2].mainsnak.datavalue.value)
+      .should.equal(631152000000)
       done()
     })
   })
@@ -87,6 +91,10 @@ describe('helpers', function () {
     it('should accept a value object', function (done) {
       wikidataTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal('1869-11-01T00:00:00.000Z')
+      wikidataTimeToISOString(Q970917.claims.P569[1].mainsnak.datavalue.value)
+      .should.equal('1990-11-01T00:00:00.000Z')
+      wikidataTimeToISOString(Q970917.claims.P569[2].mainsnak.datavalue.value)
+      .should.equal('1990-01-01T00:00:00.000Z')
       done()
     })
   })
