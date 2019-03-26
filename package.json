@@ -3,8 +3,14 @@
   "version": "6.0.1",
   "description": "A javascript tool-suite to query Wikidata and simplify its results",
   "main": "lib/index.js",
+  "files": [
+    "dist",
+    "lib"
+  ],
   "directories": {
-    "test": "tests"
+    "lib": "lib",
+    "doc": "docs",
+    "test": "test"
   },
   "scripts": {
     "test": "mocha",
