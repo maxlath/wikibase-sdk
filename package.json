@@ -4,7 +4,9 @@
   "description": "A javascript tool-suite to query Wikidata and simplify its results",
   "main": "lib/index.js",
   "directories": {
-    "test": "tests"
+    "lib": "lib",
+    "doc": "docs",
+    "test": "test"
   },
   "scripts": {
     "test": "mocha",
