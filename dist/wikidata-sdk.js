@@ -886,6 +886,8 @@ module.exports = ['aa', 'ab', 'af', 'ak', 'als', 'am', 'ang', 'an', 'ar', 'ast',
 },{}],11:[function(require,module,exports){
 'use strict';
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = function (wikidataTime) {
@@ -895,14 +897,20 @@ module.exports = function (wikidataTime) {
   }
 
   var sign = wikidataTime[0];
-  var rest = wikidataTime.slice(1);
-  var date = fullDateData(sign, rest);
 
-  if (date.toString() === 'Invalid Date') {
-    return parseInvalideDate(sign, rest);
-  } else {
-    return date;
-  }
+  var _wikidataTime$slice$s = wikidataTime.slice(1).split('T'),
+      _wikidataTime$slice$s2 = _slicedToArray(_wikidataTime$slice$s, 2),
+      yearMonthDay = _wikidataTime$slice$s2[0],
+      withinDay = _wikidataTime$slice$s2[1];
+
+  // Wikidata generates invalid ISO dates to indicate precision
+  // ex: +1990-00-00T00:00:00Z to indicate 1990 with year precision
+
+
+  yearMonthDay = yearMonthDay.replace(/-00/g, '-01');
+  var rest = yearMonthDay + 'T' + withinDay;
+
+  return fullDateData(sign, rest);
 };
 
 var fullDateData = function fullDateData(sign, rest) {
@@ -926,14 +934,6 @@ var negativeDate = function negativeDate(rest) {
     date = '-' + rest;
   }
   return new Date(date);
-};
-
-var parseInvalideDate = function parseInvalideDate(sign, rest) {
-  // This is probably a date of unsuffisient precision
-  // such as 1953-00-00T00:00:00Z, thus invalid
-  // It should at least have a year, so let's fallback to ${year}-01-01
-  var year = rest.split('T')[0].split('-')[0];
-  return fullDateData(sign, year);
 };
 
 },{}],12:[function(require,module,exports){
