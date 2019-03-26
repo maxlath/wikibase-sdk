@@ -201,7 +201,26 @@ describe('simplifyPropertyClaims', function () {
       done()
     })
 
-    it('should not filter-out empty values if given requested as object values', function (done) {
+    it('should keep snaktype if requested', function (done) {
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepSnaktypes: true }).should.deepEqual([
+        { value: undefined, snaktype: 'novalue' },
+        { value: undefined, snaktype: 'somevalue' },
+        { value: 'bacasable', snaktype: 'value' }
+      ])
+      simplifyPropertyClaims(emptyValues.claims.P3984, {
+        keepSnaktypes: true,
+        novalueValue: '-',
+        somevalueValue: '?'
+      })
+      .should.deepEqual([
+        { value: '-', snaktype: 'novalue' },
+        { value: '?', snaktype: 'somevalue' },
+        { value: 'bacasable', snaktype: 'value' }
+      ])
+      done()
+    })
+
+    it('should not filter-out empty values if requested as object values', function (done) {
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepQualifiers: true }).should.deepEqual([
         { value: undefined, qualifiers: {} },
         { value: undefined, qualifiers: {} },

@@ -13,9 +13,9 @@
 - [simplify.claims](#simplifyclaims)
 - [simplify.propertyClaims](#simplifypropertyclaims)
 - [simplify.claim](#simplifyclaim)
-- [simplify.qualifier](#simplifyqualifier)
-- [simplify.propertyQualifiers](#simplifypropertyqualifiers)
 - [simplify.qualifiers](#simplifyqualifiers)
+- [simplify.propertyQualifiers](#simplifypropertyqualifiers)
+- [simplify.qualifier](#simplifyqualifier)
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep rich values](#keep-rich-values)
@@ -25,6 +25,10 @@
   - [Keep ids](#keep-ids)
   - [Keep hashes](#keep-hashes)
   - [Keep non-truthy statements](#keep-non-truthy-statements)
+  - [Empty values](#empty-values)
+    - [Customize novalue value](#customize-novalue-value)
+    - [Customize somevalue value](#customize-somevalue-value)
+    - [Keep snaktypes](#keep-snaktypes)
   - [Change time parser](#change-time-parser)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -325,6 +329,31 @@ By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Inde
 ```js
 wdk.simplify.claims(entity.claims, { keepNonTruthy: true })
 wdk.simplify.propertyClaims(entity.claims.P50, { keepNonTruthy: true })
+```
+
+### Empty values
+
+#### Customize novalue value
+> `novalueValue`
+```js
+wdk.simplify.claims(claimWithNoValue, { novalueValue: '-' })
+// => '-'
+```
+
+#### Customize somevalue value
+> `somevalueValue`
+```js
+wdk.simplify.claims(claimWithSomeValue, { somevalueValue: '?' })
+// => '?'
+```
+
+#### Keep snaktypes
+> `keepSnaktypes`
+```js
+wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true })
+// => { value: undefined, snaktype: 'somevalue' }
+wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '?' })
+// => { value: '?', snaktype: 'somevalue' }
 ```
 
 ### Change time parser
