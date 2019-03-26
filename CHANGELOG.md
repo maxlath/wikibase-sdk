@@ -1,6 +1,18 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.1.0 - 2019-03-28
+* Added Typescript types ([6d0ae70](https://github.com/maxlath/wikidata-sdk/commit/bb22a6897593b0041c159b12e2ed5fa681702074)), thanks **[@EdJoPaTo](https://github.com/EdJoPaTo)** and **[@noinkling](https://github.com/noinkling)**!
+* Added new options to `simplify.claims`:
+  * to deal with claims with special snaktypes:
+    * [customize somevalue value](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#customize-somevalue-value)
+    * [customize novalue value](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#customize-novalue-value)
+    * [keep snaktypes](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-snaktypes)
+  * to deal with ranks:
+    * [keep ranks](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-ranks)
+  * to activate all the `keep` options at once:
+    * [keep all](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-all)
+
 ## 6.0.0 - 2019-03-17
 **BREAKING CHANGE**
 * swapping `wdk.simplify.qualifier` and `wdk.simplify.qualifiers` that were mistakenly inverted (fixed [#47](https://github.com/maxlath/wikidata-sdk/issues/47)) ((([ed0e7a4](https://github.com/maxlath/wikidata-sdk/commit/ed0e7a4))))
@@ -28,7 +40,7 @@
 
 ## 5.10.0 - 2018-05-14
 * Added new option to `simplify.claims`:
-  * [keep types](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-types) (thanks @moshest!)
+  * [keep types](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#keep-types) (thanks **[@moshest](https://github.com/moshest)**!)
 
 ## 5.9.0 - 2018-02-26
 * [`Wikidata Time converters`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidata-time-converters) now also accept a time value object to take in account the precision, which only makes a difference in the result for [`wikidataTimeToSimpleDay`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#wikidataTimeToSimpleDay)
