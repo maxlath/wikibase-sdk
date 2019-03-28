@@ -156,20 +156,6 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
-  it('should return only truthy statements by default', function (done) {
-    const simplified = simplifyPropertyClaims(Q4115189.claims.P135)
-    simplified.length.should.equal(1)
-    simplified[0].should.equal('Q2044250')
-    done()
-  })
-
-  it('should also return non-truthy statements if requested', function (done) {
-    const options = { keepNonTruthy: true }
-    const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
-    simplified.length.should.equal(3)
-    done()
-  })
-
   it('construct entity ids for old dump format', function (done) {
     const simplified = simplifyPropertyClaims(oldClaimFormat)
     simplified.length.should.equal(2)
@@ -186,6 +172,36 @@ describe('simplifyPropertyClaims', function () {
     simplified2.should.be.an.Array()
     simplified2.length.should.equal(0)
     done()
+  })
+
+  describe('ranks', function () {
+    it('should return only truthy statements by default', function (done) {
+      const simplified = simplifyPropertyClaims(Q4115189.claims.P135)
+      simplified.length.should.equal(1)
+      simplified[0].should.equal('Q2044250')
+      done()
+    })
+
+    it('should also return non-truthy statements if requested', function (done) {
+      const options = { keepNonTruthy: true }
+      const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
+      simplified.length.should.equal(3)
+      done()
+    })
+
+    it('should keep ranks', function (done) {
+      simplifyPropertyClaims(Q4115189.claims.P135, { keepRanks: true })
+      .should.deepEqual([
+        { value: 'Q2044250', rank: 'preferred' }
+      ])
+      simplifyPropertyClaims(Q4115189.claims.P135, { keepRanks: true, keepNonTruthy: true })
+      .should.deepEqual([
+        { value: 'Q213454', rank: 'deprecated' },
+        { value: 'Q2044250', rank: 'preferred' },
+        { value: 'Q5843', rank: 'normal' }
+      ])
+      done()
+    })
   })
 
   describe('empty values', function () {

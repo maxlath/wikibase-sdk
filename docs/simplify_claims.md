@@ -24,7 +24,9 @@
   - [Keep references](#keep-references)
   - [Keep ids](#keep-ids)
   - [Keep hashes](#keep-hashes)
-  - [Keep non-truthy statements](#keep-non-truthy-statements)
+  - [ranks](#ranks)
+    - [Keep non-truthy statements](#keep-non-truthy-statements)
+    - [Keep ranks](#keep-ranks)
   - [Empty values](#empty-values)
     - [Customize novalue value](#customize-novalue-value)
     - [Customize somevalue value](#customize-somevalue-value)
@@ -322,13 +324,37 @@ Results would then look something like
 }
 ```
 
-### Keep non-truthy statements
+### ranks
+#### Keep non-truthy statements
 > `keepNonTruthy`
 
-By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) are ignored. This can be disable with this option.
+By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) are filtered-out (keeping only claims of rank `preferred` if any, otherwise only claims of rank `normal`). This can be disable with this option.
 ```js
 wdk.simplify.claims(entity.claims, { keepNonTruthy: true })
-wdk.simplify.propertyClaims(entity.claims.P50, { keepNonTruthy: true })
+wdk.simplify.propertyClaims(entity.claims.P1082, { keepNonTruthy: true })
+```
+
+#### Keep ranks
+> `keepRanks`
+```js
+wdk.simplify.claims(entity.claims, { keepRanks: true })
+wdk.simplify.propertyClaims(entity.claims.P1082, { keepRanks: true })
+wdk.simplify.claim(entity.claims.P1082[0], { keepRanks: true })
+```
+This is mostly useful in combination with `keepNonTruthy`. Example: a city might have several population claims, with only the most recent having a `preferred` rank.
+
+```js
+// By default, the simplification only keep the claim of rank 'preferred'
+wdk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true })
+// => [ { value: 100000, rank: 'preferred' } ]
+
+// But the other claims can also be returned thank to 'keepNonTruthy'
+wdk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy: true })
+// => [
+//       { value: 100000, rank: 'preferred' },
+//       { value: 90000, rank: 'normal' },
+//       { value: 80000, rank: 'normal' }
+//    ]
 ```
 
 ### Empty values
