@@ -3,6 +3,8 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var toDateObject = require('./wikidata_time_to_date_object');
 
 var helpers = {};
@@ -41,7 +43,17 @@ var bestEffort = function bestEffort(fn) {
       return fn(value);
     } catch (err) {
       value = value.time || value;
-      return value.replace('-00-00', '-01-01');
+
+      var sign = value[0];
+
+      var _value$slice$split = value.slice(1).split('T'),
+          _value$slice$split2 = _slicedToArray(_value$slice$split, 2),
+          yearMonthDay = _value$slice$split2[0],
+          withinDay = _value$slice$split2[1];
+
+      yearMonthDay = yearMonthDay.replace(/-00/g, '-01');
+
+      return '' + sign + yearMonthDay + 'T' + withinDay;
     }
   };
 };
@@ -334,16 +346,22 @@ var simplifyClaim = function simplifyClaim(claim) {
   }
 
   options = parseOptions(options);
-  var _options = options,
-      keepQualifiers = _options.keepQualifiers,
-      keepReferences = _options.keepReferences,
-      keepIds = _options.keepIds,
-      keepHashes = _options.keepHashes,
-      keepTypes = _options.keepTypes;
+
+  var _parseKeepOptions = parseKeepOptions(options),
+      keepQualifiers = _parseKeepOptions.keepQualifiers,
+      keepReferences = _parseKeepOptions.keepReferences,
+      keepIds = _parseKeepOptions.keepIds,
+      keepHashes = _parseKeepOptions.keepHashes,
+      keepTypes = _parseKeepOptions.keepTypes,
+      keepSnaktypes = _parseKeepOptions.keepSnaktypes,
+      keepRanks = _parseKeepOptions.keepRanks;
+
   // tries to replace wikidata deep claim object by a simple value
   // e.g. a string, an entity Qid or an epoch time number
 
-  var mainsnak = claim.mainsnak;
+
+  var mainsnak = claim.mainsnak,
+      rank = claim.rank;
 
 
   var value, datatype, datavalue, snaktype, isQualifierSnak, isReferenceSnak;
@@ -386,15 +404,19 @@ var simplifyClaim = function simplifyClaim(claim) {
 
   // No need to test keepHashes as it has no effect if neither
   // keepQualifiers or keepReferences is true
-  if (!(keepQualifiers || keepReferences || keepIds || keepTypes)) return value;
+  if (!(keepQualifiers || keepReferences || keepIds || keepTypes || keepSnaktypes || keepRanks)) {
+    return value;
+  }
 
   // When keeping qualifiers or references, the value becomes an object
   // instead of a direct value
   var richValue = { value: value };
 
-  if (keepTypes) {
-    richValue.type = datatype;
-  }
+  if (keepTypes) richValue.type = datatype;
+
+  if (keepSnaktypes) richValue.snaktype = snaktype;
+
+  if (keepRanks) richValue.rank = rank;
 
   var subSnaksOptions = getSubSnakOptions(options);
   subSnaksOptions.keepHashes = keepHashes;
@@ -423,10 +445,10 @@ var parseOptions = function parseOptions(options) {
 
   // Legacy interface
 
-  var _options2 = _slicedToArray(options, 3),
-      entityPrefix = _options2[0],
-      propertyPrefix = _options2[1],
-      keepQualifiers = _options2[2];
+  var _options = _slicedToArray(options, 3),
+      entityPrefix = _options[0],
+      propertyPrefix = _options[1],
+      keepQualifiers = _options[2];
 
   return { entityPrefix: entityPrefix, propertyPrefix: propertyPrefix, keepQualifiers: keepQualifiers };
 };
@@ -442,6 +464,16 @@ var simplifyPropertyQualifiers = function simplifyPropertyQualifiers(propClaims,
 // Using a new object so that the original options object isn't modified
 var getSubSnakOptions = function getSubSnakOptions(options) {
   return Object.assign({}, options, { areSubSnaks: true });
+};
+
+var keepOptions = ['keepQualifiers', 'keepReferences', 'keepIds', 'keepHashes', 'keepTypes', 'keepSnaktypes', 'keepRanks'];
+var parseKeepOptions = function parseKeepOptions(options) {
+  if (options.keepAll) {
+    keepOptions.forEach(function (optionName) {
+      if (options[optionName] == null) options[optionName] = true;
+    });
+  }
+  return options;
 };
 
 module.exports = {
@@ -914,24 +946,24 @@ module.exports = function (wikidataTime) {
 };
 
 var fullDateData = function fullDateData(sign, rest) {
-  return sign === '-' ? negativeDate(rest) : positiveDate(rest);
+  var year = rest.split('-')[0];
+  var needsExpandedYear = sign === '-' || year.length > 4;
+
+  return needsExpandedYear ? expandedYearDate(sign, rest, year) : new Date(rest);
 };
 
-var positiveDate = function positiveDate(rest) {
-  return new Date(rest);
-};
-var negativeDate = function negativeDate(rest) {
-  var year = rest.split('-')[0];
+var expandedYearDate = function expandedYearDate(sign, rest, year) {
   var date;
-  // Using ISO8601 expanded notation for negative years: adding 2 leading zeros
+  // Using ISO8601 expanded notation for negative years or positive
+  // years with more than 4 digits: adding up to 2 leading zeros
   // when needed. Can't find the documentation again, but testing
   // with `new Date(date)` gives a good clue of the implementation
   if (year.length === 4) {
-    date = '-00' + rest;
+    date = sign + '00' + rest;
   } else if (year.length === 5) {
-    date = '-0' + rest;
+    date = sign + '0' + rest;
   } else {
-    date = '-' + rest;
+    date = sign + rest;
   }
   return new Date(date);
 };
