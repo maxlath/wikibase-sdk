@@ -156,20 +156,6 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
-  it('should return only truthy statements by default', function (done) {
-    const simplified = simplifyPropertyClaims(Q4115189.claims.P135)
-    simplified.length.should.equal(1)
-    simplified[0].should.equal('Q2044250')
-    done()
-  })
-
-  it('should also return non-truthy statements if requested', function (done) {
-    const options = { keepNonTruthy: true }
-    const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
-    simplified.length.should.equal(3)
-    done()
-  })
-
   it('construct entity ids for old dump format', function (done) {
     const simplified = simplifyPropertyClaims(oldClaimFormat)
     simplified.length.should.equal(2)
@@ -188,6 +174,36 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
+  describe('ranks', function () {
+    it('should return only truthy statements by default', function (done) {
+      const simplified = simplifyPropertyClaims(Q4115189.claims.P135)
+      simplified.length.should.equal(1)
+      simplified[0].should.equal('Q2044250')
+      done()
+    })
+
+    it('should also return non-truthy statements if requested', function (done) {
+      const options = { keepNonTruthy: true }
+      const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
+      simplified.length.should.equal(3)
+      done()
+    })
+
+    it('should keep ranks', function (done) {
+      simplifyPropertyClaims(Q4115189.claims.P135, { keepRanks: true })
+      .should.deepEqual([
+        { value: 'Q2044250', rank: 'preferred' }
+      ])
+      simplifyPropertyClaims(Q4115189.claims.P135, { keepRanks: true, keepNonTruthy: true })
+      .should.deepEqual([
+        { value: 'Q213454', rank: 'deprecated' },
+        { value: 'Q2044250', rank: 'preferred' },
+        { value: 'Q5843', rank: 'normal' }
+      ])
+      done()
+    })
+  })
+
   describe('empty values', function () {
     it('should not filter-out empty values if given a placeholder value', function (done) {
       simplifyPropertyClaims(emptyValues.claims.P3984).length.should.equal(1)
@@ -201,7 +217,26 @@ describe('simplifyPropertyClaims', function () {
       done()
     })
 
-    it('should not filter-out empty values if given requested as object values', function (done) {
+    it('should keep snaktype if requested', function (done) {
+      simplifyPropertyClaims(emptyValues.claims.P3984, { keepSnaktypes: true }).should.deepEqual([
+        { value: undefined, snaktype: 'novalue' },
+        { value: undefined, snaktype: 'somevalue' },
+        { value: 'bacasable', snaktype: 'value' }
+      ])
+      simplifyPropertyClaims(emptyValues.claims.P3984, {
+        keepSnaktypes: true,
+        novalueValue: '-',
+        somevalueValue: '?'
+      })
+      .should.deepEqual([
+        { value: '-', snaktype: 'novalue' },
+        { value: '?', snaktype: 'somevalue' },
+        { value: 'bacasable', snaktype: 'value' }
+      ])
+      done()
+    })
+
+    it('should not filter-out empty values if requested as object values', function (done) {
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepQualifiers: true }).should.deepEqual([
         { value: undefined, qualifiers: {} },
         { value: undefined, qualifiers: {} },
@@ -488,6 +523,36 @@ describe('simplifyClaim', function () {
       simplifyClaim(emptyValues.claims.P3984[0], { keepReferences: true }).should.have.property('references')
       simplifyClaim(emptyValues.claims.P3984[0], { keepIds: true }).should.have.property('id')
       simplifyClaim(emptyValues.claims.P3984[0], { keepTypes: true }).should.have.property('type')
+      done()
+    })
+  })
+
+  describe('keep all', function () {
+    it('should activate all keep options', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P214[0], { keepAll: true })
+      simplified.value.should.be.a.String()
+      simplified.id.should.be.a.String()
+      simplified.type.should.be.a.String()
+      simplified.rank.should.be.a.String()
+      simplified.snaktype.should.be.a.String()
+      simplified.qualifiers.should.be.an.Object()
+      simplified.references.should.be.an.Array()
+      simplified.references[0].should.be.an.Object()
+      simplified.references[0].hash.should.be.a.String()
+      done()
+    })
+
+    it('should be overriden by other flags', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P214[0], { keepAll: true, keepTypes: false })
+      simplified.value.should.be.a.String()
+      simplified.id.should.be.a.String()
+      should(simplified.type).not.be.ok()
+      simplified.rank.should.be.a.String()
+      simplified.snaktype.should.be.a.String()
+      simplified.qualifiers.should.be.an.Object()
+      simplified.references.should.be.an.Array()
+      simplified.references[0].should.be.an.Object()
+      simplified.references[0].hash.should.be.a.String()
       done()
     })
   })

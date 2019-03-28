@@ -13,9 +13,9 @@
 - [simplify.claims](#simplifyclaims)
 - [simplify.propertyClaims](#simplifypropertyclaims)
 - [simplify.claim](#simplifyclaim)
-- [simplify.qualifier](#simplifyqualifier)
-- [simplify.propertyQualifiers](#simplifypropertyqualifiers)
 - [simplify.qualifiers](#simplifyqualifiers)
+- [simplify.propertyQualifiers](#simplifypropertyqualifiers)
+- [simplify.qualifier](#simplifyqualifier)
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep rich values](#keep-rich-values)
@@ -24,7 +24,13 @@
   - [Keep references](#keep-references)
   - [Keep ids](#keep-ids)
   - [Keep hashes](#keep-hashes)
-  - [Keep non-truthy statements](#keep-non-truthy-statements)
+  - [ranks](#ranks)
+    - [Keep non-truthy statements](#keep-non-truthy-statements)
+    - [Keep ranks](#keep-ranks)
+  - [Empty values](#empty-values)
+    - [Customize novalue value](#customize-novalue-value)
+    - [Customize somevalue value](#customize-somevalue-value)
+    - [Keep snaktypes](#keep-snaktypes)
   - [Change time parser](#change-time-parser)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -318,13 +324,75 @@ Results would then look something like
 }
 ```
 
-### Keep non-truthy statements
+### ranks
+#### Keep non-truthy statements
 > `keepNonTruthy`
 
-By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) are ignored. This can be disable with this option.
+By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) are filtered-out (keeping only claims of rank `preferred` if any, otherwise only claims of rank `normal`). This can be disable with this option.
 ```js
 wdk.simplify.claims(entity.claims, { keepNonTruthy: true })
-wdk.simplify.propertyClaims(entity.claims.P50, { keepNonTruthy: true })
+wdk.simplify.propertyClaims(entity.claims.P1082, { keepNonTruthy: true })
+```
+
+#### Keep ranks
+> `keepRanks`
+```js
+wdk.simplify.claims(entity.claims, { keepRanks: true })
+wdk.simplify.propertyClaims(entity.claims.P1082, { keepRanks: true })
+wdk.simplify.claim(entity.claims.P1082[0], { keepRanks: true })
+```
+This is mostly useful in combination with `keepNonTruthy`. Example: a city might have several population claims, with only the most recent having a `preferred` rank.
+
+```js
+// By default, the simplification only keep the claim of rank 'preferred'
+wdk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true })
+// => [ { value: 100000, rank: 'preferred' } ]
+
+// But the other claims can also be returned thank to 'keepNonTruthy'
+wdk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy: true })
+// => [
+//       { value: 100000, rank: 'preferred' },
+//       { value: 90000, rank: 'normal' },
+//       { value: 80000, rank: 'normal' }
+//    ]
+```
+
+### Empty values
+
+#### Customize novalue value
+> `novalueValue`
+```js
+wdk.simplify.claims(claimWithNoValue, { novalueValue: '-' })
+// => '-'
+```
+
+#### Customize somevalue value
+> `somevalueValue`
+```js
+wdk.simplify.claims(claimWithSomeValue, { somevalueValue: '?' })
+// => '?'
+```
+
+#### Keep snaktypes
+> `keepSnaktypes`
+```js
+wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true })
+// => { value: undefined, snaktype: 'somevalue' }
+wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '?' })
+// => { value: '?', snaktype: 'somevalue' }
+```
+
+### Keep all
+> `keepAll`
+Activates all the `keep` options detailed above:
+```js
+wdk.simplify.claims(claims, { keepAll: true })
+// Is equivalent to
+wdk.simplify.claims(claims, { keepQualifiers: true, keepReferences: true, keepIds: true, keepHashes: true, keepTypes: true, keepSnaktypes: true, keepRanks: true })
+```
+Those options can then be disabled one by one
+```js
+wdk.simplify.claims(claims, { keepAll: true, keepTypes: false })
 ```
 
 ### Change time parser
