@@ -541,6 +541,20 @@ describe('simplifyClaim', function () {
       simplified.references[0].hash.should.be.a.String()
       done()
     })
+
+    it('should be overriden by other flags', function (done) {
+      const simplified = simplifyClaim(Q2112.claims.P214[0], { keepAll: true, keepTypes: false })
+      simplified.value.should.be.a.String()
+      simplified.id.should.be.a.String()
+      should(simplified.type).not.be.ok()
+      simplified.rank.should.be.a.String()
+      simplified.snaktype.should.be.a.String()
+      simplified.qualifiers.should.be.an.Object()
+      simplified.references.should.be.an.Array()
+      simplified.references[0].should.be.an.Object()
+      simplified.references[0].hash.should.be.a.String()
+      done()
+    })
   })
 })
 

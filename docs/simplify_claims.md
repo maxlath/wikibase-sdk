@@ -390,6 +390,10 @@ wdk.simplify.claims(claims, { keepAll: true })
 // Is equivalent to
 wdk.simplify.claims(claims, { keepQualifiers: true, keepReferences: true, keepIds: true, keepHashes: true, keepTypes: true, keepSnaktypes: true, keepRanks: true })
 ```
+Those options can then be disabled one by one
+```js
+wdk.simplify.claims(claims, { keepAll: true, keepTypes: false })
+```
 
 ### Change time parser
 
