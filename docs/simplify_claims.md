@@ -382,6 +382,15 @@ wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '
 // => { value: '?', snaktype: 'somevalue' }
 ```
 
+### Keep all
+> `keepAll`
+Activates all the `keep` options detailed above:
+```js
+wdk.simplify.claims(claims, { keepAll: true })
+// Is equivalent to
+wdk.simplify.claims(claims, { keepQualifiers: true, keepReferences: true, keepIds: true, keepHashes: true, keepTypes: true, keepSnaktypes: true, keepRanks: true })
+```
+
 ### Change time parser
 
 By default, `simplify.claims` functions use [`wikidataTimeToISOString`](general_helpers.md#wikidataTimeToISOString) to parse [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times).
