@@ -1,4 +1,4 @@
-require('should')
+const should = require('should')
 const qs = require('querystring')
 const getIds = require('../lib/queries/get_entities_from_sitelinks')
 
@@ -127,6 +127,20 @@ describe('wikidata getEntitiesFromSitelinks', function () {
     it('default to json', function (done) {
       const url = getIds('Hamburg')
       url.should.match(new RegExp('&format=json'))
+      done()
+    })
+  })
+
+  describe('redirects', function () {
+    it('should default to no redirects parameter', function (done) {
+      const url = getIds('Hamburg')
+      should(url.match('redirects')).not.be.ok()
+      done()
+    })
+
+    it('should add a redirects parameter if false', function (done) {
+      const url = getIds({ titles: 'Hamburg', redirects: false })
+      url.match('redirects=no').should.be.ok()
       done()
     })
   })
