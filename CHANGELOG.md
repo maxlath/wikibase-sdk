@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.2.0 - 2019-04-03
+* Allow to set the `redirects` parameter in [`getEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities#by-ids), [`getManyEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities#get-many-entities-by-id), and [`getEntitiesFromSitelinks`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities#by-other-wikimedia-projects-titles) functions
+
 ## 6.1.0 - 2019-03-28
 * Added Typescript types ([6d0ae70](https://github.com/maxlath/wikidata-sdk/commit/bb22a6897593b0041c159b12e2ed5fa681702074)), thanks **[@EdJoPaTo](https://github.com/EdJoPaTo)** and **[@noinkling](https://github.com/noinkling)**!
 * Added new options to `simplify.claims`:
@@ -15,8 +18,8 @@
 
 ## 6.0.0 - 2019-03-17
 **BREAKING CHANGE**
-* swapping `wdk.simplify.qualifier` and `wdk.simplify.qualifiers` that were mistakenly inverted (fixed [#47](https://github.com/maxlath/wikidata-sdk/issues/47)) ((([ed0e7a4](https://github.com/maxlath/wikidata-sdk/commit/ed0e7a4))))
-* Make [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) consistently outputs an array of objects, unless the option `minimize` is set to `true`, in which case direct, requests with a single variable will return an array of those variables values (([ddba9e2](https://github.com/maxlath/wikidata-sdk/commit/ddba9e2))). The easy migration from `v5.x.x` is to replace `wdk.simplifySparqlResults(results)` by `wdk.simplifySparqlResults(results, { minimize: true })` (This doesn't affect requests with several variables `SELECT`ed)
+* swapping `simplify.qualifier` and `simplify.qualifiers` that were mistakenly inverted (fixed [#47](https://github.com/maxlath/wikidata-sdk/issues/47)) ((([ed0e7a4](https://github.com/maxlath/wikidata-sdk/commit/ed0e7a4))))
+* Make [`simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) consistently outputs an array of objects, unless the option `minimize` is set to `true`, in which case direct, requests with a single variable will return an array of those variables values (([ddba9e2](https://github.com/maxlath/wikidata-sdk/commit/ddba9e2))). The easy migration from `v5.x.x` is to replace `simplifySparqlResults(results)` by `simplifySparqlResults(results, { minimize: true })` (This doesn't affect requests with several variables `SELECT`ed)
 
 ## 5.16.0 - 2019-03-13
 * [`searchEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/search_entities.md): accept a `type` parameter
@@ -29,7 +32,7 @@
 
 ## 5.13.0 - 2018-07-06
 * Added [`isGuid`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isguid) helper function
-* Make [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) format statement URIs as claims GUIDs
+* Make [`simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) format statement URIs as claims GUIDs
 
 ## 5.12.0 - 2018-06-27
 * Added [`truthyClaims`](`https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#truthyclaims`) and [`truthyPropertyClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#truthyPropertyClaims) functions
@@ -101,13 +104,13 @@
 
 ## 4.0.0 - 2016-09-09
 * Completly removed uses and references to wdq:
-  * BREAKING CHANGE: [getReverseClaims](https://github.com/maxlath/wikidata-sdk/blob/master/docs/#get-entities-reverse-claims) now returns a query to the SPARQL endpoint. Its result should thus be parsed with [`wdk.simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) instead of `wdk.parse.wdq.entities`. This parser was thus removed.
+  * BREAKING CHANGE: [`getReverseClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/#get-entities-reverse-claims) now returns a query to the SPARQL endpoint. Its result should thus be parsed with [`simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) instead of `wdk.parse.wdq.entities`. This parser was thus removed.
 
 ## 3.2.0 - 2016-06-06
-* Added [wdk.simplifySparqlResults](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md)
+* Added [`simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) function
 
 ## 3.1.0 - 2016-06-02
-* Added [wdk.getManyEntities](https://github.com/maxlath/wikidata-sdk/blob/master/docs/#get-many-entities-by-id)
+* Added [`getManyEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities#get-many-entities-by-id) function
 
 ## 3.0.0 - 2016-05-13
 * Extracting "bin" executables (qlabel, wikiqid) to there own modules: [wikidata-cli](https://github.com/maxlath/wikidata-cli). Bumping the major version as it could be considered a breaking change (despite the fact that those executables weren't really part of wikidata-sdk and that they were added very recently)
@@ -119,7 +122,7 @@
 * Added support for the uselang parameter in entities search
 
 ## 2.4.0 - 2016-04-15
-* Added [wdk.simplifyClaim](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#simplifyclaim), [wdk.simplifyPropertyClaims](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#simplifypropertyclaims)
+* Added [`simplifyClaim`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#simplifyclaim), [`simplifyPropertyClaims`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#simplifypropertyclaims)
 
 ## 2.3.0 - 2016-02-17
-* Added a SPARQL query url generator: [wdk.sparqlQuery](https://github.com/maxlath/wikidata-sdk/blob/master/docs/sparql_query.md)
+* Added a SPARQL query url generator: [`sparqlQuery`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/sparql_query.md)
