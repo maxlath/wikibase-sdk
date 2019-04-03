@@ -1029,7 +1029,7 @@ var _require = require('../utils/utils'),
     forceArray = _require.forceArray,
     shortLang = _require.shortLang;
 
-module.exports = function (ids, languages, props, format) {
+module.exports = function (ids, languages, props, format, redirects) {
   // Polymorphism: arguments can be passed as an object keys
   if (isPlainObject(ids)) {
     var _ids = ids;
@@ -1037,6 +1037,7 @@ module.exports = function (ids, languages, props, format) {
     languages = _ids.languages;
     props = _ids.props;
     format = _ids.format;
+    redirects = _ids.redirects;
   }
 
   format = format || 'json';
@@ -1061,6 +1062,8 @@ module.exports = function (ids, languages, props, format) {
     format: format
   };
 
+  if (redirects === false) query.redirects = 'no';
+
   if (languages) {
     languages = forceArray(languages).map(shortLang);
     query.languages = languages.join('|');
@@ -1081,7 +1084,7 @@ var _require = require('../utils/utils'),
     forceArray = _require.forceArray,
     shortLang = _require.shortLang;
 
-module.exports = function (titles, sites, languages, props, format) {
+module.exports = function (titles, sites, languages, props, format, redirects) {
   // polymorphism: arguments can be passed as an object keys
   if (isPlainObject(titles)) {
     // Not using destructuring assigment there as it messes with both babel and standard
@@ -1091,6 +1094,7 @@ module.exports = function (titles, sites, languages, props, format) {
     languages = params.languages;
     props = params.props;
     format = params.format;
+    redirects = params.redirects;
   }
 
   format = format || 'json';
@@ -1125,6 +1129,8 @@ module.exports = function (titles, sites, languages, props, format) {
 
   if (props && props.length > 0) query.props = props.join('|');
 
+  if (redirects === false) query.redirects = 'no';
+
   return buildUrl(query);
 };
 
@@ -1141,7 +1147,7 @@ var getEntities = require('./get_entities');
 var _require = require('../utils/utils'),
     isPlainObject = _require.isPlainObject;
 
-module.exports = function (ids, languages, props, format) {
+module.exports = function (ids, languages, props, format, redirects) {
   // Polymorphism: arguments can be passed as an object keys
   if (isPlainObject(ids)) {
     var _ids = ids;
@@ -1149,12 +1155,13 @@ module.exports = function (ids, languages, props, format) {
     languages = _ids.languages;
     props = _ids.props;
     format = _ids.format;
+    redirects = _ids.redirects;
   }
 
   if (!(ids instanceof Array)) throw new Error('getManyEntities expects an array of ids');
 
   return getIdsGroups(ids).map(function (idsGroup) {
-    return getEntities(idsGroup, languages, props, format);
+    return getEntities(idsGroup, languages, props, format, redirects);
   });
 };
 
