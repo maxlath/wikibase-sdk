@@ -1,4 +1,4 @@
-require('should')
+const should = require('should')
 const _ = require('lodash')
 
 const getManyEntities = require('../lib/queries/get_many_entities')
@@ -46,6 +46,19 @@ describe('wikidata getManyEntities', function () {
   describe('ids', function () {
     it('should throw if passed an id string', function (done) {
       (() => getManyEntities('Q535')).should.throw()
+      done()
+    })
+  })
+  describe('redirects', function () {
+    it('should default to no redirects parameter', function (done) {
+      const urls = getManyEntities(['Q535'])
+      should(urls[0].match('redirects')).not.be.ok()
+      done()
+    })
+
+    it('should add a redirects parameter if false', function (done) {
+      const urls = getManyEntities({ ids: ['Q535'], redirects: false })
+      urls[0].match('redirects=no').should.be.ok()
       done()
     })
   })
