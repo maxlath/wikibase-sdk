@@ -26,7 +26,8 @@ const ids = 'Q571' // could also be several ids as an array: ['Q1', 'Q5', 'Q571'
 const languages = ['en', 'fr', 'de'] // returns all languages if not specified
 const props = ['info', 'claims'] // returns all data if not specified
 const format = 'xml' // defaults to json
-const url = wdk.getEntities(ids, languages, props, format)
+const redirections = false // defaults to true
+const url = wdk.getEntities(ids, languages, props, format, redirections)
 ```
 
 props being wikidata entities' properties: info, sitelinks, labels, descriptions, claims.
@@ -40,7 +41,8 @@ const url = wdk.getEntities({
   ids: ['Q1', 'Q5', 'Q571'],
   languages: ['en', 'fr', 'de'], // returns all languages if not specified
   props: ['info', 'claims'], // returns all data if not specified
-  format: 'xml' // defaults to json
+  format: 'xml', // defaults to json
+  redirections: false // defaults to true
 })
 ```
 
@@ -52,13 +54,14 @@ The arguments API is the same as getEntities:
 ```js
 const urls = wdk.getManyEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
 // or
-const urls = wdk.getManyEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json')
+const urls = wdk.getManyEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json', false)
 // or
 const urls = wdk.getManyEntities({
   ids: ['Q1', 'Q2', 'Q3', ..., 'Q123'],
   languages: ['en', 'fr', 'de'],
   props: ['info', 'claims'],
-  format: 'json'
+  format: 'json',
+  redirections: false // defaults to true
 })
 ```
 but it returns an array of urls instead.
@@ -84,7 +87,8 @@ const sites = 'dewiki' // or you can just pass the 2-letters language codes: 'de
 const languages = ['en', 'fr', 'de'] // those are the languages in which we would like the entities data
 const props = ['info', 'claims']
 const format = 'json'
-const url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, props, format)
+const redirections = false // defaults to true
+const url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, props, format, redirections)
 ```
 or using the object interface:
 ```js
@@ -93,7 +97,8 @@ const url = wdk.getWikidataIdsFromWikipediaTitles({
   sites: 'dewiki',
   languages: ['en', 'fr', 'de'],
   props: ['info', 'claims'],
-  format: 'json'
+  format: 'json',
+  redirections: false // defaults to true
 })
 ```
 
