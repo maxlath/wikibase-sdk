@@ -306,6 +306,11 @@ describe('simplifyClaim', function () {
       simplifyClaim(lexemeClaim).should.equal('L397')
       done()
     })
+
+    it('should support musical-notation', function (done) {
+      simplifyClaim(Q4115189.claims.P6604[0]).should.equal('\\relative { c d e f g e }')
+      done()
+    })
   })
 
   describe('prefixes', function () {

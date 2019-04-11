@@ -114,6 +114,23 @@
         "id": "Q4115189$dce0e1ce-4af0-d503-db36-2bf61dcf077e",
         "rank": "deprecated"
       }
+    ],
+    "P6604": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6604",
+          "hash": "9d0f45a797b6657c8790dbec8a18e6bcb5ad8e4c",
+          "datavalue": {
+            "value": "\\relative { c d e f g e }",
+            "type": "string"
+          },
+          "datatype": "musical-notation"
+        },
+        "type": "statement",
+        "id": "Q4115189$dcb66dde-4487-cf25-b693-966acaa8c0dc",
+        "rank": "normal"
+      }
     ]
   },
   "sitelinks": {}
