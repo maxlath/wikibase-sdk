@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.3.0 - 2019-04-11
+* `simplify.claims`: Add support for `musical-notation` datatype
+
 ## 6.2.0 - 2019-04-03
 * Allow to set the `redirects` parameter in [`getEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities#by-ids), [`getManyEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities#get-many-entities-by-id), and [`getEntitiesFromSitelinks`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_entities#by-other-wikimedia-projects-titles) functions
 
