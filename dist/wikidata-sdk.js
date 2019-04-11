@@ -196,7 +196,8 @@ var parsers = {
   quantity: quantity,
   'globe-coordinate': coordinate,
   'geo-shape': simple,
-  'tabular-data': simple
+  'tabular-data': simple,
+  'musical-notation': simple
 };
 
 module.exports = {
