@@ -25,7 +25,9 @@ which can also be passed as an object:
 const url = wdk.searchEntities({
   search: 'Ingmar Bergman',
   format: 'xml',
-  language: 'sv'
+  language: 'sv',
+  limit: 30,
+  continue: 10
 })
 ```
 

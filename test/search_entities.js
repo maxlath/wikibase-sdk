@@ -83,7 +83,7 @@ describe('wikidata searchEntities', function () {
     })
   })
 
-  describe('format', function () {
+  describe('type', function () {
     it('should accept a valid type parameter', function (done) {
       const url = searchEntities({ search: 'alphabet', type: 'property' })
       url.should.match(/type=property/)
@@ -92,6 +92,20 @@ describe('wikidata searchEntities', function () {
 
     it('should reject an invalid type parameter', function (done) {
       (() => searchEntities({ search: 'alphabet', type: 'foo' })).should.throw()
+      done()
+    })
+  })
+
+  describe('limit', function () {
+    it('should reject an invalid type parameter', function (done) {
+      searchEntities({ search: 'alphabet', limit: 10 }).should.match(/limit=10/)
+      done()
+    })
+  })
+
+  describe('continue', function () {
+    it('should reject an invalid type parameter', function (done) {
+      searchEntities({ search: 'alphabet', continue: 10 }).should.match(/continue=10/)
       done()
     })
   })
