@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.4.0 - 2019-04-16
+[`searchEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/search_entities.md): allow to set a value to the `continue` parameter
+
 ## 6.3.0 - 2019-04-11
 * `simplify.claims`: Add support for `musical-notation` datatype
 
