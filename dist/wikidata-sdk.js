@@ -1289,7 +1289,8 @@ var _require = require('../utils/utils'),
 var types = ['item', 'property', 'lexeme', 'form', 'sense'];
 
 module.exports = function (search, language, limit, format, uselang) {
-  var type;
+  // Using the variable 'offset' instead of 'continue' as the later is a reserved word
+  var type, offset;
 
   // polymorphism: arguments can be passed as an object keys
   if (isPlainObject(search)) {
@@ -1298,6 +1299,7 @@ module.exports = function (search, language, limit, format, uselang) {
     search = params.search;
     language = params.language;
     limit = params.limit;
+    offset = params.continue;
     format = params.format;
     uselang = params.uselang;
     type = params.type;
@@ -1318,6 +1320,7 @@ module.exports = function (search, language, limit, format, uselang) {
     search: search,
     language: language,
     limit: limit,
+    continue: offset,
     format: format,
     uselang: uselang,
     type: type
