@@ -6,7 +6,8 @@ const monolingualProjects = [
   'mediawikiwiki',
   'metawiki',
   'specieswiki',
-  'wikidatawiki'
+  'wikidatawiki',
+  'wikimaniawiki'
 ]
 
 const isntMonolingualProject = site => !monolingualProjects.includes(site)
