@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.5.0 - 2019-05-17
+* Sitelink helpers: added support for wikimania sitelinks ([PR by @noinkling](https://github.com/maxlath/wikidata-sdk/pull/57))
+
 ## 6.4.0 - 2019-04-16
 [`searchEntities`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/search_entities.md): allow to set a value to the `continue` parameter
 
