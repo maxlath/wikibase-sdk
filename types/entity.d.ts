@@ -17,6 +17,7 @@ export interface Entity {
 	title?: string;
 	lastrevid?: number;
 	modified?: string;
+	redirects?: {from: string, to: string};
 
 	// Available when asked for in GetEntitiesOptions
 	aliases?: Dictionary<LanguageEntry[]>;
