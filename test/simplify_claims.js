@@ -376,6 +376,25 @@ describe('simplifyClaim', function () {
       simplifiedWithQualifiers.qualifiers['P1365'][0].should.deepEqual({ value: 'Q312881', type: 'wikibase-item' })
       done()
     })
+
+    it('should respect timeConverter for qualifiers claims', function (done) {
+      let simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'iso' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11T00:00:00.000Z')
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'epoch' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal(1433980800000)
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'simple-day' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11')
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'none' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('+2015-06-11T00:00:00Z')
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: v => `foo/${v.time}/${v.precision}/bar` })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('foo/+2015-06-11T00:00:00Z/11/bar')
+      done()
+    })
   })
 
   describe('references', function () {
