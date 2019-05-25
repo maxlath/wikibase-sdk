@@ -95,5 +95,13 @@ describe('simplifyQualifiers', function () {
       simplifyQualifiers(qualifiers, { novalueValue: null }).P1100.should.deepEqual([ null ])
       done()
     })
+
+    it('should keep snaktype if requested', function (done) {
+      const qualifier = Q19180293.claims.P1433[0].qualifiers.P1100[0]
+      simplifyQualifier(qualifier, { keepSnaktypes: true })
+      .should.deepEqual({ value: undefined, snaktype: 'novalue' }
+      )
+      done()
+    })
   })
 })
