@@ -1,5 +1,6 @@
 const should = require('should')
 const { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } = require('../lib/helpers/simplify_claims')
+const Q571 = require('./data/Q571.json')
 const Q2112 = require('./data/Q2112.json')
 const Q19180293 = require('./data/Q19180293.json')
 
@@ -31,6 +32,20 @@ describe('simplifyQualifier', function () {
     it('should accept null as a possible value', function (done) {
       const noValueQualifier = Q19180293.claims.P1433[0].qualifiers.P1100[0]
       should(simplifyQualifier(noValueQualifier, { novalueValue: null }) === null).be.true()
+      done()
+    })
+  })
+
+  describe('time', function () {
+    it('should respect timeConverter for qualifiers claims', function (done) {
+      const qualifier = Q571.claims.P1709[0].qualifiers.P813[0]
+      const timeClaim = timeConverter => simplifyQualifier(qualifier, { timeConverter })
+      timeClaim('iso').should.equal('2015-06-11T00:00:00.000Z')
+      timeClaim('epoch').should.equal(1433980800000)
+      timeClaim('simple-day').should.equal('2015-06-11')
+      timeClaim('none').should.equal('+2015-06-11T00:00:00Z')
+      const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
+      timeClaim(timeConverterFn).should.equal('foo/+2015-06-11T00:00:00Z/11/bar')
       done()
     })
   })

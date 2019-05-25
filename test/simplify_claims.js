@@ -9,7 +9,6 @@ const Q2112 = require('./data/Q2112.json')
 const Q217447 = require('./data/Q217447.json')
 const Q271094 = require('./data/Q271094.json')
 const Q4115189 = require('./data/Q4115189.json')
-const Q970917 = require('./data/Q970917.json')
 const Q1 = require('./data/Q1.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 const lexemeClaim = require('./data/lexeme_claim.json')
@@ -376,6 +375,25 @@ describe('simplifyClaim', function () {
       simplifiedWithQualifiers.qualifiers['P1365'][0].should.deepEqual({ value: 'Q312881', type: 'wikibase-item' })
       done()
     })
+
+    it('should respect timeConverter for qualifiers claims', function (done) {
+      let simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'iso' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11T00:00:00.000Z')
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'epoch' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal(1433980800000)
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'simple-day' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11')
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'none' })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('+2015-06-11T00:00:00Z')
+      simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: v => `foo/${v.time}/${v.precision}/bar` })
+      simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P813[0].should.equal('foo/+2015-06-11T00:00:00Z/11/bar')
+      done()
+    })
   })
 
   describe('references', function () {
@@ -468,31 +486,27 @@ describe('simplifyClaim', function () {
 
   describe('time converter', function () {
     it('should use a custom time converter when one is set', function (done) {
-      const timeClaim = (entity, timeConverter) => {
-        return simplifyClaim(entity.claims.P569[0], { timeConverter })
-      }
-      timeClaim(Q646148).should.equal('1939-11-08T00:00:00.000Z')
-      timeClaim(Q646148, 'iso').should.equal('1939-11-08T00:00:00.000Z')
-      timeClaim(Q646148, 'epoch').should.equal(-951436800000)
-      timeClaim(Q646148, 'simple-day').should.equal('1939-11-08')
-      timeClaim(Q646148, 'none').should.equal('+1939-11-08T00:00:00Z')
-      // New date format: missing precision units use 01 instead of 00
-      timeClaim(Q970917).should.equal('1869-11-01T00:00:00.000Z')
-      timeClaim(Q970917, 'iso').should.equal('1869-11-01T00:00:00.000Z')
-      timeClaim(Q970917, 'epoch').should.equal(-3160944000000)
-      timeClaim(Q970917, 'simple-day').should.equal('1869-11')
-      timeClaim(Q970917, 'none').should.equal('+1869-11-01T00:00:00Z')
+      const claim = Q646148.claims.P569[0]
+      const simplifyTimeClaim = timeConverter => simplifyClaim(claim, { timeConverter })
+      simplifyTimeClaim().should.equal('1939-11-08T00:00:00.000Z')
+      simplifyTimeClaim('iso').should.equal('1939-11-08T00:00:00.000Z')
+      simplifyTimeClaim('epoch').should.equal(-951436800000)
+      simplifyTimeClaim('simple-day').should.equal('1939-11-08')
+      simplifyTimeClaim('none').should.equal('+1939-11-08T00:00:00Z')
+      const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
+      simplifyTimeClaim(timeConverterFn).should.equal('foo/+1939-11-08T00:00:00Z/11/bar')
       done()
     })
 
     it('should be able to parse long dates', function (done) {
-      const timeClaim = timeConverter => {
-        return simplifyClaim(Q1.claims.P580[0], { timeConverter })
-      }
-      timeClaim().should.equal('-13798000000-01-01T00:00:00Z')
-      timeClaim('none').should.equal('-13798000000-00-00T00:00:00Z')
-      timeClaim('iso').should.equal('-13798000000-01-01T00:00:00Z')
-      timeClaim('simple-day').should.equal('-13798000000')
+      const claim = Q1.claims.P580[0]
+      const simplifyTimeClaim = timeConverter => simplifyClaim(claim, { timeConverter })
+      simplifyTimeClaim().should.equal('-13798000000-01-01T00:00:00Z')
+      simplifyTimeClaim('none').should.equal('-13798000000-00-00T00:00:00Z')
+      simplifyTimeClaim('iso').should.equal('-13798000000-01-01T00:00:00Z')
+      simplifyTimeClaim('simple-day').should.equal('-13798000000')
+      const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
+      simplifyTimeClaim(timeConverterFn).should.equal('foo/-13798000000-00-00T00:00:00Z/3/bar')
       // Can't be supported due to JS large numbers limitations;
       // 13798000000*365.25*24*60*60*1000 is too big
       // timeClaim('epoch').should.equal('-13798000000-00-00T00:00:00Z')
