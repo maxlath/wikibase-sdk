@@ -1,6 +1,6 @@
 {
   "name": "wikidata-sdk",
-  "version": "6.5.0",
+  "version": "6.6.0",
   "description": "A javascript tool-suite to query Wikidata and simplify its results",
   "main": "lib/index.js",
   "files": [
