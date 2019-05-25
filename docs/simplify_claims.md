@@ -400,11 +400,31 @@ wdk.simplify.claims(claims, { keepAll: true, keepTypes: false })
 
 By default, `simplify.claims` functions use [`wikidataTimeToISOString`](general_helpers.md#wikidataTimeToISOString) to parse [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times).
 
-You can nevertheless request to use a different converter by setting the option `timeConverter`.
+You can nevertheless request to use a different converter by setting the option `timeConverter`:
+
+```js
+wdk.simplify.claims(claims, { timeConverter: 'iso' })
+```
 
 Possible modes:
-
 * `iso`: the default value
 * `epoch`: get the time value as the milliseconds elapsed since 1 January 1970 00:00:00 UTC (as returned by [Javascript `getTime`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime))
 * `simple-day`: returns dates on the format 'yyyy-mm-dd', 'yyyy-mm', 'yyyy' depending on the date precision.
 * `none`: get the raw non-standard Wikidata `time` string (ex: `+1885-00-00T00:00:00Z`)
+
+
+If none of those format fits your needs, you can pass a custom time converter function that will receive the full data object:
+```js
+{
+  time: '+1939-11-08T00:00:00Z',
+  timezone: 0,
+  before: 0,
+  after: 0,
+  precision: 11,
+  calendarmodel: 'http://www.wikidata.org/entity/Q1985727'
+}
+```
+```js
+const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
+wdk.simplify.claims(claims, { timeConverter })
+```
