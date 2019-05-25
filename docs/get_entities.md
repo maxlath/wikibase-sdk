@@ -136,15 +136,21 @@ const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'fr')
 ## Examples
 
 ### A little [Promises](https://www.promisejs.org) workflow demo
-that's how I love to work :)
+That's how I love to work :)
+
+To keep things simple, `fetch` is the browser standard [`fetch` function](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) or its NodeJS equivalent:
+```js
+const fetch = require('node-fetch')
+```
 
 ```js
-// a little request lib returning bluebird-based promises
-const breq = require('bluereq')
-const ids = ['Q647268', 'Q771376', 'Q860998', 'Q965704']
-const url = wdk.getEntities(ids, user.language)
+const url = wdk.getEntities({
+  ids: [ 'Q647268', 'Q771376', 'Q860998', 'Q965704' ],
+  language: user.language
+})
 
-breq.get(url)
+fetch(url)
+.then(response => response.json())
 .then(wdk.parse.wd.entities)
 .then(entities => // do your thing with those entities data)
 ```
