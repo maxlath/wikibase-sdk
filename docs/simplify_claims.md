@@ -31,6 +31,7 @@
     - [Customize novalue value](#customize-novalue-value)
     - [Customize somevalue value](#customize-somevalue-value)
     - [Keep snaktypes](#keep-snaktypes)
+  - [Keep all](#keep-all)
   - [Change time parser](#change-time-parser)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

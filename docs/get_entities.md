@@ -6,10 +6,11 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-  - [By ids](#by-ids)
-    - [Get many entities by ids](#get-many-entities-by-ids)
-  - [By Wikipedia titles](#by-wikipedia-titles)
-  - [By other Wikimedia projects titles](#by-other-wikimedia-projects-titles)
+- [By ids](#by-ids)
+  - [Get many entities by ids](#get-many-entities-by-ids)
+  - [By id and revision](#by-id-and-revision)
+- [By Wikipedia titles](#by-wikipedia-titles)
+- [By other Wikimedia projects titles](#by-other-wikimedia-projects-titles)
 - [Examples](#examples)
   - [A little Promises workflow demo](#a-little-promises-workflow-demo)
 
@@ -68,6 +69,20 @@ but it returns an array of urls instead.
 
 :warning: This limitation policy was probably there for a reason, right? This should be the exception, make sure to set an interval between your requests (500ms, 1s?), and if you really need a lot of entities, consider using [dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_.28recommended.29): there are [great tools](https://github.com/maxlath/wikidata-filter) to work with those too! ;)
 
+
+### By id and revision
+At some point in your love story with Wikidata, you might end up needing to access data from an entity at a different revision than the current one, so there's a function for that:
+```js
+// multiple args interface
+const url = wdk.getEntityRevision('Q3548931', 775908525)
+// OR object interface
+const url = wdk.getEntityRevision({ id: 'Q3548931', revision: 775908525 })
+```
+
+The revision id can be obtained using [`wdk.getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md#get-revisions): look for the `revid`.
+
+The returned data can then be [simplified](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-entities-data) as for normal entity data.
+
 ## By Wikipedia titles
 *associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
@@ -118,9 +133,9 @@ const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'frwiki')
 const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'fr')
 ```
 
-# Examples
+## Examples
 
-## A little [Promises](https://www.promisejs.org) workflow demo
+### A little [Promises](https://www.promisejs.org) workflow demo
 that's how I love to work :)
 
 ```js

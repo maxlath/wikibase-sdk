@@ -57,6 +57,7 @@ A set of tools to **read** Wikidata from the [Wikidata API](https://www.wikidata
 * **[Search entities](docs/search_entities.md)**
 * **[Get entities](docs/get_entities.md)**
   * [By ids](docs/get_entities.md#by-ids)
+  * [By id and revision](docs/get_entities.md#by-id-and-revision)
   * [By Wikipedia titles](docs/get_entities.md#by-wikipedia-titles)
   * [By other Wikimedia projects titles](docs/get_entities.md#by-other-wikimedia-projects-titles)
 * **[Simplify entities data](docs/simplify_entities_data.md)**

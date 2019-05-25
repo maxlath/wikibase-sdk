@@ -12,6 +12,7 @@
   - [isEntityId](#isentityid)
   - [isNumericId](#isnumericid)
   - [isGuid](#isguid)
+  - [isRevisionId](#isrevisionid)
   - [getNumericId](#getnumericid)
 - [Claims helpers](#claims-helpers)
   - [truthyClaims](#truthyclaims)
@@ -43,6 +44,8 @@ Accepts both `P` and `Q` ids
 ### isNumericId
 
 ### isGuid
+
+### isRevisionId
 
 ### getNumericId
 
