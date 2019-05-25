@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.6.0 - 2019-05-17
+* Added [`getEntityRevision`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isrevisionid) helper function
+* Added [`isRevisionId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isrevisionid) helper function
+
 ## 6.5.0 - 2019-05-17
 * Sitelink helpers: added support for wikimania sitelinks ([PR by @noinkling](https://github.com/maxlath/wikidata-sdk/pull/57))
 
