@@ -166,12 +166,19 @@ var coordinate = function coordinate(datavalue) {
 };
 
 var time = function time(datavalue, options) {
-  return getTimeConverter(options.timeConverter)(datavalue.value);
+  if (typeof options.timeConverter === 'function') {
+    return options.timeConverter(datavalue.value);
+  } else {
+    return getTimeConverter(options.timeConverter)(datavalue.value);
+  }
 };
 
 var getTimeConverter = function getTimeConverter() {
   var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'iso';
-  return timeConverters[key];
+
+  var converter = timeConverters[key];
+  if (!converter) throw new Error('invalid converter key: ' + JSON.stringify(key).substring(0, 100));
+  return converter;
 };
 
 // Each time converter should be able to accept 2 keys of arguments:
