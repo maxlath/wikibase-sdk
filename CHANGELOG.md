@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 6.7.0 - 2019-05-26
+* [`simplify.claims` custom `timeConverter`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md): allow to pass a custom time converter function ([PR by @simon04](https://github.com/maxlath/wikidata-sdk/pull/59))
+
 ## 6.6.0 - 2019-05-17
 * Added [`getEntityRevision`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isrevisionid) helper function
 * Added [`isRevisionId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isrevisionid) helper function
