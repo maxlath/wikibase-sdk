@@ -5,12 +5,12 @@ const _ = require('lodash')
 const { simplifyEntity, simplifyEntities } = require('../lib/helpers/simplify_entity')
 
 describe('simplify.entity', () => {
-  it('should be a function', (done) => {
+  it('should be a function', done => {
     simplifyEntity.should.be.a.Function()
     done()
   })
 
-  it('should return a simplified entity', (done) => {
+  it('should return a simplified entity', done => {
     const Q571Clone = _.cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone)
     simplifiedEntity.labels.fr.should.equal('livre')
@@ -23,7 +23,7 @@ describe('simplify.entity', () => {
     done()
   })
 
-  it('should pass options down to subfunctions', (done) => {
+  it('should pass options down to subfunctions', done => {
     const Q571Clone = _.cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone, { keepQualifiers: true, keepIds: true, addUrl: true })
     simplifiedEntity.labels.fr.should.equal('livre')
@@ -39,7 +39,7 @@ describe('simplify.entity', () => {
     done()
   })
 
-  it('should accept partial entities', (done) => {
+  it('should accept partial entities', done => {
     const Q571Clone = _.cloneDeep(Q571)
     const emptyEntity = simplifyEntity({})
     Object.keys(emptyEntity).length.should.equal(3)
@@ -52,7 +52,7 @@ describe('simplify.entity', () => {
 })
 
 describe('simplify.entities', () => {
-  it('should accept enities objects', (done) => {
+  it('should accept enities objects', done => {
     const Q571Clone = _.cloneDeep(Q571)
     const entities = { Q571: Q571Clone }
     const simplifiedEntities = simplifyEntities(entities)

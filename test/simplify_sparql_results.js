@@ -10,15 +10,15 @@ const sparqlResultsWithStatements = require('./data/sparql_results_with_statemen
 const resultsWithLabelsDescriptionsAndAliases = require('./data/results_with_labels_descriptions_and_aliases.json')
 const { cloneDeep } = require('lodash')
 
-describe('wikidata simplify SPARQL results', function () {
-  describe('common', function () {
-    it('should return a plain object', function (done) {
+describe('wikidata simplify SPARQL results', () => {
+  describe('common', () => {
+    it('should return a plain object', done => {
       simplify(singleVarData).should.be.an.Array()
       simplify(multiVarsData).should.be.an.Array()
       done()
     })
 
-    it('should parse the input if passed a JSON string', function (done) {
+    it('should parse the input if passed a JSON string', done => {
       const json = JSON.stringify(singleVarData)
       simplify(json).should.be.an.Array()
       const json2 = JSON.stringify(multiVarsData)
@@ -27,7 +27,7 @@ describe('wikidata simplify SPARQL results', function () {
     })
   })
 
-  it('should return an array of results objects', function (done) {
+  it('should return an array of results objects', done => {
     const output = simplify(multiVarsData)
     output[0].should.be.an.Object()
     output[0].entity.value.should.equal('Q3731207')
@@ -36,28 +36,28 @@ describe('wikidata simplify SPARQL results', function () {
     done()
   })
 
-  it('should not throw when the datatype is missing', function (done) {
+  it('should not throw when the datatype is missing', done => {
     const output = simplify(noDatatypeData)
     output[0].year.should.equal('1937')
     done()
   })
 
-  it('should not throw when an optional variable has no result', function (done) {
+  it('should not throw when an optional variable has no result', done => {
     const result = simplify(sparqlResultsWithOptionalValues)[0]
     result.composer.should.be.an.Object()
     should(result.genre).not.be.ok()
     done()
   })
 
-  describe('minimize', function () {
-    it('should return an array of results values, filtering out blank nodes', function (done) {
+  describe('minimize', () => {
+    it('should return an array of results values, filtering out blank nodes', done => {
       const output = simplify(singleVarData, { minimize: true })
       output[0].should.equal('Q112983')
       output.forEach(result => helpers.isEntityId(result).should.be.true())
       done()
     })
 
-    it('should return an array of results value object', function (done) {
+    it('should return an array of results value object', done => {
       const output = simplify(singleVarData, { minimize: false })
       output[0].should.deepEqual({ genre: 'Q112983' })
       output.forEach(result => {
@@ -68,8 +68,8 @@ describe('wikidata simplify SPARQL results', function () {
     })
   })
 
-  describe('with labels, descriptions and aliases', function () {
-    it('should group values', function (done) {
+  describe('with labels, descriptions and aliases', () => {
+    it('should group values', done => {
       const results = simplify(resultsWithLabelsDescriptionsAndAliases)
       resultsWithLabelsDescriptionsAndAliases.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
@@ -86,7 +86,7 @@ describe('wikidata simplify SPARQL results', function () {
       done()
     })
 
-    it('should work without labels', function (done) {
+    it('should work without labels', done => {
       const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
       rawResults.head.vars = rawResults.head.vars
         .filter(varName => varName !== 'itemLabel')
@@ -102,7 +102,7 @@ describe('wikidata simplify SPARQL results', function () {
       done()
     })
 
-    it("should be ignored when the associated variable isn't selected", function (done) {
+    it("should be ignored when the associated variable isn't selected", done => {
       const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
       rawResults.head.vars = rawResults.head.vars
         .filter(varName => varName !== 'item')
@@ -120,7 +120,7 @@ describe('wikidata simplify SPARQL results', function () {
     })
   })
 
-  describe('statements', function () {
+  describe('statements', () => {
     it('should convert statement URIs into claims GUIDs', done => {
       const rawResults = cloneDeep(sparqlResultsWithStatements)
       const results = simplify(rawResults, { minimize: true })

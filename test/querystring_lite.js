@@ -2,15 +2,15 @@ require('should')
 
 const qsLite = require('../lib/utils/querystring_lite')
 
-describe('qsLite', function () {
-  it('env', function (done) {
+describe('qsLite', () => {
+  it('env', done => {
     qsLite.should.be.an.Object()
     qsLite.stringify.should.be.a.Function()
     done()
   })
 
-  describe('stringify', function () {
-    it('should return a query string', function (done) {
+  describe('stringify', () => {
+    it('should return a query string', done => {
       const query = {
         name: 'Bond',
         drink: 'martini'

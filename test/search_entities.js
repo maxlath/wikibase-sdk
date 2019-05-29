@@ -2,55 +2,55 @@ require('should')
 
 const searchEntities = require('../lib/queries/search_entities')
 
-describe('wikidata searchEntities', function () {
-  describe('action', function () {
-    it('action should be wbsearchentities', function (done) {
+describe('wikidata searchEntities', () => {
+  describe('action', () => {
+    it('action should be wbsearchentities', done => {
       const url = searchEntities('Ingmar Bergman')
       url.should.match(new RegExp('action=wbsearchentities'))
       done()
     })
   })
 
-  describe('search', function () {
-    it('accepts a string', function (done) {
+  describe('search', () => {
+    it('accepts a string', done => {
       const url = searchEntities('johnnybegood')
       url.should.match(new RegExp('search=johnnybegood'))
       done()
     })
 
-    it('accepts an object', function (done) {
+    it('accepts an object', done => {
       const url = searchEntities({search: 'johnnybegood', language: 'fr'})
       url.should.match(new RegExp('search=johnnybegood'))
       url.should.match(new RegExp('language=fr'))
       done()
     })
 
-    it('throw on empty string', function (done) {
+    it('throw on empty string', done => {
       (() => searchEntities('')).should.throw()
       done()
     })
   })
 
-  describe('language', function () {
-    it('should default on language=en', function (done) {
+  describe('language', () => {
+    it('should default on language=en', done => {
       const url = searchEntities('Ingmar Bergman')
       url.should.match(new RegExp('language=en'))
       done()
     })
 
-    it('should accept a string', function (done) {
+    it('should accept a string', done => {
       const url = searchEntities('Ingmar Bergman', 'la')
       url.should.match(new RegExp('language=la'))
       done()
     })
 
-    it('should set uselang as language by default', function (done) {
+    it('should set uselang as language by default', done => {
       const url = searchEntities('Ingmar Bergman', 'la')
       url.should.match(new RegExp('uselang=la'))
       done()
     })
 
-    it('should accept a uselang parameter different from language', function (done) {
+    it('should accept a uselang parameter different from language', done => {
       // multi-argument interface
       const url = searchEntities('Ingmar Bergman', 'la', null, null, 'eo')
       url.should.match(new RegExp('language=la'))
@@ -67,44 +67,44 @@ describe('wikidata searchEntities', function () {
     })
   })
 
-  describe('format', function () {
-    it('should have json as default format', function (done) {
+  describe('format', () => {
+    it('should have json as default format', done => {
       const url = searchEntities('Ingmar Bergman')
       url.should.match(new RegExp('format=json'))
       done()
     })
   })
 
-  describe('encoding', function () {
-    it('should url encode the query', function (done) {
+  describe('encoding', () => {
+    it('should url encode the query', done => {
       const url = searchEntities('C#')
       url.should.containEql('C%23')
       done()
     })
   })
 
-  describe('type', function () {
-    it('should accept a valid type parameter', function (done) {
+  describe('type', () => {
+    it('should accept a valid type parameter', done => {
       const url = searchEntities({ search: 'alphabet', type: 'property' })
       url.should.match(/type=property/)
       done()
     })
 
-    it('should reject an invalid type parameter', function (done) {
+    it('should reject an invalid type parameter', done => {
       (() => searchEntities({ search: 'alphabet', type: 'foo' })).should.throw()
       done()
     })
   })
 
-  describe('limit', function () {
-    it('should reject an invalid type parameter', function (done) {
+  describe('limit', () => {
+    it('should reject an invalid type parameter', done => {
       searchEntities({ search: 'alphabet', limit: 10 }).should.match(/limit=10/)
       done()
     })
   })
 
-  describe('continue', function () {
-    it('should reject an invalid type parameter', function (done) {
+  describe('continue', () => {
+    it('should reject an invalid type parameter', done => {
       searchEntities({ search: 'alphabet', continue: 10 }).should.match(/continue=10/)
       done()
     })

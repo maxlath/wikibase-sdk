@@ -1,8 +1,8 @@
 require('should')
 const wdk = require('../lib/index')
 
-describe('general', function () {
-  it('env', function (done) {
+describe('general', () => {
+  it('env', done => {
     wdk.should.be.an.Object()
     const { parse } = wdk
 

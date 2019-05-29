@@ -2,12 +2,12 @@ require('should')
 
 const { getSitelinkUrl, getSitelinkData, isSitelinkKey } = require('../lib/helpers/sitelinks_helpers')
 
-describe('getSitelinkUrl', function () {
-  it('should be a function', function (done) {
+describe('getSitelinkUrl', () => {
+  it('should be a function', done => {
     getSitelinkUrl.should.be.an.Function()
     done()
   })
-  it('should return a sitelink URL', function (done) {
+  it('should return a sitelink URL', done => {
     getSitelinkUrl('commons', 'Lyon')
     .should.equal('https://commons.wikimedia.org/wiki/Lyon')
 
@@ -45,7 +45,7 @@ describe('getSitelinkUrl', function () {
 
     done()
   })
-  it('should accept a sitelink object as unique argument', function (done) {
+  it('should accept a sitelink object as unique argument', done => {
     getSitelinkUrl({ site: 'commons', title: 'Lyon' })
     .should.equal('https://commons.wikimedia.org/wiki/Lyon')
 
@@ -84,21 +84,21 @@ describe('getSitelinkUrl', function () {
     done()
   })
 
-  it('should replace spaces by underscores', function (done) {
+  it('should replace spaces by underscores', done => {
     getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
     .should.equal('https://es.wikiquote.org/wiki/Gilles_Deleuze')
     done()
   })
 
-  it('should reject invalid sitelinks', function (done) {
+  it('should reject invalid sitelinks', done => {
     getSitelinkUrl.bind(null, 'frperlinpinpin', 'Lyon').should.throw()
     getSitelinkUrl.bind(null, 'frwikiwiki', 'Lyon').should.throw()
     done()
   })
 })
 
-describe('getSitelinkData', function () {
-  it('should return sitelinks data', function (done) {
+describe('getSitelinkData', () => {
+  it('should return sitelinks data', done => {
     getSitelinkData('frwiki').lang.should.equal('fr')
     getSitelinkData('frwiki').project.should.equal('wikipedia')
     getSitelinkData('dewikiquote').lang.should.equal('de')
@@ -111,14 +111,14 @@ describe('getSitelinkData', function () {
     done()
   })
 
-  it('should reject invalid sitelinks', function (done) {
+  it('should reject invalid sitelinks', done => {
     getSitelinkData.bind(null, 'foowiki').should.throw()
     done()
   })
 })
 
-describe('isSitelinkKey', function () {
-  it('should return true for valid sitelink keys', function (done) {
+describe('isSitelinkKey', () => {
+  it('should return true for valid sitelink keys', done => {
     isSitelinkKey('frwiki').should.be.true()
     isSitelinkKey('commonswiki').should.be.true()
     isSitelinkKey('wikidatawiki').should.be.true()
@@ -126,7 +126,7 @@ describe('isSitelinkKey', function () {
     isSitelinkKey('wikidata').should.be.false()
     done()
   })
-  it('should return false for invalid sitelink keys', function (done) {
+  it('should return false for invalid sitelink keys', done => {
     isSitelinkKey('frperlinpinpin').should.be.false()
     isSitelinkKey('frwikilinpinpin').should.be.false()
     isSitelinkKey('imaginarylangwiki').should.be.false()

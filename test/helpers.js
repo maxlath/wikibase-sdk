@@ -4,7 +4,7 @@ const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDa
 
 const Q970917 = require('./data/Q970917.json')
 
-describe('helpers', function () {
+describe('helpers', () => {
   const ISOtime = '2014-05-14T00:00:00.000Z'
   const wdTime = '+2014-05-14T00:00:00Z'
   const epoch = 1400025600000
@@ -12,34 +12,34 @@ describe('helpers', function () {
   const negativeWdTime = '-0044-03-15T00:00:00Z'
   const negativeEpoch = -63549360000000
 
-  describe('wikidataTimeToEpochTime', function () {
-    it('env', function (done) {
+  describe('wikidataTimeToEpochTime', () => {
+    it('env', done => {
       new Date(epoch).toISOString().should.equal(ISOtime)
       new Date(negativeEpoch).toISOString().should.equal(ISOnegativeTime)
       done()
     })
 
-    it('should return a number (epoch time)', function (done) {
+    it('should return a number (epoch time)', done => {
       wikidataTimeToEpochTime(wdTime).should.be.a.Number()
       done()
     })
 
-    it('should return a number for negative time', function (done) {
+    it('should return a number for negative time', done => {
       wikidataTimeToEpochTime(negativeWdTime).should.be.a.Number()
       done()
     })
 
-    it('should return the right number', function (done) {
+    it('should return the right number', done => {
       wikidataTimeToEpochTime(wdTime).should.equal(epoch)
       done()
     })
 
-    it('should return the right number for negative time too', function (done) {
+    it('should return the right number for negative time too', done => {
       wikidataTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
       done()
     })
 
-    it('should accept a value object', function (done) {
+    it('should accept a value object', done => {
       wikidataTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal(-3160944000000)
       wikidataTimeToEpochTime(Q970917.claims.P569[1].mainsnak.datavalue.value)
@@ -50,8 +50,8 @@ describe('helpers', function () {
     })
   })
 
-  describe('wikidataTimeToISOString', function () {
-    it('should convert wikidata date to ISO date', function (done) {
+  describe('wikidataTimeToISOString', () => {
+    it('should convert wikidata date to ISO date', done => {
       wikidataTimeToISOString('+1885-05-22T00:00:00Z')
       .should.equal('1885-05-22T00:00:00.000Z')
 
@@ -70,7 +70,7 @@ describe('helpers', function () {
       done()
     })
 
-    it('should return a valid time for possible invalid dates', function (done) {
+    it('should return a valid time for possible invalid dates', done => {
       wikidataTimeToISOString('+1953-00-00T00:00:00Z')
       .should.equal('1953-01-01T00:00:00.000Z')
 
@@ -79,7 +79,7 @@ describe('helpers', function () {
       done()
     })
 
-    it('should return a valid time even for possible invalid negative date', function (done) {
+    it('should return a valid time even for possible invalid negative date', done => {
       wikidataTimeToISOString('-1953-00-00T00:00:00Z')
       .should.equal('-001953-01-01T00:00:00.000Z')
 
@@ -88,7 +88,7 @@ describe('helpers', function () {
       done()
     })
 
-    it('should return a valid time for dates far in the past', function (done) {
+    it('should return a valid time for dates far in the past', done => {
       wikidataTimeToISOString('-13798000000-00-00T00:00:00Z')
       .should.equal('-13798000000-01-01T00:00:00Z')
 
@@ -100,7 +100,7 @@ describe('helpers', function () {
       done()
     })
 
-    it('should return a valid time for dates far in the future', function (done) {
+    it('should return a valid time for dates far in the future', done => {
       wikidataTimeToISOString('+13798000000-00-00T00:00:00Z')
       .should.equal('+13798000000-01-01T00:00:00Z')
 
@@ -112,7 +112,7 @@ describe('helpers', function () {
       done()
     })
 
-    it('should accept a value object', function (done) {
+    it('should accept a value object', done => {
       wikidataTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal('1869-11-01T00:00:00.000Z')
       wikidataTimeToISOString(Q970917.claims.P569[1].mainsnak.datavalue.value)
@@ -123,8 +123,8 @@ describe('helpers', function () {
     })
   })
 
-  describe('wikidataTimeToSimpleDay', function () {
-    it('should convert wikidata date with year precision to simple-day', function (done) {
+  describe('wikidataTimeToSimpleDay', () => {
+    it('should convert wikidata date with year precision to simple-day', done => {
       wikidataTimeToSimpleDay('+1953-00-00T00:00:00Z').should.equal('1953')
       wikidataTimeToSimpleDay('-1953-00-00T00:00:00Z').should.equal('-1953')
       wikidataTimeToSimpleDay('+13-00-00T00:00:00Z').should.equal('13')
@@ -133,7 +133,7 @@ describe('helpers', function () {
       done()
     })
 
-    it('should convert wikidata date with month precision to simple-day', function (done) {
+    it('should convert wikidata date with month precision to simple-day', done => {
       wikidataTimeToSimpleDay('+1953-01-00T00:00:00Z').should.equal('1953-01')
       wikidataTimeToSimpleDay('-1953-01-00T00:00:00Z').should.equal('-1953-01')
       wikidataTimeToSimpleDay('+13-01-00T00:00:00Z').should.equal('13-01')
@@ -142,7 +142,7 @@ describe('helpers', function () {
       done()
     })
 
-    it('should convert wikidata date with day precision or finer to simple-day', function (done) {
+    it('should convert wikidata date with day precision or finer to simple-day', done => {
       wikidataTimeToSimpleDay('+1953-01-01T00:00:00Z').should.equal('1953-01-01')
       wikidataTimeToSimpleDay('-1953-01-01T00:00:00Z').should.equal('-1953-01-01')
       wikidataTimeToSimpleDay('+1953-01-01T13:45:00Z').should.equal('1953-01-01')
@@ -151,15 +151,15 @@ describe('helpers', function () {
       done()
     })
 
-    it('should accept a value object', function (done) {
+    it('should accept a value object', done => {
       wikidataTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal('1869-11')
       done()
     })
   })
 
-  describe('isEntityId', function () {
-    it('should accept both item and property ids', function (done) {
+  describe('isEntityId', () => {
+    it('should accept both item and property ids', done => {
       isEntityId('Q571').should.be.true()
       isEntityId('P31').should.be.true()
       isEntityId('31').should.be.false()
@@ -171,8 +171,8 @@ describe('helpers', function () {
     })
   })
 
-  describe('isItemId', function () {
-    it('should accept both item and property ids', function (done) {
+  describe('isItemId', () => {
+    it('should accept both item and property ids', done => {
       isItemId('Q571').should.be.true()
       isItemId('P31').should.be.false()
       isItemId('31').should.be.false()
@@ -184,8 +184,8 @@ describe('helpers', function () {
     })
   })
 
-  describe('isPropertyId', function () {
-    it('should accept both item and property ids', function (done) {
+  describe('isPropertyId', () => {
+    it('should accept both item and property ids', done => {
       isPropertyId('P31').should.be.true()
       isPropertyId('Q571').should.be.false()
       isPropertyId('31').should.be.false()
@@ -197,8 +197,8 @@ describe('helpers', function () {
     })
   })
 
-  describe('getImageUrl', function () {
-    it('should build a commons FilePath Url', function (done) {
+  describe('getImageUrl', () => {
+    it('should build a commons FilePath Url', done => {
       getImageUrl('Peredot.jpg')
       .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg')
 
@@ -208,8 +208,8 @@ describe('helpers', function () {
     })
   })
 
-  describe('isGuid', function () {
-    it('should accept both item and property ids', function (done) {
+  describe('isGuid', () => {
+    it('should accept both item and property ids', done => {
       isGuid('q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C').should.be.true()
       isGuid('Q520$91F0CCEA-19E4-4CEB-97D9-74B014C14686').should.be.true()
       isGuid('q520$7f95c04f-4cb6-b018-80eb-fefe0e0bf377').should.be.true()

@@ -16,8 +16,8 @@ const emptyValues = require('./data/empty_values.json')
 
 const { simplifyClaim, simplifyPropertyClaims, simplifyClaims, truthyClaims, truthyPropertyClaims } = require('../lib/helpers/simplify_claims')
 
-describe('simplifyClaims', function () {
-  it('env', function (done) {
+describe('simplifyClaims', () => {
+  it('env', done => {
     Q571.should.be.an.Object()
     Q571.claims.should.be.ok()
     Q4132785.should.be.an.Object()
@@ -25,19 +25,19 @@ describe('simplifyClaims', function () {
     done()
   })
 
-  it('should return an object', function (done) {
+  it('should return an object', done => {
     simplifyClaims(Q571.claims).should.be.an.Object()
     done()
   })
 
-  it('should not mutate the original object', function (done) {
+  it('should not mutate the original object', done => {
     const simplified = simplifyClaims(Q571.claims)
     simplified.should.not.equal(Q571.claims)
     simplified.P487.should.not.equal(Q571.claims.P487)
     done()
   })
 
-  it('should return an object of same length', function (done) {
+  it('should return an object of same length', done => {
     const originalLength = Object.keys(Q571.claims).length
     const simplified = simplifyClaims(Q571.claims)
     const newLength = Object.keys(simplified).length
@@ -45,7 +45,7 @@ describe('simplifyClaims', function () {
     done()
   })
 
-  it('should return an indexed collection of arrays', function (done) {
+  it('should return an indexed collection of arrays', done => {
     const simplified = simplifyClaims(Q571.claims)
     for (let key in simplified) {
       simplified[key].should.be.an.Array()
@@ -53,7 +53,7 @@ describe('simplifyClaims', function () {
     done()
   })
 
-  it('should pass entity and property prefixes down', function (done) {
+  it('should pass entity and property prefixes down', done => {
     const simplified = simplifyClaims(Q2112.claims, { entityPrefix: 'wd' })
     simplified.P190[0].should.equal('wd:Q207614')
     const simplified2 = simplifyClaims(Q2112.claims, { propertyPrefix: 'wdt' })
@@ -61,7 +61,7 @@ describe('simplifyClaims', function () {
     done()
   })
 
-  it('should return prefixed properties if passed a property prefix', function (done) {
+  it('should return prefixed properties if passed a property prefix', done => {
     const simplified = simplifyClaims(Q2112.claims, { entityPrefix: 'wd', propertyPrefix: 'wdt' })
     simplified['wdt:P190'].should.be.an.Array()
     simplified['wdt:P190'][0].should.equal('wd:Q207614')
@@ -70,7 +70,7 @@ describe('simplifyClaims', function () {
     done()
   })
 
-  it('should return the correct value when called with keepQualifiers=true', function (done) {
+  it('should return the correct value when called with keepQualifiers=true', done => {
     const simplified = simplifyClaims(Q571.claims)
     const simplifiedWithQualifiers = simplifyClaims(Q571.claims, { keepQualifiers: true })
     Object.keys(simplifiedWithQualifiers).forEach(property => {
@@ -86,7 +86,7 @@ describe('simplifyClaims', function () {
     done()
   })
 
-  it('should include prefixes in qualifiers claims', function (done) {
+  it('should include prefixes in qualifiers claims', done => {
     const simplifiedWithQualifiers = simplifyClaims(Q646148.claims, { entityPrefix: 'wd', propertyPrefix: 'wdt', keepQualifiers: true })
     simplifiedWithQualifiers['wdt:P39'][1].qualifiers['wdt:P1365'].should.be.an.Array()
     simplifiedWithQualifiers['wdt:P39'][1].qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
@@ -94,29 +94,29 @@ describe('simplifyClaims', function () {
   })
 })
 
-describe('simplifyPropertyClaims', function () {
-  it('should return an arrays', function (done) {
+describe('simplifyPropertyClaims', () => {
+  it('should return an arrays', done => {
     const simplified = simplifyPropertyClaims(Q571.claims.P487)
     simplified.should.be.an.Array()
     done()
   })
 
-  it('should not mutate the original array', function (done) {
+  it('should not mutate the original array', done => {
     const simplified = simplifyPropertyClaims(Q571.claims.P487)
     simplified.should.not.equal(Q571.claims.P487)
     simplified[0].should.not.equal(Q571.claims.P487[0])
     done()
   })
 
-  it('should keep only non-null values', function (done) {
+  it('should keep only non-null values', done => {
     const simplified = simplifyPropertyClaims(Q22002395.claims.P50)
     // Q22002395 P50 has 2 values with "snaktype": "somevalue"
     // that should be removed
-    _.every(simplified, (qid) => qid != null).should.equal(true)
+    _.every(simplified, qid => qid != null).should.equal(true)
     done()
   })
 
-  it('should deduplicated values', function (done) {
+  it('should deduplicated values', done => {
     const { P50 } = Q22002395.claims
     const claimsWithDuplicates = P50.concat(P50)
     const simplified = simplifyPropertyClaims(claimsWithDuplicates)
@@ -127,7 +127,7 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
-  it('should pass entity and property prefixes down', function (done) {
+  it('should pass entity and property prefixes down', done => {
     const simplified = simplifyPropertyClaims(Q2112.claims.P190, { entityPrefix: 'wd' })
     simplified[0].should.equal('wd:Q207614')
     const simplified2 = simplifyPropertyClaims(Q2112.claims.P123456789, { entityPrefix: 'a', propertyPrefix: 'b' })
@@ -135,7 +135,7 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
-  it('should return the correct value when called with keepQualifiers=true', function (done) {
+  it('should return the correct value when called with keepQualifiers=true', done => {
     const simplified = simplifyPropertyClaims(Q571.claims.P279)
     const simplifiedWithQualifiers = simplifyPropertyClaims(Q571.claims.P279, { keepQualifiers: true })
     simplifiedWithQualifiers.should.be.an.Array()
@@ -148,14 +148,14 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
-  it('should include prefixes in qualifiers claims', function (done) {
+  it('should include prefixes in qualifiers claims', done => {
     const simplifiedWithQualifiers = simplifyPropertyClaims(Q646148.claims.P39, { entityPrefix: 'wd', propertyPrefix: 'wdt', keepQualifiers: true })
     simplifiedWithQualifiers[1].qualifiers['wdt:P1365'].should.be.an.Array()
     simplifiedWithQualifiers[1].qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
     done()
   })
 
-  it('construct entity ids for old dump format', function (done) {
+  it('construct entity ids for old dump format', done => {
     const simplified = simplifyPropertyClaims(oldClaimFormat)
     simplified.length.should.equal(2)
     simplified[0].should.equal('Q123')
@@ -163,7 +163,7 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
-  it('should tolerate empty inputs', function (done) {
+  it('should tolerate empty inputs', done => {
     const simplified = simplifyPropertyClaims()
     simplified.should.be.an.Array()
     simplified.length.should.equal(0)
@@ -173,22 +173,22 @@ describe('simplifyPropertyClaims', function () {
     done()
   })
 
-  describe('ranks', function () {
-    it('should return only truthy statements by default', function (done) {
+  describe('ranks', () => {
+    it('should return only truthy statements by default', done => {
       const simplified = simplifyPropertyClaims(Q4115189.claims.P135)
       simplified.length.should.equal(1)
       simplified[0].should.equal('Q2044250')
       done()
     })
 
-    it('should also return non-truthy statements if requested', function (done) {
+    it('should also return non-truthy statements if requested', done => {
       const options = { keepNonTruthy: true }
       const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
       simplified.length.should.equal(3)
       done()
     })
 
-    it('should keep ranks', function (done) {
+    it('should keep ranks', done => {
       simplifyPropertyClaims(Q4115189.claims.P135, { keepRanks: true })
       .should.deepEqual([
         { value: 'Q2044250', rank: 'preferred' }
@@ -203,8 +203,8 @@ describe('simplifyPropertyClaims', function () {
     })
   })
 
-  describe('empty values', function () {
-    it('should not filter-out empty values if given a placeholder value', function (done) {
+  describe('empty values', () => {
+    it('should not filter-out empty values if given a placeholder value', done => {
       simplifyPropertyClaims(emptyValues.claims.P3984).length.should.equal(1)
       simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: '-' }).length.should.equal(2)
       simplifyPropertyClaims(emptyValues.claims.P3984, { novalueValue: null }).length.should.equal(2)
@@ -216,7 +216,7 @@ describe('simplifyPropertyClaims', function () {
       done()
     })
 
-    it('should keep snaktype if requested', function (done) {
+    it('should keep snaktype if requested', done => {
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepSnaktypes: true }).should.deepEqual([
         { value: undefined, snaktype: 'novalue' },
         { value: undefined, snaktype: 'somevalue' },
@@ -235,7 +235,7 @@ describe('simplifyPropertyClaims', function () {
       done()
     })
 
-    it('should not filter-out empty values if requested as object values', function (done) {
+    it('should not filter-out empty values if requested as object values', done => {
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepQualifiers: true }).should.deepEqual([
         { value: undefined, qualifiers: {} },
         { value: undefined, qualifiers: {} },
@@ -260,7 +260,7 @@ describe('simplifyPropertyClaims', function () {
     })
   })
 
-  it('should use the placeholder value for empty values in object values', function (done) {
+  it('should use the placeholder value for empty values in object values', done => {
     simplifyPropertyClaims(emptyValues.claims.P3984, {
       keepQualifiers: true,
       novalueValue: '-',
@@ -275,15 +275,15 @@ describe('simplifyPropertyClaims', function () {
   })
 })
 
-describe('simplifyClaim', function () {
-  describe('datatypes', function () {
-    it('should return a url for datatype url', function (done) {
+describe('simplifyClaim', () => {
+  describe('datatypes', () => {
+    it('should return a url for datatype url', done => {
       const simplified = simplifyClaim(Q328212.claims.P856[0])
       simplified.should.equal('http://veronicarothbooks.blogspot.com')
       done()
     })
 
-    it('should return simplify globecoordinate as a latLng array', function (done) {
+    it('should return simplify globecoordinate as a latLng array', done => {
       const simplified = simplifyClaim(Q2112.claims.P625[0])
       simplified.should.be.an.Array()
       simplified[0].should.equal(52.016666666667)
@@ -291,29 +291,29 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should support geo-shape', function (done) {
+    it('should support geo-shape', done => {
       simplifyClaim(Q217447.claims.P3896[0]).should.equal('Data:Rky/1277_Verlan_teollisuusympäristö.map')
       done()
     })
 
-    it('should support tabular-data', function (done) {
+    it('should support tabular-data', done => {
       simplifyClaim(Q271094.claims.P4179[0]).should.equal('Data:Taipei Neihu District Population.tab')
       done()
     })
 
-    it('should support lexemes', function (done) {
+    it('should support lexemes', done => {
       simplifyClaim(lexemeClaim).should.equal('L397')
       done()
     })
 
-    it('should support musical-notation', function (done) {
+    it('should support musical-notation', done => {
       simplifyClaim(Q4115189.claims.P6604[0]).should.equal('\\relative { c d e f g e }')
       done()
     })
   })
 
-  describe('prefixes', function () {
-    it('should return prefixed entity ids if passed an entity prefix', function (done) {
+  describe('prefixes', () => {
+    it('should return prefixed entity ids if passed an entity prefix', done => {
       const claim = Q2112.claims.P190[0]
       simplifyClaim(claim).should.equal('Q207614')
       simplifyClaim(claim, { entityPrefix: 'wd' }).should.equal('wd:Q207614')
@@ -322,7 +322,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should not apply property prefixes to property claim values', function (done) {
+    it('should not apply property prefixes to property claim values', done => {
       const claim = Q2112.claims.P123456789[0]
       simplifyClaim(claim).should.equal('P207614')
       simplifyClaim(claim, { entityPrefix: null }).should.equal('P207614')
@@ -336,16 +336,16 @@ describe('simplifyClaim', function () {
     })
   })
 
-  describe('keepTypes', function () {
-    it('should return the correct value when called with keepQualifiers=true', function (done) {
+  describe('keepTypes', () => {
+    it('should return the correct value when called with keepQualifiers=true', done => {
       const simplified = simplifyClaim(Q2112.claims.P190[0], { keepTypes: true })
       simplified.should.deepEqual({ value: 'Q207614', type: 'wikibase-item' })
       done()
     })
   })
 
-  describe('qualifiers', function () {
-    it('should return the correct value when called with keepQualifiers=true', function (done) {
+  describe('qualifiers', () => {
+    it('should return the correct value when called with keepQualifiers=true', done => {
       const simplified = simplifyClaim(Q571.claims.P279[0])
       const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P279[0], { keepQualifiers: true })
       simplifiedWithQualifiers.value.should.equal(simplified)
@@ -353,7 +353,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should include qualifiers when called with keepQualifiers=true', function (done) {
+    it('should include qualifiers when called with keepQualifiers=true', done => {
       const simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true })
       simplifiedWithQualifiers.qualifiers.P973.should.be.an.Array()
       simplifiedWithQualifiers.qualifiers.P973[0].should.equal('http://mappings.dbpedia.org/index.php/OntologyClass:Book')
@@ -362,21 +362,21 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should include prefixes in qualifiers claims', function (done) {
+    it('should include prefixes in qualifiers claims', done => {
       const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { entityPrefix: 'wd', propertyPrefix: 'wdt', keepQualifiers: true })
       simplifiedWithQualifiers.qualifiers['wdt:P1365'].should.be.an.Array()
       simplifiedWithQualifiers.qualifiers['wdt:P1365'][0].should.equal('wd:Q312881')
       done()
     })
 
-    it('should include types in qualifiers claims', function (done) {
+    it('should include types in qualifiers claims', done => {
       const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { keepTypes: true, keepQualifiers: true })
       simplifiedWithQualifiers.qualifiers['P1365'].should.be.an.Array()
       simplifiedWithQualifiers.qualifiers['P1365'][0].should.deepEqual({ value: 'Q312881', type: 'wikibase-item' })
       done()
     })
 
-    it('should respect timeConverter for qualifiers claims', function (done) {
+    it('should respect timeConverter for qualifiers claims', done => {
       let simplifiedWithQualifiers = simplifyClaim(Q571.claims.P1709[0], { keepQualifiers: true, timeConverter: 'iso' })
       simplifiedWithQualifiers.qualifiers.P813.should.be.an.Array()
       simplifiedWithQualifiers.qualifiers.P813[0].should.equal('2015-06-11T00:00:00.000Z')
@@ -396,8 +396,8 @@ describe('simplifyClaim', function () {
     })
   })
 
-  describe('references', function () {
-    it('should return the correct value when called with keepReferences=true', function (done) {
+  describe('references', () => {
+    it('should return the correct value when called with keepReferences=true', done => {
       const simplified = simplifyClaim(Q2112.claims.P214[0])
       const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true })
       simplifiedWithReferences.value.should.equal(simplified)
@@ -405,7 +405,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should include references when called with keepReferences=true', function (done) {
+    it('should include references when called with keepReferences=true', done => {
       const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true })
       simplifiedWithReferences.references[0].P248.should.be.an.Array()
       simplifiedWithReferences.references[0].P248[0].should.equal('Q54919')
@@ -414,7 +414,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should include prefixes in references claims', function (done) {
+    it('should include prefixes in references claims', done => {
       const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { entityPrefix: 'wd', propertyPrefix: 'wdt', keepReferences: true })
       simplifiedWithReferences.references[0]['wdt:P248'].should.be.an.Array()
       simplifiedWithReferences.references[0]['wdt:P248'][0].should.equal('wd:Q54919')
@@ -422,8 +422,8 @@ describe('simplifyClaim', function () {
     })
   })
 
-  describe('ids', function () {
-    it('should return the correct value when called with keepIds=true', function (done) {
+  describe('ids', () => {
+    it('should return the correct value when called with keepIds=true', done => {
       const simplified = simplifyClaim(Q2112.claims.P214[0])
       const simplifiedWithIds = simplifyClaim(Q2112.claims.P214[0], { keepIds: true })
       simplifiedWithIds.value.should.equal(simplified)
@@ -431,22 +431,22 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should include ids when called with keepReferences=true', function (done) {
+    it('should include ids when called with keepReferences=true', done => {
       const simplifiedWithIds = simplifyClaim(Q2112.claims.P214[0], { keepIds: true })
       simplifiedWithIds.id.should.equal('Q2112$ECB9E5BB-B2E1-4E77-8CEE-4E9F4938EB86')
       done()
     })
   })
 
-  describe('hashes', function () {
-    it('should return the correct value when called with keepHashes=true', function (done) {
+  describe('hashes', () => {
+    it('should return the correct value when called with keepHashes=true', done => {
       const simplified = simplifyClaim(Q2112.claims.P214[0])
       const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true, keepQualifiers: true, keepHashes: true })
       simplifiedWithReferences.value.should.equal(simplified)
       done()
     })
 
-    it('should include references hashes when called with keepHashes=true', function (done) {
+    it('should include references hashes when called with keepHashes=true', done => {
       const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true, keepHashes: true })
       simplifiedWithReferences.references[0].snaks.P248.should.be.an.Array()
       simplifiedWithReferences.references[0].hash.should.equal('d6b4bc80e47def2fab91836d81e1db62c640279c')
@@ -456,7 +456,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should include qualifiers hashes when called with keepHashes=true', function (done) {
+    it('should include qualifiers hashes when called with keepHashes=true', done => {
       const simplifiedWithQualifiers = simplifyPropertyClaims(Q2112.claims.P190, { keepQualifiers: true, keepHashes: true })
       simplifiedWithQualifiers[1].qualifiers.P580[0].value.should.equal('1953-01-01T00:00:00.000Z')
       simplifiedWithQualifiers[1].qualifiers.P580[0].hash.should.equal('3d22f4dffba1ac6f66f521ea6bea924e46df4129')
@@ -464,8 +464,8 @@ describe('simplifyClaim', function () {
     })
   })
 
-  describe('rich values', function () {
-    it('should keep monolingual rich values', function (done) {
+  describe('rich values', () => {
+    it('should keep monolingual rich values', done => {
       const options = { keepRichValues: true }
       const simplified = simplifyClaim(Q328212.claims.P1477[0], options)
       simplified.text.should.equal('Veronica Roth')
@@ -473,7 +473,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should keep quantity rich values', function (done) {
+    it('should keep quantity rich values', done => {
       const options = { keepRichValues: true }
       const simplified = simplifyClaim(Q2112.claims.P2044[0], options)
       simplified.amount.should.equal(118)
@@ -484,8 +484,8 @@ describe('simplifyClaim', function () {
     })
   })
 
-  describe('time converter', function () {
-    it('should use a custom time converter when one is set', function (done) {
+  describe('time converter', () => {
+    it('should use a custom time converter when one is set', done => {
       const claim = Q646148.claims.P569[0]
       const simplifyTimeClaim = timeConverter => simplifyClaim(claim, { timeConverter })
       simplifyTimeClaim().should.equal('1939-11-08T00:00:00.000Z')
@@ -498,7 +498,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should be able to parse long dates', function (done) {
+    it('should be able to parse long dates', done => {
       const claim = Q1.claims.P580[0]
       const simplifyTimeClaim = timeConverter => simplifyClaim(claim, { timeConverter })
       simplifyTimeClaim().should.equal('-13798000000-01-01T00:00:00Z')
@@ -514,8 +514,8 @@ describe('simplifyClaim', function () {
     })
   })
 
-  describe('empty values', function () {
-    it('should return the desired novalueValue', function (done) {
+  describe('empty values', () => {
+    it('should return the desired novalueValue', done => {
       const noValueClaim = emptyValues.claims.P3984[0]
       should(simplifyClaim(noValueClaim)).not.be.ok()
       simplifyClaim(noValueClaim, { novalueValue: '-' }).should.equal('-')
@@ -523,7 +523,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should return the desired somevalueValue', function (done) {
+    it('should return the desired somevalueValue', done => {
       const someValueClaim = emptyValues.claims.P3984[1]
       should(simplifyClaim(someValueClaim)).not.be.ok()
       simplifyClaim(someValueClaim, { somevalueValue: '?' }).should.equal('?')
@@ -531,13 +531,13 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should accept null as a possible value', function (done) {
+    it('should accept null as a possible value', done => {
       const noValueClaim = emptyValues.claims.P3984[0]
       should(simplifyClaim(noValueClaim, { novalueValue: null }) === null).be.true()
       done()
     })
 
-    it('should return rich values for null values if requested', function (done) {
+    it('should return rich values for null values if requested', done => {
       simplifyClaim(emptyValues.claims.P3984[0], { keepQualifiers: true }).should.have.property('qualifiers')
       simplifyClaim(emptyValues.claims.P3984[0], { keepReferences: true }).should.have.property('references')
       simplifyClaim(emptyValues.claims.P3984[0], { keepIds: true }).should.have.property('id')
@@ -546,8 +546,8 @@ describe('simplifyClaim', function () {
     })
   })
 
-  describe('keep all', function () {
-    it('should activate all keep options', function (done) {
+  describe('keep all', () => {
+    it('should activate all keep options', done => {
       const simplified = simplifyClaim(Q2112.claims.P214[0], { keepAll: true })
       simplified.value.should.be.a.String()
       simplified.id.should.be.a.String()
@@ -561,7 +561,7 @@ describe('simplifyClaim', function () {
       done()
     })
 
-    it('should be overriden by other flags', function (done) {
+    it('should be overriden by other flags', done => {
       const simplified = simplifyClaim(Q2112.claims.P214[0], { keepAll: true, keepTypes: false })
       simplified.value.should.be.a.String()
       simplified.id.should.be.a.String()
@@ -577,8 +577,8 @@ describe('simplifyClaim', function () {
   })
 })
 
-describe('truthyClaims', function () {
-  it('should filter-out non-truthy claims', function (done) {
+describe('truthyClaims', () => {
+  it('should filter-out non-truthy claims', done => {
     const Q4115189Claims = _.cloneDeep(Q4115189.claims)
     Q4115189Claims.P135.length.should.equal(3)
     const truthyOnly = truthyClaims(Q4115189Claims)
@@ -588,8 +588,8 @@ describe('truthyClaims', function () {
   })
 })
 
-describe('truthyPropertyClaims', function () {
-  it('should filter-out non-truthy property claims', function (done) {
+describe('truthyPropertyClaims', () => {
+  it('should filter-out non-truthy property claims', done => {
     const Q4115189Claims = _.cloneDeep(Q4115189.claims)
     Q4115189Claims.P135.length.should.equal(3)
     const truthyOnly = truthyPropertyClaims(Q4115189Claims.P135)
