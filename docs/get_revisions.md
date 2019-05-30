@@ -6,7 +6,7 @@ Uses [MediaWiki Revision API](https://www.mediawiki.org/wiki/API:Revisions) to g
 // get one entity's revisions (up to 500)
 wdk.getRevisions('Q3548931')
 // get several entities' revisions (up to 500)
-wdk.getRevisions(['Q3548931', 'Q3548932'])
+wdk.getRevisions([ 'Q3548931', 'Q3548932' ])
 // get the last 10 revisions
 wdk.getRevisions('Q3548931', { limit: 10 })
 // get revisions since a precise time

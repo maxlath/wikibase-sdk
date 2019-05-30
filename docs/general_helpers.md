@@ -21,11 +21,11 @@
   - [getSitelinkUrl](#getsitelinkurl)
   - [getSitelinkData](#getsitelinkdata)
   - [isSitelinkKey](#issitelinkkey)
-- [Wikidata Time converters](#wikidata-time-converters)
-  - [wikidataTimeToDateObject](#wikidatatimetodateobject)
-  - [wikidataTimeToEpochTime](#wikidatatimetoepochtime)
-  - [wikidataTimeToISOString](#wikidatatimetoisostring)
-  - [wikidataTimeToSimpleDay](#wikidatatimetosimpleday)
+- [Wikibase Time converters](#wikibase-time-converters)
+  - [wikibaseTimeToDateObject](#wikibasetimetodateobject)
+  - [wikibaseTimeToEpochTime](#wikibasetimetoepochtime)
+  - [wikibaseTimeToISOString](#wikibasetimetoisostring)
+  - [wikibaseTimeToSimpleDay](#wikibasetimetosimpleday)
   - [getImageUrl](#getimageurl)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -129,39 +129,39 @@ isSitelinkKey('imaginarylangwiki')
 // => true
 ```
 
-## Wikidata Time converters
-> See [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times)
+## Wikibase Time converters
+> See [Wikibase time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times)
 
-### wikidataTimeToDateObject
+### wikibaseTimeToDateObject
 
-### wikidataTimeToEpochTime
+### wikibaseTimeToEpochTime
 
-### wikidataTimeToISOString
+### wikibaseTimeToISOString
 Uses [extended years following ECMAScript standard](https://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15.1)
 ```js
-var wikidataTime = '+1885-05-22T00:00:00Z'
-wdk.wikidataTimeToISOString(wikidataTime)
+var wikibaseTime = '+1885-05-22T00:00:00Z'
+wdk.wikibaseTimeToISOString(wikibaseTime)
 // => '1885-05-22T00:00:00.000Z'
 
-wikidataTime = '+0180-03-17T00:00:00Z'
-wdk.wikidataTimeToISOString(wikidataTime)
+wikibaseTime = '+0180-03-17T00:00:00Z'
+wdk.wikibaseTimeToISOString(wikibaseTime)
 // => '0180-03-17T00:00:00.000Z'
 
-wikidataTime = '-0398-00-00T00:00:00Z'
-wdk.wikidataTimeToISOString(wikidataTime)
+wikibaseTime = '-0398-00-00T00:00:00Z'
+wdk.wikibaseTimeToISOString(wikibaseTime)
 // => '-000398-01-01T00:00:00.000Z'
 
 ```
 that should also work for dates far in the past or the future:
 ```js
-wikidataTime = '-13798000000-00-00T00:00:00Z'
-wdk.wikidataTimeToISOString(wikidataTime)
+wikibaseTime = '-13798000000-00-00T00:00:00Z'
+wdk.wikibaseTimeToISOString(wikibaseTime)
 // => '-13798000000-01-01T00:00:00Z'
 
 ```
 This is the time normalizer used by `simplify.claims` functions
 
-### wikidataTimeToSimpleDay
+### wikibaseTimeToSimpleDay
 Returns dates on the format 'yyyy-mm-dd', 'yyyy-mm', 'yyyy' depending on the date precision. The benefit over the iso or the epoch format is that it preserves the precision.
 
 It is thus possible, and prefered, to pass it the full datavalue value object to let it take the precision in account:
@@ -195,11 +195,11 @@ const claims = {
 
 // Passing only the time string: the result misses the month precision
 // and thus wrongly returns the day set to '01'
-wdk.wikidataTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
+wdk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
 // => '1869-11-01'
 
 // Passing the whole value object, the function can
-wdk.wikidataTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
+wdk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
 // => '1869-11'
 ```
 

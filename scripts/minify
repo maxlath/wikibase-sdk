@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+uglifyjs dist/wikibase-sdk.js -c -m > dist/wikibase-sdk.min.js

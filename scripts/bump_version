@@ -13,7 +13,7 @@ echo "version: $tag"
 
 echo "updating build & dist..."
 npm run dist
-git add dist/wikidata-sdk.js dist/wikidata-sdk.min.js
+git add dist/wikibase-sdk.js dist/wikibase-sdk.min.js
 
 echo "amending version commit..."
 git commit --amend --no-edit

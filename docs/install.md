@@ -7,52 +7,74 @@
 
 
 - [via NPM](#via-npm)
-- [via Bower](#via-bower)
-- [The Old Way](#the-old-way)
+  - [wikibase-sdk](#wikibase-sdk)
+  - [wikidata-sdk](#wikidata-sdk)
+- [Bundles](#bundles)
+  - [wikibase-sdk](#wikibase-sdk-1)
+  - [wikidata-sdk](#wikidata-sdk-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## via NPM
-in a terminal at your project root:
+### wikibase-sdk
+In a terminal at your project root:
 
 ```sh
-npm install wikidata-sdk --save
+npm install wikibase-sdk
 ```
 
 then in your javascript project:
 ```js
-const wdk = require('wikidata-sdk')
+const wbk = require('wikibase-sdk')({
+  instance: 'https://my-wikibase-instan.se',
+  sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql'
+})
 ```
 
-## via Bower
-in a terminal at your project root:
+### wikidata-sdk
+It's basically the same, you just don't have to pass the configuration object.
+
+In a terminal at your project root:
 ```sh
-bower install wikidata-sdk --save
+npm install wikidata-sdk
+```
+then in your javascript project:
+```js
+const wbk = require('wikidata-sdk')
 ```
 
-then, in your project, include either
-```
-/bower_components/wikidata-sdk/dist/wikidata-sdk.js
-```
-or use the minified version
-```
-/bower_components/wikidata-sdk/dist/wikidata-sdk.min.js
-```
-
-this will create a global object named `wdk` (in a browser, accessible at `window.wdk`)
-
-## The Old Way
+## Bundles
+> *a.k.a the Old Way*
 
 Just download the raw package from this repository:
 ```sh
 cd /path/to/project
-wget https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/dist/wikidata-sdk.js
+# wikibase-sdk
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/dist/wikibase-sdk.js
+# wikidata-sdk
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/dist/wikidata-sdk.js
 ```
 and then in your HTML:
+### wikibase-sdk
 ```html
-<script src="/wikidata-sdk.min.js"></script>
+<!-- Initialize a global WBK function -->
+<script src="/wikibase-sdk.min.js"></script>
+<script>
+  const wbk = WBK({
+    instance: 'https://my-wikibase-instan.se',
+    sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql'
+  })
+  wbk.getEntities('Q1')
+</script>
 ```
-This will create a global object named `wdk`.
+### wikidata-sdk
+```html
+<!-- Initialize a global wdk object -->
+<script src="/wikidata-sdk.min.js"></script>
+<script>
+  wdk.getEntities('Q1')
+</script>
+```
 
 **Tip**: to work, this requires having a file server running at your project's root.
 The simplest form of such a server can be:

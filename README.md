@@ -1,6 +1,8 @@
-# Wikidata SDK
+# Wikibase SDK
 
-A javascript tool-suite to query [Wikidata](http://wikidata.org/) and simplify its results.
+A javascript tool-suite to query a [Wikibase](http://wikiba.se) instance and simplify its results.
+
+This package was primarily developed as `wikidata-sdk` but has now being generalized to support any Wikibase instance: [wikidata.org](https://www.wikidata.org) is now just one Wikibase instance among others.
 
 This project is [funded by a Wikimedia Project Grant](https://meta.wikimedia.org/wiki/Grants:Project/WikidataJS).
 
@@ -8,10 +10,11 @@ This project is [funded by a Wikimedia Project Grant](https://meta.wikimedia.org
 [![Node](https://img.shields.io/badge/node-%3E=%20v6.4.0-brightgreen.svg)](http://nodejs.org)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-[![wikidata](https://raw.githubusercontent.com/maxlath/wikidata-sdk/master/assets/wikidata.jpg)](https://wikidata.org)
+[![wikibase](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikibase.jpg)](https://wikiba.se)
+[![wikidata](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikidata.jpg)](https://wikidata.org)
 
-[![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/) [![NPM](https://nodei.co/npm-dl/wikidata-sdk.png?months=6&height=3)](https://npmjs.com/package/wikidata-sdk/)
-
+[![NPM](https://nodei.co/npm/wikibase-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikibase-sdk/)
+[![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/)
 
 ## Summary
 
@@ -19,11 +22,12 @@ This project is [funded by a Wikimedia Project Grant](https://meta.wikimedia.org
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Dependencies](#dependencies)
 - [Install](#install)
 - [Import](#import)
 - [Features](#features)
-  - [Wikidata API](#wikidata-api)
-  - [Wikidata Query](#wikidata-query)
+  - [Wikibase API](#wikibase-api)
+  - [Wikibase Query](#wikibase-query)
   - [General helpers](#general-helpers)
 - [Contributing](#contributing)
 - [Donate](#donate)
@@ -34,25 +38,40 @@ This project is [funded by a Wikimedia Project Grant](https://meta.wikimedia.org
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
+## Dependencies
+This module uses [JavaScript ES6](https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015), which means NodeJS `>= v6.4.0` or not too outdated web browsers.
+
+For older version, you can use ES5 [bundles](docs/install.md#bundles).
+
 ## Install
 ```sh
-npm install wikidata-sdk --save
+npm install wikibase-sdk
 ```
-Or see [alternative installations](docs/install.md)
 
 ## Import
-Node **>= v6.4.0**:
 ```js
-const wdk = require('wikidata-sdk')
+const wbk = require('wikibase-sdk')({
+  instance: 'https://my-wikibase-instan.se',
+  sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql'
+})
 ```
-Older versions: if you can't update to a recent NodeJS version, a work around is to use the bundled version:
+The `wdk` object of previous versions of this documentation - from the time this module was bound to wikidata.org only - thus corresponds to the following:
 ```js
-var wdk = require('path/to/node_modules/wikidata-sdk/dist/wikidata-sdk')
+const wdk = require('wikibase-sdk')({
+  instance: 'https://www.wikidata.org',
+  sparqlEndpoint: 'https://query.wikidata.org/sparql'
+})
+```
+For convenience, and for the sake of retro-compatibility, that same `wdk` object can be obtain with:
+```js
+// After having run `npm install wikidata-sdk`
+const wdk = require('wikidata-sdk')
 ```
 
 ## Features
-### Wikidata API
-A set of tools to **read** Wikidata from the [Wikidata API](https://www.wikidata.org/w/api.php). For **write** operations, see [wikidata-edit](http://github.com/maxlath/wikidata-edit).
+### Wikibase API
+A set of functions to make **read** queries to a Wikibase instance API (see [Wikidata API documentation](https://www.wikidata.org/w/api.php)).
+For **write** operations, see [wikibase-edit](http://github.com/maxlath/wikibase-edit).
 
 * **[Search entities](docs/search_entities.md)**
 * **[Get entities](docs/get_entities.md)**
@@ -65,8 +84,8 @@ A set of tools to **read** Wikidata from the [Wikidata API](https://www.wikidata
 * **Advanced**
   * [Use a custom Wikibase instance](docs/use_a_custom_wikibase_instance.md)
 
-### Wikidata Query
-[Wikidata Query](http://query.wikidata.org/) allows to extract all sorts of data from Wikidata by walking the graph of entities using [SPARQL](https://en.wikipedia.org/wiki/SPARQL). SPARQL can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a super rich [Wikidata Query Help](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Wikidata_Query_Help) page, [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), and [lots of examples](https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:SPARQL_query_service/queries/examples)!
+### Wikibase Query
+There are additional functions for Wikibase instances that have a [SPARQL](https://en.wikipedia.org/wiki/SPARQL) Query Service (such as [Wikidata Query](http://query.wikidata.org/) for wikidata.org). SPARQL can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a super rich [Wikidata Query Help](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Wikidata_Query_Help) page, [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), and [lots of examples](https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:SPARQL_query_service/queries/examples)!
 
 * **[Get JSON from a SPARQL query](docs/sparql_query.md)**
 * **[Simplify results](docs/simplify_sparql_results.md)**
@@ -76,7 +95,7 @@ A set of tools to **read** Wikidata from the [Wikidata API](https://www.wikidata
 ### General helpers
   * **[Work with ids](docs/general_helpers.md#work-with-ids)**
   * **[Sitelink helper](docs/general_helpers.md#sitelink-helpers)**
-  * **[Wikidata Time converters](docs/general_helpers.md#wikidata-time-converters)**
+  * **[Wikibase Time converters](docs/general_helpers.md#wikibase-time-converters)**
 
 ## Contributing
 **Context**
@@ -85,17 +104,17 @@ This library had for primary purpose to serve the needs of the [inventaire](http
 
 **Design constraints**
 
-* `wikidata-sdk` should stay "small" and dependency-free, so that a web application can include it in its bundle without paying a too high cost for it. A consequence is that the lib generates URLs where other libs would integrate doing the request and parsing it's response. But that actually feels quite right to do this way: simply generating the URLs let's users free to handle requests as they like (with callbacks, promises, async/await, whatever!)
-* Therefore, it should focus on providing basic, general helper functions most application working with Wikidata would need.
-* Edition operations should go into [wikidata-edit](https://github.com/maxlath/wikidata-edit) as it involves working with Wikidata credentials/tokens.
-* General command-line interface tools should go to [wikidata-cli](https://github.com/maxlath/wikidata-cli), very specific ones — [`wikidata-filter`, `import-wikidata-dump-to-couchdb`, and alikes](#see-also) — should get their own modules.
+* `wikibase-sdk` should stay "small" and dependency-free, so that a web application can include it in its bundle without paying a too high cost for it. A consequence is that the lib generates URLs where other libs would integrate doing the request and parsing it's response. But that actually feels quite right to do this way: simply generating the URLs let's users free to handle requests as they like (with callbacks, promises, async/await, whatever!)
+* Therefore, it should focus on providing basic, general helper functions most application working with a Wikibase instance would need.
+* Write operations should go into [wikibase-edit](https://github.com/maxlath/wikibase-edit) as it involves working with Wikibase credentials/tokens.
+* General command-line interface tools should go to [wikibase-cli](https://github.com/maxlath/wikibase-cli), very specific ones — [`wikidata-filter`, `import-wikidata-dump-to-couchdb`, and alikes](#see-also) — should get their own modules.
 
 ## Donate
 We are developing and maintaining tools to work with Wikidata from NodeJS, the browser, or simply the command line, with quality and ease of use at heart. Any donation will be interpreted as a "please keep going, your work is very much needed and awesome. PS: love". [Donate](https://liberapay.com/WikidataJS)
 
 ## See Also
-* [wikidata-edit](https://github.com/maxlath/wikidata-edit): Edit Wikidata from NodeJS
-* [wikidata-cli](https://github.com/maxlath/wikidata-cli): The command-line interface to Wikidata
+* [wikibase-edit](https://github.com/maxlath/wikibase-edit): Edit a Wikibase instance from NodeJS
+* [wikibase-cli](https://github.com/maxlath/wikibase-cli): The command-line interface to Wikibase instances
 * [wikidata-filter](https://github.com/maxlath/wikidata-filter): A command-line tool to filter a Wikidata dump by claim
 * [wikidata-subset-search-engine](https://github.com/inventaire/wikidata-subset-search-engine): Tools to setup an ElasticSearch instance fed with subsets of Wikidata
 * [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy): Command-line tool to extract taxonomies from Wikidata
