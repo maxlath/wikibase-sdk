@@ -1,11 +1,15 @@
-#!/usr/bin/env zsh
-npm run lint &&
-npm test &&
+#!/usr/bin/env bash
+
+set -eu
+
+npm run lint
+npm test
 npm run dist
 
 # verify that the build produced no modified file
 [ -z "$(git status --porcelain |grep M)" ] || {
-# otherwise, it's that the version was bumped without updating build & dist before
-echo -e "\e[0;31mGit directory not clean: always manage versions with bump-version script\e[0m" && exit 1 }
+  # otherwise, it's that the version was bumped without updating build & dist before
+  echo -e "\e[0;31mGit directory not clean: always manage versions with bump-version script\e[0m" && exit 1 ;
+}
 
 echo 'done prepublishing...'
