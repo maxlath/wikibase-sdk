@@ -1,6 +1,7 @@
 require('should')
 
-const searchEntities = require('../lib/queries/search_entities')
+const { buildUrl } = require('./lib/tests_env')
+const searchEntities = require('../lib/queries/search_entities')(buildUrl)
 
 describe('wikidata searchEntities', () => {
   describe('action', () => {

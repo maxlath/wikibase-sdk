@@ -1,6 +1,6 @@
 require('should')
-
-const wdSparqlQuery = require('../lib/queries/sparql_query')
+const { sparqlEndpoint } = require('./lib/tests_env')
+const wdSparqlQuery = require('../lib/queries/sparql_query')(sparqlEndpoint)
 
 const sparqlExemple = `
   PREFIX wikibase: <http://wikiba.se/ontology#>

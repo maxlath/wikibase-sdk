@@ -1,8 +1,10 @@
 const should = require('should')
-const getRevisions = require('../lib/queries/get_revisions')
 const qs = require('querystring')
 const sinceYesterdayInMilliSeconds = new Date().getTime() - 24 * 60 * 60 * 1000
 const sinceYesterdayInSeconds = Math.trunc(sinceYesterdayInMilliSeconds / 1000)
+
+const { buildUrl } = require('./lib/tests_env')
+const getRevisions = require('../lib/queries/get_revisions')(buildUrl)
 
 describe('getRevisions', () => {
   it('should return a revision query url', done => {

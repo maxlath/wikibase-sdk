@@ -1,7 +1,8 @@
 const should = require('should')
 const _ = require('lodash')
 
-const getManyEntities = require('../lib/queries/get_many_entities')
+const { buildUrl } = require('./lib/tests_env')
+const getManyEntities = require('../lib/queries/get_many_entities')(buildUrl)
 const manyIds = _.range(1, 80).map(id => `Q${id}`)
 
 describe('wikidata getManyEntities', () => {

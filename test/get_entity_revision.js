@@ -1,6 +1,8 @@
 require('should')
-const getEntityRevision = require('../lib/queries/get_entity_revision')
 const qs = require('querystring')
+
+const { instance } = require('./lib/tests_env')
+const getEntityRevision = require('../lib/queries/get_entity_revision')(instance)
 
 describe('getEntityRevision', () => {
   it('should reject an invalid entity id', done => {

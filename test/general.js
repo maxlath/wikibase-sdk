@@ -1,10 +1,34 @@
 require('should')
-const wdk = require('../lib/index')
+const wbkBuilder = require('../lib/index')
+const { instance, sparqlEndpoint } = require('./lib/tests_env')
 
-describe('general', () => {
-  it('env', done => {
+describe('builder', () => {
+  it('should be a function', done => {
+    wbkBuilder.should.be.a.Function()
+    done()
+  })
+
+  it('should throw when initialized without a config', done => {
+    wbkBuilder.should.throw()
+    done()
+  })
+
+  it('should throw when initialized with an invalid instance', done => {
+    (() => wbkBuilder({ instance: 'foo' })).should.throw('invalid instance: foo')
+    done()
+  })
+
+  it('should throw when initialized with an invalid sparql endpoint', done => {
+    (() => wbkBuilder({ instance, sparqlEndpoint: 'foo' })).should.throw('invalid sparqlEndpoint: foo')
+    done()
+  })
+})
+
+describe('index', () => {
+  it('should give access to all the function', done => {
+    const wdk = wbkBuilder({ instance, sparqlEndpoint })
+
     wdk.should.be.an.Object()
-    const { parse } = wdk
 
     wdk.searchEntities.should.be.a.Function()
     wdk.getEntities.should.be.a.Function()
@@ -39,9 +63,9 @@ describe('general', () => {
     wdk.simplifyClaims.should.be.a.Function()
     wdk.simplifySparqlResults.should.be.a.Function()
 
-    parse.should.be.an.Object()
-    parse.wd.should.be.an.Object()
-    parse.wd.entities.should.be.an.Function()
+    wdk.parse.should.be.an.Object()
+    wdk.parse.wd.should.be.an.Object()
+    wdk.parse.wd.entities.should.be.an.Function()
 
     wdk.getWikidataIdsFromWikipediaTitles.should.be.a.Function()
 

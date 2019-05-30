@@ -1,6 +1,7 @@
 const should = require('should')
 const qs = require('querystring')
-const getIds = require('../lib/queries/get_entities_from_sitelinks')
+const { buildUrl } = require('./lib/tests_env')
+const getIds = require('../lib/queries/get_entities_from_sitelinks')(buildUrl)
 
 describe('wikidata getEntitiesFromSitelinks', () => {
   describe('polymorphism', () => {
