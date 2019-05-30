@@ -4,7 +4,6 @@
   "description": "A javascript tool-suite to query wikibase and simplify its results",
   "main": "lib/wikibase-sdk.js",
   "files": [
-    "dist",
     "lib",
     "types/**/*.d.ts"
   ],
