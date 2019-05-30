@@ -1,32 +1,32 @@
 require('should')
-const wbkBuilder = require('../lib/index')
+const WBK = require('../lib/wikibase-sdk')
 const { instance, sparqlEndpoint } = require('./lib/tests_env')
 
 describe('builder', () => {
   it('should be a function', done => {
-    wbkBuilder.should.be.a.Function()
+    WBK.should.be.a.Function()
     done()
   })
 
   it('should throw when initialized without a config', done => {
-    wbkBuilder.should.throw()
+    WBK.should.throw()
     done()
   })
 
   it('should throw when initialized with an invalid instance', done => {
-    (() => wbkBuilder({ instance: 'foo' })).should.throw('invalid instance: foo')
+    (() => WBK({ instance: 'foo' })).should.throw('invalid instance: foo')
     done()
   })
 
   it('should throw when initialized with an invalid sparql endpoint', done => {
-    (() => wbkBuilder({ instance, sparqlEndpoint: 'foo' })).should.throw('invalid sparqlEndpoint: foo')
+    (() => WBK({ instance, sparqlEndpoint: 'foo' })).should.throw('invalid sparqlEndpoint: foo')
     done()
   })
 })
 
 describe('index', () => {
   it('should give access to all the function', done => {
-    const wdk = wbkBuilder({ instance, sparqlEndpoint })
+    const wdk = WBK({ instance, sparqlEndpoint })
 
     wdk.should.be.an.Object()
 
