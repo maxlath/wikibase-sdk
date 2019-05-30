@@ -12,6 +12,7 @@
 - [Bundles](#bundles)
   - [wikibase-sdk](#wikibase-sdk-1)
   - [wikidata-sdk](#wikidata-sdk-1)
+  - [tip](#tip)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -46,16 +47,14 @@ const wbk = require('wikidata-sdk')
 ## Bundles
 > *a.k.a the Old Way*
 
+### wikibase-sdk
 Just download the raw package from this repository:
 ```sh
 cd /path/to/project
 # wikibase-sdk
-wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/dist/wikibase-sdk.js
-# wikidata-sdk
-wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/dist/wikidata-sdk.js
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikibase-sdk.min.js
 ```
 and then in your HTML:
-### wikibase-sdk
 ```html
 <!-- Initialize a global WBK function -->
 <script src="/wikibase-sdk.min.js"></script>
@@ -68,15 +67,24 @@ and then in your HTML:
 </script>
 ```
 ### wikidata-sdk
+Download both `wikibase-sdk.min.js` and `wikidata-sdk.min.js`
+```sh
+cd /path/to/project
+# wikibase-sdk
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikibase-sdk.min.js
+```
+and then in your HTML:
 ```html
+<!-- Initialize a global WBK function -->
+<script src="/wikibase-sdk.min.js"></script>
 <!-- Initialize a global wdk object -->
 <script src="/wikidata-sdk.min.js"></script>
 <script>
   wdk.getEntities('Q1')
 </script>
 ```
-
-**Tip**: to work, this requires having a file server running at your project's root.
+### tip
+To work, this requires having a file server running at your project's root.
 The simplest form of such a server can be:
 ```sh
 cd /path/to/project
