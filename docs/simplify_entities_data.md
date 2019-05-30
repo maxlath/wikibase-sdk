@@ -44,11 +44,11 @@ wdk.simplify.entity(entity, simplificationOptions)
 ## Simplify entities
 Same as [`wdk.simplify.entity`](#simplify-entity), but accepts the all the entities sent by the Wikidata API at once:
 ```js
-const url = wdk.getEntities(['Q1', 'Q2', 'Q3'])
+const url = wdk.getEntities([ 'Q1', 'Q2', 'Q3' ])
 fetch(url)
 .then(res => {
   const { entities } = res.json()
-  # simplificationOptions: see wdk.simplify.entity doc above
+  // simplificationOptions: see wdk.simplify.entity doc above
   const simplifiedEntities = wdk.simplify.entities(entities, simplificationOptions)
 })
 ```

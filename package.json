@@ -1,7 +1,7 @@
 {
-  "name": "wikidata-sdk",
+  "name": "wikibase-sdk",
   "version": "6.7.0",
-  "description": "A javascript tool-suite to query Wikidata and simplify its results",
+  "description": "A javascript tool-suite to query wikibase and simplify its results",
   "main": "lib/index.js",
   "files": [
     "dist",
@@ -17,23 +17,21 @@
   "scripts": {
     "test": "mocha",
     "test-types": "tsc",
-    "test-watch": "mocha --watch",
     "lint": "standard",
-    "build": "browserify lib/index.js -s wdk -o dist/wikidata-sdk.js -t [ babelify --presets [ es2015 ] ]",
-    "minify": "uglifyjs dist/wikidata-sdk.js -c -m > dist/wikidata-sdk.min.js",
+    "build": "./scripts/build",
+    "minify": "./scripts/minify",
     "dist": "npm run build && npm run minify",
     "prepublishOnly": "./scripts/prepublish",
     "postpublish": "git push --tags",
-    "update-bower": "./scripts/update_bower",
     "bump-version": "./scripts/bump_version",
     "update-toc": "./scripts/update_toc",
     "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
     "add-fixture-entity": "./scripts/add_fixture_entity",
-    "check-supported-types": "./scripts/check_supported_types"
+    "check-supported-datatypes": "./scripts/check_supported_datatypes"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/maxlath/wikidata-sdk"
+    "url": "https://github.com/maxlath/wikibase-sdk"
   },
   "keywords": [
     "wikidata",
@@ -47,9 +45,9 @@
   "author": "maxlath",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maxlath/wikidata-sdk/issues"
+    "url": "https://github.com/maxlath/wikibase-sdk/issues"
   },
-  "homepage": "https://github.com/maxlath/wikidata-sdk",
+  "homepage": "https://github.com/maxlath/wikibase-sdk",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",

@@ -1,10 +1,34 @@
 require('should')
-const wdk = require('../lib/index')
+const wbkBuilder = require('../lib/index')
+const { instance, sparqlEndpoint } = require('./lib/tests_env')
 
-describe('general', () => {
-  it('env', done => {
+describe('builder', () => {
+  it('should be a function', done => {
+    wbkBuilder.should.be.a.Function()
+    done()
+  })
+
+  it('should throw when initialized without a config', done => {
+    wbkBuilder.should.throw()
+    done()
+  })
+
+  it('should throw when initialized with an invalid instance', done => {
+    (() => wbkBuilder({ instance: 'foo' })).should.throw('invalid instance: foo')
+    done()
+  })
+
+  it('should throw when initialized with an invalid sparql endpoint', done => {
+    (() => wbkBuilder({ instance, sparqlEndpoint: 'foo' })).should.throw('invalid sparqlEndpoint: foo')
+    done()
+  })
+})
+
+describe('index', () => {
+  it('should give access to all the function', done => {
+    const wdk = wbkBuilder({ instance, sparqlEndpoint })
+
     wdk.should.be.an.Object()
-    const { parse } = wdk
 
     wdk.searchEntities.should.be.a.Function()
     wdk.getEntities.should.be.a.Function()
@@ -13,8 +37,6 @@ describe('general', () => {
     wdk.getReverseClaims.should.be.a.Function()
     wdk.getRevisions.should.be.a.Function()
     wdk.getEntitiesFromSitelinks.should.be.a.Function()
-    // Legacy
-    wdk.getWikidataIdsFromSitelinks.should.be.a.Function()
 
     wdk.simplify.should.be.a.Object()
     wdk.simplify.entity.should.be.a.Function()
@@ -33,17 +55,9 @@ describe('general', () => {
     wdk.truthyClaims.should.be.a.Function()
     wdk.truthyPropertyClaims.should.be.a.Function()
 
-    // Legacy
-    wdk.simplifyClaim.should.be.a.Function()
-    wdk.simplifyPropertyClaims.should.be.a.Function()
-    wdk.simplifyClaims.should.be.a.Function()
-    wdk.simplifySparqlResults.should.be.a.Function()
-
-    parse.should.be.an.Object()
-    parse.wd.should.be.an.Object()
-    parse.wd.entities.should.be.an.Function()
-
-    wdk.getWikidataIdsFromWikipediaTitles.should.be.a.Function()
+    wdk.parse.should.be.an.Object()
+    wdk.parse.wd.should.be.an.Object()
+    wdk.parse.wd.entities.should.be.an.Function()
 
     wdk.isEntityId.should.be.a.Function()
     wdk.isItemId.should.be.a.Function()
@@ -51,17 +65,13 @@ describe('general', () => {
     wdk.isNumericId.should.be.a.Function()
     wdk.isGuid.should.be.a.Function()
     wdk.getNumericId.should.be.a.Function()
-    wdk.wikidataTimeToDateObject.should.be.a.Function()
-    wdk.wikidataTimeToEpochTime.should.be.a.Function()
-    wdk.wikidataTimeToISOString.should.be.a.Function()
-
     wdk.isEntityId.should.be.a.Function()
     wdk.isItemId.should.be.a.Function()
     wdk.isPropertyId.should.be.a.Function()
-    wdk.wikidataTimeToDateObject.should.be.a.Function()
-    wdk.wikidataTimeToEpochTime.should.be.a.Function()
-    wdk.wikidataTimeToISOString.should.be.a.Function()
-    wdk.wikidataTimeToSimpleDay.should.be.a.Function()
+    wdk.wikibaseTimeToDateObject.should.be.a.Function()
+    wdk.wikibaseTimeToEpochTime.should.be.a.Function()
+    wdk.wikibaseTimeToISOString.should.be.a.Function()
+    wdk.wikibaseTimeToSimpleDay.should.be.a.Function()
     wdk.getSitelinkUrl.should.be.a.Function()
     wdk.getSitelinkData.should.be.a.Function()
     wdk.isSitelinkKey.should.be.a.Function()

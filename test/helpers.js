@@ -1,6 +1,6 @@
 require('should')
 
-const { wikidataTimeToEpochTime, wikidataTimeToISOString, wikidataTimeToSimpleDay, isEntityId, isItemId, isPropertyId, getImageUrl, isGuid } = require('../lib/helpers/helpers')
+const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, getImageUrl, isGuid } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -12,7 +12,7 @@ describe('helpers', () => {
   const negativeWdTime = '-0044-03-15T00:00:00Z'
   const negativeEpoch = -63549360000000
 
-  describe('wikidataTimeToEpochTime', () => {
+  describe('wikibaseTimeToEpochTime', () => {
     it('env', done => {
       new Date(epoch).toISOString().should.equal(ISOtime)
       new Date(negativeEpoch).toISOString().should.equal(ISOnegativeTime)
@@ -20,139 +20,139 @@ describe('helpers', () => {
     })
 
     it('should return a number (epoch time)', done => {
-      wikidataTimeToEpochTime(wdTime).should.be.a.Number()
+      wikibaseTimeToEpochTime(wdTime).should.be.a.Number()
       done()
     })
 
     it('should return a number for negative time', done => {
-      wikidataTimeToEpochTime(negativeWdTime).should.be.a.Number()
+      wikibaseTimeToEpochTime(negativeWdTime).should.be.a.Number()
       done()
     })
 
     it('should return the right number', done => {
-      wikidataTimeToEpochTime(wdTime).should.equal(epoch)
+      wikibaseTimeToEpochTime(wdTime).should.equal(epoch)
       done()
     })
 
     it('should return the right number for negative time too', done => {
-      wikidataTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
+      wikibaseTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
       done()
     })
 
     it('should accept a value object', done => {
-      wikidataTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)
+      wikibaseTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal(-3160944000000)
-      wikidataTimeToEpochTime(Q970917.claims.P569[1].mainsnak.datavalue.value)
+      wikibaseTimeToEpochTime(Q970917.claims.P569[1].mainsnak.datavalue.value)
       .should.equal(657417600000)
-      wikidataTimeToEpochTime(Q970917.claims.P569[2].mainsnak.datavalue.value)
+      wikibaseTimeToEpochTime(Q970917.claims.P569[2].mainsnak.datavalue.value)
       .should.equal(631152000000)
       done()
     })
   })
 
-  describe('wikidataTimeToISOString', () => {
-    it('should convert wikidata date to ISO date', done => {
-      wikidataTimeToISOString('+1885-05-22T00:00:00Z')
+  describe('wikibaseTimeToISOString', () => {
+    it('should convert wikibase date to ISO date', done => {
+      wikibaseTimeToISOString('+1885-05-22T00:00:00Z')
       .should.equal('1885-05-22T00:00:00.000Z')
 
-      wikidataTimeToISOString('+0180-03-17T00:00:00Z')
+      wikibaseTimeToISOString('+0180-03-17T00:00:00Z')
       .should.equal('0180-03-17T00:00:00.000Z')
 
-      wikidataTimeToISOString('-0398-00-00T00:00:00Z')
+      wikibaseTimeToISOString('-0398-00-00T00:00:00Z')
       .should.equal('-000398-01-01T00:00:00.000Z')
 
-      wikidataTimeToISOString('-34000-00-00T00:00:00Z')
+      wikibaseTimeToISOString('-34000-00-00T00:00:00Z')
       .should.equal('-034000-01-01T00:00:00.000Z')
 
-      wikidataTimeToISOString('+34000-00-00T00:00:00Z')
+      wikibaseTimeToISOString('+34000-00-00T00:00:00Z')
       .should.equal('+034000-01-01T00:00:00.000Z')
 
       done()
     })
 
     it('should return a valid time for possible invalid dates', done => {
-      wikidataTimeToISOString('+1953-00-00T00:00:00Z')
+      wikibaseTimeToISOString('+1953-00-00T00:00:00Z')
       .should.equal('1953-01-01T00:00:00.000Z')
 
-      wikidataTimeToISOString('+1953-11-00T00:00:00Z')
+      wikibaseTimeToISOString('+1953-11-00T00:00:00Z')
       .should.equal('1953-11-01T00:00:00.000Z')
       done()
     })
 
     it('should return a valid time even for possible invalid negative date', done => {
-      wikidataTimeToISOString('-1953-00-00T00:00:00Z')
+      wikibaseTimeToISOString('-1953-00-00T00:00:00Z')
       .should.equal('-001953-01-01T00:00:00.000Z')
 
-      wikidataTimeToISOString('-1953-11-00T00:00:00Z')
+      wikibaseTimeToISOString('-1953-11-00T00:00:00Z')
       .should.equal('-001953-11-01T00:00:00.000Z')
       done()
     })
 
     it('should return a valid time for dates far in the past', done => {
-      wikidataTimeToISOString('-13798000000-00-00T00:00:00Z')
+      wikibaseTimeToISOString('-13798000000-00-00T00:00:00Z')
       .should.equal('-13798000000-01-01T00:00:00Z')
 
-      wikidataTimeToISOString('-13798000000-02-00T00:00:00Z')
+      wikibaseTimeToISOString('-13798000000-02-00T00:00:00Z')
       .should.equal('-13798000000-02-01T00:00:00Z')
 
-      wikidataTimeToISOString('-13798000000-02-07T15:00:00Z')
+      wikibaseTimeToISOString('-13798000000-02-07T15:00:00Z')
       .should.equal('-13798000000-02-07T15:00:00Z')
       done()
     })
 
     it('should return a valid time for dates far in the future', done => {
-      wikidataTimeToISOString('+13798000000-00-00T00:00:00Z')
+      wikibaseTimeToISOString('+13798000000-00-00T00:00:00Z')
       .should.equal('+13798000000-01-01T00:00:00Z')
 
-      wikidataTimeToISOString('+13798000000-02-00T00:00:00Z')
+      wikibaseTimeToISOString('+13798000000-02-00T00:00:00Z')
       .should.equal('+13798000000-02-01T00:00:00Z')
 
-      wikidataTimeToISOString('+13798000000-02-07T15:00:00Z')
+      wikibaseTimeToISOString('+13798000000-02-07T15:00:00Z')
       .should.equal('+13798000000-02-07T15:00:00Z')
       done()
     })
 
     it('should accept a value object', done => {
-      wikidataTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)
+      wikibaseTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal('1869-11-01T00:00:00.000Z')
-      wikidataTimeToISOString(Q970917.claims.P569[1].mainsnak.datavalue.value)
+      wikibaseTimeToISOString(Q970917.claims.P569[1].mainsnak.datavalue.value)
       .should.equal('1990-11-01T00:00:00.000Z')
-      wikidataTimeToISOString(Q970917.claims.P569[2].mainsnak.datavalue.value)
+      wikibaseTimeToISOString(Q970917.claims.P569[2].mainsnak.datavalue.value)
       .should.equal('1990-01-01T00:00:00.000Z')
       done()
     })
   })
 
-  describe('wikidataTimeToSimpleDay', () => {
-    it('should convert wikidata date with year precision to simple-day', done => {
-      wikidataTimeToSimpleDay('+1953-00-00T00:00:00Z').should.equal('1953')
-      wikidataTimeToSimpleDay('-1953-00-00T00:00:00Z').should.equal('-1953')
-      wikidataTimeToSimpleDay('+13-00-00T00:00:00Z').should.equal('13')
-      wikidataTimeToSimpleDay('-13-00-00T00:00:00Z').should.equal('-13')
-      wikidataTimeToSimpleDay('-0100-00-00T00:00:00Z').should.equal('-100')
+  describe('wikibaseTimeToSimpleDay', () => {
+    it('should convert wikibase date with year precision to simple-day', done => {
+      wikibaseTimeToSimpleDay('+1953-00-00T00:00:00Z').should.equal('1953')
+      wikibaseTimeToSimpleDay('-1953-00-00T00:00:00Z').should.equal('-1953')
+      wikibaseTimeToSimpleDay('+13-00-00T00:00:00Z').should.equal('13')
+      wikibaseTimeToSimpleDay('-13-00-00T00:00:00Z').should.equal('-13')
+      wikibaseTimeToSimpleDay('-0100-00-00T00:00:00Z').should.equal('-100')
       done()
     })
 
-    it('should convert wikidata date with month precision to simple-day', done => {
-      wikidataTimeToSimpleDay('+1953-01-00T00:00:00Z').should.equal('1953-01')
-      wikidataTimeToSimpleDay('-1953-01-00T00:00:00Z').should.equal('-1953-01')
-      wikidataTimeToSimpleDay('+13-01-00T00:00:00Z').should.equal('13-01')
-      wikidataTimeToSimpleDay('-13-01-00T00:00:00Z').should.equal('-13-01')
-      wikidataTimeToSimpleDay('-0044-03-00T00:00:00Z').should.equal('-44-03')
+    it('should convert wikibase date with month precision to simple-day', done => {
+      wikibaseTimeToSimpleDay('+1953-01-00T00:00:00Z').should.equal('1953-01')
+      wikibaseTimeToSimpleDay('-1953-01-00T00:00:00Z').should.equal('-1953-01')
+      wikibaseTimeToSimpleDay('+13-01-00T00:00:00Z').should.equal('13-01')
+      wikibaseTimeToSimpleDay('-13-01-00T00:00:00Z').should.equal('-13-01')
+      wikibaseTimeToSimpleDay('-0044-03-00T00:00:00Z').should.equal('-44-03')
       done()
     })
 
-    it('should convert wikidata date with day precision or finer to simple-day', done => {
-      wikidataTimeToSimpleDay('+1953-01-01T00:00:00Z').should.equal('1953-01-01')
-      wikidataTimeToSimpleDay('-1953-01-01T00:00:00Z').should.equal('-1953-01-01')
-      wikidataTimeToSimpleDay('+1953-01-01T13:45:00Z').should.equal('1953-01-01')
-      wikidataTimeToSimpleDay('-1953-01-01T13:45:00Z').should.equal('-1953-01-01')
-      wikidataTimeToSimpleDay('-0044-03-01T00:00:00Z').should.equal('-44-03-01')
+    it('should convert wikibase date with day precision or finer to simple-day', done => {
+      wikibaseTimeToSimpleDay('+1953-01-01T00:00:00Z').should.equal('1953-01-01')
+      wikibaseTimeToSimpleDay('-1953-01-01T00:00:00Z').should.equal('-1953-01-01')
+      wikibaseTimeToSimpleDay('+1953-01-01T13:45:00Z').should.equal('1953-01-01')
+      wikibaseTimeToSimpleDay('-1953-01-01T13:45:00Z').should.equal('-1953-01-01')
+      wikibaseTimeToSimpleDay('-0044-03-01T00:00:00Z').should.equal('-44-03-01')
       done()
     })
 
     it('should accept a value object', done => {
-      wikidataTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)
+      wikibaseTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal('1869-11')
       done()
     })

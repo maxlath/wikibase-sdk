@@ -1,6 +1,6 @@
 # Search entities
 
-*associated Wikidata doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
+*associated Wikibase API doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
 
 ```js
 const url = wdk.searchEntities('Ingmar Bergman')

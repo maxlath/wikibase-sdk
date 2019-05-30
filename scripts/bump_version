@@ -11,13 +11,9 @@ npm version $1
 tag=$(cat package.json | jd version | sed -e "s/'//g" | sed -e "s/^/v/")
 echo "version: $tag"
 
-echo "updating bower..."
-npm run update-bower
-git add bower.json
-
 echo "updating build & dist..."
 npm run dist
-git add dist/wikidata-sdk.js dist/wikidata-sdk.min.js
+git add dist/wikibase-sdk.js dist/wikibase-sdk.min.js
 
 echo "amending version commit..."
 git commit --amend --no-edit

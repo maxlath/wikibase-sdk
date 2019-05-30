@@ -9,8 +9,7 @@
 - [By ids](#by-ids)
   - [Get many entities by ids](#get-many-entities-by-ids)
   - [By id and revision](#by-id-and-revision)
-- [By Wikipedia titles](#by-wikipedia-titles)
-- [By other Wikimedia projects titles](#by-other-wikimedia-projects-titles)
+- [By Sitelinks](#by-sitelinks)
 - [Examples](#examples)
   - [A little Promises workflow demo](#a-little-promises-workflow-demo)
 
@@ -18,14 +17,14 @@
 
 
 ## By ids
-*associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
+*associated Wikibase API doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
 on the same pattern
 
 ```js
-const ids = 'Q571' // could also be several ids as an array: ['Q1', 'Q5', 'Q571']
-const languages = ['en', 'fr', 'de'] // returns all languages if not specified
-const props = ['info', 'claims'] // returns all data if not specified
+const ids = 'Q571' // could also be several ids as an array: [ 'Q1', 'Q5', 'Q571' ]
+const languages = [ 'en', 'fr', 'de' ] // returns all languages if not specified
+const props = [ 'info', 'claims' ] // returns all data if not specified
 const format = 'xml' // defaults to json
 const redirections = false // defaults to true
 const url = wdk.getEntities(ids, languages, props, format, redirections)
@@ -39,9 +38,9 @@ ids, languages, props can get either one single value as a string or several val
 And Again, this can also be passed as an object:
 ```js
 const url = wdk.getEntities({
-  ids: ['Q1', 'Q5', 'Q571'],
-  languages: ['en', 'fr', 'de'], // returns all languages if not specified
-  props: ['info', 'claims'], // returns all data if not specified
+  ids: [ 'Q1', 'Q5', 'Q571' ],
+  languages: [ 'en', 'fr', 'de' ], // returns all languages if not specified
+  props: [ 'info', 'claims' ], // returns all data if not specified
   format: 'xml', // defaults to json
   redirections: false // defaults to true
 })
@@ -53,14 +52,14 @@ You can use `wdk.getManyEntities` instead to generate several request urls to wo
 
 The arguments API is the same as getEntities:
 ```js
-const urls = wdk.getManyEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'])
+const urls = wdk.getManyEntities([ 'Q1', 'Q2', 'Q3', ..., 'Q123' ])
 // or
-const urls = wdk.getManyEntities(['Q1', 'Q2', 'Q3', ..., 'Q123'], ['en', 'fr', 'de'], ['info', 'claims'], 'json', false)
+const urls = wdk.getManyEntities([ 'Q1', 'Q2', 'Q3', ..., 'Q123' ], [ 'en', 'fr', 'de' ], [ 'info', 'claims' ], 'json', false)
 // or
 const urls = wdk.getManyEntities({
-  ids: ['Q1', 'Q2', 'Q3', ..., 'Q123'],
-  languages: ['en', 'fr', 'de'],
-  props: ['info', 'claims'],
+  ids: [ 'Q1', 'Q2', 'Q3', ..., 'Q123' ],
+  languages: [ 'en', 'fr', 'de' ],
+  props: [ 'info', 'claims' ],
   format: 'json',
   redirections: false // defaults to true
 })
@@ -83,54 +82,43 @@ The revision id can be obtained using [`wdk.getRevisions`](https://github.com/ma
 
 The returned data can then be [simplified](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-entities-data) as for normal entity data.
 
-## By Wikipedia titles
-*associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
+## By Sitelinks
+*associated Wikibase API doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
 
-This can be very useful when you work with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides:
+Typical usecase: you're working with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides: you can fetch the entities on Wikidata using the Wikipedia articles titles:
 ```js
-const url = wdk.getWikidataIdsFromWikipediaTitles('Hamburg')
+const url = wdk.getEntitiesFromSitelinks('Hamburg')
 //=> 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg&sites=enwiki&format=json'
 
-const url = wdk.getWikidataIdsFromWikipediaTitles(['Hamburg', 'Lyon', 'Berlin'])
+const url = wdk.getEntitiesFromSitelinks([ 'Hamburg', 'London', 'Lisbon' ])
 // => 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg%7CLyon%7CBerlin&sites=enwiki&format=json'
 ```
 
 By default, it looks in the English Wikipedia, but we can change that:
 ```js
-const titles = 'Hamburg'
-const sites = 'dewiki' // or you can just pass the 2-letters language codes: 'de'
-const languages = ['en', 'fr', 'de'] // those are the languages in which we would like the entities data
-const props = ['info', 'claims']
-const format = 'json'
-const redirections = false // defaults to true
-const url = wdk.getWikidataIdsFromWikipediaTitles(titles, sites, languages, props, format, redirections)
+const url = wdk.getEntitiesFromSitelinks([ 'Hambourg', 'Londres', 'Lisbonne' ], 'frwiki')
+// => 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg%7CLyon%7CBerlin&sites=enwiki&format=json'
 ```
-or using the object interface:
+You can customize different things by passing more arguments
 ```js
-const url = wdk.getWikidataIdsFromWikipediaTitles({
+const titles = 'Hamburg'
+const sites = 'enwikivoyage'
+const languages = [ 'en', 'fr', 'de' ] // those are the languages in which we would like the entities data
+const props = [ 'info', 'claims' ] // default: info, sitelinks, aliases, labels, descriptions, claims, datatype
+const format = 'json' // default: json
+const redirections = false // default: true
+const url = wdk.getEntitiesFromSitelinks(titles, sites, languages, props, format, redirections)
+```
+or by using the object interface:
+```js
+const url = wdk.getEntitiesFromSitelinks({
   titles: 'Hamburg',
-  sites: 'dewiki',
-  languages: ['en', 'fr', 'de'],
-  props: ['info', 'claims'],
-  format: 'json',
+  sites: 'enwikivoyage',
+  languages: [ 'en', 'fr', 'de' ],
+  props: [ 'info', 'claims' ],
+  format: 'json', // defaults to json
   redirections: false // defaults to true
 })
-```
-
-## By other Wikimedia projects titles
-*associated Wikidata doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*
-
-This is exactly the same interface as with `getWikidataIdsFromWikipediaTitles`, you just need to specify the sitelink in the form `{2 letters language code}{project}`
-
-```js
-const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'frwikisource')
-```
-
-Actually, `getWikidataIdsFromWikipediaTitles` is just an alias of `getEntitiesFromSitelinks`, so you can use it for Wikipedia too:
-```js
-const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'frwiki')
-// or given it defauts to the Wikipedia project:
-const url = wdk.getEntitiesFromSitelinks('Victor Hugo', 'fr')
 ```
 
 ## Examples

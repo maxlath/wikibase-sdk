@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+browserify lib/index.js -s WBK -o dist/wikibase-sdk.js -t [ babelify --presets [ es2015 ] ]

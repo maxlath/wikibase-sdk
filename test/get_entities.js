@@ -1,7 +1,8 @@
 const should = require('should')
 const qs = require('querystring')
 
-const getEntities = require('../lib/queries/get_entities')
+const { buildUrl } = require('./lib/tests_env')
+const getEntities = require('../lib/queries/get_entities')(buildUrl)
 
 describe('wikidata getEntities', () => {
   describe('polymorphism', () => {

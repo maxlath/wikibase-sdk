@@ -1,5 +1,5 @@
 # Simplify claims
-*associated Wikidata doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
+*associated Wikibase doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
 
 `simplify.claims` functions are part of the larger [`simplify.entity` functions family](simplify_entities_data.md)
 
