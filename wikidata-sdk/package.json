@@ -26,10 +26,11 @@
   },
   "homepage": "https://github.com/maxlath/wikidata-sdk",
   "dependencies": {
-    "typescript": "^3.5.1",
-    "wikibase-sdk": "^7.0.0"
+    "wikibase-sdk": "^7.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^3.5.1"
+  },
   "engines": {
     "node": ">= 6.4"
   }
