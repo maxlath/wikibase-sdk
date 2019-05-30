@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+git push --tags
+
+wbk_version=$(node -p 'require("./package.json").version')
+
+cd ./wikidata-sdk
+npm install "wikibase-sdk@${wbk_version}"
+npm version "$wbk_version"
+npm publish
+git add package*.json
+git commit -m 'wikidata-sdk: updated'

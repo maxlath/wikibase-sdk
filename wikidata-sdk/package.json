@@ -1,0 +1,36 @@
+{
+  "name": "wikidata-sdk",
+  "version": "7.0.0",
+  "description": "A javascript tool-suite to query Wikidata and simplify its results",
+  "main": "./wikidata-sdk.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "test-types": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxlath/wikidata-sdk"
+  },
+  "keywords": [
+    "wikidata",
+    "sdk",
+    "api",
+    "wdq",
+    "sparql",
+    "wdk"
+  ],
+  "author": "maxlath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxlath/wikidata-sdk/issues"
+  },
+  "homepage": "https://github.com/maxlath/wikidata-sdk",
+  "dependencies": {
+    "typescript": "^3.5.1",
+    "wikibase-sdk": "^7.0.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">= 6.4"
+  }
+}

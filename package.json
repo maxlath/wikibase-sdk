@@ -2,7 +2,7 @@
   "name": "wikibase-sdk",
   "version": "7.0.0",
   "description": "A javascript tool-suite to query wikibase and simplify its results",
-  "main": "lib/index.js",
+  "main": "lib/wikibase-sdk.js",
   "files": [
     "dist",
     "lib",
@@ -22,7 +22,7 @@
     "minify": "./scripts/minify",
     "dist": "npm run build && npm run minify",
     "prepublishOnly": "./scripts/prepublish",
-    "postpublish": "git push --tags",
+    "postpublish": "./scripts/postpublish",
     "bump-version": "./scripts/bump_version",
     "update-toc": "./scripts/update_toc",
     "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
@@ -40,7 +40,7 @@
     "api",
     "wdq",
     "sparql",
-    "wdk"
+    "wbk"
   ],
   "author": "maxlath",
   "license": "MIT",
