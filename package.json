@@ -14,19 +14,19 @@
     "test": "test"
   },
   "scripts": {
+    "add-fixture-entity": "./scripts/add_fixture_entity",
+    "build": "./scripts/build",
+    "check-supported-datatypes": "./scripts/check_supported_datatypes",
+    "lint": "standard",
+    "minify": "./scripts/minify",
     "test": "mocha",
     "test-types": "tsc",
-    "lint": "standard",
-    "build": "./scripts/build",
-    "minify": "./scripts/minify",
-    "update-dist": "./scripts/update_dist",
     "prepublishOnly": "npm run lint && npm test",
     "postpublish": "./scripts/postpublish",
-    "update-toc": "./scripts/update_toc",
+    "update-dist": "./scripts/update_dist",
     "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
-    "update-wikidata-sdk": "./scripts/update_wikidata_sdk",
-    "add-fixture-entity": "./scripts/add_fixture_entity",
-    "check-supported-datatypes": "./scripts/check_supported_datatypes"
+    "update-toc": "./scripts/update_toc",
+    "update-wikidata-sdk": "./scripts/update_wikidata_sdk"
   },
   "repository": {
     "type": "git",
