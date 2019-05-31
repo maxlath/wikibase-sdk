@@ -1,7 +1,7 @@
 {
   "name": "wikidata-sdk",
-  "version": "7.0.0",
-  "description": "A javascript tool-suite to query Wikidata and simplify its results",
+  "version": "*",
+  "description": "A convenience package bundling wikibase-sdk initialized with wikidata.org config",
   "main": "./wikidata-sdk.js",
   "types": "types/index.d.ts",
   "scripts": {
