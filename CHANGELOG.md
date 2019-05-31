@@ -3,18 +3,18 @@
 
 ## 7.0.0 - 2019-05-31
 **Breaking Changes**:
-  * the module initialization was restructured to support Wikibase instances other than wikidata.org
-  * dropping bower support [as it has been deprecated for a while now](https://bower.io/blog/2017/how-to-migrate-away-from-bower/): old versions of wikidata-sdk should still be available though
-  * renamed:
+  * The module initialization was restructured to support Wikibase instances other than wikidata.org. As a consequence, while `require('wikidata-sdk')`  still produces the same object as before, `require('wikibase-sdk')` returns a function that takes a config object, which then returns the equivalent of the `wdk` object but customized for the desired Wikibase instance (see [import documentation](https://github.com/maxlath/wikibase-sdk#import)).
+  * Dropping bower support [as it has been deprecated for a while now](https://bower.io/blog/2017/how-to-migrate-away-from-bower/): old versions of wikidata-sdk should still be available though
+  * Renamed:
     * `wikidataTimeToEpochTime` => `wikibaseTimeToEpochTime`
     * `wikidataTimeToISOString` => `wikibaseTimeToISOString`
     * `wikidataTimeToSimpleDay` => `wikibaseTimeToSimpleDay`
-  * removed legacy aliases:
-    `simplifyClaim` (use `simplify.claim`)
-    `simplifyPropertyClaims` (use `simplify.propertyClaims`)
-    `simplifyClaims` (use `simplify.claims`)
-    `simplifySparqlResults` (use `simplify.sparqlResults`)
-    `getWikidataIdsFromWikipediaTitles` (use `getEntitiesFromSitelinks`)
+  * Removed legacy aliases:
+    * `simplifyClaim` (use `simplify.claim`)
+    * `simplifyPropertyClaims` (use `simplify.propertyClaims`)
+    * `simplifyClaims` (use `simplify.claims`)
+    * `simplifySparqlResults` (use `simplify.sparqlResults`)
+    * `getWikidataIdsFromWikipediaTitles` (use `getEntitiesFromSitelinks`)
 
 ## 6.7.0 - 2019-05-26
 * [`simplify.claims` custom `timeConverter`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md): allow to pass a custom time converter function ([PR by @simon04](https://github.com/maxlath/wikidata-sdk/pull/59))

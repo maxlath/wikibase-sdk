@@ -2,19 +2,25 @@
 
 A javascript tool-suite to query a [Wikibase](http://wikiba.se) instance and simplify its results.
 
-This package was primarily developed as `wikidata-sdk` but has now being generalized to support any Wikibase instance: [wikidata.org](https://www.wikidata.org) is now just one Wikibase instance among others.
+This package was primarily developed as `wikidata-sdk` but has now being generalized to support any Wikibase instance: [wikidata.org](https://www.wikidata.org) among others.
 
-This project is [funded by a Wikimedia Project Grant](https://meta.wikimedia.org/wiki/Grants:Project/WikidataJS).
+This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wiki/Grants:Project/WikidataJS).
+
+<!-- ![wikibase](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikibase.png) -->
+<!-- ![wikidata](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikidata.jpg) -->
+<div align="center">
+  <a href="https://wikiba.se"><img height="150" src="https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikibase.png" alt="wikibase"></a>
+  <!-- yeay hacky margin \o/ -->
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://wikidata.org"><img src="https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikidata.jpg" alt="wikidata"></a>
+</div>
+
+[![NPM](https://nodei.co/npm/wikibase-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikibase-sdk/)
+[![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node](https://img.shields.io/badge/node-%3E=%20v6.4.0-brightgreen.svg)](http://nodejs.org)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-
-[![wikibase](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikibase.jpg)](https://wikiba.se)
-[![wikidata](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikidata.jpg)](https://wikidata.org)
-
-[![NPM](https://nodei.co/npm/wikibase-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikibase-sdk/)
-[![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/)
 
 ## Summary
 
@@ -81,8 +87,6 @@ For **write** operations, see [wikibase-edit](http://github.com/maxlath/wikibase
   * [By other Wikimedia projects titles](docs/get_entities.md#by-other-wikimedia-projects-titles)
 * **[Simplify entities data](docs/simplify_entities_data.md)**
 * **[Get revisions](docs/get_revisions.md)**
-* **Advanced**
-  * [Use a custom Wikibase instance](docs/use_a_custom_wikibase_instance.md)
 
 ### Wikibase Query
 There are additional functions for Wikibase instances that have a [SPARQL](https://en.wikipedia.org/wiki/SPARQL) Query Service (such as [Wikidata Query](http://query.wikidata.org/) for wikidata.org). SPARQL can be a weird thing at first, but the Wikidata team and community really puts lots of efforts to make things easy with a super rich [Wikidata Query Help](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Wikidata_Query_Help) page, [an awesome tool to test you queries and visualize the result](https://query.wikidata.org/), and [lots of examples](https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:SPARQL_query_service/queries/examples)!
