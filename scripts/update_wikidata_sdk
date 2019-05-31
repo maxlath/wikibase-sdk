@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -eu
+
+green_log(){ echo -e "\e[0;32m$1\e[0;0m" ; }
+
+git checkout master
+
+wbk_version=$(node -p 'require("./package.json").version')
+green_log "wbk_version: $wbk_version"
+
+cd ./wikidata-sdk
+green_log "update wikidata-sdk..."
+npm install "wikibase-sdk@${wbk_version}"
+npm version "$wbk_version"
+
+green_log 'commit...'
+git checkout -B wikidata-sdk
+git add ./package*.json
+git commit -m 'wikidata-sdk: updated'
+
+green_log "publish wikidata-sdk..."
+npm publish '.'
+
+git checkout master
+
+green_log 'done update wikidata-sdk'

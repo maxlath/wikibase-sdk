@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -eu
+
+green_log(){ echo -e "\e[0;32m$1\e[0;0m" ; }
+
+git checkout master
+
+green_log 'update dist...'
+
+green_log 'build...'
+npm run build
+
+green_log 'minify...'
+npm run minify
+
+green_log 'commit...'
+git checkout -B dist
+git add dist/wikibase-sdk.js dist/wikibase-sdk.min.js dist/wikidata-sdk.js dist/wikidata-sdk.min.js
+git commit -m 'dist: updated'
+
+git push origin -f dist
+
+git checkout master
+
+green_log 'done update dist'
