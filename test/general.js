@@ -22,6 +22,13 @@ describe('builder', () => {
     (() => WBK({ instance, sparqlEndpoint: 'foo' })).should.throw('invalid sparqlEndpoint: foo')
     done()
   })
+
+  it('should produce valid URLs', done => {
+    const wdk = WBK({ instance, sparqlEndpoint })
+    wdk.searchEntities('ingmar Bergman').should.startWith(instance)
+    wdk.getReverseClaims('P50', 'Q504').should.startWith(sparqlEndpoint)
+    done()
+  })
 })
 
 describe('index', () => {
