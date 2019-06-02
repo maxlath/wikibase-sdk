@@ -73,6 +73,10 @@ For convenience, and for the sake of retro-compatibility, that same `wdk` object
 // After having run `npm install wikidata-sdk`
 const wdk = require('wikidata-sdk')
 ```
+and instance-independant helper functions are directly available from the module root:
+```js
+const { simplify, parse, isEntityId, isPropertyId, ... } = require('wikibase-sdk')
+```
 
 ## Features
 ### Wikibase API

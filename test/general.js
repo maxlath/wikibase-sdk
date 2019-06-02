@@ -8,6 +8,14 @@ describe('builder', () => {
     done()
   })
 
+  it('should reference instance-independant helpers', done => {
+    WBK.parse.should.be.an.Object()
+    WBK.simplify.should.be.an.Object()
+    WBK.isEntityId.should.be.a.Function()
+    WBK.getSitelinkData.should.be.a.Function()
+    done()
+  })
+
   it('should throw when initialized without a config', done => {
     WBK.should.throw()
     done()

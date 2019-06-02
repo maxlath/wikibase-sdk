@@ -1,6 +1,6 @@
 require('should')
 
-const { getSitelinkUrl, getSitelinkData, isSitelinkKey } = require('../lib/helpers/sitelinks_helpers')
+const { getSitelinkUrl, getSitelinkData, isSitelinkKey } = require('../lib/helpers/sitelinks')
 
 describe('getSitelinkUrl', () => {
   it('should be a function', done => {

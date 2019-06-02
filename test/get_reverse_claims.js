@@ -2,7 +2,7 @@ const should = require('should')
 const { sparqlEndpoint } = require('./lib/tests_env')
 const getReverseClaims = require('../lib/queries/get_reverse_claims')(sparqlEndpoint)
 
-describe('simplifyClaims', () => {
+describe('getReverseClaims', () => {
   it('env', done => {
     getReverseClaims.should.be.a.Function()
     done()
