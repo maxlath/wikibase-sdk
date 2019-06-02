@@ -6,8 +6,6 @@ This package was primarily developed as `wikidata-sdk` but has now being general
 
 This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wiki/Grants:Project/WikidataJS).
 
-<!-- ![wikibase](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikibase.png) -->
-<!-- ![wikidata](https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikidata.jpg) -->
 <div align="center">
   <a href="https://wikiba.se"><img height="150" src="https://raw.githubusercontent.com/maxlath/wikibase-sdk/master/assets/wikibase.png" alt="wikibase"></a>
   <!-- yeay hacky margin \o/ -->
