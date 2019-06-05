@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 git push --tags
 npm run update-dist
-npm run update-wikidata-sdk
