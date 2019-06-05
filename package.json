@@ -7,7 +7,6 @@
     "lib",
     "types/**/*.d.ts"
   ],
-  "types": "types/index.d.ts",
   "directories": {
     "lib": "lib",
     "doc": "docs",
@@ -20,7 +19,6 @@
     "lint": "standard",
     "minify": "./scripts/minify",
     "test": "mocha",
-    "test-types": "tsc",
     "prepublishOnly": "npm run lint && npm test",
     "postpublish": "./scripts/postpublish",
     "update-dist": "./scripts/update_dist",
@@ -60,7 +58,6 @@
     "mocha": "^5.1.1",
     "should": "^13.2.1",
     "standard": "^10.0.3",
-    "typescript": "^3.3.4000",
     "uglify-js": "^3.3.25",
     "wikidata-cli": "^6.0.8"
   },
