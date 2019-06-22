@@ -15,6 +15,7 @@
     * `simplifyClaims` (use `simplify.claims`)
     * `simplifySparqlResults` (use `simplify.sparqlResults`)
     * `getWikidataIdsFromWikipediaTitles` (use `getEntitiesFromSitelinks`)
+    * `getWikidataIdsFromSitelinks` (use `getEntitiesFromSitelinks`)
 
 ## 6.7.0 - 2019-05-26
 * [`simplify.claims` custom `timeConverter`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md): allow to pass a custom time converter function ([PR by @simon04](https://github.com/maxlath/wikidata-sdk/pull/59))
