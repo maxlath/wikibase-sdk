@@ -31,6 +31,13 @@ describe('builder', () => {
     done()
   })
 
+  it('should not throw when initialized without a sparql endpoint, but sparql endpoint bound function should', done => {
+    const wbk = WBK({ instance })
+    wbk.sparqlQuery.should.throw('sparqlQuery requires a sparqlEndpoint to be set in configuration object')
+    wbk.getReverseClaims.should.throw('getReverseClaims requires a sparqlEndpoint to be set in configuration object')
+    done()
+  })
+
   it('should produce valid URLs', done => {
     const wdk = WBK({ instance, sparqlEndpoint })
     wdk.searchEntities('ingmar Bergman').should.startWith(instance)
