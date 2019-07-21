@@ -46,8 +46,9 @@ Same as [`wdk.simplify.entity`](#simplify-entity), but accepts the all the entit
 ```js
 const url = wdk.getEntities([ 'Q1', 'Q2', 'Q3' ])
 fetch(url)
+.then(res => res.json())
 .then(res => {
-  const { entities } = res.json()
+  const { entities } = res
   // simplificationOptions: see wdk.simplify.entity doc above
   const simplifiedEntities = wdk.simplify.entities(entities, simplificationOptions)
 })
