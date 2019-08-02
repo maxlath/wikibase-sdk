@@ -8,7 +8,15 @@ const getRevisions = require('../lib/queries/get_revisions')(buildUrl)
 
 describe('getRevisions', () => {
   it('should reject invalid ids', done => {
-    getRevisions.bind(null, 'foo').should.throw('invalid entity id: foo')
+    getRevisions.bind(null, 'foo').should.throw('invalid entity page title: foo')
+    done()
+  })
+
+  it('should accept namespaced ids invalid ids', done => {
+    getRevisions.bind(null, 'Item:Q123').should.not.throw()
+    getRevisions.bind(null, 'Property:P123').should.not.throw()
+    getRevisions.bind(null, 'Lexeme:L123').should.not.throw()
+    getRevisions.bind(null, 'Property:Q123').should.throw('invalid entity page title: Property:Q123')
     done()
   })
 
