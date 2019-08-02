@@ -7,6 +7,11 @@ const manyIds = _.range(1, 80).map(id => `Q${id}`)
 
 describe('wikidata getManyEntities', () => {
   describe('general', () => {
+    it('should reject invalid ids', done => {
+      getManyEntities.bind(null, [ 'foo' ]).should.throw('invalid entity id: foo')
+      done()
+    })
+
     it('should return an array of urls', done => {
       const urls = getManyEntities(manyIds, 'fr', 'info', 'json')
       urls.should.be.an.Array()

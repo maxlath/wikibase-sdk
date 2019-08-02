@@ -8,6 +8,11 @@ describe('getReverseClaims', () => {
     done()
   })
 
+  it('should reject invalid property ids', done => {
+    getReverseClaims.bind(null, 'foo', 'Q535').should.throw('invalid property id: foo')
+    done()
+  })
+
   it('should return a SPARQL query url', done => {
     const url = getReverseClaims('P50', 'Q535')
     url.should.be.a.String()

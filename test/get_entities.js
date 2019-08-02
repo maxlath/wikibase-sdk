@@ -39,6 +39,11 @@ describe('wikidata getEntities', () => {
     })
   })
   describe('ids', () => {
+    it('should reject invalid ids', done => {
+      getEntities.bind(null, 'foo').should.throw('invalid entity id: foo')
+      done()
+    })
+
     it('accepts one id as a string', done => {
       const url = getEntities('Q535')
       url.should.equal(getEntities({ids: 'Q535'}))

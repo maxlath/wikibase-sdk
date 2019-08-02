@@ -7,6 +7,11 @@ const { buildUrl } = require('./lib/tests_env')
 const getRevisions = require('../lib/queries/get_revisions')(buildUrl)
 
 describe('getRevisions', () => {
+  it('should reject invalid ids', done => {
+    getRevisions.bind(null, 'foo').should.throw('invalid entity id: foo')
+    done()
+  })
+
   it('should return a revision query url', done => {
     const url = getRevisions('Q3548931')
     url.should.be.a.String()
