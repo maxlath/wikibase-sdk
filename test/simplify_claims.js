@@ -283,7 +283,7 @@ describe('simplifyClaim', () => {
       done()
     })
 
-    it('should return simplify globecoordinate as a latLng array', done => {
+    it('should return simplified globecoordinate as a latLng array', done => {
       const simplified = simplifyClaim(Q2112.claims.P625[0])
       simplified.should.be.an.Array()
       simplified[0].should.equal(52.016666666667)
@@ -466,20 +466,41 @@ describe('simplifyClaim', () => {
 
   describe('rich values', () => {
     it('should keep monolingual rich values', done => {
-      const options = { keepRichValues: true }
-      const simplified = simplifyClaim(Q328212.claims.P1477[0], options)
+      const simplified = simplifyClaim(Q328212.claims.P1477[0], { keepRichValues: true })
       simplified.text.should.equal('Veronica Roth')
       simplified.language.should.equal('es')
       done()
     })
 
     it('should keep quantity rich values', done => {
-      const options = { keepRichValues: true }
-      const simplified = simplifyClaim(Q2112.claims.P2044[0], options)
+      const simplified = simplifyClaim(Q2112.claims.P2044[0], { keepRichValues: true })
       simplified.amount.should.equal(118)
       simplified.unit.should.equal('Q11573')
       simplified.upperBound.should.equal(119)
       simplified.lowerBound.should.equal(117)
+      done()
+    })
+
+    it('should keep globecoordinate rich values', done => {
+      simplifyClaim(Q2112.claims.P625[0], { keepRichValues: true }).should.deepEqual({
+        latitude: 52.016666666667,
+        longitude: 8.5166666666667,
+        altitude: null,
+        precision: 0.016666666666667,
+        globe: 'http://www.wikidata.org/entity/Q2'
+      })
+      done()
+    })
+
+    it('should keep time rich values', done => {
+      simplifyClaim(Q646148.claims.P569[0], { keepRichValues: true }).should.deepEqual({
+        time: '1939-11-08T00:00:00.000Z',
+        timezone: 0,
+        before: 0,
+        after: 0,
+        precision: 11,
+        calendarmodel: 'http://www.wikidata.org/entity/Q1985727'
+      })
       done()
     })
   })
