@@ -53,47 +53,47 @@ Accepts both `P` and `Q` ids
 ### truthyClaims
 Filter-out non-[truthy](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) claims from an `entity.claims` object
 ```js
-const entityTruthyClaims = wdk.truthyClaims(entity.claims)
+const entityTruthyClaims = wbk.truthyClaims(entity.claims)
 ```
 
 ### truthyPropertyClaims
 Filter-out non-[truthy](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) claims from an `entity.claims[prop]` array
 ```js
-const entityP135TruthyClaims = wdk.truthyPropertyClaims(entity.claims.P135)
+const entityP135TruthyClaims = wbk.truthyPropertyClaims(entity.claims.P135)
 ```
 
 ## Sitelink helpers
 ### getSitelinkUrl
 ```js
 // multiple arguments interface
-wdk.getSitelinkUrl(site, title)
+wbk.getSitelinkUrl(site, title)
 
-wdk.getSitelinkUrl('commons', 'Lyon')
+wbk.getSitelinkUrl('commons', 'Lyon')
 // => 'https://commons.wikimedia.org/wiki/Lyon'
 
-wdk.getSitelinkUrl('frwiki', 'Septembre')
+wbk.getSitelinkUrl('frwiki', 'Septembre')
 // => 'https://fr.wikipedia.org/wiki/Septembre'
 
-wdk.getSitelinkUrl('zhwikiquote', '維克多·雨果')
+wbk.getSitelinkUrl('zhwikiquote', '維克多·雨果')
 // => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
 ```
 ```js
 // object interface: allow you to directly pass the API sitelink object
-wdk.getSitelinkUrl({ site, title })
+wbk.getSitelinkUrl({ site, title })
 
-wdk.getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
+wbk.getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
 // => 'https://fr.wikipedia.org/wiki/Septembre'
 
-wdk.getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
+wbk.getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
 // => 'https://es.wikiquote.org/wiki/Gilles_Deleuze'
 
-wdk.getSitelinkUrl({ site: 'commons', title: 'Lyon' })
+wbk.getSitelinkUrl({ site: 'commons', title: 'Lyon' })
 // => 'https://commons.wikimedia.org/wiki/Lyon'
 
-wdk.getSitelinkUrl({ site: 'wikidata', title: 'Q1' })
+wbk.getSitelinkUrl({ site: 'wikidata', title: 'Q1' })
 // => 'https://wikidata.org/wiki/Q1'
 
-wdk.getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
+wbk.getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
 // => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
 ```
 
@@ -140,22 +140,22 @@ isSitelinkKey('imaginarylangwiki')
 Uses [extended years following ECMAScript standard](https://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15.1)
 ```js
 var wikibaseTime = '+1885-05-22T00:00:00Z'
-wdk.wikibaseTimeToISOString(wikibaseTime)
+wbk.wikibaseTimeToISOString(wikibaseTime)
 // => '1885-05-22T00:00:00.000Z'
 
 wikibaseTime = '+0180-03-17T00:00:00Z'
-wdk.wikibaseTimeToISOString(wikibaseTime)
+wbk.wikibaseTimeToISOString(wikibaseTime)
 // => '0180-03-17T00:00:00.000Z'
 
 wikibaseTime = '-0398-00-00T00:00:00Z'
-wdk.wikibaseTimeToISOString(wikibaseTime)
+wbk.wikibaseTimeToISOString(wikibaseTime)
 // => '-000398-01-01T00:00:00.000Z'
 
 ```
 that should also work for dates far in the past or the future:
 ```js
 wikibaseTime = '-13798000000-00-00T00:00:00Z'
-wdk.wikibaseTimeToISOString(wikibaseTime)
+wbk.wikibaseTimeToISOString(wikibaseTime)
 // => '-13798000000-01-01T00:00:00Z'
 
 ```
@@ -195,19 +195,19 @@ const claims = {
 
 // Passing only the time string: the result misses the month precision
 // and thus wrongly returns the day set to '01'
-wdk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
+wbk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
 // => '1869-11-01'
 
 // Passing the whole value object, the function can
-wdk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
+wbk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
 // => '1869-11'
 ```
 
 ### getImageUrl
 Get an image URL from a Wikimedia Commons filename:
 ```js
-wdk.getImageUrl('Peredot.jpg')
+wbk.getImageUrl('Peredot.jpg')
 // => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg
-wdk.getImageUrl('Peredot.jpg', 250)
+wbk.getImageUrl('Peredot.jpg', 250)
 // => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250
 ```

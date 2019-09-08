@@ -107,17 +107,17 @@ That's what `simplify.claims`, `simplify.propertyClaims`, `simplify.claim` do, e
 ## simplify.claims
 you just need to pass your entity' claims object to simplify.claims as such:
 ```js
-const simplifiedClaims = wdk.simplify.claims(entity.claims)
+const simplifiedClaims = wbk.simplify.claims(entity.claims)
 ```
 
 in your workflow, that could give something like:
 
 ```js
-const url = wdk.getEntities('Q535')
+const url = wbk.getEntities('Q535')
 request(url, function(err, response){
   if (err) { dealWithError(err) }
   const entity = response.entities.Q535
-  simplifiedClaims = wdk.simplify.claims(entity.claims)
+  simplifiedClaims = wbk.simplify.claims(entity.claims)
 })
 ```
 
@@ -126,13 +126,13 @@ To keep things simple, "weird" values are removed (for instance, statements of d
 ## simplify.propertyClaims
 Same as simplify.claims but expects an array of claims, typically the array of claims of a specific property:
 ```js
-const simplifiedP31Claims = wdk.simplify.propertyClaims(entity.claims.P31)
+const simplifiedP31Claims = wbk.simplify.propertyClaims(entity.claims.P31)
 ```
 
 ## simplify.claim
 Same as simplify.claims but expects a unique claim
 ```js
-const simplifiedP31Claim = wdk.simplify.claim(entity.claims.P31[0])
+const simplifiedP31Claim = wbk.simplify.claim(entity.claims.P31[0])
 ```
 
 ## simplify.qualifiers
@@ -152,9 +152,9 @@ Same interface as [simplify.claim](#simplifyclaim) but taking a qualifier object
 It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by setting an entity prefix and/or a property prefix in the options:
 ```js
 const options = { entityPrefix: 'wd', propertyPrefix: 'wdt' }
-wdk.simplify.claims(entity.claims, options)
-wdk.simplify.propertyClaims(entity.claims.P31, options)
-wdk.simplify.claim(entity.claims.P31[0], options)
+wbk.simplify.claims(entity.claims, options)
+wbk.simplify.propertyClaims(entity.claims.P31, options)
+wbk.simplify.claim(entity.claims.P31[0], options)
 ```
 Results would then look something like
 ```json
@@ -176,9 +176,9 @@ By setting `keepRichValues=true`,
 
 You can keep the value's types by passing `keepTypes: true` in the options:
 ```js
-wdk.simplify.claims(entity.claims, { keepTypes: true })
-wdk.simplify.propertyClaims(entity.claims.P50, { keepTypes: true })
-wdk.simplify.claim(entity.claims.P50[0], { keepTypes: true })
+wbk.simplify.claims(entity.claims, { keepTypes: true })
+wbk.simplify.propertyClaims(entity.claims.P50, { keepTypes: true })
+wbk.simplify.claim(entity.claims.P50[0], { keepTypes: true })
 ```
 Results would then look something like
 ```json
@@ -213,9 +213,9 @@ Here is a list with all the supported types:
 
 You can keep qualifiers by passing `keepQualifiers: true` in the options:
 ```js
-wdk.simplify.claims(entity.claims, { keepQualifiers: true })
-wdk.simplify.propertyClaims(entity.claims.P50, { keepQualifiers: true })
-wdk.simplify.claim(entity.claims.P50[0], { keepQualifiers: true })
+wbk.simplify.claims(entity.claims, { keepQualifiers: true })
+wbk.simplify.propertyClaims(entity.claims.P50, { keepQualifiers: true })
+wbk.simplify.claim(entity.claims.P50[0], { keepQualifiers: true })
 ```
 Results would then look something like
 ```json
@@ -246,9 +246,9 @@ Results would then look something like
 
 You can keep reference by passing `keepReferences: true` in the options:
 ```js
-wdk.simplify.claims(entity.claims, { keepReferences: true })
-wdk.simplify.propertyClaims(entity.claims.P50, { keepReferences: true })
-wdk.simplify.claim(entity.claims.P50[0], { keepReferences: true })
+wbk.simplify.claims(entity.claims, { keepReferences: true })
+wbk.simplify.propertyClaims(entity.claims.P50, { keepReferences: true })
+wbk.simplify.claim(entity.claims.P50[0], { keepReferences: true })
 ```
 Results would then look something like
 ```json
@@ -277,9 +277,9 @@ Results would then look something like
 You can keep claim ids (a.k.a. `guid`), references and qualifiers hashes by passing `keepIds: true` in the options:
 
 ```js
-wdk.simplify.claims(entity.claims, { keepIds: true })
-wdk.simplify.propertyClaims(entity.claims.P50, { keepIds: true })
-wdk.simplify.claim(entity.claims.P50[0], { keepIds: true })
+wbk.simplify.claims(entity.claims, { keepIds: true })
+wbk.simplify.propertyClaims(entity.claims.P50, { keepIds: true })
+wbk.simplify.claim(entity.claims.P50[0], { keepIds: true })
 ```
 Results would then look something like
 ```json
@@ -298,9 +298,9 @@ Results would then look something like
 You can keep references and qualifiers hashes by passing `keepHashes: true` in the options:
 
 ```js
-wdk.simplify.claims(entity.claims, { keepHashes: true })
-wdk.simplify.propertyClaims(entity.claims.P50, { keepHashes: true })
-wdk.simplify.claim(entity.claims.P50[0], { keepHashes: true })
+wbk.simplify.claims(entity.claims, { keepHashes: true })
+wbk.simplify.propertyClaims(entity.claims.P50, { keepHashes: true })
+wbk.simplify.claim(entity.claims.P50[0], { keepHashes: true })
 ```
 
 This option has no effect if neither `keepQualifiers` nor `keepReferences` is `true`.
@@ -331,26 +331,26 @@ Results would then look something like
 
 By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) are filtered-out (keeping only claims of rank `preferred` if any, otherwise only claims of rank `normal`). This can be disable with this option.
 ```js
-wdk.simplify.claims(entity.claims, { keepNonTruthy: true })
-wdk.simplify.propertyClaims(entity.claims.P1082, { keepNonTruthy: true })
+wbk.simplify.claims(entity.claims, { keepNonTruthy: true })
+wbk.simplify.propertyClaims(entity.claims.P1082, { keepNonTruthy: true })
 ```
 
 #### Keep ranks
 > `keepRanks`
 ```js
-wdk.simplify.claims(entity.claims, { keepRanks: true })
-wdk.simplify.propertyClaims(entity.claims.P1082, { keepRanks: true })
-wdk.simplify.claim(entity.claims.P1082[0], { keepRanks: true })
+wbk.simplify.claims(entity.claims, { keepRanks: true })
+wbk.simplify.propertyClaims(entity.claims.P1082, { keepRanks: true })
+wbk.simplify.claim(entity.claims.P1082[0], { keepRanks: true })
 ```
 This is mostly useful in combination with `keepNonTruthy`. Example: a city might have several population claims, with only the most recent having a `preferred` rank.
 
 ```js
 // By default, the simplification only keep the claim of rank 'preferred'
-wdk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true })
+wbk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true })
 // => [ { value: 100000, rank: 'preferred' } ]
 
 // But the other claims can also be returned thank to 'keepNonTruthy'
-wdk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy: true })
+wbk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy: true })
 // => [
 //       { value: 100000, rank: 'preferred' },
 //       { value: 90000, rank: 'normal' },
@@ -363,23 +363,23 @@ wdk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy:
 #### Customize novalue value
 > `novalueValue`
 ```js
-wdk.simplify.claims(claimWithNoValue, { novalueValue: '-' })
+wbk.simplify.claims(claimWithNoValue, { novalueValue: '-' })
 // => '-'
 ```
 
 #### Customize somevalue value
 > `somevalueValue`
 ```js
-wdk.simplify.claims(claimWithSomeValue, { somevalueValue: '?' })
+wbk.simplify.claims(claimWithSomeValue, { somevalueValue: '?' })
 // => '?'
 ```
 
 #### Keep snaktypes
 > `keepSnaktypes`
 ```js
-wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true })
+wbk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true })
 // => { value: undefined, snaktype: 'somevalue' }
-wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '?' })
+wbk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '?' })
 // => { value: '?', snaktype: 'somevalue' }
 ```
 
@@ -387,13 +387,13 @@ wdk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '
 > `keepAll`
 Activates all the `keep` options detailed above:
 ```js
-wdk.simplify.claims(claims, { keepAll: true })
+wbk.simplify.claims(claims, { keepAll: true })
 // Is equivalent to
-wdk.simplify.claims(claims, { keepQualifiers: true, keepReferences: true, keepIds: true, keepHashes: true, keepTypes: true, keepSnaktypes: true, keepRanks: true })
+wbk.simplify.claims(claims, { keepQualifiers: true, keepReferences: true, keepIds: true, keepHashes: true, keepTypes: true, keepSnaktypes: true, keepRanks: true })
 ```
 Those options can then be disabled one by one
 ```js
-wdk.simplify.claims(claims, { keepAll: true, keepTypes: false })
+wbk.simplify.claims(claims, { keepAll: true, keepTypes: false })
 ```
 
 ### Change time parser
@@ -403,7 +403,7 @@ By default, `simplify.claims` functions use [`wikidataTimeToISOString`](general_
 You can nevertheless request to use a different converter by setting the option `timeConverter`:
 
 ```js
-wdk.simplify.claims(claims, { timeConverter: 'iso' })
+wbk.simplify.claims(claims, { timeConverter: 'iso' })
 ```
 
 Possible modes:
@@ -426,5 +426,5 @@ If none of those format fits your needs, you can pass a custom time converter fu
 ```
 ```js
 const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
-wdk.simplify.claims(claims, { timeConverter })
+wbk.simplify.claims(claims, { timeConverter })
 ```

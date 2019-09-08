@@ -44,7 +44,7 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
   }
 }
 ```
-`wdk.simplify.sparqlResults` converts it to a way simpler:
+`wbk.simplify.sparqlResults` converts it to a way simpler:
 ```json
 [
   {
@@ -70,17 +70,17 @@ And then to make it even more simpler, we can... hum no, that's all we got.
 
 Use it like so:
 ```js
-const simplifiedResults = wdk.simplify.sparqlResults(results)
+const simplifiedResults = wbk.simplify.sparqlResults(results)
 ```
 or for a more complete example (using [promises](https://www.promisejs.org))
 ```js
 // see the "SPARQL Query" section above
-const url = wdk.sparqlQuery(SPARQL)
+const url = wbk.sparqlQuery(SPARQL)
 
 // If you aren't familiar with Promise requests
 // see https://github.com/maxlath/wikidata-sdk/issues/31
 promiseRequest(url)
-.then(wdk.simplify.sparqlResults)
+.then(wbk.simplify.sparqlResults)
 .then(simplifiedResults => { // do awesome stuffs here })
 ```
 
@@ -91,9 +91,9 @@ promiseRequest(url)
 
 When only one variable is requested, set minimize to `true`, the simplified results will consist of an array of this variable values, instead of an array of objects.
 ```js
-wdk.simplify.sparqlResults(results, { minimize: true })
+wbk.simplify.sparqlResults(results, { minimize: true })
 // => [ "Q112983", "Q185598", "Q3879286" ]
 
-wdk.simplify.sparqlResults(results, { minimize: false })
+wbk.simplify.sparqlResults(results, { minimize: false })
 // => [ { item: "Q112983" }, { item: "Q185598" }, { item: "Q3879286" } ]
 ```

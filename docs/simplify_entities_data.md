@@ -21,7 +21,7 @@
 ## Simplify entity
 Applying all simplifiers at once: labels, descriptions, aliases, claims, sitelinks. See next sections for details.
 ```js
-wdk.simplify.entity(entity)
+wbk.simplify.entity(entity)
 ```
 You can also pass options as a second argument, that will then be passed the subfunctions: currently only [simplify claims](simplify_claims.md) and [simplify sitelinks](#simplify-sitelinks).
 ```js
@@ -38,19 +38,19 @@ const simplificationOptions = {
   // sitelinks
   addUrl: true
 }
-wdk.simplify.entity(entity, simplificationOptions)
+wbk.simplify.entity(entity, simplificationOptions)
 ```
 
 ## Simplify entities
-Same as [`wdk.simplify.entity`](#simplify-entity), but accepts the all the entities sent by the Wikidata API at once:
+Same as [`wbk.simplify.entity`](#simplify-entity), but accepts the all the entities sent by the Wikidata API at once:
 ```js
-const url = wdk.getEntities([ 'Q1', 'Q2', 'Q3' ])
+const url = wbk.getEntities([ 'Q1', 'Q2', 'Q3' ])
 fetch(url)
 .then(res => res.json())
 .then(res => {
   const { entities } = res
-  // simplificationOptions: see wdk.simplify.entity doc above
-  const simplifiedEntities = wdk.simplify.entities(entities, simplificationOptions)
+  // simplificationOptions: see wbk.simplify.entity doc above
+  const simplifiedEntities = wbk.simplify.entities(entities, simplificationOptions)
 })
 ```
 
@@ -59,35 +59,35 @@ That's a huge chunk so it got it's own doc page: [simplify claims](simplify_clai
 
 ## Simplify labels
 ```js
-wdk.simplify.labels(entity.labels)
+wbk.simplify.labels(entity.labels)
 ```
 Before: `{ pl: { language: 'pl', value: 'książka' } }`<br>
 After: `{ pl: 'książka' }`
 
 ## Simplify descriptions
 ```js
-wdk.simplify.descriptions(entity.descriptions)
+wbk.simplify.descriptions(entity.descriptions)
 ```
 Before: `{ pl: { language: 'pl', value: 'dokument piśmienniczy [...]' } }`<br>
 After: `{ pl: 'dokument piśmienniczy [...]' }`
 
 ## Simplify aliases
 ```js
-wdk.simplify.aliases(entity.aliases)
+wbk.simplify.aliases(entity.aliases)
 ```
 Before: `{ pl: [ { language: 'pl', value: 'Tom' }, { language: 'pl', value: 'Tomik' } ] }`<br>
 After: `{ pl: [ 'Tom', 'Tomik' ] }`
 
 ## Simplify sitelinks
 ```js
-wdk.simplify.sitelinks(entity.sitelinks)
+wbk.simplify.sitelinks(entity.sitelinks)
 ```
 Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`<br>
 After: `{ plwiki: 'Książka' }`
 
 ### add sitelinks URLs
 ```js
-wdk.simplify.sitelinks(entity.sitelinks, { addUrl: true })
+wbk.simplify.sitelinks(entity.sitelinks, { addUrl: true })
 ```
 Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`<br>
 After: `{ plwiki: { title: 'Książka', url: 'https://pl.wikipedia.org/wiki/Książka' }`

@@ -27,7 +27,7 @@ const languages = [ 'en', 'fr', 'de' ] // returns all languages if not specified
 const props = [ 'info', 'claims' ] // returns all data if not specified
 const format = 'xml' // defaults to json
 const redirections = false // defaults to true
-const url = wdk.getEntities(ids, languages, props, format, redirections)
+const url = wbk.getEntities(ids, languages, props, format, redirections)
 ```
 
 props being wikidata entities' properties: info, sitelinks, labels, descriptions, claims.
@@ -37,7 +37,7 @@ ids, languages, props can get either one single value as a string or several val
 
 And Again, this can also be passed as an object:
 ```js
-const url = wdk.getEntities({
+const url = wbk.getEntities({
   ids: [ 'Q1', 'Q5', 'Q571' ],
   languages: [ 'en', 'fr', 'de' ], // returns all languages if not specified
   props: [ 'info', 'claims' ], // returns all data if not specified
@@ -47,16 +47,16 @@ const url = wdk.getEntities({
 ```
 
 ### Get many entities by ids
-Above 50 ids, `wdk.getEntities` will warn you that your request won't be fully fullfiled by Wikidata API due to its limitations policy.
-You can use `wdk.getManyEntities` instead to generate several request urls to work around this limitation:
+Above 50 ids, `wbk.getEntities` will warn you that your request won't be fully fullfiled by Wikidata API due to its limitations policy.
+You can use `wbk.getManyEntities` instead to generate several request urls to work around this limitation:
 
 The arguments API is the same as getEntities:
 ```js
-const urls = wdk.getManyEntities([ 'Q1', 'Q2', 'Q3', ..., 'Q123' ])
+const urls = wbk.getManyEntities([ 'Q1', 'Q2', 'Q3', ..., 'Q123' ])
 // or
-const urls = wdk.getManyEntities([ 'Q1', 'Q2', 'Q3', ..., 'Q123' ], [ 'en', 'fr', 'de' ], [ 'info', 'claims' ], 'json', false)
+const urls = wbk.getManyEntities([ 'Q1', 'Q2', 'Q3', ..., 'Q123' ], [ 'en', 'fr', 'de' ], [ 'info', 'claims' ], 'json', false)
 // or
-const urls = wdk.getManyEntities({
+const urls = wbk.getManyEntities({
   ids: [ 'Q1', 'Q2', 'Q3', ..., 'Q123' ],
   languages: [ 'en', 'fr', 'de' ],
   props: [ 'info', 'claims' ],
@@ -73,12 +73,12 @@ but it returns an array of urls instead.
 At some point in your love story with Wikidata, you might end up needing to access data from an entity at a different revision than the current one, so there's a function for that:
 ```js
 // multiple args interface
-const url = wdk.getEntityRevision('Q3548931', 775908525)
+const url = wbk.getEntityRevision('Q3548931', 775908525)
 // OR object interface
-const url = wdk.getEntityRevision({ id: 'Q3548931', revision: 775908525 })
+const url = wbk.getEntityRevision({ id: 'Q3548931', revision: 775908525 })
 ```
 
-The revision id can be obtained using [`wdk.getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md#get-revisions): look for the `revid`.
+The revision id can be obtained using [`wbk.getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md#get-revisions): look for the `revid`.
 
 The returned data can then be [simplified](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-entities-data) as for normal entity data.
 
@@ -87,16 +87,16 @@ The returned data can then be [simplified](https://github.com/maxlath/wikidata-s
 
 Typical usecase: you're working with a list of Wikipedia articles in a given language and would like to move to Wikidata for all the awesomeness it provides: you can fetch the entities on Wikidata using the Wikipedia articles titles:
 ```js
-const url = wdk.getEntitiesFromSitelinks('Hamburg')
+const url = wbk.getEntitiesFromSitelinks('Hamburg')
 //=> 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg&sites=enwiki&format=json'
 
-const url = wdk.getEntitiesFromSitelinks([ 'Hamburg', 'London', 'Lisbon' ])
+const url = wbk.getEntitiesFromSitelinks([ 'Hamburg', 'London', 'Lisbon' ])
 // => 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg%7CLyon%7CBerlin&sites=enwiki&format=json'
 ```
 
 By default, it looks in the English Wikipedia, but we can change that:
 ```js
-const url = wdk.getEntitiesFromSitelinks([ 'Hambourg', 'Londres', 'Lisbonne' ], 'frwiki')
+const url = wbk.getEntitiesFromSitelinks([ 'Hambourg', 'Londres', 'Lisbonne' ], 'frwiki')
 // => 'https://www.wikidata.org/w/api.php?action=wbgetentities&titles=Hamburg%7CLyon%7CBerlin&sites=enwiki&format=json'
 ```
 You can customize different things by passing more arguments
@@ -107,11 +107,11 @@ const languages = [ 'en', 'fr', 'de' ] // those are the languages in which we wo
 const props = [ 'info', 'claims' ] // default: info, sitelinks, aliases, labels, descriptions, claims, datatype
 const format = 'json' // default: json
 const redirections = false // default: true
-const url = wdk.getEntitiesFromSitelinks(titles, sites, languages, props, format, redirections)
+const url = wbk.getEntitiesFromSitelinks(titles, sites, languages, props, format, redirections)
 ```
 or by using the object interface:
 ```js
-const url = wdk.getEntitiesFromSitelinks({
+const url = wbk.getEntitiesFromSitelinks({
   titles: 'Hamburg',
   sites: 'enwikivoyage',
   languages: [ 'en', 'fr', 'de' ],
@@ -132,13 +132,13 @@ const fetch = require('node-fetch')
 ```
 
 ```js
-const url = wdk.getEntities({
+const url = wbk.getEntities({
   ids: [ 'Q647268', 'Q771376', 'Q860998', 'Q965704' ],
   language: user.language
 })
 
 fetch(url)
 .then(response => response.json())
-.then(wdk.parse.wd.entities)
+.then(wbk.parse.wd.entities)
 .then(entities => // do your thing with those entities data)
 ```

@@ -3,7 +3,7 @@
 *associated Wikibase API doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
 
 ```js
-const url = wdk.searchEntities('Ingmar Bergman')
+const url = wbk.searchEntities('Ingmar Bergman')
 ```
 
 this returns a query url that you are then free to request with the tool you like
@@ -18,11 +18,11 @@ const language = 'fr' // will default to 'en'
 const limit = 10 // defaults to 20
 const format = 'json' // defaults to json
 
-const url = wdk.searchEntities(search, language, limit, format)
+const url = wbk.searchEntities(search, language, limit, format)
 ```
 which can also be passed as an object:
 ```js
-const url = wdk.searchEntities({
+const url = wbk.searchEntities({
   search: 'Ingmar Bergman',
   format: 'xml',
   language: 'sv',
@@ -35,11 +35,11 @@ By default, the `uselang` parameter (the language in which the search results ar
 * as last argument (inline interface)
 ```js
 const uselang = 'eo'
-const url = wdk.searchEntities(search, language, limit, format, uselang)
+const url = wbk.searchEntities(search, language, limit, format, uselang)
 ```
 * or set `uselang` in the option object (object interface).
 ```js
-const url = wdk.searchEntities({
+const url = wbk.searchEntities({
   search: 'Ingmar Bergman',
   language: 'sv',
   uselang: 'eo'
@@ -50,5 +50,5 @@ If the values aren't available in the desired language, it will fallback to the 
 ## entities type
 You can request a specific type of entity by setting the `type` parameter to either `item` (default), `property`, `lexeme`, `form`, or `sense`:
 ```js
-const url = wdk.searchEntities({ search: 'alphabet', type: 'property' })
+const url = wbk.searchEntities({ search: 'alphabet', type: 'property' })
 ```
