@@ -44,6 +44,13 @@ describe('builder', () => {
     wdk.getReverseClaims('P50', 'Q504').should.startWith(sparqlEndpoint)
     done()
   })
+
+  it('should exposed sanitized instance URL', done => {
+    const wdk = WBK({ instance, sparqlEndpoint })
+    wdk.instance.root.should.equal(instance)
+    wdk.instance.apiEndpoint.should.equal(`${instance}/w/api.php`)
+    done()
+  })
 })
 
 describe('index', () => {
