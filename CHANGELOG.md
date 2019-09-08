@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.1.0 - 2019-09-08
+* Expose parsed instance URLs: `wbk.instance`
+
 ## 7.0.0 - 2019-05-31
 **Breaking Changes**:
   * The module initialization was restructured to support Wikibase instances other than wikidata.org. As a consequence, while `require('wikidata-sdk')`  still produces the same object as before, `require('wikibase-sdk')` returns a function that takes a config object, which then returns the equivalent of the `wdk` object but customized for the desired Wikibase instance (see [import documentation](https://github.com/maxlath/wikibase-sdk#import)).
