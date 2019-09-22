@@ -8,6 +8,7 @@ const noDatatypeData = require('./data/no_datatype_sparql_results.json')
 const sparqlResultsWithOptionalValues = require('./data/sparql_results_with_optional_values.json')
 const sparqlResultsWithStatements = require('./data/sparql_results_with_statements.json')
 const resultsWithLabelsDescriptionsAndAliases = require('./data/results_with_labels_descriptions_and_aliases.json')
+const propertiesList = require('./data/properties_list.json')
 const { cloneDeep } = require('lodash')
 
 describe('wikidata simplify SPARQL results', () => {
@@ -68,8 +69,8 @@ describe('wikidata simplify SPARQL results', () => {
     })
   })
 
-  describe('with labels, descriptions and aliases', () => {
-    it('should group values', done => {
+  describe('with associated variables', () => {
+    it('should add labels, descriptions and aliases', done => {
       const results = simplify(resultsWithLabelsDescriptionsAndAliases)
       resultsWithLabelsDescriptionsAndAliases.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
@@ -82,6 +83,18 @@ describe('wikidata simplify SPARQL results', () => {
         should(simplified.itemDescription).not.be.ok()
         should(simplified.itemAltLabel).not.be.ok()
         simplified.pseudonyme.should.a.String()
+      })
+      done()
+    })
+
+    it('should add some non-standard associated variables', done => {
+      const results = simplify(propertiesList)
+      propertiesList.results.bindings.forEach((rawResult, i) => {
+        const simplified = results[i]
+        simplified.property.should.be.an.Object()
+        simplified.property.value.should.be.a.String()
+        if (rawResult.propertyType) simplified.property.type.should.be.a.String()
+        should(simplified.propertyType).not.be.ok()
       })
       done()
     })
