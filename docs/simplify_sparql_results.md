@@ -58,7 +58,7 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
   }
 ]
 ```
-That's still hairy, because we requested 3 variables, but that can get even simpler if there is only one variable!
+That's still hairy, because we requested many variables, but that can get even simpler if there is only one variable!
 Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`:
 ```js
 simplify.sparqlResults(results)
