@@ -26,6 +26,7 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Changelog](#changelog)
 - [Dependencies](#dependencies)
 - [Install](#install)
 - [Import](#import)
@@ -41,6 +42,8 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Changelog
+See [CHANGELOG.md](CHANGELOG.md) for version info
 
 ## Dependencies
 This module uses [JavaScript ES6](https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015), which means NodeJS `>= v6.4.0` or not too outdated web browsers.
