@@ -569,16 +569,31 @@ describe('simplifyClaim', () => {
 
   describe('keep all', () => {
     it('should activate all keep options', done => {
-      const simplified = simplifyClaim(Q2112.claims.P214[0], { keepAll: true })
-      simplified.value.should.be.a.String()
-      simplified.id.should.be.a.String()
-      simplified.type.should.be.a.String()
-      simplified.rank.should.be.a.String()
-      simplified.snaktype.should.be.a.String()
-      simplified.qualifiers.should.be.an.Object()
-      simplified.references.should.be.an.Array()
-      simplified.references[0].should.be.an.Object()
-      simplified.references[0].hash.should.be.a.String()
+      const simplifiedP214 = simplifyClaim(Q2112.claims.P214[0], { keepAll: true })
+      const simplifiedP625 = simplifyClaim(Q2112.claims.P625[0], { keepAll: true })
+      simplifiedP214.value.should.be.a.String()
+      simplifiedP214.id.should.be.a.String()
+      simplifiedP214.type.should.be.a.String()
+      simplifiedP214.rank.should.be.a.String()
+      simplifiedP214.snaktype.should.be.a.String()
+      simplifiedP214.qualifiers.should.be.an.Object()
+      simplifiedP214.references.should.be.an.Array()
+      simplifiedP214.references[0].snaks.P813[0].value.should.deepEqual({
+        time: '2015-08-02T00:00:00.000Z',
+        timezone: 0,
+        before: 0,
+        after: 0,
+        precision: 11,
+        calendarmodel: 'http://www.wikidata.org/entity/Q1985727'
+      })
+      simplifiedP214.references[0].hash.should.be.a.String()
+      simplifiedP625.value.should.deepEqual({
+        latitude: 52.016666666667,
+        longitude: 8.5166666666667,
+        altitude: null,
+        precision: 0.016666666666667,
+        globe: 'http://www.wikidata.org/entity/Q2'
+      })
       done()
     })
 
