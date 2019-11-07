@@ -25,12 +25,12 @@ describe('simplify claims functions legacy options interface', () => {
     it('should return the correct value when called with keepQualifiers=true', done => {
       const simplified = simplifyClaims(Q571.claims)
       const simplifiedWithQualifiers = simplifyClaims(Q571.claims, null, null, true)
-      for (let property in simplifiedWithQualifiers) {
-        let propertyValues = simplifiedWithQualifiers[property]
+      for (const property in simplifiedWithQualifiers) {
+        const propertyValues = simplifiedWithQualifiers[property]
         propertyValues.should.be.an.Array()
-        for (let [index, valueObj] of propertyValues.entries()) {
+        for (const [ index, valueObj ] of propertyValues.entries()) {
           valueObj.should.be.an.Object()
-          let value = simplified[property][index]
+          const value = simplified[property][index]
           valueObj.value.should.equal(value)
           valueObj.qualifiers.should.be.an.Object()
         }
@@ -57,9 +57,9 @@ describe('simplify claims functions legacy options interface', () => {
       const simplified = simplifyPropertyClaims(Q571.claims.P279)
       const simplifiedWithQualifiers = simplifyPropertyClaims(Q571.claims.P279, null, null, true)
       simplifiedWithQualifiers.should.be.an.Array()
-      for (let [index, valueObj] of simplifiedWithQualifiers.entries()) {
+      for (const [ index, valueObj ] of simplifiedWithQualifiers.entries()) {
         valueObj.should.be.an.Object()
-        let value = simplified[index]
+        const value = simplified[index]
         valueObj.value.should.equal(value)
         valueObj.qualifiers.should.be.an.Object()
       }

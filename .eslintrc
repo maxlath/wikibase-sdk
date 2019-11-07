@@ -1,0 +1,12 @@
+// This config file is used by standardx to override standardjs rules.
+// Using standardx was preferred to using eslint with eslint-config-standard
+// as standard also bundles a bunch of eslint-plugins
+// See package.json scripts: lint, lint-fix
+// Rules documentation: https://eslint.org/docs/rules/
+{
+  "rules": {
+    "array-bracket-spacing": [ "error", "always" ],
+    "arrow-parens": [ "error", "as-needed" ],
+    "indent": [ "error", 2, { "MemberExpression": "off" } ]
+  }
+}

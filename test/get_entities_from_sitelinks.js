@@ -32,7 +32,7 @@ describe('getEntitiesFromSitelinks', () => {
   describe('action', () => {
     it('action should be wbgetentities', done => {
       const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon'}))
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
       url.should.match(new RegExp('action=wbgetentities&'))
       done()
     })
@@ -41,14 +41,14 @@ describe('getEntitiesFromSitelinks', () => {
   describe('titles', () => {
     it('accepts one title as a string', done => {
       const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon'}))
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
       url.should.match(new RegExp('&titles=Lyon'))
       done()
     })
 
     it('accepts titles as an array', done => {
-      const url = getEntitiesFromSitelinks(['Lyon', 'Hamburg'])
-      url.should.equal(getEntitiesFromSitelinks({titles: ['Lyon', 'Hamburg']}))
+      const url = getEntitiesFromSitelinks([ 'Lyon', 'Hamburg' ])
+      url.should.equal(getEntitiesFromSitelinks({ titles: [ 'Lyon', 'Hamburg' ] }))
       const url2 = qs.unescape(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&titles=Lyon|Hamburg&').length.should.equal(2)
@@ -59,14 +59,14 @@ describe('getEntitiesFromSitelinks', () => {
   describe('sitelinks', () => {
     it('accepts one site as a string', done => {
       const url = getEntitiesFromSitelinks('Lyon', 'itwiki')
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon', sites: 'itwiki'}))
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: 'itwiki' }))
       url.should.match(new RegExp('&sites=itwiki'))
       done()
     })
 
     it('accepts titles as an array', done => {
-      const url = getEntitiesFromSitelinks('Lyon', ['itwiki', 'eswikisource'])
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon', sites: ['itwiki', 'eswikisource']}))
+      const url = getEntitiesFromSitelinks('Lyon', [ 'itwiki', 'eswikisource' ])
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'itwiki', 'eswikisource' ] }))
       const url2 = qs.unescape(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&sites=itwiki|eswikisource&').length.should.equal(2)
@@ -75,7 +75,7 @@ describe('getEntitiesFromSitelinks', () => {
 
     it('defaults to the English Wikipedia', done => {
       const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon'}))
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
       const url2 = qs.unescape(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&sites=enwiki&').length.should.equal(2)
@@ -83,8 +83,8 @@ describe('getEntitiesFromSitelinks', () => {
     })
 
     it('converts 2-letters language codes to Wikipedia sites', done => {
-      const url = getEntitiesFromSitelinks('Lyon', ['it', 'fr'])
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon', sites: ['it', 'fr']}))
+      const url = getEntitiesFromSitelinks('Lyon', [ 'it', 'fr' ])
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'it', 'fr' ] }))
       const url2 = qs.unescape(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&sites=itwiki|frwiki&').length.should.equal(2)
@@ -95,21 +95,21 @@ describe('getEntitiesFromSitelinks', () => {
   describe('languages', () => {
     it('default to no language parameter', done => {
       const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon'}))
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
       url.should.not.match(new RegExp('languages'))
       done()
     })
 
     it('accepts one language as a string', done => {
       const url = getEntitiesFromSitelinks('Lyon', null, 'fr')
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon', languages: 'fr'}))
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', languages: 'fr' }))
       url.should.match(new RegExp('&languages=fr'))
       done()
     })
 
     it('accepts language as an array', done => {
-      const url = getEntitiesFromSitelinks('Lyon', null, ['fr', 'de'])
-      url.should.equal(getEntitiesFromSitelinks({titles: 'Lyon', languages: ['fr', 'de']}))
+      const url = getEntitiesFromSitelinks('Lyon', null, [ 'fr', 'de' ])
+      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', languages: [ 'fr', 'de' ] }))
       const url2 = qs.unescape(url)
       url2.split('&languages=fr|de').length.should.equal(2)
       done()

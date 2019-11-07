@@ -20,5 +20,7 @@ const stringifiedArray = JSON.stringify(uniq(languagesCodes))
   // Prevent linting errors
   .replace(/"/g, '\'')
   .replace(/,/g, ', ')
+  .replace('[', '[ ')
+  .replace(']', ' ]')
 
 console.log(stringifiedArray)

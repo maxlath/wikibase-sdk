@@ -16,7 +16,8 @@
     "add-fixture-entity": "./scripts/add_fixture_entity",
     "build": "./scripts/build",
     "check-supported-datatypes": "./scripts/check_supported_datatypes",
-    "lint": "standard",
+    "lint": "standardx --verbose",
+    "lint-fix": "standardx --verbose --fix",
     "minify": "./scripts/minify",
     "test": "mocha",
     "prepublishOnly": "npm run lint && npm test",
@@ -57,7 +58,7 @@
     "lodash": "^4.17.15",
     "mocha": "^5.1.1",
     "should": "^13.2.1",
-    "standard": "^10.0.3",
+    "standardx": "^5.0.0",
     "uglify-js": "^3.3.25",
     "wikidata-cli": "^6.0.8"
   },
@@ -65,7 +66,7 @@
     "node": ">= 6.4"
   },
   "dependencies": {},
-  "standard": {
+  "standardx": {
     "ignore": [
       "dist"
     ],

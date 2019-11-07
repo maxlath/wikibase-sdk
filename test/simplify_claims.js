@@ -47,7 +47,7 @@ describe('simplifyClaims', () => {
 
   it('should return an indexed collection of arrays', done => {
     const simplified = simplifyClaims(Q571.claims)
-    for (let key in simplified) {
+    for (const key in simplified) {
       simplified[key].should.be.an.Array()
     }
     done()
@@ -74,11 +74,11 @@ describe('simplifyClaims', () => {
     const simplified = simplifyClaims(Q571.claims)
     const simplifiedWithQualifiers = simplifyClaims(Q571.claims, { keepQualifiers: true })
     Object.keys(simplifiedWithQualifiers).forEach(property => {
-      let propertyValues = simplifiedWithQualifiers[property]
+      const propertyValues = simplifiedWithQualifiers[property]
       propertyValues.should.be.an.Array()
       propertyValues.forEach((valueObj, index) => {
         valueObj.should.be.an.Object()
-        let value = simplified[property][index]
+        const value = simplified[property][index]
         valueObj.value.should.equal(value)
         valueObj.qualifiers.should.be.an.Object()
       })
@@ -121,7 +121,7 @@ describe('simplifyPropertyClaims', () => {
     const claimsWithDuplicates = P50.concat(P50)
     const simplified = simplifyPropertyClaims(claimsWithDuplicates)
     while (simplified.length > 0) {
-      let nextValue = simplified.pop()
+      const nextValue = simplified.pop()
       simplified.includes(nextValue).should.be.false()
     }
     done()
@@ -141,7 +141,7 @@ describe('simplifyPropertyClaims', () => {
     simplifiedWithQualifiers.should.be.an.Array()
     simplifiedWithQualifiers.forEach((valueObj, index) => {
       valueObj.should.be.an.Object()
-      let value = simplified[index]
+      const value = simplified[index]
       valueObj.value.should.equal(value)
       valueObj.qualifiers.should.be.an.Object()
     })
@@ -371,8 +371,8 @@ describe('simplifyClaim', () => {
 
     it('should include types in qualifiers claims', done => {
       const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { keepTypes: true, keepQualifiers: true })
-      simplifiedWithQualifiers.qualifiers['P1365'].should.be.an.Array()
-      simplifiedWithQualifiers.qualifiers['P1365'][0].should.deepEqual({ value: 'Q312881', type: 'wikibase-item' })
+      simplifiedWithQualifiers.qualifiers.P1365.should.be.an.Array()
+      simplifiedWithQualifiers.qualifiers.P1365[0].should.deepEqual({ value: 'Q312881', type: 'wikibase-item' })
       done()
     })
 

@@ -57,13 +57,13 @@ describe('wikidata getManyEntities', () => {
   })
   describe('redirects', () => {
     it('should default to no redirects parameter', done => {
-      const urls = getManyEntities(['Q535'])
+      const urls = getManyEntities([ 'Q535' ])
       should(urls[0].match('redirects')).not.be.ok()
       done()
     })
 
     it('should add a redirects parameter if false', done => {
-      const urls = getManyEntities({ ids: ['Q535'], redirects: false })
+      const urls = getManyEntities({ ids: [ 'Q535' ], redirects: false })
       urls[0].match('redirects=no').should.be.ok()
       done()
     })

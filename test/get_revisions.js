@@ -33,7 +33,7 @@ describe('getRevisions', () => {
   })
 
   it('should accept several ids', done => {
-    const url = getRevisions(['Q3548931', 'Q3548932'])
+    const url = getRevisions([ 'Q3548931', 'Q3548932' ])
     const query = qs.parse(url.split('?')[1])
     query.titles.should.equal('Q3548931|Q3548932')
     done()

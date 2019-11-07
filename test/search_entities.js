@@ -20,7 +20,7 @@ describe('wikidata searchEntities', () => {
     })
 
     it('accepts an object', done => {
-      const url = searchEntities({search: 'johnnybegood', language: 'fr'})
+      const url = searchEntities({ search: 'johnnybegood', language: 'fr' })
       url.should.match(new RegExp('search=johnnybegood'))
       url.should.match(new RegExp('language=fr'))
       done()
