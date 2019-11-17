@@ -21,6 +21,11 @@ describe('builder', () => {
     done()
   })
 
+  it('should throw when initialized without an instance or a sparqlEndpoint', done => {
+    (() => WBK({})).should.throw()
+    done()
+  })
+
   it('should throw when initialized with an invalid instance', done => {
     (() => WBK({ instance: 'foo' })).should.throw('invalid instance: foo')
     done()
