@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.2.0 - 2019-12-06
+* Make [`getSitelinkData`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getsitelinkdata) accept full article URLs and return `{ lang, project, key, title, url }`
+
 ## 7.1.0 - 2019-09-08
 * Expose parsed instance URLs: `wbk.instance`
 
