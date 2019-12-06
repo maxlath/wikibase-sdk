@@ -98,7 +98,7 @@ describe('getSitelinkUrl', () => {
 })
 
 describe('getSitelinkData', () => {
-  it('should return sitelinks data', done => {
+  it('should return a sitelink data from a sitelink key', done => {
     getSitelinkData('frwiki').lang.should.equal('fr')
     getSitelinkData('frwiki').project.should.equal('wikipedia')
     getSitelinkData('dewikiquote').lang.should.equal('de')
@@ -111,7 +111,25 @@ describe('getSitelinkData', () => {
     done()
   })
 
-  it('should reject invalid sitelinks', done => {
+  it('should return sitelink data from a URL', done => {
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_(2001)').lang.should.equal('de')
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_(2001)').project.should.equal('wikipedia')
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_(2001)').key.should.equal('dewiki')
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_(2001)').title.should.equal('The_Score_(2001)')
+
+    getSitelinkData('https://www.wikidata.org/wiki/Q4115189').lang.should.equal('en')
+    getSitelinkData('https://www.wikidata.org/wiki/Q4115189').project.should.equal('wikidata')
+    getSitelinkData('https://www.wikidata.org/wiki/Q4115189').key.should.equal('wikidata')
+    getSitelinkData('https://www.wikidata.org/wiki/Q4115189').title.should.equal('Q4115189')
+
+    getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').lang.should.equal('en')
+    getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').project.should.equal('commons')
+    getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').key.should.equal('commons')
+    getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').title.should.equal('Category:ITER')
+    done()
+  })
+
+  it('should reject invalid sitelink key', done => {
     getSitelinkData.bind(null, 'foowiki').should.throw()
     done()
   })

@@ -99,16 +99,35 @@ wbk.getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
 
 ### getSitelinkData
 ```js
-getSitelinkData('frwiki')
-// => { lang: 'fr', project: 'wikipedia' }
-getSitelinkData('dewikiquote')
-// => { lang: 'de', project: 'wikiquote' }
+getSitelinkData('https://de.wikipedia.org/wiki/Kernfusion')
+// => {
+//      lang: 'de',
+//      project: 'wikipedia',
+//      key: 'dewiki',
+//      title: 'Kernfusion',
+//      url: 'https://de.wikipedia.org/wiki/Kernfusion'
+//   }
 
-// Using 'en' as placeholder lang for commons and wikidata
-getSitelinkData('commons')
-// => { lang: 'en', project: 'commons' }
-getSitelinkData('wikidata')
-// => { lang: 'en', project: 'wikidata' }
+getSitelinkData('https://www.wikidata.org/wiki/Q13082')
+// => {
+//      lang: 'en', // Using 'en' as placeholder lang for commons and wikidata
+//      project: 'wikidata',
+//      key: 'wikidata',
+//      title: 'Q13082',
+//      url: 'https://www.wikidata.org/wiki/Q13082'
+//   }
+
+// Can also be used to get basic data from a sitelink key
+getSitelinkData('frwiki')
+// => { lang: 'fr', project: 'wikipedia', key: 'frwiki' }
+
+getSitelinkData('dewikiquote')
+// => { lang: 'de', project: 'wikiquote', key: 'dewikiquote' }
+
+getSitelinkData('commonswiki')
+// => { lang: 'en', project: 'commons', key: 'commonswiki' }
+getSitelinkData('wikidatawiki')
+// => { lang: 'en', project: 'wikidata', key: 'wikidatawiki' }
 ```
 
 ### isSitelinkKey
