@@ -1,4 +1,4 @@
-# Wikibase SDK
+# wikibase-sdk
 
 A javascript tool-suite to query a [Wikibase](http://wikiba.se) instance and simplify its results.
 
