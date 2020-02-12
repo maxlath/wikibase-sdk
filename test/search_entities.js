@@ -39,6 +39,12 @@ describe('wikidata searchEntities', () => {
       done()
     })
 
+    it('should default on continue=0', done => {
+      const url = searchEntities('Ingmar Bergman')
+      url.should.match(new RegExp('continue=0'))
+      done()
+    })
+
     it('should accept a string', done => {
       const url = searchEntities('Ingmar Bergman', 'la')
       url.should.match(new RegExp('language=la'))
