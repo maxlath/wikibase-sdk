@@ -1,6 +1,6 @@
 # wikibase-sdk
 
-A javascript tool-suite to query a [Wikibase](http://wikiba.se) instance and simplify its results.
+JS utils functions to query a [Wikibase](http://wikiba.se) instance and simplify its results
 
 This package was primarily developed as `wikidata-sdk` but has now being generalized to support any Wikibase instance: [wikidata.org](https://www.wikidata.org) among others.
 
