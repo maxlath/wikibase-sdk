@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.3.0 - 2020-04-08
+* [`getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md): added support for `rvprops`, `rvuser`, `rvexcludeuser`, and `rvtag` parameters
+
 ## 7.2.0 - 2019-12-06
 * Make [`getSitelinkData`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getsitelinkdata) accept full article URLs and return `{ lang, project, key, title, url }`
 
