@@ -77,4 +77,34 @@ describe('getRevisions', () => {
     should(query.rvend).not.be.ok()
     done()
   })
+
+  it('should allow to set rvprop as a string', () => {
+    const url = getRevisions('Q3548931', { prop: 'tags|user' })
+    const query = qs.parse(url.split('?')[1])
+    query.rvprop.should.equal('tags|user')
+  })
+
+  it('should allow to set rvprop as an array', () => {
+    const url = getRevisions('Q3548931', { prop: [ 'tags', 'user' ] })
+    const query = qs.parse(url.split('?')[1])
+    query.rvprop.should.equal('tags|user')
+  })
+
+  it('should allow to set rvuser', () => {
+    const url = getRevisions('Q3548931', { user: 'foo' })
+    const query = qs.parse(url.split('?')[1])
+    query.rvuser.should.equal('foo')
+  })
+
+  it('should allow to set rvexcludeuser', () => {
+    const url = getRevisions('Q3548931', { excludeuser: 'foo' })
+    const query = qs.parse(url.split('?')[1])
+    query.rvexcludeuser.should.equal('foo')
+  })
+
+  it('should allow to set rvtag', () => {
+    const url = getRevisions('Q3548931', { tag: 'foo' })
+    const query = qs.parse(url.split('?')[1])
+    query.rvtag.should.equal('foo')
+  })
 })

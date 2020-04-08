@@ -14,6 +14,14 @@ const startTime = // ISO time string OR epoch time in seconds OR milliseconds
 wbk.getRevisions('Q3548931', { start: startTime })
 // get revisions from a precise period
 wbk.getRevisions('Q3548931', { start: startTime, end: endTime })
+// customize revisions properties (`rvprops` in documentation)
+wbk.getRevisions('Q3548931', { prop: 'tags' })
+// get revisions from a user (`rvuser` in documentation)
+wbk.getRevisions('Q3548931', { user: 'Someusername' })
+// get revisions from all but a user (`rvexcludeuser` in documentation)
+wbk.getRevisions('Q3548931', { excludeuser: 'Someusername' })
+// get revisions with a given tag (`rvtag` in documentation)
+wbk.getRevisions('Q3548931', { tag: 'WikibaseJS-edit' })
 ```
 
 **NB**: `limit`, `start`, and `end` parameters aren't passed when several ids are requested as the API would reject the request with this message:
