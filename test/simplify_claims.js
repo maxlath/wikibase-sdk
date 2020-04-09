@@ -9,6 +9,7 @@ const Q2112 = require('./data/Q2112.json')
 const Q217447 = require('./data/Q217447.json')
 const Q271094 = require('./data/Q271094.json')
 const Q4115189 = require('./data/Q4115189.json')
+const Q275937 = require('./data/Q275937.json')
 const Q1 = require('./data/Q1.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 const lexemeClaim = require('./data/lexeme_claim.json')
@@ -308,6 +309,11 @@ describe('simplifyClaim', () => {
 
     it('should support musical-notation', done => {
       simplifyClaim(Q4115189.claims.P6604[0]).should.equal('\\relative { c d e f g e }')
+      done()
+    })
+
+    it('should support wikibase-form', done => {
+      simplifyClaim(Q275937.claims.P8017[0]).should.equal('L252247-F2')
       done()
     })
   })

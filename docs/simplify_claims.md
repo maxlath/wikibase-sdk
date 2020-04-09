@@ -193,20 +193,25 @@ Results would then look something like
 ```
 
 Here is a list with all the supported types:
-
- - `"string"`
- - `"commonsMedia"`
- - `"url"`
- - `"external-id"`
- - `"math"`
- - `"monolingualtext"`
- - `"wikibase-item"`
- - `"wikibase-property"`
- - `"time"`
- - `"quantity"`
- - `"globe-coordinate"`
- - `"geo-shape"`
- - `"tabular-data"`
+```
+commonsMedia
+external-id
+geo-shape
+globe-coordinate
+math
+monolingualtext
+musical-notation
+quantity
+string
+tabular-data
+time
+url
+wikibase-form
+wikibase-item
+wikibase-lexeme
+wikibase-property
+```
+If one if missing from this list (probably because it's new) you are welcome to open an issue to request that support be added.
 
 ### Keep qualifiers
 > `keepQualifiers`
