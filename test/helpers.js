@@ -1,6 +1,6 @@
 require('should')
 
-const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, getImageUrl, isGuid } = require('../lib/helpers/helpers')
+const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, getImageUrl, isGuid } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -159,9 +159,10 @@ describe('helpers', () => {
   })
 
   describe('isEntityId', () => {
-    it('should accept both item and property ids', done => {
+    it('should accept all supported entity types ids', done => {
       isEntityId('Q571').should.be.true()
       isEntityId('P31').should.be.true()
+      isEntityId('L525').should.be.true()
       isEntityId('31').should.be.false()
       isEntityId(31).should.be.false()
       isEntityId('Z31').should.be.false()
@@ -172,7 +173,7 @@ describe('helpers', () => {
   })
 
   describe('isItemId', () => {
-    it('should accept both item and property ids', done => {
+    it('should accept item ids', done => {
       isItemId('Q571').should.be.true()
       isItemId('P31').should.be.false()
       isItemId('31').should.be.false()
@@ -185,7 +186,7 @@ describe('helpers', () => {
   })
 
   describe('isPropertyId', () => {
-    it('should accept both item and property ids', done => {
+    it('should accept property ids', done => {
       isPropertyId('P31').should.be.true()
       isPropertyId('Q571').should.be.false()
       isPropertyId('31').should.be.false()
@@ -193,6 +194,40 @@ describe('helpers', () => {
       isPropertyId('Z31').should.be.false()
       isPropertyId('q31').should.be.false()
       isPropertyId('p31').should.be.false()
+      done()
+    })
+  })
+
+  describe('isLexemeId', () => {
+    it('should accept lexeme ids', done => {
+      isLexemeId('L525').should.be.true()
+      isLexemeId('P31').should.be.false()
+      isLexemeId('Q571').should.be.false()
+      isLexemeId('31').should.be.false()
+      isLexemeId(31).should.be.false()
+      isLexemeId('Z31').should.be.false()
+      isLexemeId('q31').should.be.false()
+      isLexemeId('p31').should.be.false()
+      done()
+    })
+  })
+
+  describe('isFormId', () => {
+    it('should accept form ids', done => {
+      isFormId('L525-F1').should.be.true()
+      isFormId('L525').should.be.false()
+      isFormId('L525F1').should.be.false()
+      isFormId('L525-S1').should.be.false()
+      done()
+    })
+  })
+
+  describe('isSenseId', () => {
+    it('should accept sense ids', done => {
+      isSenseId('L525-S1').should.be.true()
+      isSenseId('L525').should.be.false()
+      isSenseId('L525S1').should.be.false()
+      isSenseId('L525-F1').should.be.false()
       done()
     })
   })

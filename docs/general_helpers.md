@@ -31,15 +31,59 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Work with ids
+Those helpers help you figure-out if an id format looks right, not that the associated entity really exists. Typically to be used in conditions:
+```js
+if (wbk.isItemId(someId)) doThis()
+else if (wbk.isPropertyId(someId)) doThat()
+```
+
+### isEntityId
+Accepts `Q` (item), `P` (property), and `L` (lexeme) ids.
+```js
+wbk.isEntityId('Q1') // true
+wbk.isEntityId('P1') // true
+wbk.isEntityId('L1') // true
+wbk.isEntityId('L1-F1') // false
+wbk.isEntityId('L1-S1') // false
+```
 
 ### isItemId
 item ids a.k.a. `Q` ids
+```js
+wbk.isItemId('Q1') // true
+wbk.isItemId('P1') // false
+```
 
 ### isPropertyId
 Property ids a.k.a. `P` ids
+```js
+wbk.isPropertyId('P1') // true
+wbk.isPropertyId('Q1') // false
+```
 
-### isEntityId
-Accepts both `P` and `Q` ids
+### isLexemeId
+Property ids a.k.a. `L` ids
+```js
+wbk.isLexemeId('L1') // true
+wbk.isLexemeId('L1-F1') // false
+wbk.isLexemeId('L1-S1') // false
+```
+
+### isFormId
+Property ids a.k.a. `L` ids
+```js
+wbk.isFormId('L1-F1') // true
+wbk.isFormId('L1') // false
+wbk.isFormId('L1-S1') // false
+```
+
+### isSenseId
+Property ids a.k.a. `L` ids
+```js
+wbk.isSenseId('L1-S1') // true
+wbk.isSenseId('L1') // false
+wbk.isSenseId('L1-F1') // false
+```
 
 ### isNumericId
 
