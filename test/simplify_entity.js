@@ -1,5 +1,6 @@
 require('should')
 const Q571 = require('./data/Q571.json')
+const L525 = require('./data/L525.json')
 const _ = require('lodash')
 
 const { simplifyEntity, simplifyEntities } = require('../lib/helpers/simplify_entity')
@@ -48,6 +49,23 @@ describe('simplify.entity', () => {
     partialEntity.labels.should.be.an.Object()
     partialEntity.labels.fr.should.equal('livre')
     done()
+  })
+
+  it('should support lexemes', () => {
+    const L525Clone = _.cloneDeep(L525)
+    const simplifiedEntity = simplifyEntity(L525Clone)
+    simplifiedEntity.lemmas.should.be.an.Object()
+    simplifiedEntity.lemmas.fr.should.equal('maison')
+    simplifiedEntity.claims.should.be.an.Object()
+    simplifiedEntity.lexicalCategory.should.equal('Q1084')
+    simplifiedEntity.language.should.equal('Q150')
+    simplifiedEntity.claims.should.be.an.Object()
+    simplifiedEntity.claims.P5185[0].should.equal('Q1775415')
+    simplifiedEntity.forms.should.be.an.Object()
+    simplifiedEntity.forms[0].claims.P443[0].should.equal('LL-Q150 (fra)-0x010C-maisons.wav')
+    simplifiedEntity.senses.should.be.an.Object()
+    simplifiedEntity.senses[0].glosses.fr.should.equal("édifice destiné à l'habitation")
+    simplifiedEntity.senses[0].claims.P5137[0].should.equal('Q3947')
   })
 })
 
