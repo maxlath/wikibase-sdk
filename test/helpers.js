@@ -1,6 +1,6 @@
 require('should')
 
-const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, getImageUrl, isGuid } = require('../lib/helpers/helpers')
+const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isNumericId, getNumericId, getImageUrl } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -232,17 +232,6 @@ describe('helpers', () => {
     })
   })
 
-  describe('getImageUrl', () => {
-    it('should build a commons FilePath Url', done => {
-      getImageUrl('Peredot.jpg')
-      .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg')
-
-      getImageUrl('Peredot.jpg', 250)
-      .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250')
-      done()
-    })
-  })
-
   describe('isGuid', () => {
     it('should accept guids for all supported entities types', done => {
       isGuid('q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C').should.be.true()
@@ -255,6 +244,34 @@ describe('helpers', () => {
       isGuid('P6216$a7fd6230-496e-6b47-ca4a-dcec5dbd7f95').should.be.true()
       isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec').should.be.false()
       isGuid('Q520').should.be.false()
+      done()
+    })
+  })
+
+  describe('isNumericId', () => {
+    it('should accept numeric ids', () => {
+      isNumericId('1').should.be.true()
+      isNumericId('Q1').should.be.false()
+    })
+  })
+
+  describe('getNumericId', () => {
+    it('should get a numeric id from an entity id', () => {
+      getNumericId('Q1').should.equal('1')
+      getNumericId('P1').should.equal('1')
+      getNumericId('L1').should.equal('1')
+      getNumericId.bind(null, 'L1-F1').should.throw()
+      getNumericId.bind(null, 'L1-S1').should.throw()
+    })
+  })
+
+  describe('getImageUrl', () => {
+    it('should build a commons FilePath Url', done => {
+      getImageUrl('Peredot.jpg')
+      .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg')
+
+      getImageUrl('Peredot.jpg', 250)
+      .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250')
       done()
     })
   })
