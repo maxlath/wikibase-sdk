@@ -92,6 +92,8 @@ describe('index', () => {
     wdk.simplify.qualifier.should.be.a.Function()
     wdk.simplify.propertyQualifiers.should.be.a.Function()
     wdk.simplify.qualifiers.should.be.a.Function()
+    wdk.simplify.forms.should.be.a.Function()
+    wdk.simplify.form.should.be.a.Function()
     wdk.simplify.sparqlResults.should.be.a.Function()
     wdk.truthyClaims.should.be.a.Function()
     wdk.truthyPropertyClaims.should.be.a.Function()
