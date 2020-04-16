@@ -11,6 +11,7 @@ const Q271094 = require('./data/Q271094.json')
 const Q4115189 = require('./data/Q4115189.json')
 const Q275937 = require('./data/Q275937.json')
 const Q1 = require('./data/Q1.json')
+const L525 = require('./data/L525.json')
 const oldClaimFormat = require('./data/old_claim_format.json')
 const lexemeClaim = require('./data/lexeme_claim.json')
 const emptyValues = require('./data/empty_values.json')
@@ -316,6 +317,11 @@ describe('simplifyClaim', () => {
       simplifyClaim(Q275937.claims.P8017[0]).should.equal('L252247-F2')
       done()
     })
+
+    it('should support wikibase-sense', done => {
+      simplifyClaim(L525.claims.P5972[0]).should.equal('L512-S1')
+      done()
+    })
   })
 
   describe('prefixes', () => {
@@ -615,6 +621,15 @@ describe('simplifyClaim', () => {
       simplified.references[0].should.be.an.Object()
       simplified.references[0].hash.should.be.a.String()
       done()
+    })
+  })
+
+  describe('lexemes', () => {
+    it('should parse lexem claims', () => {
+      simplifyClaims(L525.claims).should.deepEqual({
+        P5185: [ 'Q1775415' ],
+        P5972: [ 'L512-S1' ]
+      })
     })
   })
 })
