@@ -14,12 +14,15 @@
 - [Simplify aliases](#simplify-aliases)
 - [Simplify sitelinks](#simplify-sitelinks)
   - [add sitelinks URLs](#add-sitelinks-urls)
+- [Simplify lemmas](#simplify-lemmas)
+- [Simplify forms](#simplify-forms)
+- [Simplify senses](#simplify-senses)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 ## Simplify entity
-Applying all simplifiers at once: labels, descriptions, aliases, claims, sitelinks. See next sections for details.
+Applying all simplifiers at once. See next sections for details.
 ```js
 wbk.simplify.entity(entity)
 ```
@@ -42,9 +45,9 @@ wbk.simplify.entity(entity, simplificationOptions)
 ```
 
 ## Simplify entities
-Same as [`wbk.simplify.entity`](#simplify-entity), but accepts the all the entities sent by the Wikidata API at once:
+Same as [`wbk.simplify.entity`](#simplify-entity), but accepts all the entities sent by the Wikibase API at once:
 ```js
-const url = wbk.getEntities([ 'Q1', 'Q2', 'Q3' ])
+const url = wbk.getEntities([ 'Q1', 'P2', 'L3' ])
 fetch(url)
 .then(res => res.json())
 .then(res => {
@@ -91,3 +94,30 @@ wbk.simplify.sitelinks(entity.sitelinks, { addUrl: true })
 ```
 Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`<br>
 After: `{ plwiki: { title: 'Książka', url: 'https://pl.wikipedia.org/wiki/Książka' }`
+
+## Simplify lemmas
+*Specific to lexemes*
+
+```js
+wbk.simplify.lemmas(entity.lemmas)
+```
+Before: `{ pl: { language: 'pl', value: 'książka' } }`<br>
+After: `{ pl: 'książka' }`
+
+## Simplify forms
+*Specific to lexemes*
+
+```js
+// return an array of simplified forms, that is,
+// the forms but with simplified representations and claims
+wbk.simplify.forms(entity.forms)
+```
+
+## Simplify senses
+*Specific to lexemes*
+
+```js
+// return an array of simplified senses, that is,
+// the senses but with simplified glosses and claims
+wbk.simplify.senses(entity.senses)
+```

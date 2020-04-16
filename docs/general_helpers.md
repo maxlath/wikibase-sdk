@@ -7,9 +7,12 @@
 
 
 - [Work with ids](#work-with-ids)
+  - [isEntityId](#isentityid)
   - [isItemId](#isitemid)
   - [isPropertyId](#ispropertyid)
-  - [isEntityId](#isentityid)
+  - [isLexemeId](#islexemeid)
+  - [isFormId](#isformid)
+  - [isSenseId](#issenseid)
   - [isNumericId](#isnumericid)
   - [isGuid](#isguid)
   - [isRevisionId](#isrevisionid)
