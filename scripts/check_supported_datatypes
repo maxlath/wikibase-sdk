@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-wd sparql ./scripts/queries/all_properties_datatypes.rq --json > /tmp/all_wikidata_datatypes.json
+set -eu
 
+wd sparql ./scripts/queries/all_properties_datatypes.rq --json > /tmp/all_wikidata_datatypes.json
 ./scripts/compare_datatypes

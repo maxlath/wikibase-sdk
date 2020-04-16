@@ -59,7 +59,7 @@
     "should": "^13.2.1",
     "standardx": "^5.0.0",
     "uglify-js": "^3.3.25",
-    "wikidata-cli": "^6.0.8"
+    "wikibase-cli": "^10.0.0"
   },
   "engines": {
     "node": ">= 6.4"
