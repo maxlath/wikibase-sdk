@@ -1,6 +1,17 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.4.0 - 2020-04-17
+* `simplify.entity`/`simplify.entities` function: added support for Lexemes
+* Added `simplify.lemmas` function
+* Added `simplify.glosses` function
+* Added `simplify.form` function
+* Added `simplify.forms` function
+* Added `simplify.sense` function
+* Added `simplify.senses` function
+* Added `isFormId` function
+* Added `isSenseId` function
+
 ## 7.3.0 - 2020-04-08
 * [`getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md): added support for `rvprops`, `rvuser`, `rvexcludeuser`, and `rvtag` parameters
 
