@@ -59,6 +59,12 @@ describe('wikidata getEntities', () => {
       url2.split('&ids=Q535|Q7546&').length.should.equal(2)
       done()
     })
+
+    it('accepts all supported entities types', done => {
+      const url = getEntities([ 'Q535', 'P123', 'L525' ])
+      qs.unescape(url).should.containEql('&ids=Q535|P123|L525&')
+      done()
+    })
   })
   describe('languages', () => {
     it('default to no language parameter', done => {
