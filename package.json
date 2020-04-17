@@ -52,7 +52,6 @@
     "babelify": "^8.0.0",
     "browserify": "^16.2.3",
     "git-hooks": "^1.1.10",
-    "jsondepth": "^1.9.2",
     "lodash": "^4.17.15",
     "mocha": "^5.1.1",
     "should": "^13.2.1",

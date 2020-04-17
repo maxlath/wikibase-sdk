@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
+
+which jq > /dev/null || {
+  echo "requires to have jq (https://stedolan.github.io/jq/) installed"
+  exit 1
+}
+
 echo "Updating ./scripts/sitelinks_languages/sites.json"
-curl -s 'https://www.wikidata.org/w/api.php?action=paraminfo&modules=wbgetentities&format=json' | jd paraminfo.modules.0.parameters.1.type -j > ./scripts/sitelinks_languages/sites.json
+curl -s 'https://www.wikidata.org/w/api.php?action=paraminfo&modules=wbgetentities&format=json' | jq '.paraminfo.modules[0].parameters[1].type' > ./scripts/sitelinks_languages/sites.json
 
 echo "Generating ./lib/helpers/sitelinks_languages.js"
 tee ./lib/helpers/sitelinks_languages.js << EOF
