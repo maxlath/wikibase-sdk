@@ -1,5 +1,6 @@
 require('should')
 const Q571 = require('./data/Q571.json')
+const P8098 = require('./data/P8098.json')
 const L525 = require('./data/L525.json')
 const _ = require('lodash')
 
@@ -11,9 +12,10 @@ describe('simplify.entity', () => {
     done()
   })
 
-  it('should return a simplified entity', done => {
+  it('should support items', done => {
     const Q571Clone = _.cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone)
+    simplifiedEntity.type.should.equal('item')
     simplifiedEntity.labels.fr.should.equal('livre')
     simplifiedEntity.descriptions.fr.should.equal('document écrit formé de pages reliées entre elles')
     simplifiedEntity.aliases.pl.should.be.an.Array()
@@ -22,6 +24,38 @@ describe('simplify.entity', () => {
     simplifiedEntity.claims.P279[0].should.equal('Q2342494')
     simplifiedEntity.sitelinks.afwiki.should.equal('Boek')
     done()
+  })
+
+  it('should support properties', () => {
+    const P8098Clone = _.cloneDeep(P8098)
+    const simplifiedEntity = simplifyEntity(P8098Clone)
+    simplifiedEntity.type.should.equal('property')
+    simplifiedEntity.datatype.should.equal('external-id')
+    simplifiedEntity.labels.fr.should.equal('identifiant Biographical Dictionary of Architects in Canada')
+    simplifiedEntity.descriptions.fr.should.equal("identifiant d'un architecte dans le Biographical Dictionary of Architects in Canada")
+    simplifiedEntity.aliases.fr.should.be.an.Array()
+    simplifiedEntity.aliases.fr[0].should.equal('identifiant BDAC')
+    simplifiedEntity.claims.should.be.an.Object()
+    simplifiedEntity.claims.P1630.should.be.an.Array()
+    simplifiedEntity.claims.P1630[0].should.equal('http://dictionaryofarchitectsincanada.org/node/$1')
+  })
+
+  it('should support lexemes', () => {
+    const L525Clone = _.cloneDeep(L525)
+    const simplifiedEntity = simplifyEntity(L525Clone)
+    simplifiedEntity.type.should.equal('lexeme')
+    simplifiedEntity.lemmas.should.be.an.Object()
+    simplifiedEntity.lemmas.fr.should.equal('maison')
+    simplifiedEntity.claims.should.be.an.Object()
+    simplifiedEntity.lexicalCategory.should.equal('Q1084')
+    simplifiedEntity.language.should.equal('Q150')
+    simplifiedEntity.claims.should.be.an.Object()
+    simplifiedEntity.claims.P5185[0].should.equal('Q1775415')
+    simplifiedEntity.forms.should.be.an.Object()
+    simplifiedEntity.forms[0].claims.P443[0].should.equal('LL-Q150 (fra)-0x010C-maisons.wav')
+    simplifiedEntity.senses.should.be.an.Object()
+    simplifiedEntity.senses[0].glosses.fr.should.equal("édifice destiné à l'habitation")
+    simplifiedEntity.senses[0].claims.P5137[0].should.equal('Q3947')
   })
 
   it('should pass options down to subfunctions', done => {
@@ -49,23 +83,6 @@ describe('simplify.entity', () => {
     partialEntity.labels.should.be.an.Object()
     partialEntity.labels.fr.should.equal('livre')
     done()
-  })
-
-  it('should support lexemes', () => {
-    const L525Clone = _.cloneDeep(L525)
-    const simplifiedEntity = simplifyEntity(L525Clone)
-    simplifiedEntity.lemmas.should.be.an.Object()
-    simplifiedEntity.lemmas.fr.should.equal('maison')
-    simplifiedEntity.claims.should.be.an.Object()
-    simplifiedEntity.lexicalCategory.should.equal('Q1084')
-    simplifiedEntity.language.should.equal('Q150')
-    simplifiedEntity.claims.should.be.an.Object()
-    simplifiedEntity.claims.P5185[0].should.equal('Q1775415')
-    simplifiedEntity.forms.should.be.an.Object()
-    simplifiedEntity.forms[0].claims.P443[0].should.equal('LL-Q150 (fra)-0x010C-maisons.wav')
-    simplifiedEntity.senses.should.be.an.Object()
-    simplifiedEntity.senses[0].glosses.fr.should.equal("édifice destiné à l'habitation")
-    simplifiedEntity.senses[0].claims.P5137[0].should.equal('Q3947')
   })
 })
 
