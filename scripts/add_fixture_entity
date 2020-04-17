@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-wd data $1 > ./test/data/$1.json
