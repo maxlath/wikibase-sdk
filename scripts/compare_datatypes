@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { kebabCase } = require('lodash')
-const { red, green } = require('chalk')
+const { red, green } = require('tiny-chalk')
 const supportedTypes = Object.keys(require('../lib/helpers/parse_claim').parsers)
 
 require('/tmp/all_wikidata_datatypes.json')
