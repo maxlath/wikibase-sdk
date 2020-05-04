@@ -1,4 +1,5 @@
 node_modules
+package-lock.json
+repo-backup
 scripts/sitelinks_languages/sites.json
 types/**/*.js
-repo-backup
