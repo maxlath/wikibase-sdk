@@ -3,10 +3,7 @@
   "version": "*",
   "description": "A convenience package bundling wikibase-sdk initialized with wikidata.org config",
   "main": "./wikidata-sdk.js",
-  "types": "types/index.d.ts",
-  "scripts": {
-    "test-types": "tsc"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/maxlath/wikidata-sdk"
@@ -28,9 +25,7 @@
   "dependencies": {
     "wikibase-sdk": "*"
   },
-  "devDependencies": {
-    "typescript": "^3.5.1"
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">= 6.4"
   }

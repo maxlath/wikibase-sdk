@@ -4,8 +4,7 @@
   "description": "utils functions to query a Wikibase instance and simplify its results",
   "main": "lib/wikibase-sdk.js",
   "files": [
-    "lib",
-    "types/**/*.d.ts"
+    "lib"
   ],
   "directories": {
     "lib": "lib",
