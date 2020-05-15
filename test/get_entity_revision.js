@@ -22,7 +22,7 @@ describe('getEntityRevision', () => {
     query = qs.parse(query)
     host.should.equal('https://www.wikidata.org/w/index.php')
     query.title.should.equal('Special:EntityData/Q3548931.json')
-    query.oldid.should.equal('3548931')
+    query.revision.should.equal('3548931')
     done()
   })
 
@@ -33,7 +33,7 @@ describe('getEntityRevision', () => {
     query = qs.parse(query)
     host.should.equal('https://www.wikidata.org/w/index.php')
     query.title.should.equal('Special:EntityData/Q3548931.json')
-    query.oldid.should.equal('3548931')
+    query.revision.should.equal('3548931')
     done()
   })
 })
