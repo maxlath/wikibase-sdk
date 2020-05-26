@@ -17,6 +17,14 @@ describe('simplifyLabels', () => {
   it('should create a different object', () => {
     should(simplifyLabels(Q571.labels) === Q571.labels).be.false()
   })
+
+  it.only('should not crash when the simplified attribute is null', () => {
+    // This might be the case if a tool was requested entity.labels.en
+    // and set it to null in absence of value
+    // Known case in wikibase-cli: wd data --props labels.en --simplify
+    const entityWithNullEnLabel = { labels: { en: null } }
+    simplifyLabels(entityWithNullEnLabel.labels).should.deepEqual({ en: null })
+  })
 })
 
 describe('simplifyDescriptions', () => {
