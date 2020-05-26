@@ -24,15 +24,13 @@ const sparqlExemple = `
 `
 
 describe('wdSparqlQuery', () => {
-  it('env', done => {
+  it('env', () => {
     wdSparqlQuery.should.be.a.Function()
-    done()
   })
 
-  it('should return a url', done => {
+  it('should return a url', () => {
     const url = wdSparqlQuery(sparqlExemple)
     url.should.be.a.String()
     url.should.match(new RegExp('https://'))
-    done()
   })
 })

@@ -7,20 +7,18 @@ const { buildUrl } = require('./lib/tests_env')
 const getRevisions = require('../lib/queries/get_revisions')(buildUrl)
 
 describe('getRevisions', () => {
-  it('should reject invalid ids', done => {
+  it('should reject invalid ids', () => {
     getRevisions.bind(null, 'foo').should.throw('invalid entity page title: foo')
-    done()
   })
 
-  it('should accept namespaced ids invalid ids', done => {
+  it('should accept namespaced ids invalid ids', () => {
     getRevisions.bind(null, 'Item:Q123').should.not.throw()
     getRevisions.bind(null, 'Property:P123').should.not.throw()
     getRevisions.bind(null, 'Lexeme:L123').should.not.throw()
     getRevisions.bind(null, 'Property:Q123').should.throw('invalid entity page title: Property:Q123')
-    done()
   })
 
-  it('should return a revision query url', done => {
+  it('should return a revision query url', () => {
     const url = getRevisions('Q3548931')
     url.should.be.a.String()
     const query = qs.parse(url.split('?')[1])
@@ -29,53 +27,46 @@ describe('getRevisions', () => {
     query.titles.should.equal('Q3548931')
     query.rvlimit.should.equal('max')
     query.format.should.equal('json')
-    done()
   })
 
-  it('should accept several ids', done => {
+  it('should accept several ids', () => {
     const url = getRevisions([ 'Q3548931', 'Q3548932' ])
     const query = qs.parse(url.split('?')[1])
     query.titles.should.equal('Q3548931|Q3548932')
-    done()
   })
 
-  it('should accept custom parameters', done => {
+  it('should accept custom parameters', () => {
     const url = getRevisions('Q3548931', { limit: 2, start: sinceYesterdayInSeconds })
     const query = qs.parse(url.split('?')[1])
     query.rvlimit.should.equal('2')
     query.rvstart.should.equal(sinceYesterdayInSeconds.toString())
-    done()
   })
 
-  it('should accept time in milliseconds', done => {
+  it('should accept time in milliseconds', () => {
     const url = getRevisions('Q3548931', { start: sinceYesterdayInMilliSeconds })
     const query = qs.parse(url.split('?')[1])
     query.rvstart.should.equal(sinceYesterdayInSeconds.toString())
-    done()
   })
 
-  it('should accept time in ISO format', done => {
+  it('should accept time in ISO format', () => {
     const ISOtime = new Date(sinceYesterdayInMilliSeconds).toISOString()
     const url = getRevisions('Q3548931', { end: ISOtime })
     const query = qs.parse(url.split('?')[1])
     query.rvend.should.equal(sinceYesterdayInSeconds.toString())
-    done()
   })
 
-  it('should accept date objects in ISO format', done => {
+  it('should accept date objects in ISO format', () => {
     const dateObj = new Date(sinceYesterdayInMilliSeconds)
     const url = getRevisions('Q3548931', { end: dateObj })
     const query = qs.parse(url.split('?')[1])
     query.rvend.should.equal(sinceYesterdayInSeconds.toString())
-    done()
   })
 
-  it('should ignore parameters that the API refuses for multiple ids', done => {
+  it('should ignore parameters that the API refuses for multiple ids', () => {
     const dateObj = new Date(sinceYesterdayInMilliSeconds)
     const url = getRevisions([ 'Q3548931', 'Q3548932' ], { end: dateObj })
     const query = qs.parse(url.split('?')[1])
     should(query.rvend).not.be.ok()
-    done()
   })
 
   it('should allow to set rvprop as a string', () => {

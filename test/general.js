@@ -3,70 +3,60 @@ const WBK = require('../lib/wikibase-sdk')
 const { instance, sparqlEndpoint } = require('./lib/tests_env')
 
 describe('builder', () => {
-  it('should be a function', done => {
+  it('should be a function', () => {
     WBK.should.be.a.Function()
-    done()
   })
 
-  it('should reference instance-independant helpers', done => {
+  it('should reference instance-independant helpers', () => {
     WBK.parse.should.be.an.Object()
     WBK.simplify.should.be.an.Object()
     WBK.isEntityId.should.be.a.Function()
     WBK.getSitelinkData.should.be.a.Function()
-    done()
   })
 
-  it('should throw when initialized without a config', done => {
+  it('should throw when initialized without a config', () => {
     WBK.should.throw()
-    done()
   })
 
-  it('should throw when initialized without an instance or a sparqlEndpoint', done => {
+  it('should throw when initialized without an instance or a sparqlEndpoint', () => {
     (() => WBK({})).should.throw()
-    done()
   })
 
-  it('should throw when initialized with an invalid instance', done => {
+  it('should throw when initialized with an invalid instance', () => {
     (() => WBK({ instance: 'foo' })).should.throw('invalid instance: foo')
-    done()
   })
 
-  it('should throw when initialized with an invalid sparql endpoint', done => {
+  it('should throw when initialized with an invalid sparql endpoint', () => {
     (() => WBK({ instance, sparqlEndpoint: 'foo' })).should.throw('invalid sparqlEndpoint: foo')
-    done()
   })
 
-  it('should not throw when initialized without a sparql endpoint', done => {
+  it('should not throw when initialized without a sparql endpoint', () => {
     const wbk = WBK({ instance })
     wbk.sparqlQuery.should.throw('sparqlQuery requires a sparqlEndpoint to be set at initialization')
     wbk.getReverseClaims.should.throw('getReverseClaims requires a sparqlEndpoint to be set at initialization')
-    done()
   })
 
-  it('should not throw when initialized without a sparql endpoint', done => {
+  it('should not throw when initialized without a sparql endpoint', () => {
     const wbk = WBK({ sparqlEndpoint })
     wbk.searchEntities.should.throw('searchEntities requires an instance to be set at initialization')
     wbk.getEntities.should.throw('getEntities requires an instance to be set at initialization')
-    done()
   })
 
-  it('should produce valid URLs', done => {
+  it('should produce valid URLs', () => {
     const wdk = WBK({ instance, sparqlEndpoint })
     wdk.searchEntities('ingmar Bergman').should.startWith(instance)
     wdk.getReverseClaims('P50', 'Q504').should.startWith(sparqlEndpoint)
-    done()
   })
 
-  it('should exposed sanitized instance URL', done => {
+  it('should exposed sanitized instance URL', () => {
     const wdk = WBK({ instance, sparqlEndpoint })
     wdk.instance.root.should.equal(instance)
     wdk.instance.apiEndpoint.should.equal(`${instance}/w/api.php`)
-    done()
   })
 })
 
 describe('index', () => {
-  it('should give access to all the function', done => {
+  it('should give access to all the function', () => {
     const wdk = WBK({ instance, sparqlEndpoint })
 
     wdk.should.be.an.Object()
@@ -120,7 +110,5 @@ describe('index', () => {
     wdk.getSitelinkUrl.should.be.a.Function()
     wdk.getSitelinkData.should.be.a.Function()
     wdk.isSitelinkKey.should.be.a.Function()
-
-    done()
   })
 })

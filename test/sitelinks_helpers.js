@@ -3,11 +3,11 @@ require('should')
 const { getSitelinkUrl, getSitelinkData, isSitelinkKey } = require('../lib/helpers/sitelinks')
 
 describe('getSitelinkUrl', () => {
-  it('should be a function', done => {
+  it('should be a function', () => {
     getSitelinkUrl.should.be.an.Function()
-    done()
   })
-  it('should return a sitelink URL', done => {
+
+  it('should return a sitelink URL', () => {
     getSitelinkUrl('commons', 'Lyon')
     .should.equal('https://commons.wikimedia.org/wiki/Lyon')
 
@@ -42,10 +42,9 @@ describe('getSitelinkUrl', () => {
 
     getSitelinkUrl('wikidata', 'P50')
     .should.equal('https://www.wikidata.org/wiki/Property:P50')
-
-    done()
   })
-  it('should accept a sitelink object as unique argument', done => {
+
+  it('should accept a sitelink object as unique argument', () => {
     getSitelinkUrl({ site: 'commons', title: 'Lyon' })
     .should.equal('https://commons.wikimedia.org/wiki/Lyon')
 
@@ -80,25 +79,21 @@ describe('getSitelinkUrl', () => {
 
     getSitelinkUrl({ site: 'wikidata', title: 'P50' })
     .should.equal('https://www.wikidata.org/wiki/Property:P50')
-
-    done()
   })
 
-  it('should replace spaces by underscores', done => {
+  it('should replace spaces by underscores', () => {
     getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
     .should.equal('https://es.wikiquote.org/wiki/Gilles_Deleuze')
-    done()
   })
 
-  it('should reject invalid sitelinks', done => {
+  it('should reject invalid sitelinks', () => {
     getSitelinkUrl.bind(null, 'frperlinpinpin', 'Lyon').should.throw()
     getSitelinkUrl.bind(null, 'frwikiwiki', 'Lyon').should.throw()
-    done()
   })
 })
 
 describe('getSitelinkData', () => {
-  it('should return a sitelink data from a sitelink key', done => {
+  it('should return a sitelink data from a sitelink key', () => {
     getSitelinkData('frwiki').lang.should.equal('fr')
     getSitelinkData('frwiki').project.should.equal('wikipedia')
     getSitelinkData('dewikiquote').lang.should.equal('de')
@@ -108,10 +103,9 @@ describe('getSitelinkData', () => {
     // Using 'en' as placeholder
     getSitelinkData('wikidatawiki').lang.should.equal('en')
     getSitelinkData('commonswiki').lang.should.equal('en')
-    done()
   })
 
-  it('should return sitelink data from a URL', done => {
+  it('should return sitelink data from a URL', () => {
     getSitelinkData('https://de.wikipedia.org/wiki/The_Score_(2001)').lang.should.equal('de')
     getSitelinkData('https://de.wikipedia.org/wiki/The_Score_(2001)').project.should.equal('wikipedia')
     getSitelinkData('https://de.wikipedia.org/wiki/The_Score_(2001)').key.should.equal('dewiki')
@@ -126,29 +120,26 @@ describe('getSitelinkData', () => {
     getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').project.should.equal('commons')
     getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').key.should.equal('commons')
     getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').title.should.equal('Category:ITER')
-    done()
   })
 
-  it('should reject invalid sitelink key', done => {
+  it('should reject invalid sitelink key', () => {
     getSitelinkData.bind(null, 'foowiki').should.throw()
-    done()
   })
 })
 
 describe('isSitelinkKey', () => {
-  it('should return true for valid sitelink keys', done => {
+  it('should return true for valid sitelink keys', () => {
     isSitelinkKey('frwiki').should.be.true()
     isSitelinkKey('commonswiki').should.be.true()
     isSitelinkKey('wikidatawiki').should.be.true()
     isSitelinkKey('commons').should.be.false()
     isSitelinkKey('wikidata').should.be.false()
-    done()
   })
-  it('should return false for invalid sitelink keys', done => {
+
+  it('should return false for invalid sitelink keys', () => {
     isSitelinkKey('frperlinpinpin').should.be.false()
     isSitelinkKey('frwikilinpinpin').should.be.false()
     isSitelinkKey('imaginarylangwiki').should.be.false()
     isSitelinkKey('frwikiwiki').should.be.false()
-    done()
   })
 })

@@ -7,12 +7,11 @@ const _ = require('lodash')
 const { simplifyEntity, simplifyEntities } = require('../lib/helpers/simplify_entity')
 
 describe('simplify.entity', () => {
-  it('should be a function', done => {
+  it('should be a function', () => {
     simplifyEntity.should.be.a.Function()
-    done()
   })
 
-  it('should support items', done => {
+  it('should support items', () => {
     const Q571Clone = _.cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone)
     simplifiedEntity.type.should.equal('item')
@@ -23,7 +22,6 @@ describe('simplify.entity', () => {
     simplifiedEntity.claims.P279.should.be.an.Array()
     simplifiedEntity.claims.P279[0].should.equal('Q2342494')
     simplifiedEntity.sitelinks.afwiki.should.equal('Boek')
-    done()
   })
 
   it('should support properties', () => {
@@ -58,7 +56,7 @@ describe('simplify.entity', () => {
     simplifiedEntity.senses[0].claims.P5137[0].should.equal('Q3947')
   })
 
-  it('should pass options down to subfunctions', done => {
+  it('should pass options down to subfunctions', () => {
     const Q571Clone = _.cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone, { keepQualifiers: true, keepIds: true, addUrl: true })
     simplifiedEntity.labels.fr.should.equal('livre')
@@ -71,10 +69,9 @@ describe('simplify.entity', () => {
     simplifiedEntity.sitelinks.afwiki.should.be.an.Object()
     simplifiedEntity.sitelinks.afwiki.title.should.equal('Boek')
     simplifiedEntity.sitelinks.afwiki.url.should.equal('https://af.wikipedia.org/wiki/Boek')
-    done()
   })
 
-  it('should accept partial entities', done => {
+  it('should accept partial entities', () => {
     const Q571Clone = _.cloneDeep(Q571)
     const emptyEntity = simplifyEntity({})
     Object.keys(emptyEntity).length.should.equal(3)
@@ -82,12 +79,11 @@ describe('simplify.entity', () => {
     Object.keys(partialEntity).length.should.equal(4)
     partialEntity.labels.should.be.an.Object()
     partialEntity.labels.fr.should.equal('livre')
-    done()
   })
 })
 
 describe('simplify.entities', () => {
-  it('should accept enities objects', done => {
+  it('should accept enities objects', () => {
     const Q571Clone = _.cloneDeep(Q571)
     const entities = { Q571: Q571Clone }
     const simplifiedEntities = simplifyEntities(entities)
@@ -98,6 +94,5 @@ describe('simplify.entities', () => {
     simplifiedEntities.Q571.claims.P279.should.be.an.Array()
     simplifiedEntities.Q571.claims.P279[0].should.equal('Q2342494')
     simplifiedEntities.Q571.sitelinks.afwiki.should.equal('Boek')
-    done()
   })
 })

@@ -13,45 +13,39 @@ describe('helpers', () => {
   const negativeEpoch = -63549360000000
 
   describe('wikibaseTimeToEpochTime', () => {
-    it('env', done => {
+    it('env', () => {
       new Date(epoch).toISOString().should.equal(ISOtime)
       new Date(negativeEpoch).toISOString().should.equal(ISOnegativeTime)
-      done()
     })
 
-    it('should return a number (epoch time)', done => {
+    it('should return a number (epoch time)', () => {
       wikibaseTimeToEpochTime(wdTime).should.be.a.Number()
-      done()
     })
 
-    it('should return a number for negative time', done => {
+    it('should return a number for negative time', () => {
       wikibaseTimeToEpochTime(negativeWdTime).should.be.a.Number()
-      done()
     })
 
-    it('should return the right number', done => {
+    it('should return the right number', () => {
       wikibaseTimeToEpochTime(wdTime).should.equal(epoch)
-      done()
     })
 
-    it('should return the right number for negative time too', done => {
+    it('should return the right number for negative time too', () => {
       wikibaseTimeToEpochTime(negativeWdTime).should.equal(negativeEpoch)
-      done()
     })
 
-    it('should accept a value object', done => {
+    it('should accept a value object', () => {
       wikibaseTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal(-3160944000000)
       wikibaseTimeToEpochTime(Q970917.claims.P569[1].mainsnak.datavalue.value)
       .should.equal(657417600000)
       wikibaseTimeToEpochTime(Q970917.claims.P569[2].mainsnak.datavalue.value)
       .should.equal(631152000000)
-      done()
     })
   })
 
   describe('wikibaseTimeToISOString', () => {
-    it('should convert wikibase date to ISO date', done => {
+    it('should convert wikibase date to ISO date', () => {
       wikibaseTimeToISOString('+1885-05-22T00:00:00Z')
       .should.equal('1885-05-22T00:00:00.000Z')
 
@@ -66,29 +60,25 @@ describe('helpers', () => {
 
       wikibaseTimeToISOString('+34000-00-00T00:00:00Z')
       .should.equal('+034000-01-01T00:00:00.000Z')
-
-      done()
     })
 
-    it('should return a valid time for possible invalid dates', done => {
+    it('should return a valid time for possible invalid dates', () => {
       wikibaseTimeToISOString('+1953-00-00T00:00:00Z')
       .should.equal('1953-01-01T00:00:00.000Z')
 
       wikibaseTimeToISOString('+1953-11-00T00:00:00Z')
       .should.equal('1953-11-01T00:00:00.000Z')
-      done()
     })
 
-    it('should return a valid time even for possible invalid negative date', done => {
+    it('should return a valid time even for possible invalid negative date', () => {
       wikibaseTimeToISOString('-1953-00-00T00:00:00Z')
       .should.equal('-001953-01-01T00:00:00.000Z')
 
       wikibaseTimeToISOString('-1953-11-00T00:00:00Z')
       .should.equal('-001953-11-01T00:00:00.000Z')
-      done()
     })
 
-    it('should return a valid time for dates far in the past', done => {
+    it('should return a valid time for dates far in the past', () => {
       wikibaseTimeToISOString('-13798000000-00-00T00:00:00Z')
       .should.equal('-13798000000-01-01T00:00:00Z')
 
@@ -97,10 +87,9 @@ describe('helpers', () => {
 
       wikibaseTimeToISOString('-13798000000-02-07T15:00:00Z')
       .should.equal('-13798000000-02-07T15:00:00Z')
-      done()
     })
 
-    it('should return a valid time for dates far in the future', done => {
+    it('should return a valid time for dates far in the future', () => {
       wikibaseTimeToISOString('+13798000000-00-00T00:00:00Z')
       .should.equal('+13798000000-01-01T00:00:00Z')
 
@@ -109,57 +98,51 @@ describe('helpers', () => {
 
       wikibaseTimeToISOString('+13798000000-02-07T15:00:00Z')
       .should.equal('+13798000000-02-07T15:00:00Z')
-      done()
     })
 
-    it('should accept a value object', done => {
+    it('should accept a value object', () => {
       wikibaseTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal('1869-11-01T00:00:00.000Z')
       wikibaseTimeToISOString(Q970917.claims.P569[1].mainsnak.datavalue.value)
       .should.equal('1990-11-01T00:00:00.000Z')
       wikibaseTimeToISOString(Q970917.claims.P569[2].mainsnak.datavalue.value)
       .should.equal('1990-01-01T00:00:00.000Z')
-      done()
     })
   })
 
   describe('wikibaseTimeToSimpleDay', () => {
-    it('should convert wikibase date with year precision to simple-day', done => {
+    it('should convert wikibase date with year precision to simple-day', () => {
       wikibaseTimeToSimpleDay('+1953-00-00T00:00:00Z').should.equal('1953')
       wikibaseTimeToSimpleDay('-1953-00-00T00:00:00Z').should.equal('-1953')
       wikibaseTimeToSimpleDay('+13-00-00T00:00:00Z').should.equal('13')
       wikibaseTimeToSimpleDay('-13-00-00T00:00:00Z').should.equal('-13')
       wikibaseTimeToSimpleDay('-0100-00-00T00:00:00Z').should.equal('-100')
-      done()
     })
 
-    it('should convert wikibase date with month precision to simple-day', done => {
+    it('should convert wikibase date with month precision to simple-day', () => {
       wikibaseTimeToSimpleDay('+1953-01-00T00:00:00Z').should.equal('1953-01')
       wikibaseTimeToSimpleDay('-1953-01-00T00:00:00Z').should.equal('-1953-01')
       wikibaseTimeToSimpleDay('+13-01-00T00:00:00Z').should.equal('13-01')
       wikibaseTimeToSimpleDay('-13-01-00T00:00:00Z').should.equal('-13-01')
       wikibaseTimeToSimpleDay('-0044-03-00T00:00:00Z').should.equal('-44-03')
-      done()
     })
 
-    it('should convert wikibase date with day precision or finer to simple-day', done => {
+    it('should convert wikibase date with day precision or finer to simple-day', () => {
       wikibaseTimeToSimpleDay('+1953-01-01T00:00:00Z').should.equal('1953-01-01')
       wikibaseTimeToSimpleDay('-1953-01-01T00:00:00Z').should.equal('-1953-01-01')
       wikibaseTimeToSimpleDay('+1953-01-01T13:45:00Z').should.equal('1953-01-01')
       wikibaseTimeToSimpleDay('-1953-01-01T13:45:00Z').should.equal('-1953-01-01')
       wikibaseTimeToSimpleDay('-0044-03-01T00:00:00Z').should.equal('-44-03-01')
-      done()
     })
 
-    it('should accept a value object', done => {
+    it('should accept a value object', () => {
       wikibaseTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)
       .should.equal('1869-11')
-      done()
     })
   })
 
   describe('isEntityId', () => {
-    it('should accept all supported entity types ids', done => {
+    it('should accept all supported entity types ids', () => {
       isEntityId('Q571').should.be.true()
       isEntityId('P31').should.be.true()
       isEntityId('L525').should.be.true()
@@ -171,12 +154,11 @@ describe('helpers', () => {
       isEntityId('Z31').should.be.false()
       isEntityId('q31').should.be.false()
       isEntityId('p31').should.be.false()
-      done()
     })
   })
 
   describe('isItemId', () => {
-    it('should accept item ids', done => {
+    it('should accept item ids', () => {
       isItemId('Q571').should.be.true()
       isItemId('P31').should.be.false()
       isItemId('31').should.be.false()
@@ -184,12 +166,11 @@ describe('helpers', () => {
       isItemId('Z31').should.be.false()
       isItemId('q31').should.be.false()
       isItemId('p31').should.be.false()
-      done()
     })
   })
 
   describe('isPropertyId', () => {
-    it('should accept property ids', done => {
+    it('should accept property ids', () => {
       isPropertyId('P31').should.be.true()
       isPropertyId('Q571').should.be.false()
       isPropertyId('31').should.be.false()
@@ -197,12 +178,11 @@ describe('helpers', () => {
       isPropertyId('Z31').should.be.false()
       isPropertyId('q31').should.be.false()
       isPropertyId('p31').should.be.false()
-      done()
     })
   })
 
   describe('isLexemeId', () => {
-    it('should accept lexeme ids', done => {
+    it('should accept lexeme ids', () => {
       isLexemeId('L525').should.be.true()
       isLexemeId('P31').should.be.false()
       isLexemeId('Q571').should.be.false()
@@ -211,32 +191,29 @@ describe('helpers', () => {
       isLexemeId('Z31').should.be.false()
       isLexemeId('q31').should.be.false()
       isLexemeId('p31').should.be.false()
-      done()
     })
   })
 
   describe('isFormId', () => {
-    it('should accept form ids', done => {
+    it('should accept form ids', () => {
       isFormId('L525-F1').should.be.true()
       isFormId('L525').should.be.false()
       isFormId('L525F1').should.be.false()
       isFormId('L525-S1').should.be.false()
-      done()
     })
   })
 
   describe('isSenseId', () => {
-    it('should accept sense ids', done => {
+    it('should accept sense ids', () => {
       isSenseId('L525-S1').should.be.true()
       isSenseId('L525').should.be.false()
       isSenseId('L525S1').should.be.false()
       isSenseId('L525-F1').should.be.false()
-      done()
     })
   })
 
   describe('isGuid', () => {
-    it('should accept guids for all supported entities types', done => {
+    it('should accept guids for all supported entities types', () => {
       isGuid('q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C').should.be.true()
       isGuid('Q520$91F0CCEA-19E4-4CEB-97D9-74B014C14686').should.be.true()
       isGuid('q520$7f95c04f-4cb6-b018-80eb-fefe0e0bf377').should.be.true()
@@ -247,7 +224,6 @@ describe('helpers', () => {
       isGuid('P6216$a7fd6230-496e-6b47-ca4a-dcec5dbd7f95').should.be.true()
       isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec').should.be.false()
       isGuid('Q520').should.be.false()
-      done()
     })
   })
 
@@ -269,13 +245,12 @@ describe('helpers', () => {
   })
 
   describe('getImageUrl', () => {
-    it('should build a commons FilePath Url', done => {
+    it('should build a commons FilePath Url', () => {
       getImageUrl('Peredot.jpg')
       .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg')
 
       getImageUrl('Peredot.jpg', 250)
       .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250')
-      done()
     })
   })
 })
