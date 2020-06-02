@@ -18,7 +18,7 @@ git checkout -B dist
 git add dist/wikibase-sdk.js dist/wikibase-sdk.min.js dist/wikidata-sdk.js dist/wikidata-sdk.min.js
 git commit -m 'dist: updated'
 
-local last_version="v$(jq '.version' -r < package.json)"
+last_version="v$(jq '.version' -r < package.json)"
 echo "last_version: $last_version"
 
 # Deleting the tag on `npm version` commit
