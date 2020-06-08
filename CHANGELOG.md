@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.5.0 - 2020-06-08
+* Added `isHash` function
+
 ## 7.4.0 - 2020-04-17
 * `simplify.entity`/`simplify.entities` function: added support for Lexemes
 * Added `simplify.lemmas` function
