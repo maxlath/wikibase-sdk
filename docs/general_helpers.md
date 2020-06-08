@@ -15,6 +15,7 @@
   - [isSenseId](#issenseid)
   - [isNumericId](#isnumericid)
   - [isGuid](#isguid)
+  - [isHash](#ishash)
   - [isRevisionId](#isrevisionid)
   - [getNumericId](#getnumericid)
 - [Claims helpers](#claims-helpers)
@@ -91,6 +92,8 @@ wbk.isSenseId('L1-F1') // false
 ### isNumericId
 
 ### isGuid
+
+### isHash
 
 ### isRevisionId
 
