@@ -1,6 +1,6 @@
 require('should')
 
-const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isNumericId, getNumericId, getImageUrl } = require('../lib/helpers/helpers')
+const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isHash, isNumericId, getNumericId, getImageUrl } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -224,6 +224,15 @@ describe('helpers', () => {
       isGuid('P6216$a7fd6230-496e-6b47-ca4a-dcec5dbd7f95').should.be.true()
       isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec').should.be.false()
       isGuid('Q520').should.be.false()
+    })
+  })
+
+  describe('isHash', () => {
+    it('should accept hash', () => {
+      isHash('14ddd544b82e2f811669d2bb4c939c4997536ce3').should.be.true()
+      isHash('14ddd544b82e2f811669d2bb4c939c4997536ce').should.be.false()
+      isHash('14ddd544b82e2f811669d2bb4c939c4997536ceaf').should.be.false()
+      isHash('14ddd544b82e2f811669d2bb4c939c4997536ceg').should.be.false()
     })
   })
 
