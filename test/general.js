@@ -100,6 +100,7 @@ describe('index', () => {
     wdk.isNumericId.should.be.a.Function()
     wdk.isGuid.should.be.a.Function()
     wdk.isHash.should.be.a.Function()
+    wdk.isPropertyClaimsId.should.be.a.Function()
     wdk.getNumericId.should.be.a.Function()
     wdk.isEntityId.should.be.a.Function()
     wdk.isItemId.should.be.a.Function()
