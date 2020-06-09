@@ -1,19 +1,22 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.6.0 - 2020-06-09
+* Added [`isPropertyClaimsId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#ispropertyclaimsid) function
+
 ## 7.5.0 - 2020-06-08
-* Added `isHash` function
+* Added [`isHash`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#ishash) function
 
 ## 7.4.0 - 2020-04-17
 * `simplify.entity`/`simplify.entities` function: added support for Lexemes
-* Added `simplify.lemmas` function
-* Added `simplify.glosses` function
-* Added `simplify.form` function
-* Added `simplify.forms` function
-* Added `simplify.sense` function
-* Added `simplify.senses` function
-* Added `isFormId` function
-* Added `isSenseId` function
+* Added [`simplify.lemmas`]((https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-lemmas)) function
+* Added [`simplify.glosses`]((https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-glosses)) function
+* Added [`simplify.form`]((https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-form)) function
+* Added [`simplify.forms`]((https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-forms)) function
+* Added [`simplify.sense`]((https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-sense)) function
+* Added [`simplify.senses`]((https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-senses)) function
+* Added [`isFormId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isformid) function
+* Added [`isSenseId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#issenseid) function
 
 ## 7.3.0 - 2020-04-08
 * [`getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md): added support for `rvprops`, `rvuser`, `rvexcludeuser`, and `rvtag` parameters
