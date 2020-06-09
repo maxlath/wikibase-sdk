@@ -13,10 +13,11 @@
   - [isLexemeId](#islexemeid)
   - [isFormId](#isformid)
   - [isSenseId](#issenseid)
-  - [isNumericId](#isnumericid)
   - [isGuid](#isguid)
   - [isHash](#ishash)
+  - [isPropertyClaimsId](#ispropertyclaimsid)
   - [isRevisionId](#isrevisionid)
+  - [isNumericId](#isnumericid)
   - [getNumericId](#getnumericid)
 - [Claims helpers](#claims-helpers)
   - [truthyClaims](#truthyclaims)
@@ -89,13 +90,30 @@ wbk.isSenseId('L1') // false
 wbk.isSenseId('L1-F1') // false
 ```
 
-### isNumericId
-
 ### isGuid
+The global unique `id` of a claim
+```js
+isGuid('q520$7f95c04f-4cb6-b018-80eb-fefe0e0bf377') // true
+isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec6') // true
+```
 
 ### isHash
+The hash of a claim, qualifier, or reference
+```js
+isHash('14ddd544b82e2f811669d2bb4c939c4997536ce3') // true
+```
+
+### isPropertyClaimsId
+Property claims id is a non-official term to refer to a group of claims an entity has for a given property
+```js
+isPropertyClaimsId('Q1#P1') // true
+isPropertyClaimsId('P12#P12') // true
+isPropertyClaimsId('L123#P123') // true
+```
 
 ### isRevisionId
+
+### isNumericId
 
 ### getNumericId
 
