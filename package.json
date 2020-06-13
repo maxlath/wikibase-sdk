@@ -1,6 +1,6 @@
 {
   "name": "wikibase-sdk",
-  "version": "7.6.0",
+  "version": "7.6.1",
   "description": "utils functions to query a Wikibase instance and simplify its results",
   "main": "lib/wikibase-sdk.js",
   "files": [
