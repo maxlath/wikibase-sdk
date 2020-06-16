@@ -29,7 +29,8 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 - [Changelog](#changelog)
 - [Dependencies](#dependencies)
 - [Install](#install)
-- [Import](#import)
+  - [as a module](#as-a-module)
+  - [download pre-bundled files](#download-pre-bundled-files)
 - [Features](#features)
   - [Wikibase API](#wikibase-api)
   - [Wikibase Query](#wikibase-query)
@@ -51,20 +52,23 @@ This module uses [JavaScript ES6](https://en.wikipedia.org/wiki/ECMAScript#6th_E
 For older version, you can use ES5 [bundles](docs/install.md#bundles).
 
 ## Install
+### as a module
+Install via npm to be able to use the module with `require` (CommonJS) or `import` (ES6 Modules)
 ```sh
 npm install wikibase-sdk
 ```
-
-## Import
+Then in your javascript:
 ```js
-const wbk = require('wikibase-sdk')({
+const WBK = require('wikibase-sdk')
+const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
   sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql'
 })
 ```
 The `wdk` object of previous versions of this documentation - from the time this module was bound to wikidata.org only - thus corresponds to the following:
 ```js
-const wdk = require('wikibase-sdk')({
+const WBK = require('wikibase-sdk')
+const wdk = WBK({
   instance: 'https://www.wikidata.org',
   sparqlEndpoint: 'https://query.wikidata.org/sparql'
 })
@@ -77,6 +81,23 @@ const wdk = require('wikidata-sdk')
 and instance-independant helper functions are directly available from the module root:
 ```js
 const { simplify, parse, isEntityId, isPropertyId, ... } = require('wikibase-sdk')
+```
+
+### download pre-bundled files
+If you just want to import the lib from an HTML file and don't have a setup that can import with CommonJS or ES6 Modules, you can simply download those pre-bundled files:
+```sh
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikibase-sdk.js
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikidata-sdk.js
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikibase-sdk.min.js
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikidata-sdk.min.js
+```
+
+then you can import it in your html:
+```html
+<script src="/path/to/wikibase-sdk.js"></script>
+<script>console.log('can access WBK', WBK)</script>
+<script src="/path/to/wikidata-sdk.js"></script>
+<script>console.log('can access wdk, the wikidata.org bound product of WBK', wdk)</script>
 ```
 
 ## Features
