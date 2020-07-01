@@ -125,6 +125,13 @@ describe('getSitelinkData', () => {
   it('should reject invalid sitelink key', () => {
     getSitelinkData.bind(null, 'foowiki').should.throw()
   })
+
+  it('should parse encoded URL components', () => {
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_%282001%29').title.should.equal('The_Score_(2001)')
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_%282001%29').lang.should.equal('de')
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_%282001%29').project.should.equal('wikipedia')
+    getSitelinkData('https://de.wikipedia.org/wiki/The_Score_%282001%29').key.should.equal('dewiki')
+  })
 })
 
 describe('isSitelinkKey', () => {
