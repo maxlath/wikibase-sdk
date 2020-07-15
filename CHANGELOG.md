@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.7.0 - 2020-07-15
+* Added [`getEntityIdFromGuid`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getentityidfromguid) function
+
 ## 7.6.0 - 2020-06-09
 * Added [`isPropertyClaimsId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#ispropertyclaimsid) function
 
