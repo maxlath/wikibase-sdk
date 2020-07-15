@@ -1,6 +1,6 @@
 require('should')
 
-const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isHash, isPropertyClaimsId, isNumericId, getNumericId, getImageUrl } = require('../lib/helpers/helpers')
+const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isHash, isPropertyClaimsId, isNumericId, getNumericId, getImageUrl, getEntityIdFromGuid } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -270,6 +270,20 @@ describe('helpers', () => {
 
       getImageUrl('Peredot.jpg', 250)
       .should.equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250')
+    })
+  })
+
+  describe('getEntityIdFromGuid', () => {
+    it('should all kinds of guids', () => {
+      getEntityIdFromGuid('q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C').should.equal('Q520')
+      getEntityIdFromGuid('Q520$91F0CCEA-19E4-4CEB-97D9-74B014C14686').should.equal('Q520')
+      getEntityIdFromGuid('q520$7f95c04f-4cb6-b018-80eb-fefe0e0bf377').should.equal('Q520')
+      getEntityIdFromGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec6').should.equal('Q520')
+      getEntityIdFromGuid('L525$faeae005-4b75-1319-5516-e08a8bdd0e9c').should.equal('L525')
+      getEntityIdFromGuid('L525-F2$52c9b382-02f5-4413-9923-26ade74f5a0d').should.equal('L525-F2')
+      getEntityIdFromGuid('L525-S1$66D20252-8CEC-4DB1-8B00-D713CFF42E48').should.equal('L525-S1')
+      getEntityIdFromGuid('P6216$a7fd6230-496e-6b47-ca4a-dcec5dbd7f95').should.equal('P6216')
+      getEntityIdFromGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec').should.equal('Q520')
     })
   })
 })

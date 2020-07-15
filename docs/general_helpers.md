@@ -32,6 +32,7 @@
   - [wikibaseTimeToISOString](#wikibasetimetoisostring)
   - [wikibaseTimeToSimpleDay](#wikibasetimetosimpleday)
   - [getImageUrl](#getimageurl)
+  - [getEntityIdFromGuid](#getentityidfromguid)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -297,4 +298,21 @@ wbk.getImageUrl('Peredot.jpg')
 // => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg
 wbk.getImageUrl('Peredot.jpg', 250)
 // => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250
+```
+
+### getEntityIdFromGuid
+You would think it's trivial, but actually GUIDs' case is inconsistent, so we need to take care of that once for all
+```js
+getEntityIdFromGuid('Q520$91F0CCEA-19E4-4CEB-97D9-74B014C14686')
+// => 'Q520'
+getEntityIdFromGuid('q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C')
+// => 'Q520'
+getEntityIdFromGuid('L525$faeae005-4b75-1319-5516-e08a8bdd0e9c')
+// => 'L525'
+getEntityIdFromGuid('L525-F2$52c9b382-02f5-4413-9923-26ade74f5a0d')
+// => 'L525-F2'
+getEntityIdFromGuid('L525-S1$66D20252-8CEC-4DB1-8B00-D713CFF42E48')
+// => 'L525-S1'
+getEntityIdFromGuid('P6216$a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')
+// => 'P6216'
 ```

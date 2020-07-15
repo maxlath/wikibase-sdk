@@ -112,5 +112,7 @@ describe('index', () => {
     wdk.getSitelinkUrl.should.be.a.Function()
     wdk.getSitelinkData.should.be.a.Function()
     wdk.isSitelinkKey.should.be.a.Function()
+    wdk.getImageUrl.should.be.a.Function()
+    wdk.getEntityIdFromGuid.should.be.a.Function()
   })
 })
