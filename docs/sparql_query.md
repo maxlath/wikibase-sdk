@@ -12,7 +12,7 @@ const url = wbk.sparqlQuery(sparql)
 // request the generated URL with your favorite HTTP request library
 request({ method: 'GET', url })
 ```
-You can then simplify the response using [`wbk.simplifySparqlResults`](simplify_sparql_results.md).
+You can then simplify the response using [`wbk.simplify.sparqlResults`](simplify_sparql_results.md).
 
 ### Example
 
