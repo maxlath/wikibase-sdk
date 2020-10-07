@@ -1,6 +1,12 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.8.0 - 2020-10-07
+* Added function aliases:
+  * `simplify.snak = simplify.claim`
+  * `simplify.propertySnaks = simplify.propertyClaims`
+  * `simplify.snaks = simplify.claims`
+
 ## 7.7.0 - 2020-07-15
 * Added [`getEntityIdFromGuid`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getentityidfromguid) function
 
