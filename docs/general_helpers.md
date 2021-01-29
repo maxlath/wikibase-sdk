@@ -316,3 +316,24 @@ getEntityIdFromGuid('L525-S1$66D20252-8CEC-4DB1-8B00-D713CFF42E48')
 getEntityIdFromGuid('P6216$a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')
 // => 'P6216'
 ```
+Hyphenated GUIDs, such as returned by the Query Service, can also be passed:
+```js
+getEntityIdFromGuid('q520-BCA8D9DE-B467-473B-943C-6FD0C5B3D02C')
+// => Q520
+getEntityIdFromGuid('Q520-91F0CCEA-19E4-4CEB-97D9-74B014C14686')
+// => Q520
+getEntityIdFromGuid('q520-7f95c04f-4cb6-b018-80eb-fefe0e0bf377')
+// => Q520
+getEntityIdFromGuid('Q520-4a0b85a0-4a47-3254-0379-52680370fec6')
+// => Q520
+getEntityIdFromGuid('L525-faeae005-4b75-1319-5516-e08a8bdd0e9c')
+// => L525
+getEntityIdFromGuid('L525-F2-52c9b382-02f5-4413-9923-26ade74f5a0d')
+// => L525-F2
+getEntityIdFromGuid('L525-S1-66D20252-8CEC-4DB1-8B00-D713CFF42E48')
+// => L525-S1
+getEntityIdFromGuid('P6216-a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')
+// => P6216
+getEntityIdFromGuid('Q520-4a0b85a0-4a47-3254-0379-52680370fec')
+// => Q520
+```
