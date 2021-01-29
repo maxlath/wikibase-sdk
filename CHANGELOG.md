@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.9.0 - 2021-01-29
+* [`getEntityIdFromGuid`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getentityidfromguid): added support for hyphenated GUIDs
+
 ## 7.8.0 - 2020-10-07
 * Added function aliases:
   * `simplify.snak = simplify.claim`
