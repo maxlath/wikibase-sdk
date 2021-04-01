@@ -1,4 +1,4 @@
-require('should')
+const should = require('should')
 
 const { buildUrl } = require('./lib/tests_env')
 const cirrusSearch = require('../lib/queries/cirrus_search')(buildUrl)
@@ -39,6 +39,33 @@ describe('cirrusSearch', () => {
     it('should accept a custom format', () => {
       const { searchParams } = new URL(cirrusSearch({ search: 'hello', format: 'xml' }))
       searchParams.get('format').should.equal('xml')
+    })
+  })
+
+  describe('namespace', () => {
+    it('should default to not being set', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello' }))
+      should(searchParams.get('srnamespace')).not.be.ok()
+    })
+
+    it('should accept a single namespace number', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', namespace: 0 }))
+      searchParams.get('srnamespace').should.equal('0')
+    })
+
+    it('should accept a single namespace string', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', namespace: '0' }))
+      searchParams.get('srnamespace').should.equal('0')
+    })
+
+    it('should accept multiple namespaces as a string', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', namespace: '0|1' }))
+      searchParams.get('srnamespace').should.equal('0|1')
+    })
+
+    it('should accept multiple namespaces as an array', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', namespace: [ 0, 1 ] }))
+      searchParams.get('srnamespace').should.equal('0|1')
     })
   })
 })
