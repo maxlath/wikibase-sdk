@@ -111,13 +111,29 @@ describe('cirrusSearch', () => {
       should(searchParams.get('srqiprofile')).not.be.ok()
     })
 
-    it('should accept a single profile', () => {
+    it('should accept a profile', () => {
       const { searchParams } = new URL(cirrusSearch({ search: 'hello', profile: 'wikibase_prefix_boost' }))
       searchParams.get('srqiprofile').should.equal('wikibase_prefix_boost')
     })
 
     it('should reject an invalid profile', () => {
       cirrusSearch.bind(null, { search: 'hello', profile: 'foo' }).should.throw(/invalid profile/)
+    })
+  })
+
+  describe('sort', () => {
+    it('should default to not being set', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello' }))
+      should(searchParams.get('srsort')).not.be.ok()
+    })
+
+    it('should accept a sort', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', sort: 'last_edit_desc' }))
+      searchParams.get('srsort').should.equal('last_edit_desc')
+    })
+
+    it('should reject an invalid sort', () => {
+      cirrusSearch.bind(null, { search: 'hello', sort: 'foo' }).should.throw(/invalid sort/)
     })
   })
 })
