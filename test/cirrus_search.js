@@ -68,4 +68,28 @@ describe('cirrusSearch', () => {
       searchParams.get('srnamespace').should.equal('0|1')
     })
   })
+
+  describe('limit', () => {
+    it('should default to not being set', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello' }))
+      should(searchParams.get('srlimit')).not.be.ok()
+    })
+
+    it('should accept a single limit number', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', limit: 10 }))
+      searchParams.get('srlimit').should.equal('10')
+    })
+  })
+
+  describe('offset', () => {
+    it('should default to not being set', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello' }))
+      should(searchParams.get('sroffset')).not.be.ok()
+    })
+
+    it('should accept a single offset number', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', offset: 10 }))
+      searchParams.get('sroffset').should.equal('10')
+    })
+  })
 })
