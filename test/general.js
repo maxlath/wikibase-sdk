@@ -62,6 +62,7 @@ describe('index', () => {
     wdk.should.be.an.Object()
 
     wdk.searchEntities.should.be.a.Function()
+    wdk.cirrusSearch.should.be.a.Function()
     wdk.getEntities.should.be.a.Function()
     wdk.getManyEntities.should.be.a.Function()
     wdk.getEntityRevision.should.be.a.Function()
