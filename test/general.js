@@ -95,6 +95,12 @@ describe('index', () => {
     wbk.truthyPropertyClaims.should.be.a.Function()
 
     wbk.parse.should.be.an.Object()
+
+    wbk.parse.wb.should.be.an.Object()
+    wbk.parse.wb.entities.should.be.an.Function()
+    wbk.parse.wb.cirrusSearchTitles.should.be.an.Function()
+
+    // Legacy
     wbk.parse.wd.should.be.an.Object()
     wbk.parse.wd.entities.should.be.an.Function()
 
