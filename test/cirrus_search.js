@@ -67,6 +67,10 @@ describe('cirrusSearch', () => {
       const { searchParams } = new URL(cirrusSearch({ search: 'hello', namespace: [ 0, 1 ] }))
       searchParams.get('srnamespace').should.equal('0|1')
     })
+
+    it('should reject an invalid namespace', () => {
+      cirrusSearch.bind(null, { search: 'hello', namespace: 'foo' }).should.throw(/invalid namespace/)
+    })
   })
 
   describe('limit', () => {
@@ -75,9 +79,13 @@ describe('cirrusSearch', () => {
       should(searchParams.get('srlimit')).not.be.ok()
     })
 
-    it('should accept a single limit number', () => {
+    it('should accept a custom limit', () => {
       const { searchParams } = new URL(cirrusSearch({ search: 'hello', limit: 10 }))
       searchParams.get('srlimit').should.equal('10')
+    })
+
+    it('should reject an invalid limit', () => {
+      cirrusSearch.bind(null, { search: 'hello', limit: 'foo' }).should.throw(/invalid limit/)
     })
   })
 
@@ -87,9 +95,29 @@ describe('cirrusSearch', () => {
       should(searchParams.get('sroffset')).not.be.ok()
     })
 
-    it('should accept a single offset number', () => {
+    it('should accept a custom offset', () => {
       const { searchParams } = new URL(cirrusSearch({ search: 'hello', offset: 10 }))
       searchParams.get('sroffset').should.equal('10')
+    })
+
+    it('should reject an invalid offset', () => {
+      cirrusSearch.bind(null, { search: 'hello', offset: 'foo' }).should.throw(/invalid offset/)
+    })
+  })
+
+  describe('profile', () => {
+    it('should default to not being set', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello' }))
+      should(searchParams.get('srqiprofile')).not.be.ok()
+    })
+
+    it('should accept a single profile', () => {
+      const { searchParams } = new URL(cirrusSearch({ search: 'hello', profile: 'wikibase_prefix_boost' }))
+      searchParams.get('srqiprofile').should.equal('wikibase_prefix_boost')
+    })
+
+    it('should reject an invalid profile', () => {
+      cirrusSearch.bind(null, { search: 'hello', profile: 'foo' }).should.throw(/invalid profile/)
     })
   })
 })
