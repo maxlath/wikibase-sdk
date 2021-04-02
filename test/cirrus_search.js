@@ -30,6 +30,13 @@ describe('cirrusSearchPages', () => {
       const { searchParams } = new URL(cirrusSearchPages({ haswbstatement: [ 'P31=Q5', 'P279=Q2934' ] }))
       searchParams.get('srsearch').should.equal('haswbstatement:P31=Q5 haswbstatement:P279=Q2934')
     })
+
+    it('should accept negative statements', () => {
+      const { searchParams } = new URL(cirrusSearchPages({ haswbstatement: '-P31=Q5' }))
+      searchParams.get('srsearch').should.equal('-haswbstatement:P31=Q5')
+      const { searchParams: searchParams2 } = new URL(cirrusSearchPages({ haswbstatement: [ 'P31=Q5', '-P279=Q2934' ] }))
+      searchParams2.get('srsearch').should.equal('haswbstatement:P31=Q5 -haswbstatement:P279=Q2934')
+    })
   })
 
   describe('format', () => {
