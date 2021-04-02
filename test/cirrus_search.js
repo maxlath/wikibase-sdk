@@ -17,17 +17,17 @@ describe('cirrusSearchPages', () => {
 
   describe('statement', () => {
     it('should accept a statement argument', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', statement: 'P31=Q5' }))
+      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', haswbstatement: 'P31=Q5' }))
       searchParams.get('srsearch').should.equal('hello haswbstatement:P31=Q5')
     })
 
     it('should accept a statement argument alone', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ statement: 'P31=Q5' }))
+      const { searchParams } = new URL(cirrusSearchPages({ haswbstatement: 'P31=Q5' }))
       searchParams.get('srsearch').should.equal('haswbstatement:P31=Q5')
     })
 
     it('should accept an array of statements', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ statement: [ 'P31=Q5', 'P279=Q2934' ] }))
+      const { searchParams } = new URL(cirrusSearchPages({ haswbstatement: [ 'P31=Q5', 'P279=Q2934' ] }))
       searchParams.get('srsearch').should.equal('haswbstatement:P31=Q5 haswbstatement:P279=Q2934')
     })
   })
