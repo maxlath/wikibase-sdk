@@ -15,7 +15,7 @@ describe('cirrusSearchPages', () => {
     cirrusSearchPages.bind(null, 'hello').should.throw()
   })
 
-  describe('statement', () => {
+  describe('haswbstatement', () => {
     it('should accept a statement argument', () => {
       const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', haswbstatement: 'P31=Q5' }))
       searchParams.get('srsearch').should.equal('hello haswbstatement:P31=Q5')
