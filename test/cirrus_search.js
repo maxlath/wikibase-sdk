@@ -117,7 +117,7 @@ describe('cirrusSearch', () => {
     })
 
     it('should reject an invalid profile', () => {
-      cirrusSearch.bind(null, { search: 'hello', profile: 'foo' }).should.throw(/invalid profile/)
+      cirrusSearch.bind(null, { search: 'hello', profile: 123 }).should.throw(/invalid profile/)
     })
   })
 
@@ -133,7 +133,7 @@ describe('cirrusSearch', () => {
     })
 
     it('should reject an invalid sort', () => {
-      cirrusSearch.bind(null, { search: 'hello', sort: 'foo' }).should.throw(/invalid sort/)
+      cirrusSearch.bind(null, { search: 'hello', sort: 123 }).should.throw(/invalid sort/)
     })
   })
 })
