@@ -62,7 +62,7 @@ describe('index', () => {
     wbk.should.be.an.Object()
 
     wbk.searchEntities.should.be.a.Function()
-    wbk.cirrusSearch.should.be.a.Function()
+    wbk.cirrusSearchPages.should.be.a.Function()
     wbk.getEntities.should.be.a.Function()
     wbk.getManyEntities.should.be.a.Function()
     wbk.getEntityRevision.should.be.a.Function()
@@ -98,7 +98,7 @@ describe('index', () => {
 
     wbk.parse.wb.should.be.an.Object()
     wbk.parse.wb.entities.should.be.an.Function()
-    wbk.parse.wb.cirrusSearchTitles.should.be.an.Function()
+    wbk.parse.wb.pagesTitles.should.be.an.Function()
 
     // Legacy
     wbk.parse.wd.should.be.an.Object()

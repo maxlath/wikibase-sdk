@@ -1,7 +1,7 @@
 require('should')
 const parse = require('../lib/helpers/parse_responses')
 const wbgetentitiesResponse = require('./data/wbgetentities_response.json')
-const cirrusSearchResponse = require('./data/cirrus_search_response.json')
+const cirrusSearchPagesResponse = require('./data/cirrus_search_response.json')
 
 describe('parse', () => {
   describe('wb', () => {
@@ -19,9 +19,9 @@ describe('parse', () => {
         entities.Q3235026.claims.should.be.an.Object()
       })
     })
-    describe('cirrusSearchTitles', () => {
+    describe('pagesTitles', () => {
       it('should parse a cirrus search response', () => {
-        const titles = parse.wb.cirrusSearchTitles(cirrusSearchResponse)
+        const titles = parse.wb.pagesTitles(cirrusSearchPagesResponse)
         titles.should.deepEqual([ 'Q1' ])
       })
     })
