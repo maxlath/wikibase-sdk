@@ -76,10 +76,11 @@ const url = wbk.searchEntities({ search: 'alphabet', type: 'property' })
 ## cirrusSearchPages
 *associated Wikibase API doc: [action=query&list=search](https://www.wikidata.org/w/api.php?action=help&modules=query%2Bsearch)*
 
-This alternative search mode allows to use the [`WikibaseCirrusSearch`](https://www.mediawiki.org/wiki/Help:Extension:WikibaseCirrusSearch) features, such as `haswbstatement`.
+This alternative search mode allows to use the [`WikibaseCirrusSearch`](https://www.mediawiki.org/wiki/Help:Extension:WikibaseCirrusSearch) features, such as [`haswbstatement`](#haswbstatement).
 
 ```js
-const url = wbk.cirrusSearchPages({ search: 'Ingmar Bergman' })
+// Note that the search is case-insensitive
+const url = wbk.cirrusSearchPages({ search: 'ingmar bergman' })
 ```
 
 Due to the endpoint not returning much data other than the page title, a full example could look something like this:
@@ -113,7 +114,7 @@ fetch(url)
 ### haswbstatement
 *associated Wikibase API doc: [haswbstatement](https://www.mediawiki.org/wiki/Help:Extension:WikibaseCirrusSearch#haswbstatement)*
 
-This feature requires that the Wikibase instance you are targetting as the `WikibaseCirrusSearch` extension installed: you can check that on `/wiki/Special:Version`
+This feature requires that the Wikibase instance you are targetting has the `WikibaseCirrusSearch` extension installed: you can check that on `/wiki/Special:Version`
 
 ```js
 // Search for instance of (P31) filmographies (Q1371849) matching "Ingmar Bergman"
@@ -136,6 +137,15 @@ const url = wbk.cirrusSearchPages({ haswbstatement: '-P31=Q5' })
 // Qualifiers
 // Search for entities that depict (P180) a cat (Q146) of color (P462) black (P462)
 const url = wbk.cirrusSearchPages({ haswbstatement: 'P180=Q146[P462=Q23445]' })
+```
+
+This can also be used to lookup external ids:
+```js
+const url = wbk.cirrusSearchPages({ haswbstatement: 'P227=4079154-3' })
+```
+but not that if your Wikibase instance offers a SPARQL endpoint, this can also be done with [`getReverseClaims`](https://github.com/maxlath/wikibase-sdk/blob/master/docs/get_entities_reverse_claims.md)
+```js
+const url = wbk.getReverseClaims('P227', '4079154-3')
 ```
 
 ### namespace
