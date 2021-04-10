@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.10.0 - 2021-04-10
+* Added [`cirrusSearchPages`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/search_entities.md#cirrussearchpages) function
+
 ## 7.9.0 - 2021-01-29
 * [`getEntityIdFromGuid`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#getentityidfromguid): added support for hyphenated GUIDs
 
