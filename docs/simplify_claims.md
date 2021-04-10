@@ -16,6 +16,10 @@
 - [simplify.qualifiers](#simplifyqualifiers)
 - [simplify.propertyQualifiers](#simplifypropertyqualifiers)
 - [simplify.qualifier](#simplifyqualifier)
+- [simplify.references](#simplifyreferences)
+- [simplify.snaks](#simplifysnaks)
+- [simplify.propertySnaks](#simplifypropertysnaks)
+- [simplify.snak](#simplifysnak)
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep rich values](#keep-rich-values)
@@ -143,6 +147,18 @@ Same interface as [simplify.propertyClaims](#simplifypropertyclaims) but taking 
 
 ## simplify.qualifier
 Same interface as [simplify.claim](#simplifyclaim) but taking a qualifier object
+
+## simplify.references
+Same interface as [simplify.claims](#simplifyclaims) but taking an array of reference records
+
+## simplify.snaks
+Same interface as [simplify.claims](#simplifyclaims), but with a name that hints that it could also accept qualifiers or reference records.
+
+## simplify.propertySnaks
+Same interface as [simplify.propertyClaims](#simplifypropertyclaims), but with a name that hints that it could also accept an array of qualifiers snaks or an array of reference snaks.
+
+## simplify.snak
+Same interface as [simplify.claim](#simplifyclaim), but with a name that hints that it could also accept a qualifier or reference record [snak](https://www.wikidata.org/wiki/Wikidata:Glossary/en#Snak).
 
 ## Options
 
