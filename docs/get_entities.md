@@ -139,6 +139,7 @@ const url = wbk.getEntities({
 
 fetch(url)
 .then(response => response.json())
-.then(wbk.parse.wd.entities)
+// Turns the response in an array of simplified entities
+.then(wbk.parse.wb.entities)
 .then(entities => // do your thing with those entities data)
 ```
