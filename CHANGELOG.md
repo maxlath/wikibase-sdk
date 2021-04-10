@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.11.0 - 2021-04-10
+* Added [`simplify.references`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#simplify-references) function
+
 ## 7.10.0 - 2021-04-10
 * Added [`cirrusSearchPages`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/search_entities.md#cirrussearchpages) function
 
