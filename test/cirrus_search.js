@@ -9,6 +9,11 @@ describe('cirrusSearchPages', () => {
     searchParams.get('action').should.equal('query')
     searchParams.get('list').should.equal('search')
     searchParams.get('srsearch').should.equal('hello')
+    searchParams.has('srlimit').should.be.false()
+    searchParams.has('srnamespace').should.be.false()
+    searchParams.has('sroffset').should.be.false()
+    searchParams.has('srqiprofile').should.be.false()
+    searchParams.has('srsort').should.be.false()
   })
 
   it('should accept only the object interface', () => {
