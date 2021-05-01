@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.12.0 - 2021-05-01
+* Added [`isEntitySchemaId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isentityschemaid)
+
 ## 7.11.0 - 2021-04-10
 * Added [`simplify.references`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_claims.md#simplify-references) function
 
