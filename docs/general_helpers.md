@@ -16,6 +16,7 @@
   - [isGuid](#isguid)
   - [isHash](#ishash)
   - [isPropertyClaimsId](#ispropertyclaimsid)
+  - [isEntitySchemaId](#isentityschemaid)
   - [isRevisionId](#isrevisionid)
   - [isNumericId](#isnumericid)
   - [getNumericId](#getnumericid)
@@ -110,6 +111,11 @@ Property claims id is a non-official term to refer to a group of claims an entit
 isPropertyClaimsId('Q1#P1') // true
 isPropertyClaimsId('P12#P12') // true
 isPropertyClaimsId('L123#P123') // true
+```
+
+### isEntitySchemaId
+```js
+isEntitySchemaId('E123') // true
 ```
 
 ### isRevisionId

@@ -1,6 +1,6 @@
 require('should')
 
-const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isHash, isPropertyClaimsId, isNumericId, getNumericId, getImageUrl, getEntityIdFromGuid } = require('../lib/helpers/helpers')
+const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isHash, isPropertyClaimsId, isEntitySchemaId, isNumericId, getNumericId, getImageUrl, getEntityIdFromGuid } = require('../lib/helpers/helpers')
 
 const Q970917 = require('./data/Q970917.json')
 
@@ -237,12 +237,19 @@ describe('helpers', () => {
   })
 
   describe('isPropertyClaimsId', () => {
-    it('should accept property claims id', () => {
+    it('should accept property claims ids', () => {
       isPropertyClaimsId('Q1#P1').should.be.true()
       isPropertyClaimsId('P12#P12').should.be.true()
       isPropertyClaimsId('L123#P123').should.be.true()
       isPropertyClaimsId('Q1~P1').should.be.false()
       isPropertyClaimsId('Q1~Q1').should.be.false()
+    })
+  })
+
+  describe('isEntitySchemaId', () => {
+    it('should accept entity schema ids', () => {
+      isEntitySchemaId('E123').should.be.true()
+      isEntitySchemaId('Q123').should.be.false()
     })
   })
 
