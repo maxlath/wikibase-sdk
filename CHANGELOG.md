@@ -97,7 +97,7 @@
 
 ## 6.0.0 - 2019-03-17
 **BREAKING CHANGE**
-* swapping `simplify.qualifier` and `simplify.qualifiers` that were mistakenly inverted (fixed [#47](https://github.com/maxlath/wikidata-sdk/issues/47)) ((([ed0e7a4](https://github.com/maxlath/wikidata-sdk/commit/ed0e7a4))))
+* swapping `simplify.qualifier` and `simplify.qualifiers` that were mistakenly inverted (fixed [#47](https://github.com/maxlath/wikidata-sdk/issues/47), [`ed0e7a4`](https://github.com/maxlath/wikidata-sdk/commit/ed0e7a4))
 * Make [`simplifySparqlResults`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_sparql_results.md) consistently outputs an array of objects, unless the option `minimize` is set to `true`, in which case direct, requests with a single variable will return an array of those variables values (([ddba9e2](https://github.com/maxlath/wikidata-sdk/commit/ddba9e2))). The easy migration from `v5.x.x` is to replace `simplifySparqlResults(results)` by `simplifySparqlResults(results, { minimize: true })` (This doesn't affect requests with several variables `SELECT`ed)
 
 ## 5.16.0 - 2019-03-13
