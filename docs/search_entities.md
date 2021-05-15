@@ -143,7 +143,7 @@ This can also be used to lookup external ids:
 ```js
 const url = wbk.cirrusSearchPages({ haswbstatement: 'P227=4079154-3' })
 ```
-but not that if your Wikibase instance offers a SPARQL endpoint, this can also be done with [`getReverseClaims`](https://github.com/maxlath/wikibase-sdk/blob/master/docs/get_entities_reverse_claims.md)
+but note that if your Wikibase instance offers a SPARQL endpoint, this can also be done with [`getReverseClaims`](https://github.com/maxlath/wikibase-sdk/blob/master/docs/get_entities_reverse_claims.md)
 ```js
 const url = wbk.getReverseClaims('P227', '4079154-3')
 ```
