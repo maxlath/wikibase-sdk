@@ -49,7 +49,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version info
 ## Dependencies
 This module uses [JavaScript ES6](https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015), which means NodeJS `>= v6.4.0` or not too outdated web browsers.
 
-For older version, you can use ES5 [bundles](docs/install.md#bundles).
+For older version, you can use ES5 [bundles](#download-pre-bundled-files).
 
 ## Install
 ### as a module
@@ -62,7 +62,7 @@ Then in your javascript:
 const WBK = require('wikibase-sdk')
 const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
-  sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql'
+  sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql' // Required to use `sparqlQuery` and `getReverseClaims` functions, optional otherwise
 })
 ```
 The `wdk` object of previous versions of this documentation - from the time this module was bound to wikidata.org only - thus corresponds to the following:
@@ -73,7 +73,7 @@ const wdk = WBK({
   sparqlEndpoint: 'https://query.wikidata.org/sparql'
 })
 ```
-For convenience, and for the sake of retro-compatibility, that same `wdk` object can be obtain with:
+For convenience, and for the sake of retro-compatibility, that same `wdk` object can be obtain directly from the `wikidata-sdk` package:
 ```js
 // After having run `npm install wikidata-sdk`
 const wdk = require('wikidata-sdk')
@@ -81,6 +81,14 @@ const wdk = require('wikidata-sdk')
 and instance-independant helper functions are directly available from the module root:
 ```js
 const { simplify, parse, isEntityId, isPropertyId, ... } = require('wikibase-sdk')
+```
+
+By default `wikibase-sdk` assumes that your Wikibase instance has [`$wgScriptPath`](https://www.mediawiki.org/wiki/Manual:$wgScriptPath) set to `/w`, but if that's not the case, you can set it by passing a `wgScriptPath` parameter:
+```js
+const wbk = require('wikibase-sdk')({
+  instance: 'https://my-wikibase-instan.se',
+  wgScriptPath: '/some_custom_script_path'
+})
 ```
 
 ### download pre-bundled files
