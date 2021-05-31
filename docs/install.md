@@ -32,6 +32,14 @@ const wbk = require('wikibase-sdk')({
 })
 ```
 
+By default `wikibase-sdk` assumes that your Wikibase instance has [`$wgScriptPath`](https://www.mediawiki.org/wiki/Manual:$wgScriptPath) set to `/w`, but if that's not the case, you can set it by passing a `wgScriptPath` parameter:
+```js
+const wbk = require('wikibase-sdk')({
+  instance: 'https://my-wikibase-instan.se',
+  wgScriptPath: '/some_custom_script_path'
+})
+```
+
 ### wikidata-sdk
 It's basically the same, you just don't have to pass the configuration object.
 

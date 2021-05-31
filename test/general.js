@@ -53,6 +53,11 @@ describe('builder', () => {
     wbk.instance.root.should.equal(instance)
     wbk.instance.apiEndpoint.should.equal(`${instance}/w/api.php`)
   })
+
+  it('should allow to customize the script path', () => {
+    WBK({ instance, wgScriptPath: 'foo' }).instance.apiEndpoint.should.equal(`${instance}/foo/api.php`)
+    WBK({ instance, wgScriptPath: '/foo' }).instance.apiEndpoint.should.equal(`${instance}/foo/api.php`)
+  })
 })
 
 describe('index', () => {
