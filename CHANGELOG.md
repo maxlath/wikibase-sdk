@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.13.0 - 2021-06-01
+* Added `wgScriptPath` to the initialization parameters
+
 ## 7.12.0 - 2021-05-01
 * Added [`isEntitySchemaId`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/general_helpers.md#isentityschemaid)
 
