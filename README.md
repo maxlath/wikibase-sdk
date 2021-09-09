@@ -20,6 +20,9 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 [![Node](https://img.shields.io/badge/node-%3E=%20v6.4.0-brightgreen.svg)](http://nodejs.org)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
+* [wikibase-sdk download stats](https://npm-stat.com/charts.html?package=wikibase-sdk)
+* [wikidata-sdk download stats](https://npm-stat.com/charts.html?package=wikidata-sdk)
+
 ## Summary
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
