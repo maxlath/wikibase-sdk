@@ -1,6 +1,6 @@
 # Simplify SPARQL results
 
-With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/maxlath/wikidata-sdk/blob/master/assets/queries/simplify_sparql_results_doc_example.rq), you get results that look like this:
+With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/maxlath/wikidata-sdk/blob/main/assets/queries/simplify_sparql_results_doc_example.rq), you get results that look like this:
 ```json
 {
   "head": {
