@@ -16,11 +16,8 @@ const languagesCodes = require('./sites.json')
   .filter(isntMonolingualProject)
   .map(site => site.split(/wik(i|t)/)[0])
 
-const stringifiedArray = JSON.stringify(uniq(languagesCodes))
+const stringifiedArray = JSON.stringify(uniq(languagesCodes), null, 2)
   // Prevent linting errors
   .replace(/"/g, '\'')
-  .replace(/,/g, ', ')
-  .replace('[', '[ ')
-  .replace(']', ' ]')
 
 console.log(stringifiedArray)
