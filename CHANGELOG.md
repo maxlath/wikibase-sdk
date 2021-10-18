@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.14.0 - 2021-10-18
+* new [`simplify.claims`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/simplify_claims.md) option: `keepNonDeprecated`
+
 ## 7.13.0 - 2021-06-01
 * Added `wgScriptPath` to the initialization parameters
 
