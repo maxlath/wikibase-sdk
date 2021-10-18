@@ -161,13 +161,20 @@ describe('simplifyPropertyClaims', () => {
     it('should return only truthy statements by default', () => {
       const simplified = simplifyPropertyClaims(Q4115189.claims.P135)
       simplified.length.should.equal(1)
-      simplified[0].should.equal('Q2044250')
+      simplified.should.deepEqual([ 'Q2044250' ])
     })
 
-    it('should also return non-truthy statements if requested', () => {
+    it('should return non-truthy statements if requested', () => {
       const options = { keepNonTruthy: true }
       const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
-      simplified.length.should.equal(3)
+      simplified.should.deepEqual([ 'Q213454', 'Q2044250', 'Q5843' ])
+    })
+
+    it('should return non-deprecated statements if requested', () => {
+      const options = { keepNonDeprecated: true }
+      const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
+      simplified.length.should.equal(2)
+      simplified.should.deepEqual([ 'Q2044250', 'Q5843' ])
     })
 
     it('should keep ranks', () => {

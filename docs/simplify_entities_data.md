@@ -37,7 +37,9 @@ const simplificationOptions = {
   keepReferences: true,
   keepIds: true,
   keepHashes: true,
-  keepNonTruthy: true,
+  keepNonTruthy: true, // For each property, keep claims with preferred rank, or normal rank if no claims has the preferred rank
+  keepNonDeprecated: true, // For each property, keep all claims with preferred or normal rank
+
   // sitelinks
   addUrl: true
 }
