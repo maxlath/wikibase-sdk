@@ -78,9 +78,9 @@ const url = wbk.getEntityRevision('Q3548931', 775908525)
 const url = wbk.getEntityRevision({ id: 'Q3548931', revision: 775908525 })
 ```
 
-The revision id can be obtained using [`wbk.getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/master/docs/get_revisions.md#get-revisions): look for the `revid`.
+The revision id can be obtained using [`wbk.getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/get_revisions.md#get-revisions): look for the `revid`.
 
-The returned data can then be [simplified](https://github.com/maxlath/wikidata-sdk/blob/master/docs/simplify_entities_data.md#simplify-entities-data) as for normal entity data.
+The returned data can then be [simplified](https://github.com/maxlath/wikidata-sdk/blob/main/docs/simplify_entities_data.md#simplify-entities-data) as for normal entity data.
 
 ## By Sitelinks
 *associated Wikibase API doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*

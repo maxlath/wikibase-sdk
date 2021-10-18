@@ -4,7 +4,7 @@ set -eu
 
 green_log(){ echo -e "\e[0;32m$1\e[0;0m" ; }
 
-git checkout master
+git checkout main
 
 wbk_version=$(node -p 'require("./package.json").version')
 green_log "wbk_version: $wbk_version"
@@ -22,6 +22,6 @@ git commit -m 'wikidata-sdk: updated'
 green_log "publish wikidata-sdk..."
 npm publish '.'
 
-git checkout master
+git checkout main
 
 green_log 'done update wikidata-sdk'
