@@ -39,7 +39,6 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
   - [Wikibase Query](#wikibase-query)
   - [General helpers](#general-helpers)
 - [Contributing](#contributing)
-- [Donate](#donate)
 - [See Also](#see-also)
 - [You may also like](#you-may-also-like)
 - [License](#license)
@@ -149,9 +148,6 @@ This library had for primary purpose to serve the needs of the [inventaire](http
 * Therefore, it should focus on providing basic, general helper functions most application working with a Wikibase instance would need.
 * Write operations should go into [wikibase-edit](https://github.com/maxlath/wikibase-edit) as it involves working with Wikibase credentials/tokens.
 * General command-line interface tools should go to [wikibase-cli](https://github.com/maxlath/wikibase-cli), very specific ones — [`wikidata-filter`, `import-wikidata-dump-to-couchdb`, and alikes](#see-also) — should get their own modules.
-
-## Donate
-We are developing and maintaining tools to work with Wikidata from NodeJS, the browser, or simply the command line, with quality and ease of use at heart. Any donation will be interpreted as a "please keep going, your work is very much needed and awesome. PS: love". [Donate](https://liberapay.com/WikidataJS)
 
 ## See Also
 * [wikibase-edit](https://github.com/maxlath/wikibase-edit): Edit a Wikibase instance from NodeJS
