@@ -19,4 +19,9 @@ describe('simplify.sitelinks', () => {
   it('should return an object with a URL if requested ', () => {
     simplifySitelinks(Q571.sitelinks, { addUrl: true }).enwiki.url.should.equal('https://en.wikipedia.org/wiki/Book')
   })
+
+  it('should not throw when a sitelink is null ', () => {
+    const sitelinks = { frwiki: null }
+    simplifySitelinks(sitelinks).should.deepEqual(sitelinks)
+  })
 })
