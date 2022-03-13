@@ -1,6 +1,6 @@
 import {
+	InstanceConfig,
 	Property,
-	SearchType,
 	UrlResultFormat,
 	GetEntitiesFromSitelinksOptions,
 	GetEntitiesOptions,
@@ -9,7 +9,7 @@ import {
 	SearchEntitiesOptions,
 	SimplifyClaimsOptions,
 	SimplifyEntitiesOptions,
-	SimplifySitelinkOptions
+	SimplifySitelinkOptions,
 } from './options.d'
 
 import {
@@ -32,76 +32,76 @@ import {
 	SparqlResults
 } from './sparql.d'
 
-import {Dictionary} from './helper'
+import {
+	Dictionary
+} from './helper'
 
-export as namespace wdk
+// The exported object is the WBK function extended with helpers,
+// which seems hard to describe as a type declaration
+// This weird module interface could be simplified when moving to ES modules
+export = WBK;
 
-export * from './claim.d'
-export * from './entity.d'
-export * from './options.d'
-export * from './search.d'
-export * from './sparql.d'
+declare function WBK(config: InstanceConfig): wbk;
 
-export function searchEntities(search: string, language?: string, limit?: number, format?: UrlResultFormat, uselang?: string): string;
-export function searchEntities(options: SearchEntitiesOptions): string;
+interface wbk extends helpers {
+	searchEntities: (search: string | SearchEntitiesOptions, language?: string, limit?: number, format?: UrlResultFormat, uselang?: string) => string;
 
-export function getEntities(ids: string | string[], languages?: string | string[], props?: Property | Property[], format?: UrlResultFormat): string;
-export function getEntities(options: GetEntitiesOptions): string;
+	getEntities: (ids: string | string[] | GetEntitiesOptions, languages?: string | string[], props?: Property | Property[], format?: UrlResultFormat) => string;
 
-export function getManyEntities(ids: string | string[], languages?: string | string[], props?: Property | Property[], format?: UrlResultFormat): string[];
-export function getManyEntities(options: GetEntitiesOptions): string[];
+	getManyEntities: (ids: string | string[] | GetEntitiesOptions, languages?: string | string[], props?: Property | Property[], format?: UrlResultFormat) => string[];
 
-export function sparqlQuery(query: string): string;
+	sparqlQuery: (query: string) => string;
 
-export function getReverseClaims(property: string | string[], value: string | string[], options?: GetReverseClaimOptions): string;
+	getReverseClaims: (property: string | string[], value: string | string[], options?: GetReverseClaimOptions) => string;
 
-export function getRevisions(ids: string | string[], options?: GetRevisionsOptions): string;
+	getRevisions: (ids: string | string[], options?: GetRevisionsOptions) => string;
 
-export function getEntitiesFromSitelinks(titles: string | string[], sites: string | string[], languages?: string | string[], props?: string | string[], format?: UrlResultFormat): string;
-export function getEntitiesFromSitelinks(options: GetEntitiesFromSitelinksOptions): string;
+	getEntitiesFromSitelinks: (titles: string | string[] | GetEntitiesFromSitelinksOptions, sites?: string | string[], languages?: string | string[], props?: string | string[], format?: UrlResultFormat) => string;
+}
 
-// Helpers
-export function isNumericId(id: string): boolean;
-export function isEntityId(id: string): boolean;
-export function isItemId(id: string): boolean;
-export function isPropertyId(id: string): boolean;
-export function isGuid(guid: string): boolean;
+interface helpers {
+	isNumericId: (id: string) => boolean;
+	isEntityId: (id: string) => boolean;
+	isItemId: (id: string) => boolean;
+	isPropertyId: (id: string) => boolean;
+	isGuid: (guid: string) => boolean;
 
-export function getNumericId(id: string): number;
+	getNumericId: (id: string) => number;
 
-export function truthyClaims(claims: Dictionary<Claim[]>): Dictionary<Claim[]>;
-export function truthyPropertyClaims(claims: Claim[]): Claim[];
+	truthyClaims: (claims: Dictionary<Claim[]>) => Dictionary<Claim[]>;
+	truthyPropertyClaims: (claims: Claim[]) => Claim[];
 
-export function wikidataTimeToDateObject(wikidataTime: string): Date;
-export function wikidataTimeToEpochTime(wikidataTime: string): number;
-export function wikidataTimeToISOString(wikidataTime: string): string;
-export function wikidataTimeToSimpleDay(wikidataTime: string): string;
+	wikidataTimeToDateObject: (wikidataTime: string) => Date;
+	wikidataTimeToEpochTime: (wikidataTime: string) => number;
+	wikidataTimeToISOString: (wikidataTime: string) => string;
+	wikidataTimeToSimpleDay: (wikidataTime: string) => string;
 
-export function getImageUrl(filename: string, width?: number): string;
+	getImageUrl: (filename: string, width?: number) => string;
 
-// Sitelink helpers
-export function getSitelinkUrl(site: string, title: string): string;
-export function getSitelinkData(site: string): {lang: string; project: string};
-export function isSitelinkKey(site: string): boolean;
+	getSitelinkUrl: (site: string, title: string) => string;
+	getSitelinkData: (site: string) => {lang: string; project: string};
+	isSitelinkKey: (site: string) => boolean;
+	simplify: simplify;
+}
 
-export namespace simplify {
-	export function labels(data: Dictionary<LanguageEntry>): Dictionary<string>;
-	export function descriptions(data: Dictionary<LanguageEntry>): Dictionary<string>;
-	export function aliases(data: Dictionary<LanguageEntry[]>): Dictionary<string[]>;
+interface simplify {
+	labels: (data: Dictionary<LanguageEntry>) => Dictionary<string>;
+	descriptions: (data: Dictionary<LanguageEntry>) => Dictionary<string>;
+	aliases: (data: Dictionary<LanguageEntry[]>) => Dictionary<string[]>;
 
-	export function entity(entity: Entity, options?: SimplifyEntitiesOptions): EntitySimplified;
-	export function entities(entities: Dictionary<Entity>, options?: SimplifyEntitiesOptions): Dictionary<EntitySimplified>;
-	export function sparqlResults(results: SparqlResults, options?: {minimize?: false}): Dictionary<SparqlValueType>[];
-	export function sparqlResults(results: SparqlResults, options: {minimize: true}): SparqlValueRaw[];
+	entity: (entity: Entity, options?: SimplifyEntitiesOptions) => EntitySimplified;
+	entities: (entities: Dictionary<Entity>, options?: SimplifyEntitiesOptions) => Dictionary<EntitySimplified>;
+	sparqlResults: (results: SparqlResults, options?: {minimize?: false}) => Dictionary<SparqlValueType>[];
+	sparqlResults: (results: SparqlResults, options: {minimize: true}) => SparqlValueRaw[];
 
-	export function claims(claims: Dictionary<Claim[]>, options?: SimplifyClaimsOptions): Dictionary<ClaimSimplified[]>;
-	export function propertyClaims(propClaims: Claim[], options?: SimplifyClaimsOptions): ClaimSimplified[];
-	export function claim(claim: Claim, options?: SimplifyClaimsOptions): ClaimSimplified;
+	claims: (claims: Dictionary<Claim[]>, options?: SimplifyClaimsOptions) => Dictionary<ClaimSimplified[]>;
+	propertyClaims: (propClaims: Claim[], options?: SimplifyClaimsOptions) => ClaimSimplified[];
+	claim: (claim: Claim, options?: SimplifyClaimsOptions) => ClaimSimplified;
 
-	export function qualifiers(qualifiers: Dictionary<ClaimSnak[]>, options?: SimplifyClaimsOptions): Dictionary<ClaimSnakSimplified[]>;
-	export function propertyQualifiers(propQualifiers: ClaimSnak[], options?: SimplifyClaimsOptions): ClaimSnakSimplified[];
-	export function qualifier(qualifier: ClaimSnak, options?: SimplifyClaimsOptions): ClaimSnakSimplified;
+	qualifiers: (qualifiers: Dictionary<ClaimSnak[]>, options?: SimplifyClaimsOptions) => Dictionary<ClaimSnakSimplified[]>;
+	propertyQualifiers: (propQualifiers: ClaimSnak[], options?: SimplifyClaimsOptions) => ClaimSnakSimplified[];
+	qualifier: (qualifier: ClaimSnak, options?: SimplifyClaimsOptions) => ClaimSnakSimplified;
 
-	export function sitelinks(sitelinks: Dictionary<Sitelink>, options?: {addUrl?: false} & SimplifySitelinkOptions): Dictionary<string>;
-	export function sitelinks(sitelinks: Dictionary<Sitelink>, options?: {addUrl: true} & SimplifySitelinkOptions): Dictionary<{title: string, url: string}>;
+	sitelinks: (sitelinks: Dictionary<Sitelink>, options?: {addUrl?: false} & SimplifySitelinkOptions) => Dictionary<string>;
+	sitelinks: (sitelinks: Dictionary<Sitelink>, options?: {addUrl: true} & SimplifySitelinkOptions) => Dictionary<{title: string, url: string}>;
 }

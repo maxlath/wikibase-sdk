@@ -1,3 +1,9 @@
+export interface InstanceConfig {
+  instance?: string;
+  sparqlEndpoint?: string;
+  wgScriptPath?: string;
+}
+
 export type Property = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'labels' | 'descriptions' | 'claims' | 'datatype';
 export type SearchType = 'item' | 'property' | 'lexeme' | 'form' | 'sense'
 export type UrlResultFormat = 'xml' | 'json';
