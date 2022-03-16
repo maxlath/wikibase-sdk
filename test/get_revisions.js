@@ -27,6 +27,8 @@ describe('getRevisions', () => {
     query.titles.should.equal('Q3548931')
     query.rvlimit.should.equal('max')
     query.format.should.equal('json')
+    query.rvprop.should.equal('ids|flags|timestamp|user|userid|size|slotsize|sha1|slotsha1|contentmodel|comment|parsedcomment|content|tags|roles|oresscores')
+    query.rvslots.should.equal('*')
   })
 
   it('should accept several ids', () => {
