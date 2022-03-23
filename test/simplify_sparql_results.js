@@ -7,6 +7,7 @@ const multiVarsData = require('./data/multi_vars_sparql_results.json')
 const noDatatypeData = require('./data/no_datatype_sparql_results.json')
 const sparqlResultsWithOptionalValues = require('./data/sparql_results_with_optional_values.json')
 const sparqlResultsWithStatements = require('./data/sparql_results_with_statements.json')
+const sparqlResultsWithNestedAssociatedVariables = require('./data/sparql_results_with_nested_associated_variables.json')
 const resultsWithLabelsDescriptionsAndAliases = require('./data/results_with_labels_descriptions_and_aliases.json')
 const propertiesList = require('./data/properties_list.json')
 const { cloneDeep } = require('lodash')
@@ -119,6 +120,12 @@ describe('wikidata simplify SPARQL results', () => {
         if (rawResult.itemAltLabel) simplified.itemAltLabel.should.be.a.String()
         simplified.pseudonyme.should.a.String()
       })
+    })
+
+    it('should ignore nested associated variables', () => {
+      const rawResults = cloneDeep(sparqlResultsWithNestedAssociatedVariables)
+      const results = simplify(rawResults, { minimize: true })
+      results.length.should.equal(2)
     })
   })
 
