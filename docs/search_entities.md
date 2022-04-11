@@ -183,6 +183,17 @@ const url = wbk.cirrusSearchPages({
 
 See [`srsort`](https://www.wikidata.org/w/api.php?action=help&modules=query+search) for possible values
 
+### prop
+Customise the prop parameter:
+```js
+const url = wbk.cirrusSearchPages({
+  search: 'Ingmar Bergman',
+  prop: [ 'snippet', 'titlesnippet' ],
+})
+```
+
+See [`srprop`](https://www.wikidata.org/w/api.php?action=help&modules=query+search) for possible values
+
 ### other parameters
 
 ```js
