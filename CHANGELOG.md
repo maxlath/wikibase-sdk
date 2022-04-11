@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 7.15.0 - 2021-04-10
+* [`cirrusSearchPages`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/search_entities.md#cirrussearchpages): added support for `srprop` parameter
+
 ## 7.14.0 - 2021-10-18
 * new [`simplify.claims`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/simplify_claims.md) option: `keepNonDeprecated`
 
