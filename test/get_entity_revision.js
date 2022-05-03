@@ -1,7 +1,7 @@
 require('should')
-const qs = require('querystring')
 
 const { instance, wgScriptPath } = require('./lib/tests_env')
+const { parseQuery } = require('./lib/utils')
 const getEntityRevision = require('../lib/queries/get_entity_revision')(instance, wgScriptPath)
 
 describe('getEntityRevision', () => {
@@ -17,7 +17,7 @@ describe('getEntityRevision', () => {
     const url = getEntityRevision('Q3548931', '3548931')
     url.should.be.a.String()
     let [ host, query ] = url.split('?')
-    query = qs.parse(query)
+    query = parseQuery(query)
     host.should.equal('https://www.wikidata.org/w/index.php')
     query.title.should.equal('Special:EntityData/Q3548931.json')
     query.revision.should.equal('3548931')
@@ -27,7 +27,7 @@ describe('getEntityRevision', () => {
     const url = getEntityRevision({ id: 'Q3548931', revision: '3548931' })
     url.should.be.a.String()
     let [ host, query ] = url.split('?')
-    query = qs.parse(query)
+    query = parseQuery(query)
     host.should.equal('https://www.wikidata.org/w/index.php')
     query.title.should.equal('Special:EntityData/Q3548931.json')
     query.revision.should.equal('3548931')

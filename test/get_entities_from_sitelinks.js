@@ -1,5 +1,4 @@
 const should = require('should')
-const qs = require('querystring')
 const { buildUrl } = require('./lib/tests_env')
 const getEntitiesFromSitelinks = require('../lib/queries/get_entities_from_sitelinks')(buildUrl)
 
@@ -45,7 +44,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('accepts titles as an array', () => {
       const url = getEntitiesFromSitelinks([ 'Lyon', 'Hamburg' ])
       url.should.equal(getEntitiesFromSitelinks({ titles: [ 'Lyon', 'Hamburg' ] }))
-      const url2 = qs.unescape(url)
+      const url2 = decodeURI(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&titles=Lyon|Hamburg&').length.should.equal(2)
     })
@@ -61,7 +60,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('accepts titles as an array', () => {
       const url = getEntitiesFromSitelinks('Lyon', [ 'itwiki', 'eswikisource' ])
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'itwiki', 'eswikisource' ] }))
-      const url2 = qs.unescape(url)
+      const url2 = decodeURI(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&sites=itwiki|eswikisource&').length.should.equal(2)
     })
@@ -69,7 +68,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('defaults to the English Wikipedia', () => {
       const url = getEntitiesFromSitelinks('Lyon')
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      const url2 = qs.unescape(url)
+      const url2 = decodeURI(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&sites=enwiki&').length.should.equal(2)
     })
@@ -77,7 +76,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('converts 2-letters language codes to Wikipedia sites', () => {
       const url = getEntitiesFromSitelinks('Lyon', [ 'it', 'fr' ])
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'it', 'fr' ] }))
-      const url2 = qs.unescape(url)
+      const url2 = decodeURI(url)
       // use splitinstead of a regexp to work around pipe escaping issues
       url2.split('&sites=itwiki|frwiki&').length.should.equal(2)
     })
@@ -99,7 +98,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('accepts language as an array', () => {
       const url = getEntitiesFromSitelinks('Lyon', null, [ 'fr', 'de' ])
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', languages: [ 'fr', 'de' ] }))
-      const url2 = qs.unescape(url)
+      const url2 = decodeURI(url)
       url2.split('&languages=fr|de').length.should.equal(2)
     })
   })

@@ -1,5 +1,4 @@
 const should = require('should')
-const qs = require('querystring')
 
 const { buildUrl } = require('./lib/tests_env')
 const getEntities = require('../lib/queries/get_entities')(buildUrl)
@@ -49,14 +48,14 @@ describe('wikidata getEntities', () => {
     it('accepts ids as an array', () => {
       const url = getEntities([ 'Q535', 'Q7546' ])
       url.should.equal(getEntities({ ids: [ 'Q535', 'Q7546' ] }))
-      const url2 = qs.unescape(url)
+      const url2 = decodeURIComponent(url)
       // use split(instead of a regexp to work around pipe escapingfunction  issu {
       url2.split('&ids=Q535|Q7546&').length.should.equal(2)
     })
 
     it('accepts all supported entities types', () => {
       const url = getEntities([ 'Q535', 'P123', 'L525' ])
-      qs.unescape(url).should.containEql('&ids=Q535|P123|L525&')
+      decodeURIComponent(url).should.containEql('&ids=Q535|P123|L525&')
     })
   })
   describe('languages', () => {
@@ -75,7 +74,7 @@ describe('wikidata getEntities', () => {
     it('accepts language as an array', () => {
       const url = getEntities('Q535', [ 'fr', 'de' ])
       url.should.equal(getEntities({ ids: 'Q535', languages: [ 'fr', 'de' ] }))
-      const url2 = qs.unescape(url)
+      const url2 = decodeURIComponent(url)
       url2.split('&languages=fr|de').length.should.equal(2)
     })
   })
