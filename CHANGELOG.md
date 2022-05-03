@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 8.0.0 - 2022-05-03
+**BREAKING CHANGE**: use `URLSearchParams` in NodeJS, which only is available in NodeJS `>= v10.0.0`
+
 ## 7.15.0 - 2021-04-10
 * [`cirrusSearchPages`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/search_entities.md#cirrussearchpages): added support for `srprop` parameter
 
