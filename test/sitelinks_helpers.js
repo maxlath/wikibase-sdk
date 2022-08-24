@@ -90,6 +90,13 @@ describe('getSitelinkUrl', () => {
     getSitelinkUrl.bind(null, 'frperlinpinpin', 'Lyon').should.throw()
     getSitelinkUrl.bind(null, 'frwikiwiki', 'Lyon').should.throw()
   })
+
+  it('should support multi-part language codes', () => {
+    getSitelinkUrl({ site: 'zh_classicalwiki', title: '編訂名詞館' })
+    .should.startWith('https://zh-classical.wikipedia.org/')
+    getSitelinkUrl({ site: 'be_x_oldwiki', title: 'Віктор_Юго' })
+    .should.startWith('https://be-x-old.wikipedia.org/')
+  })
 })
 
 describe('getSitelinkData', () => {
@@ -132,11 +139,20 @@ describe('getSitelinkData', () => {
     getSitelinkData('https://de.wikipedia.org/wiki/The_Score_%282001%29').project.should.equal('wikipedia')
     getSitelinkData('https://de.wikipedia.org/wiki/The_Score_%282001%29').key.should.equal('dewiki')
   })
+
+  it('should support multi-part language codes', () => {
+    const data = getSitelinkData('https://be-x-old.wikipedia.org/wiki/Беларускі_клясычны_правапіс')
+    data.title.should.equal('Беларускі_клясычны_правапіс')
+    data.lang.should.equal('be_x_old')
+    data.project.should.equal('wikipedia')
+    data.key.should.equal('be_x_oldwiki')
+  })
 })
 
 describe('isSitelinkKey', () => {
   it('should return true for valid sitelink keys', () => {
     isSitelinkKey('frwiki').should.be.true()
+    isSitelinkKey('be_x_oldwiki').should.be.true()
     isSitelinkKey('commonswiki').should.be.true()
     isSitelinkKey('wikidatawiki').should.be.true()
     isSitelinkKey('commons').should.be.false()
@@ -148,5 +164,6 @@ describe('isSitelinkKey', () => {
     isSitelinkKey('frwikilinpinpin').should.be.false()
     isSitelinkKey('imaginarylangwiki').should.be.false()
     isSitelinkKey('frwikiwiki').should.be.false()
+    isSitelinkKey('be-x-oldwiki').should.be.false()
   })
 })
