@@ -164,13 +164,6 @@ describe('simplifyPropertyClaims', () => {
       simplified.should.deepEqual([ 'Q2044250' ])
     })
 
-    it('should not return empty claims arrays', () => {
-      const deprecatedClaim = Q4115189.claims.P135[0]
-      const claims = { P135: [ deprecatedClaim ] }
-      const simplified = simplifyClaims(claims)
-      should(simplified.P135).not.be.ok()
-    })
-
     it('should return non-truthy statements if requested', () => {
       const options = { keepNonTruthy: true }
       const simplified = simplifyPropertyClaims(Q4115189.claims.P135, options)
