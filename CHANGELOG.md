@@ -4,6 +4,9 @@
 ## 8.0.0 - 2022-05-03
 **BREAKING CHANGE**: use `URLSearchParams` in NodeJS, which only is available in NodeJS `>= v10.0.0`
 
+## 7.16.0 - 2022-10-31
+* new [`simplify.siteliks`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/simplify_entities_data.md#simplify-sitelinks) option: [`keepBadges`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/simplify_entities_data.md#keep-badges)
+
 ## 7.15.0 - 2021-04-10
 * [`cirrusSearchPages`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/search_entities.md#cirrussearchpages): added support for `srprop` parameter
 
