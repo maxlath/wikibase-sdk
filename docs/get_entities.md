@@ -5,7 +5,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [By ids](#by-ids)
   - [Get many entities by ids](#get-many-entities-by-ids)
   - [By id and revision](#by-id-and-revision)

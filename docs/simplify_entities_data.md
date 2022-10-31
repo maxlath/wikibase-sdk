@@ -5,7 +5,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Simplify entity](#simplify-entity)
 - [Simplify entities](#simplify-entities)
 - [Simplify claims](simplify_claims.md)
@@ -13,6 +12,7 @@
 - [Simplify descriptions](#simplify-descriptions)
 - [Simplify aliases](#simplify-aliases)
 - [Simplify sitelinks](#simplify-sitelinks)
+  - [keep badges](#keep-badges)
   - [add sitelinks URLs](#add-sitelinks-urls)
 - [Simplify lemmas](#simplify-lemmas)
 - [Simplify forms](#simplify-forms)
@@ -41,7 +41,8 @@ const simplificationOptions = {
   keepNonDeprecated: true, // For each property, keep all claims with preferred or normal rank
 
   // sitelinks
-  addUrl: true
+  keepBadges: true,
+  addUrl: true,
 }
 wbk.simplify.entity(entity, simplificationOptions)
 ```
@@ -87,8 +88,17 @@ After: `{ pl: [ 'Tom', 'Tomik' ] }`
 ```js
 wbk.simplify.sitelinks(entity.sitelinks)
 ```
-Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: [] } }`<br>
+Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: ['Q17437796'] } }`<br>
 After: `{ plwiki: 'Książka' }`
+
+### keep badges
+```js
+wbk.simplify.sitelinks(entity.sitelinks, { keepBadges: true })
+```
+Before: `{ plwiki: { site: 'plwiki', title: 'Książka', badges: ['Q17437796'] } }`<br>
+After: `{ plwiki: { title: 'Książka', badges: ['Q17437796'] }`
+
+*NB*: setting `keepAll` would also imply keeping sitelinks badges
 
 ### add sitelinks URLs
 ```js

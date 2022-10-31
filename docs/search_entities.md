@@ -5,7 +5,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [searchEntities](#searchentities)
   - [entities type](#entities-type)
 - [cirrusSearchPages](#cirrussearchpages)
@@ -13,6 +12,7 @@
   - [namespace](#namespace)
   - [profile](#profile)
   - [sort](#sort)
+  - [prop](#prop)
   - [other parameters](#other-parameters)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

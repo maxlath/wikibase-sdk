@@ -28,7 +28,6 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Changelog](#changelog)
 - [Dependencies](#dependencies)
 - [Install](#install)

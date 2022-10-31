@@ -12,6 +12,22 @@ describe('simplify.sitelinks', () => {
     objLenght(simplifiedSitelinks).should.equal(objLenght(Q571.sitelinks))
   })
 
+  it('should preserve badges if requested with keepBadges=true', () => {
+    const simplifiedSitelinks = simplifySitelinks(Q571.sitelinks, { keepBadges: true })
+    simplifiedSitelinks.enwiki.title.should.equal('Book')
+    simplifiedSitelinks.enwiki.badges.should.deepEqual([])
+    simplifiedSitelinks.lawiki.title.should.equal('Liber')
+    simplifiedSitelinks.lawiki.badges.should.deepEqual([ 'Q17437796' ])
+  })
+
+  it('should preserve badges if requested with keepAll=true', () => {
+    const simplifiedSitelinks = simplifySitelinks(Q571.sitelinks, { keepBadges: true })
+    simplifiedSitelinks.enwiki.title.should.equal('Book')
+    simplifiedSitelinks.enwiki.badges.should.deepEqual([])
+    simplifiedSitelinks.lawiki.title.should.equal('Liber')
+    simplifiedSitelinks.lawiki.badges.should.deepEqual([ 'Q17437796' ])
+  })
+
   it('should create a different object', () => {
     should(simplifySitelinks(Q571.sitelinks) === Q571.sitelinks).be.false()
   })
