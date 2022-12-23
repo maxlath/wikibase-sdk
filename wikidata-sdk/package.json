@@ -22,9 +22,7 @@
     "url": "https://github.com/maxlath/wikidata-sdk/issues"
   },
   "homepage": "https://github.com/maxlath/wikidata-sdk",
-  "dependencies": {
-    "wikibase-sdk": "*"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">= 10.0.0"
   }
