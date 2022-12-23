@@ -25,8 +25,7 @@
   "dependencies": {
     "wikibase-sdk": "*"
   },
-  "devDependencies": {},
   "engines": {
-    "node": ">= 6.4"
+    "node": ">= 10.0.0"
   }
 }
