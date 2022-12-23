@@ -42,6 +42,15 @@ describe('getSitelinkUrl', () => {
 
     getSitelinkUrl('wikidata', 'P50')
     .should.equal('https://www.wikidata.org/wiki/Property:P50')
+
+    getSitelinkUrl({ site: 'wikidatawiki', title: 'L622301-F1' })
+    .should.equal('https://www.wikidata.org/wiki/Lexeme:L622301#F1')
+
+    getSitelinkUrl({ site: 'wikidatawiki', title: 'L16097-S1' })
+    .should.equal('https://www.wikidata.org/wiki/Lexeme:L16097#S1')
+
+    getSitelinkUrl({ site: 'wikidatawiki', title: 'E1' })
+    .should.equal('https://www.wikidata.org/wiki/EntitySchema:E1')
   })
 
   it('should accept a sitelink object as unique argument', () => {
