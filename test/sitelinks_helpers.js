@@ -43,6 +43,9 @@ describe('getSitelinkUrl', () => {
     getSitelinkUrl('wikidata', 'P50')
     .should.equal('https://www.wikidata.org/wiki/Property:P50')
 
+    getSitelinkUrl({ site: 'wikidatawiki', title: 'L622301' })
+    .should.equal('https://www.wikidata.org/wiki/Lexeme:L622301')
+
     getSitelinkUrl({ site: 'wikidatawiki', title: 'L622301-F1' })
     .should.equal('https://www.wikidata.org/wiki/Lexeme:L622301#F1')
 
