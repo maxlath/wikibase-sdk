@@ -1,6 +1,5 @@
-require('should')
-
-const { getSitelinkUrl, getSitelinkData, isSitelinkKey } = require('../lib/helpers/sitelinks')
+import 'should'
+import { getSitelinkUrl, getSitelinkData, isSitelinkKey } from '../lib/helpers/sitelinks.js'
 
 describe('getSitelinkUrl', () => {
   it('should be a function', () => {

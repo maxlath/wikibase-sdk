@@ -1,8 +1,9 @@
-const should = require('should')
-const _ = require('lodash')
+import _ from 'lodash-es'
+import should from 'should'
+import { GetManyEntities } from '../lib/queries/get_many_entities.js'
+import { buildUrl } from './lib/tests_env.js'
 
-const { buildUrl } = require('./lib/tests_env')
-const getManyEntities = require('../lib/queries/get_many_entities')(buildUrl)
+const getManyEntities = GetManyEntities(buildUrl)
 const manyIds = _.range(1, 80).map(id => `Q${id}`)
 
 describe('wikidata getManyEntities', () => {
@@ -34,7 +35,7 @@ describe('wikidata getManyEntities', () => {
         ids: manyIds,
         languages: 'fr',
         props: 'labels',
-        format: 'xml'
+        format: 'xml',
       })
       urls.should.be.an.Array()
       urls.forEach(url => {

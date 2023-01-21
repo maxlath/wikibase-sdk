@@ -1,7 +1,9 @@
-require('should')
-const _ = require('lodash')
-const Q4115189 = require('./data/Q4115189.json')
-const { truthyClaims, truthyPropertyClaims } = require('../lib/helpers/rank')
+import 'should'
+import _ from 'lodash-es'
+import { truthyClaims, truthyPropertyClaims } from '../lib/helpers/rank.js'
+import { requireJson } from './lib/utils.js'
+
+const Q4115189 = requireJson(import.meta.url, './data/Q4115189.json')
 
 describe('truthyClaims', () => {
   it('should filter-out non-truthy claims', () => {

@@ -1,7 +1,8 @@
-const should = require('should')
+import should from 'should'
+import { CirrusSearchPages } from '../lib/queries/cirrus_search.js'
+import { buildUrl } from './lib/tests_env.js'
 
-const { buildUrl } = require('./lib/tests_env')
-const cirrusSearchPages = require('../lib/queries/cirrus_search')(buildUrl)
+const cirrusSearchPages = CirrusSearchPages(buildUrl)
 
 describe('cirrusSearchPages', () => {
   it('should generate a URL with the query/search endpoint', () => {

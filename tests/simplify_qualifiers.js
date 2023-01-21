@@ -1,8 +1,10 @@
-const should = require('should')
-const { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } = require('../lib/helpers/simplify_claims')
-const Q571 = require('./data/Q571.json')
-const Q2112 = require('./data/Q2112.json')
-const Q19180293 = require('./data/Q19180293.json')
+import should from 'should'
+import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../lib/helpers/simplify_claims.js'
+import { requireJson } from './lib/utils.js'
+
+const Q19180293 = requireJson(import.meta.url, './data/Q19180293.json')
+const Q2112 = requireJson(import.meta.url, './data/Q2112.json')
+const Q571 = requireJson(import.meta.url, './data/Q571.json')
 
 describe('simplifyQualifier', () => {
   it('should simplify a qualifier', () => {

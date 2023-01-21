@@ -1,16 +1,17 @@
-const should = require('should')
+import { cloneDeep } from 'lodash-es'
+import should from 'should'
+import { isEntityId, isGuid } from '../lib/helpers/helpers.js'
+import simplify from '../lib/helpers/simplify_sparql_results.js'
+import { requireJson } from './lib/utils.js'
 
-const helpers = require('../lib/helpers/helpers')
-const simplify = require('../lib/helpers/simplify_sparql_results')
-const singleVarData = require('./data/single_var_sparql_results.json')
-const multiVarsData = require('./data/multi_vars_sparql_results.json')
-const noDatatypeData = require('./data/no_datatype_sparql_results.json')
-const sparqlResultsWithOptionalValues = require('./data/sparql_results_with_optional_values.json')
-const sparqlResultsWithStatements = require('./data/sparql_results_with_statements.json')
-const sparqlResultsWithNestedAssociatedVariables = require('./data/sparql_results_with_nested_associated_variables.json')
-const resultsWithLabelsDescriptionsAndAliases = require('./data/results_with_labels_descriptions_and_aliases.json')
-const propertiesList = require('./data/properties_list.json')
-const { cloneDeep } = require('lodash')
+const multiVarsData = requireJson(import.meta.url, './data/multi_vars_sparql_results.json')
+const noDatatypeData = requireJson(import.meta.url, './data/no_datatype_sparql_results.json')
+const propertiesList = requireJson(import.meta.url, './data/properties_list.json')
+const resultsWithLabelsDescriptionsAndAliases = requireJson(import.meta.url, './data/results_with_labels_descriptions_and_aliases.json')
+const singleVarData = requireJson(import.meta.url, './data/single_var_sparql_results.json')
+const sparqlResultsWithNestedAssociatedVariables = requireJson(import.meta.url, './data/sparql_results_with_nested_associated_variables.json')
+const sparqlResultsWithOptionalValues = requireJson(import.meta.url, './data/sparql_results_with_optional_values.json')
+const sparqlResultsWithStatements = requireJson(import.meta.url, './data/sparql_results_with_statements.json')
 
 describe('wikidata simplify SPARQL results', () => {
   describe('common', () => {
@@ -50,7 +51,7 @@ describe('wikidata simplify SPARQL results', () => {
     it('should return an array of results values, filtering out blank nodes', () => {
       const output = simplify(singleVarData, { minimize: true })
       output[0].should.equal('Q112983')
-      output.forEach(result => helpers.isEntityId(result).should.be.true())
+      output.forEach(result => isEntityId(result).should.be.true())
     })
 
     it('should return an array of results value object', () => {
@@ -58,7 +59,7 @@ describe('wikidata simplify SPARQL results', () => {
       output[0].should.deepEqual({ genre: 'Q112983' })
       output.forEach(result => {
         result.should.be.an.Object()
-        if (result.genre) helpers.isEntityId(result.genre).should.be.true()
+        if (result.genre) isEntityId(result.genre).should.be.true()
       })
     })
   })
@@ -133,7 +134,7 @@ describe('wikidata simplify SPARQL results', () => {
     it('should convert statement URIs into claims GUIDs', () => {
       const rawResults = cloneDeep(sparqlResultsWithStatements)
       const results = simplify(rawResults, { minimize: true })
-      results.forEach(result => helpers.isGuid(result).should.be.true())
+      results.forEach(result => isGuid(result).should.be.true())
     })
   })
 })

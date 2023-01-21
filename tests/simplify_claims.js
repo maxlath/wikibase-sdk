@@ -1,22 +1,23 @@
-const should = require('should')
-const _ = require('lodash')
-const Q571 = require('./data/Q571.json')
-const Q646148 = require('./data/Q646148.json')
-const Q4132785 = require('./data/Q4132785.json')
-const Q328212 = require('./data/Q328212.json')
-const Q22002395 = require('./data/Q22002395.json')
-const Q2112 = require('./data/Q2112.json')
-const Q217447 = require('./data/Q217447.json')
-const Q271094 = require('./data/Q271094.json')
-const Q4115189 = require('./data/Q4115189.json')
-const Q275937 = require('./data/Q275937.json')
-const Q1 = require('./data/Q1.json')
-const L525 = require('./data/L525.json')
-const oldClaimFormat = require('./data/old_claim_format.json')
-const lexemeClaim = require('./data/lexeme_claim.json')
-const emptyValues = require('./data/empty_values.json')
+import _ from 'lodash-es'
+import should from 'should'
+import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../lib/helpers/simplify_claims.js'
+import { requireJson } from './lib/utils.js'
 
-const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
+const L525 = requireJson(import.meta.url, './data/L525.json')
+const Q1 = requireJson(import.meta.url, './data/Q1.json')
+const Q2112 = requireJson(import.meta.url, './data/Q2112.json')
+const Q217447 = requireJson(import.meta.url, './data/Q217447.json')
+const Q22002395 = requireJson(import.meta.url, './data/Q22002395.json')
+const Q271094 = requireJson(import.meta.url, './data/Q271094.json')
+const Q275937 = requireJson(import.meta.url, './data/Q275937.json')
+const Q328212 = requireJson(import.meta.url, './data/Q328212.json')
+const Q4115189 = requireJson(import.meta.url, './data/Q4115189.json')
+const Q4132785 = requireJson(import.meta.url, './data/Q4132785.json')
+const Q571 = requireJson(import.meta.url, './data/Q571.json')
+const Q646148 = requireJson(import.meta.url, './data/Q646148.json')
+const emptyValues = requireJson(import.meta.url, './data/empty_values.json')
+const lexemeClaim = requireJson(import.meta.url, './data/lexeme_claim.json')
+const oldClaimFormat = requireJson(import.meta.url, './data/old_claim_format.json')
 
 describe('simplifyClaims', () => {
   it('env', () => {
@@ -180,13 +181,13 @@ describe('simplifyPropertyClaims', () => {
     it('should keep ranks', () => {
       simplifyPropertyClaims(Q4115189.claims.P135, { keepRanks: true })
       .should.deepEqual([
-        { value: 'Q2044250', rank: 'preferred' }
+        { value: 'Q2044250', rank: 'preferred' },
       ])
       simplifyPropertyClaims(Q4115189.claims.P135, { keepRanks: true, keepNonTruthy: true })
       .should.deepEqual([
         { value: 'Q213454', rank: 'deprecated' },
         { value: 'Q2044250', rank: 'preferred' },
-        { value: 'Q5843', rank: 'normal' }
+        { value: 'Q5843', rank: 'normal' },
       ])
     })
   })
@@ -207,17 +208,17 @@ describe('simplifyPropertyClaims', () => {
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepSnaktypes: true }).should.deepEqual([
         { value: undefined, snaktype: 'novalue' },
         { value: undefined, snaktype: 'somevalue' },
-        { value: 'bacasable', snaktype: 'value' }
+        { value: 'bacasable', snaktype: 'value' },
       ])
       simplifyPropertyClaims(emptyValues.claims.P3984, {
         keepSnaktypes: true,
         novalueValue: '-',
-        somevalueValue: '?'
+        somevalueValue: '?',
       })
       .should.deepEqual([
         { value: '-', snaktype: 'novalue' },
         { value: '?', snaktype: 'somevalue' },
-        { value: 'bacasable', snaktype: 'value' }
+        { value: 'bacasable', snaktype: 'value' },
       ])
     })
 
@@ -225,22 +226,22 @@ describe('simplifyPropertyClaims', () => {
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepQualifiers: true }).should.deepEqual([
         { value: undefined, qualifiers: {} },
         { value: undefined, qualifiers: {} },
-        { value: 'bacasable', qualifiers: {} }
+        { value: 'bacasable', qualifiers: {} },
       ])
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepReferences: true }).should.deepEqual([
         { value: undefined, references: [] },
         { value: undefined, references: [] },
-        { value: 'bacasable', references: [] }
+        { value: 'bacasable', references: [] },
       ])
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepIds: true }).should.deepEqual([
         { value: undefined, id: 'Q4115189$c973aadc-48d3-5ac2-45fc-9f34a51ebdf6' },
         { value: undefined, id: 'Q4115189$db1940f1-41bd-ad24-8fbc-20bc6465a35f' },
-        { value: 'bacasable', id: 'Q4115189$5c85ec5e-48f5-716d-8944-c4364693e406' }
+        { value: 'bacasable', id: 'Q4115189$5c85ec5e-48f5-716d-8944-c4364693e406' },
       ])
       simplifyPropertyClaims(emptyValues.claims.P3984, { keepTypes: true }).should.deepEqual([
         { value: undefined, type: 'external-id' },
         { value: undefined, type: 'external-id' },
-        { value: 'bacasable', type: 'external-id' }
+        { value: 'bacasable', type: 'external-id' },
       ])
     })
   })
@@ -249,12 +250,12 @@ describe('simplifyPropertyClaims', () => {
     simplifyPropertyClaims(emptyValues.claims.P3984, {
       keepQualifiers: true,
       novalueValue: '-',
-      somevalueValue: '?'
+      somevalueValue: '?',
     })
     .should.deepEqual([
       { value: '-', qualifiers: {} },
       { value: '?', qualifiers: {} },
-      { value: 'bacasable', qualifiers: {} }
+      { value: 'bacasable', qualifiers: {} },
     ])
   })
 })
@@ -455,7 +456,7 @@ describe('simplifyClaim', () => {
         longitude: 8.5166666666667,
         altitude: null,
         precision: 0.016666666666667,
-        globe: 'http://www.wikidata.org/entity/Q2'
+        globe: 'http://www.wikidata.org/entity/Q2',
       })
     })
 
@@ -466,7 +467,7 @@ describe('simplifyClaim', () => {
         before: 0,
         after: 0,
         precision: 11,
-        calendarmodel: 'http://www.wikidata.org/entity/Q1985727'
+        calendarmodel: 'http://www.wikidata.org/entity/Q1985727',
       })
     })
   })
@@ -544,7 +545,7 @@ describe('simplifyClaim', () => {
         before: 0,
         after: 0,
         precision: 11,
-        calendarmodel: 'http://www.wikidata.org/entity/Q1985727'
+        calendarmodel: 'http://www.wikidata.org/entity/Q1985727',
       })
       simplifiedP214.references[0].hash.should.be.a.String()
       simplifiedP625.value.should.deepEqual({
@@ -552,7 +553,7 @@ describe('simplifyClaim', () => {
         longitude: 8.5166666666667,
         altitude: null,
         precision: 0.016666666666667,
-        globe: 'http://www.wikidata.org/entity/Q2'
+        globe: 'http://www.wikidata.org/entity/Q2',
       })
     })
 
@@ -574,7 +575,7 @@ describe('simplifyClaim', () => {
     it('should parse lexem claims', () => {
       simplifyClaims(L525.claims).should.deepEqual({
         P5185: [ 'Q1775415' ],
-        P5972: [ 'L512-S1' ]
+        P5972: [ 'L512-S1' ],
       })
     })
   })

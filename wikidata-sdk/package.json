@@ -1,6 +1,7 @@
 {
   "name": "wikidata-sdk",
   "version": "*",
+  "type": "module",
   "description": "A convenience package bundling wikibase-sdk initialized with wikidata.org config",
   "main": "./wikidata-sdk.js",
   "scripts": {},

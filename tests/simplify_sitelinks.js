@@ -1,8 +1,8 @@
-const should = require('should')
-const Q571 = require('./data/Q571.json')
-const { objLenght } = require('./lib/utils')
+import should from 'should'
+import simplifySitelinks from '../lib/helpers/simplify_sitelinks.js'
+import { requireJson, objLenght } from './lib/utils.js'
 
-const simplifySitelinks = require('../lib/helpers/simplify_sitelinks')
+const Q571 = requireJson(import.meta.url, './data/Q571.json')
 
 describe('simplify.sitelinks', () => {
   it('should simplify sitelinks', () => {

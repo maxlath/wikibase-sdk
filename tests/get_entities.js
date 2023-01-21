@@ -1,7 +1,8 @@
-const should = require('should')
+import should from 'should'
+import { GetEntities } from '../lib/queries/get_entities.js'
+import { buildUrl } from './lib/tests_env.js'
 
-const { buildUrl } = require('./lib/tests_env')
-const getEntities = require('../lib/queries/get_entities')(buildUrl)
+const getEntities = GetEntities(buildUrl)
 
 describe('wikidata getEntities', () => {
   describe('polymorphism', () => {
@@ -18,7 +19,7 @@ describe('wikidata getEntities', () => {
         ids: 'Q1',
         languages: 'fr',
         props: 'info',
-        format: 'json'
+        format: 'json',
       })
 
       url.split('&ids=Q1').length.should.equal(2)
@@ -31,7 +32,7 @@ describe('wikidata getEntities', () => {
     it('action should be wbgetentities', () => {
       const url = getEntities('Q1')
       url.should.equal(getEntities({ ids: 'Q1' }))
-      url.should.match(new RegExp('action=wbgetentities&'))
+      url.should.match(/action=wbgetentities&/)
     })
   })
   describe('ids', () => {
@@ -42,7 +43,7 @@ describe('wikidata getEntities', () => {
     it('accepts one id as a string', () => {
       const url = getEntities('Q535')
       url.should.equal(getEntities({ ids: 'Q535' }))
-      url.should.match(new RegExp('&ids=Q535'))
+      url.should.match(/&ids=Q535/)
     })
 
     it('accepts ids as an array', () => {
@@ -62,13 +63,13 @@ describe('wikidata getEntities', () => {
     it('default to no language parameter', () => {
       const url = getEntities('Q535')
       url.should.equal(getEntities({ ids: 'Q535' }))
-      url.should.not.match(new RegExp('languages'))
+      url.should.not.match(/languages/)
     })
 
     it('accepts one language as a string', () => {
       const url = getEntities('Q535', 'fr')
       url.should.equal(getEntities({ ids: 'Q535', languages: 'fr' }))
-      url.should.match(new RegExp('&languages=fr'))
+      url.should.match(/&languages=fr/)
     })
 
     it('accepts language as an array', () => {
@@ -82,22 +83,22 @@ describe('wikidata getEntities', () => {
     it('default to no property specified', () => {
       const url = getEntities('Q702741', [ 'es', 'fi' ])
       url.should.equal(getEntities({ ids: 'Q702741', languages: [ 'es', 'fi' ] }))
-      url.should.not.match(new RegExp('&props'))
+      url.should.not.match(/&props/)
     })
     it('include the requested property', () => {
       const url = getEntities({ ids: 'Q702741', props: 'claims' })
-      url.should.match(new RegExp('&props=claims'))
+      url.should.match(/&props=claims/)
     })
     it('include the requested properties', () => {
       const url = getEntities({ ids: 'Q702741', props: [ 'claims', 'info' ] })
-      url.should.match(new RegExp('&props=claims|info'))
+      url.should.match(/&props=claims|info/)
     })
   })
   describe('format', () => {
     it('default to json', () => {
       const url = getEntities('Q702741', [ 'es', 'fi' ])
       url.should.equal(getEntities({ ids: 'Q702741', languages: [ 'es', 'fi' ] }))
-      url.should.match(new RegExp('&format=json'))
+      url.should.match(/&format=json/)
     })
   })
   describe('redirects', () => {

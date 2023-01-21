@@ -1,6 +1,8 @@
-const should = require('should')
-const { buildUrl } = require('./lib/tests_env')
-const getEntitiesFromSitelinks = require('../lib/queries/get_entities_from_sitelinks')(buildUrl)
+import should from 'should'
+import { GetEntitiesFromSitelinks } from '../lib/queries/get_entities_from_sitelinks.js'
+import { buildUrl } from './lib/tests_env.js'
+
+const getEntitiesFromSitelinks = GetEntitiesFromSitelinks(buildUrl)
 
 describe('getEntitiesFromSitelinks', () => {
   describe('polymorphism', () => {
@@ -20,7 +22,7 @@ describe('getEntitiesFromSitelinks', () => {
         sites: 'dewiki',
         languages: 'en',
         props: 'info',
-        format: 'json'
+        format: 'json',
       })
       url.should.equal(url2)
     })
@@ -30,7 +32,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('action should be wbgetentities', () => {
       const url = getEntitiesFromSitelinks('Lyon')
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      url.should.match(new RegExp('action=wbgetentities&'))
+      url.should.match(/action=wbgetentities&/)
     })
   })
 
@@ -38,7 +40,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('accepts one title as a string', () => {
       const url = getEntitiesFromSitelinks('Lyon')
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      url.should.match(new RegExp('&titles=Lyon'))
+      url.should.match(/&titles=Lyon/)
     })
 
     it('accepts titles as an array', () => {
@@ -54,7 +56,7 @@ describe('getEntitiesFromSitelinks', () => {
     it('accepts one site as a string', () => {
       const url = getEntitiesFromSitelinks('Lyon', 'itwiki')
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: 'itwiki' }))
-      url.should.match(new RegExp('&sites=itwiki'))
+      url.should.match(/&sites=itwiki/)
     })
 
     it('accepts titles as an array', () => {
@@ -86,13 +88,13 @@ describe('getEntitiesFromSitelinks', () => {
     it('default to no language parameter', () => {
       const url = getEntitiesFromSitelinks('Lyon')
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      url.should.not.match(new RegExp('languages'))
+      url.should.not.match(/languages/)
     })
 
     it('accepts one language as a string', () => {
       const url = getEntitiesFromSitelinks('Lyon', null, 'fr')
       url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', languages: 'fr' }))
-      url.should.match(new RegExp('&languages=fr'))
+      url.should.match(/&languages=fr/)
     })
 
     it('accepts language as an array', () => {
@@ -106,14 +108,14 @@ describe('getEntitiesFromSitelinks', () => {
   describe('properties', () => {
     it('defaults to no property specified', () => {
       const url = getEntitiesFromSitelinks('Hamburg')
-      url.should.not.match(new RegExp('&props'))
+      url.should.not.match(/&props/)
     })
   })
 
   describe('format', () => {
     it('default to json', () => {
       const url = getEntitiesFromSitelinks('Hamburg')
-      url.should.match(new RegExp('&format=json'))
+      url.should.match(/&format=json/)
     })
   })
 

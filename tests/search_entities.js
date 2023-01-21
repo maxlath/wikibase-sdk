@@ -1,8 +1,9 @@
-require('should')
-const { URL } = require('url')
+import 'should'
+import { URL } from 'node:url'
+import { SearchEntities } from '../lib/queries/search_entities.js'
+import { buildUrl } from './lib/tests_env.js'
 
-const { buildUrl } = require('./lib/tests_env')
-const searchEntities = require('../lib/queries/search_entities')(buildUrl)
+const searchEntities = SearchEntities(buildUrl)
 
 describe('searchEntities', () => {
   describe('action', () => {
@@ -59,7 +60,7 @@ describe('searchEntities', () => {
       const { searchParams: searchParams2 } = new URL(searchEntities({
         search: 'Ingmar Bergman',
         language: 'la',
-        uselang: 'eo'
+        uselang: 'eo',
       }))
       searchParams2.get('language').should.equal('la')
       searchParams2.get('uselang').should.equal('eo')

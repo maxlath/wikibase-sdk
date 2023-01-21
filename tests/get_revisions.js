@@ -1,10 +1,11 @@
-const should = require('should')
+import should from 'should'
+import { GetRevisions } from '../lib/queries/get_revisions.js'
+import { buildUrl } from './lib/tests_env.js'
+import { parseQuery } from './lib/utils.js'
+
 const sinceYesterdayInMilliSeconds = new Date().getTime() - 24 * 60 * 60 * 1000
 const sinceYesterdayInSeconds = Math.trunc(sinceYesterdayInMilliSeconds / 1000)
-
-const { buildUrl } = require('./lib/tests_env')
-const { parseQuery } = require('./lib/utils')
-const getRevisions = require('../lib/queries/get_revisions')(buildUrl)
+const getRevisions = GetRevisions(buildUrl)
 
 describe('getRevisions', () => {
   it('should reject invalid ids', () => {

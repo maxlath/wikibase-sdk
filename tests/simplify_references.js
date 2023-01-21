@@ -1,6 +1,8 @@
-require('should')
-const { simplifyReferences } = require('../lib/helpers/simplify_claims')
-const Q217447 = require('./data/Q217447.json')
+import 'should'
+import { simplifyReferences } from '../lib/helpers/simplify_claims.js'
+import { requireJson } from './lib/utils.js'
+
+const Q217447 = requireJson(import.meta.url, './data/Q217447.json')
 
 describe('simplifyReferences', () => {
   it('should simplify references', () => {

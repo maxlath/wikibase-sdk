@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-const { uniq } = require('lodash')
+import { uniq } from 'lodash-es'
+import { requireJson } from '../../tests/lib/utils.js'
 
 const monolingualProjects = [
   'commonswiki',
@@ -7,12 +8,12 @@ const monolingualProjects = [
   'metawiki',
   'specieswiki',
   'wikidatawiki',
-  'wikimaniawiki'
+  'wikimaniawiki',
 ]
 
 const isntMonolingualProject = site => !monolingualProjects.includes(site)
 
-const languagesCodes = require('./sites.json')
+const languagesCodes = requireJson(import.meta.url, './sites.json')
   .filter(isntMonolingualProject)
   .map(site => site.split(/wik(i|t)/)[0])
 

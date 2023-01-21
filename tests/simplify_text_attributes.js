@@ -1,10 +1,8 @@
-const should = require('should')
-const Q571 = require('./data/Q571.json')
-const { objLenght } = require('./lib/utils')
-const simplify = require('../lib/helpers/simplify_text_attributes')
-const simplifyLabels = simplify.labels
-const simplifyDescriptions = simplify.descriptions
-const simplifyAliases = simplify.aliases
+import should from 'should'
+import { simplifyAliases, simplifyDescriptions, simplifyLabels } from '../lib/helpers/simplify_text_attributes.js'
+import { requireJson, objLenght } from './lib/utils.js'
+
+const Q571 = requireJson(import.meta.url, './data/Q571.json')
 
 describe('simplifyLabels', () => {
   it('should simplify labels', () => {

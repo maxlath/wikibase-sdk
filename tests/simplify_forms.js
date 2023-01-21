@@ -1,6 +1,8 @@
-require('should')
-const L525 = require('./data/L525.json')
-const { simplifyForms, simplifyForm } = require('../lib/helpers/simplify_forms')
+import 'should'
+import { simplifyForms, simplifyForm } from '../lib/helpers/simplify_forms.js'
+import { requireJson } from './lib/utils.js'
+
+const L525 = requireJson(import.meta.url, './data/L525.json')
 
 describe('simplify.form', () => {
   it('should reject an object that isnt a form', () => {
@@ -22,9 +24,9 @@ describe('simplify.form', () => {
       P443: [
         {
           id: 'L525-F1$079bdca7-5130-4f9f-bac9-e8d032c38263',
-          value: 'LL-Q150 (fra)-0x010C-maisons.wav'
-        }
-      ]
+          value: 'LL-Q150 (fra)-0x010C-maisons.wav',
+        },
+      ],
     })
   })
 })

@@ -1,6 +1,8 @@
-require('should')
-const { sparqlEndpoint } = require('./lib/tests_env')
-const wdSparqlQuery = require('../lib/queries/sparql_query')(sparqlEndpoint)
+import 'should'
+import { SparqlQuery } from '../lib/queries/sparql_query.js'
+import { sparqlEndpoint } from './lib/tests_env.js'
+
+const sparqlQuery = SparqlQuery(sparqlEndpoint)
 
 const sparqlExemple = `
   PREFIX wikibase: <http://wikiba.se/ontology#>
@@ -23,14 +25,14 @@ const sparqlExemple = `
   }
 `
 
-describe('wdSparqlQuery', () => {
+describe('sparqlQuery', () => {
   it('env', () => {
-    wdSparqlQuery.should.be.a.Function()
+    sparqlQuery.should.be.a.Function()
   })
 
   it('should return a url', () => {
-    const url = wdSparqlQuery(sparqlExemple)
+    const url = sparqlQuery(sparqlExemple)
     url.should.be.a.String()
-    url.should.match(new RegExp('https://'))
+    url.should.match(/https:\/\//)
   })
 })

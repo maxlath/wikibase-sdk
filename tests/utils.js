@@ -1,30 +1,29 @@
-require('should')
-
-const utils = require('../lib/utils/utils')
+import 'should'
+import { isPlainObject } from '../lib/utils/utils.js'
 
 describe('utils', () => {
   describe('isPlainObject', () => {
     it('should return true for plain objects', () => {
-      utils.isPlainObject({}).should.equal(true)
-      utils.isPlainObject({ a: 1, b: 2 }).should.equal(true)
+      isPlainObject({}).should.equal(true)
+      isPlainObject({ a: 1, b: 2 }).should.equal(true)
     })
 
     it('should return false for arrays', () => {
-      utils.isPlainObject([]).should.equal(false)
-      utils.isPlainObject([ 1, 2 ]).should.equal(false)
+      isPlainObject([]).should.equal(false)
+      isPlainObject([ 1, 2 ]).should.equal(false)
     })
 
     it('should return false for strings', () => {
-      utils.isPlainObject('').should.equal(false)
-      utils.isPlainObject('hello').should.equal(false)
+      isPlainObject('').should.equal(false)
+      isPlainObject('hello').should.equal(false)
     })
 
     it('should return false for null', () => {
-      utils.isPlainObject(null).should.equal(false)
+      isPlainObject(null).should.equal(false)
     })
 
     it('should return false for undefined', () => {
-      utils.isPlainObject().should.equal(false)
+      isPlainObject().should.equal(false)
     })
   })
 })

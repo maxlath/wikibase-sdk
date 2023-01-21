@@ -1,6 +1,8 @@
-require('should')
-const L525 = require('./data/L525.json')
-const { simplifySenses, simplifySense } = require('../lib/helpers/simplify_senses')
+import 'should'
+import { simplifySenses, simplifySense } from '../lib/helpers/simplify_senses.js'
+import { requireJson } from './lib/utils.js'
+
+const L525 = requireJson(import.meta.url, './data/L525.json')
 
 describe('simplify.sense', () => {
   it('should reject an object that isnt a sense', () => {
@@ -20,9 +22,9 @@ describe('simplify.sense', () => {
       P5137: [
         {
           id: 'L525-S1$66D20252-8CEC-4DB1-8B00-D713CFF42E48',
-          value: 'Q3947'
-        }
-      ]
+          value: 'Q3947',
+        },
+      ],
     })
   })
 })

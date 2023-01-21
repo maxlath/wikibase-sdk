@@ -1,9 +1,10 @@
-require('should')
-const Q571 = require('./data/Q571.json')
-const Q646148 = require('./data/Q646148.json')
-const Q2112 = require('./data/Q2112.json')
+import 'should'
+import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../lib/helpers/simplify_claims.js'
+import { requireJson } from './lib/utils.js'
 
-const { simplifyClaim, simplifyPropertyClaims, simplifyClaims } = require('../lib/helpers/simplify_claims')
+const Q2112 = requireJson(import.meta.url, './data/Q2112.json')
+const Q571 = requireJson(import.meta.url, './data/Q571.json')
+const Q646148 = requireJson(import.meta.url, './data/Q646148.json')
 
 describe('simplify claims functions legacy options interface', () => {
   describe('simplifyClaims', () => {

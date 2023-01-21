@@ -1,6 +1,6 @@
-require('should')
-const WBK = require('../lib/wikibase-sdk')
-const { instance, sparqlEndpoint } = require('./lib/tests_env')
+import should from 'should'
+import WBK from '../lib/wikibase-sdk.js'
+import { instance, sparqlEndpoint } from './lib/tests_env.js'
 
 describe('builder', () => {
   it('should be a function', () => {
@@ -8,8 +8,10 @@ describe('builder', () => {
   })
 
   it('should reference instance-independant helpers', () => {
-    WBK.parse.should.be.an.Object()
-    WBK.simplify.should.be.an.Object()
+    should(WBK.parse).be.an.Object()
+    should(WBK.simplify).be.an.Object()
+    WBK.parse.wb.entities.should.be.an.Function()
+    WBK.simplify.labels.should.be.an.Function()
     WBK.isEntityId.should.be.a.Function()
     WBK.getSitelinkData.should.be.a.Function()
   })
@@ -99,7 +101,7 @@ describe('index', () => {
     wbk.truthyClaims.should.be.a.Function()
     wbk.truthyPropertyClaims.should.be.a.Function()
 
-    wbk.parse.should.be.an.Object()
+    wbk.parse.wb.entities.should.be.an.Function()
 
     wbk.parse.wb.should.be.an.Object()
     wbk.parse.wb.entities.should.be.an.Function()

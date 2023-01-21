@@ -1,10 +1,8 @@
-const instance = 'https://www.wikidata.org'
-const wgScriptPath = 'w'
+import { BuildUrl } from '../../lib/utils/build_url.js'
+
+export const instance = 'https://www.wikidata.org'
+export const wgScriptPath = 'w'
 const instanceApiEndpoint = `${instance}/${wgScriptPath}/api.php`
 
-module.exports = {
-  instance,
-  wgScriptPath,
-  sparqlEndpoint: 'https://query.wikidata.org/sparql',
-  buildUrl: require('../../lib/utils/build_url')(instanceApiEndpoint)
-}
+export const sparqlEndpoint = 'https://query.wikidata.org/sparql'
+export const buildUrl = BuildUrl(instanceApiEndpoint)

@@ -1,6 +1,8 @@
-const should = require('should')
-const { sparqlEndpoint } = require('./lib/tests_env')
-const getReverseClaims = require('../lib/queries/get_reverse_claims')(sparqlEndpoint)
+import should from 'should'
+import { GetReverseClaims } from '../lib/queries/get_reverse_claims.js'
+import { sparqlEndpoint } from './lib/tests_env.js'
+
+const getReverseClaims = GetReverseClaims(sparqlEndpoint)
 
 describe('getReverseClaims', () => {
   it('env', () => {

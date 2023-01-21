@@ -1,10 +1,11 @@
-require('should')
-const Q571 = require('./data/Q571.json')
-const P8098 = require('./data/P8098.json')
-const L525 = require('./data/L525.json')
-const _ = require('lodash')
+import 'should'
+import _ from 'lodash-es'
+import { simplifyEntity, simplifyEntities } from '../lib/helpers/simplify_entity.js'
+import { requireJson } from './lib/utils.js'
 
-const { simplifyEntity, simplifyEntities } = require('../lib/helpers/simplify_entity')
+const L525 = requireJson(import.meta.url, './data/L525.json')
+const P8098 = requireJson(import.meta.url, './data/P8098.json')
+const Q571 = requireJson(import.meta.url, './data/Q571.json')
 
 describe('simplify.entity', () => {
   it('should be a function', () => {

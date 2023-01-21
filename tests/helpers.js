@@ -1,8 +1,27 @@
-require('should')
+import 'should'
 
-const { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, isEntityId, isItemId, isPropertyId, isLexemeId, isFormId, isSenseId, isGuid, isHash, isPropertyClaimsId, isEntitySchemaId, isNumericId, getNumericId, getImageUrl, getEntityIdFromGuid } = require('../lib/helpers/helpers')
+import {
+  wikibaseTimeToEpochTime,
+  wikibaseTimeToISOString,
+  wikibaseTimeToSimpleDay,
+  isEntityId,
+  isItemId,
+  isPropertyId,
+  isLexemeId,
+  isFormId,
+  isSenseId,
+  isGuid,
+  isHash,
+  isPropertyClaimsId,
+  isEntitySchemaId,
+  isNumericId,
+  getNumericId,
+  getImageUrl,
+  getEntityIdFromGuid,
+} from '../lib/helpers/helpers.js'
+import { requireJson } from './lib/utils.js'
 
-const Q970917 = require('./data/Q970917.json')
+const Q970917 = requireJson(import.meta.url, './data/Q970917.json')
 
 describe('helpers', () => {
   const ISOtime = '2014-05-14T00:00:00.000Z'

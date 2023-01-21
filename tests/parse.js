@@ -1,7 +1,9 @@
-require('should')
-const parse = require('../lib/helpers/parse_responses')
-const wbgetentitiesResponse = require('./data/wbgetentities_response.json')
-const cirrusSearchPagesResponse = require('./data/cirrus_search_response.json')
+import 'should'
+import * as parse from '../lib/helpers/parse_responses.js'
+import { requireJson } from './lib/utils.js'
+
+const cirrusSearchPagesResponse = requireJson(import.meta.url, './data/cirrus_search_response.json')
+const wbgetentitiesResponse = requireJson(import.meta.url, './data/wbgetentities_response.json')
 
 describe('parse', () => {
   describe('wb', () => {

@@ -1,8 +1,9 @@
-require('should')
+import 'should'
+import { GetEntityRevision } from '../lib/queries/get_entity_revision.js'
+import { instance, wgScriptPath } from './lib/tests_env.js'
+import { parseQuery } from './lib/utils.js'
 
-const { instance, wgScriptPath } = require('./lib/tests_env')
-const { parseQuery } = require('./lib/utils')
-const getEntityRevision = require('../lib/queries/get_entity_revision')(instance, wgScriptPath)
+const getEntityRevision = GetEntityRevision(instance, wgScriptPath)
 
 describe('getEntityRevision', () => {
   it('should reject an invalid entity id', () => {
