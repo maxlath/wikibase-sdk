@@ -5,37 +5,42 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    commonjs: true,
-    es6: true
-  },
-  parserOptions: {
-    ecmaVersion: 2018
+    node: true,
+    es2022: true,
   },
   extends: [
     // See https://github.com/standard/eslint-config-standard/blob/master/eslintrc.json
     'standard'
   ],
-  plugins: [
-    'prefer-arrow'
-  ],
   rules: {
     'array-bracket-spacing': [ 'error', 'always' ],
     'arrow-parens': [ 'error', 'as-needed' ],
     'comma-dangle': [ 'error', {
-      arrays: 'only-multiline',
-      objects: 'only-multiline',
+      arrays: 'always-multiline',
+      objects: 'always-multiline',
       imports: 'only-multiline',
       exports: 'only-multiline',
       functions: 'never'
     } ],
     eqeqeq: [ 'error', 'smart' ],
     'implicit-arrow-linebreak': [ 'error', 'beside' ],
+    'import/newline-after-import': 'error',
+    'import/order': [
+      'error',
+      {
+        pathGroups: [
+          { pattern: '#*/**', group: 'internal', position: 'before' },
+        ],
+        groups: [ 'builtin', 'external', 'internal', 'parent', 'sibling' ],
+        'newlines-between': 'never',
+        alphabetize: { order: 'asc' },
+      },
+    ],
     indent: [ 'error', 2, { MemberExpression: 'off' } ],
     'no-var': [ 'error' ],
     'nonblock-statement-body-position': [ 'error', 'beside' ],
     'object-curly-spacing': [ 'error', 'always' ],
     'object-shorthand': [ 'error', 'properties' ],
-    'prefer-arrow/prefer-arrow-functions': [ 'error' ],
     'prefer-arrow-callback': [ 'error' ],
     'prefer-const': [ 'error' ]
   },
