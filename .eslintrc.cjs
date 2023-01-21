@@ -1,0 +1,51 @@
+// This config file is used by eslint
+// See package.json scripts: lint*
+// Rules documentation: https://eslint.org/docs/rules/
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true
+  },
+  parserOptions: {
+    ecmaVersion: 2018
+  },
+  extends: [
+    // See https://github.com/standard/eslint-config-standard/blob/master/eslintrc.json
+    'standard'
+  ],
+  plugins: [
+    'prefer-arrow'
+  ],
+  rules: {
+    'array-bracket-spacing': [ 'error', 'always' ],
+    'arrow-parens': [ 'error', 'as-needed' ],
+    'comma-dangle': [ 'error', {
+      arrays: 'only-multiline',
+      objects: 'only-multiline',
+      imports: 'only-multiline',
+      exports: 'only-multiline',
+      functions: 'never'
+    } ],
+    eqeqeq: [ 'error', 'smart' ],
+    'implicit-arrow-linebreak': [ 'error', 'beside' ],
+    indent: [ 'error', 2, { MemberExpression: 'off' } ],
+    'no-var': [ 'error' ],
+    'nonblock-statement-body-position': [ 'error', 'beside' ],
+    'object-curly-spacing': [ 'error', 'always' ],
+    'object-shorthand': [ 'error', 'properties' ],
+    'prefer-arrow/prefer-arrow-functions': [ 'error' ],
+    'prefer-arrow-callback': [ 'error' ],
+    'prefer-const': [ 'error' ]
+  },
+  globals: {
+    // Mocha globals
+    it: 'readonly',
+    xit: 'readonly',
+    describe: 'readonly',
+    xdescribe: 'readonly',
+    before: 'readonly',
+    beforeEach: 'readonly',
+  }
+}
