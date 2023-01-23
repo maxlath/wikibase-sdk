@@ -1,5 +1,5 @@
-import * as rankHelpers from '../lib/helpers/rank.js'
-import * as sitelinksHelpers from '../lib/helpers/sitelinks.js'
+import * as rankHelpers from './helpers/rank.js'
+import * as sitelinksHelpers from './helpers/sitelinks.js'
 import * as helpers from './helpers/helpers.js'
 import * as parse from './helpers/parse_responses.js'
 import simplify from './helpers/simplify.js'
