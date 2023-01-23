@@ -9,3 +9,8 @@ export const requireJson = (requiringUrl, jsonFilePath) => createRequire(requiri
 export const objLenght = obj => Object.keys(obj).length
 
 export const parseQuery = query => Object.fromEntries(new URLSearchParams(query))
+
+export const parseUrlQuery = url => {
+  const { searchParams } = new URL(url)
+  return searchParams ? Object.fromEntries(searchParams) : {}
+}

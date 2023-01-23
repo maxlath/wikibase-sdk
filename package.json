@@ -26,7 +26,8 @@
     "update-dist": "./scripts/update_dist",
     "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
     "update-toc": "./scripts/update_toc",
-    "update-wikidata-sdk": "./scripts/update_wikidata_sdk"
+    "update-wikidata-sdk": "./scripts/update_wikidata_sdk",
+    "watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,8 @@
   },
   "homepage": "https://github.com/maxlath/wikibase-sdk",
   "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vercel/git-hooks": "^1.0.0",

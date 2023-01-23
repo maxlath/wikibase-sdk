@@ -1,3 +1,5 @@
+import type { Dictionary } from './helper.js'
+
 export interface InstanceConfig {
   instance?: string;
   sparqlEndpoint?: string;
@@ -7,6 +9,11 @@ export interface InstanceConfig {
 export type Property = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'labels' | 'descriptions' | 'claims' | 'datatype';
 export type SearchType = 'item' | 'property' | 'lexeme' | 'form' | 'sense'
 export type UrlResultFormat = 'xml' | 'json';
+
+export type ApiQueryParameters = Dictionary<string | number>
+
+// export type Url = `http${string}`
+export type Url = string
 
 export interface GetEntitiesFromSitelinksOptions {
   titles: string | string[];
@@ -33,15 +40,6 @@ export interface GetRevisionsOptions {
   limit?: number;
   start?: string | number;
   end?: string | number;
-}
-
-export interface SearchEntitiesOptions {
-  search: string;
-  language?: string;
-  limit?: number;
-  format?: UrlResultFormat;
-  uselang?: string;
-  type?: SearchType;
 }
 
 export interface SimplifyClaimsOptions {
