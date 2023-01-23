@@ -48,14 +48,14 @@ const getValueString = value => {
   return value
 }
 
-const directValueQuery = (properties, value, filter, limit) => {
+const directValueQuery = (properties, value, filter) => {
   return `?subject ${properties} ${value} .
     ${filter}`
 }
 
 // Discussion on how to make this query optimal:
 // http://stackoverflow.com/q/43073266/3324977
-const caseInsensitiveValueQuery = (properties, value, filter, limit) => {
+const caseInsensitiveValueQuery = (properties, value, filter) => {
   return `?subject ${properties} ?value .
     FILTER (lcase(?value) = ${value.toLowerCase()})
     ${filter}`

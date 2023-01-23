@@ -36,13 +36,16 @@ module.exports = {
         pathGroups: [
           { pattern: '#*/**', group: 'internal', position: 'before' },
         ],
-        groups: [ 'builtin', 'external', 'internal', 'parent', 'sibling' ],
+        groups: [ 'builtin', 'external', 'internal', 'parent', 'sibling', 'type' ],
         'newlines-between': 'never',
         alphabetize: { order: 'asc' },
       },
     ],
     indent: [ 'error', 2, { MemberExpression: 'off' } ],
     'no-var': [ 'error' ],
+    // Primarily to avoid false positive with interfaces declarations
+    // See https://github.com/typescript-eslint/typescript-eslint/issues/1262
+    'no-use-before-define': 'off',
     'nonblock-statement-body-position': [ 'error', 'beside' ],
     'object-curly-spacing': [ 'error', 'always' ],
     'object-shorthand': [ 'error', 'properties' ],
