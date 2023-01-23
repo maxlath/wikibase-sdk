@@ -14,6 +14,7 @@ import { searchEntitiesFactory } from './queries/search_entities.js'
 import { sparqlQueryFactory } from './queries/sparql_query.js'
 import { buildUrlFactory } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
+import type { InstanceConfig } from './types/options.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
 those are also exposed directly on the module object. Exemple:
@@ -21,7 +22,7 @@ import { isItemId, simplify } from 'wikibase-sdk'`
 
 const common = Object.assign({ simplify, parse }, helpers, sitelinksHelpers, rankHelpers)
 
-const WBK = config => {
+function WBK (config: InstanceConfig) {
   if (!isPlainObject(config)) throw new Error('invalid config')
   const { instance, sparqlEndpoint } = config
   let { wgScriptPath = 'w' } = config
@@ -99,7 +100,7 @@ const validateEndpoint = (name, url) => {
   }
 }
 
-const missingConfig = missingParameter => name => () => {
+const missingConfig = (missingParameter: string) => (name: string) => () => {
   throw new Error(`${name} requires ${missingParameter} to be set at initialization`)
 }
 
