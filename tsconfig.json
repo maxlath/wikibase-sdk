@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "allowJs": true,
-    "target": "esnext",
+    "target": "es2016",
     "module": "esnext",
     "declaration": true,
     "importsNotUsedAsValues": "error",
