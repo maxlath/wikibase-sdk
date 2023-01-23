@@ -4,7 +4,7 @@ import { isPlainObject } from '../utils/utils.js'
 
 const namespacePattern = /^\d+[|\d]*$/
 
-export const CirrusSearchPages = buildUrl => params => {
+export const cirrusSearchPagesFactory = buildUrl => params => {
   if (!isPlainObject(params)) {
     throw new Error(`expected parameters to be passed as an object, got ${params} (${typeof params})`)
   }

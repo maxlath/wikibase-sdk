@@ -3,7 +3,7 @@ import { forceArray } from '../utils/utils.js'
 
 // See https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
 
-export const GetRevisions = buildUrl => (ids, options: any = {}) => {
+export const getRevisionsFactory = buildUrl => (ids, options: any = {}) => {
   ids = forceArray(ids)
   ids.forEach(validate.entityPageTitle)
 

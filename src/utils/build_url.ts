@@ -2,7 +2,7 @@ const isBrowser = typeof location !== 'undefined' && typeof document !== 'undefi
 
 const stringifyQuery = queryObj => new URLSearchParams(queryObj).toString()
 
-export const BuildUrl = instanceApiEndpoint => queryObj => {
+export const buildUrlFactory = instanceApiEndpoint => queryObj => {
   // Request CORS headers if the request is made from a browser
   // See https://www.wikidata.org/w/api.php ('origin' parameter)
   if (isBrowser) queryObj.origin = '*'

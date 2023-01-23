@@ -1,9 +1,9 @@
 import 'should'
 import { URL } from 'node:url'
-import { SearchEntities } from '../dist/queries/search_entities.js'
+import { searchEntitiesFactory } from '../dist/queries/search_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 
-const searchEntities = SearchEntities(buildUrl)
+const searchEntities = searchEntitiesFactory(buildUrl)
 
 describe('searchEntities', () => {
   describe('action', () => {

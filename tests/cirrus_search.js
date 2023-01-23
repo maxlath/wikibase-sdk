@@ -1,8 +1,8 @@
 import should from 'should'
-import { CirrusSearchPages } from '../dist/queries/cirrus_search.js'
+import { cirrusSearchPagesFactory } from '../dist/queries/cirrus_search.js'
 import { buildUrl } from './lib/tests_env.js'
 
-const cirrusSearchPages = CirrusSearchPages(buildUrl)
+const cirrusSearchPages = cirrusSearchPagesFactory(buildUrl)
 
 describe('cirrusSearchPages', () => {
   it('should generate a URL with the query/search endpoint', () => {

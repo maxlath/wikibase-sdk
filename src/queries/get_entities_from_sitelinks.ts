@@ -1,6 +1,6 @@
 import { isPlainObject, forceArray, shortLang } from '../utils/utils.js'
 
-export const GetEntitiesFromSitelinks = buildUrl => (titles, sites, languages, props, format, redirects) => {
+export const getEntitiesFromSitelinksFactory = buildUrl => (titles, sites, languages, props, format, redirects) => {
   // polymorphism: arguments can be passed as an object keys
   if (isPlainObject(titles)) {
     // Not using destructuring assigment there as it messes with both babel and standard

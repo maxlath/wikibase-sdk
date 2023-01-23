@@ -1,8 +1,8 @@
-import { BuildUrl } from '../../dist/utils/build_url.js'
+import { buildUrlFactory } from '../../dist/utils/build_url.js'
 
 export const instance = 'https://www.wikidata.org'
 export const wgScriptPath = 'w'
 const instanceApiEndpoint = `${instance}/${wgScriptPath}/api.php`
 
 export const sparqlEndpoint = 'https://query.wikidata.org/sparql'
-export const buildUrl = BuildUrl(instanceApiEndpoint)
+export const buildUrl = buildUrlFactory(instanceApiEndpoint)

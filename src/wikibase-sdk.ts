@@ -3,16 +3,16 @@ import * as parse from './helpers/parse_responses.js'
 import * as rankHelpers from './helpers/rank.js'
 import simplify from './helpers/simplify.js'
 import * as sitelinksHelpers from './helpers/sitelinks.js'
-import { CirrusSearchPages } from './queries/cirrus_search.js'
-import { GetEntities } from './queries/get_entities.js'
-import { GetEntitiesFromSitelinks } from './queries/get_entities_from_sitelinks.js'
-import { GetEntityRevision } from './queries/get_entity_revision.js'
-import { GetManyEntities } from './queries/get_many_entities.js'
-import { GetReverseClaims } from './queries/get_reverse_claims.js'
-import { GetRevisions } from './queries/get_revisions.js'
-import { SearchEntities } from './queries/search_entities.js'
-import { SparqlQuery } from './queries/sparql_query.js'
-import { BuildUrl } from './utils/build_url.js'
+import { cirrusSearchPagesFactory } from './queries/cirrus_search.js'
+import { getEntitiesFactory } from './queries/get_entities.js'
+import { getEntitiesFromSitelinksFactory } from './queries/get_entities_from_sitelinks.js'
+import { getEntityRevisionFactory } from './queries/get_entity_revision.js'
+import { getManyEntitiesFactory } from './queries/get_many_entities.js'
+import { getReverseClaimsFactory } from './queries/get_reverse_claims.js'
+import { getRevisionsFactory } from './queries/get_revisions.js'
+import { searchEntitiesFactory } from './queries/search_entities.js'
+import { sparqlQueryFactory } from './queries/sparql_query.js'
+import { buildUrlFactory } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
@@ -42,16 +42,16 @@ const WBK = config => {
 
     instanceApiEndpoint = `${instanceRoot}/${wgScriptPath}/api.php`
 
-    const buildUrl = BuildUrl(instanceApiEndpoint)
+    const buildUrl = buildUrlFactory(instanceApiEndpoint)
 
     wikibaseApiFunctions = {
-      searchEntities: SearchEntities(buildUrl),
-      cirrusSearchPages: CirrusSearchPages(buildUrl),
-      getEntities: GetEntities(buildUrl),
-      getManyEntities: GetManyEntities(buildUrl),
-      getRevisions: GetRevisions(buildUrl),
-      getEntityRevision: GetEntityRevision(instance, wgScriptPath),
-      getEntitiesFromSitelinks: GetEntitiesFromSitelinks(buildUrl),
+      searchEntities: searchEntitiesFactory(buildUrl),
+      cirrusSearchPages: cirrusSearchPagesFactory(buildUrl),
+      getEntities: getEntitiesFactory(buildUrl),
+      getManyEntities: getManyEntitiesFactory(buildUrl),
+      getRevisions: getRevisionsFactory(buildUrl),
+      getEntityRevision: getEntityRevisionFactory(instance, wgScriptPath),
+      getEntitiesFromSitelinks: getEntitiesFromSitelinksFactory(buildUrl),
     }
   } else {
     wikibaseApiFunctions = {
@@ -69,8 +69,8 @@ const WBK = config => {
   if (sparqlEndpoint) {
     validateEndpoint('sparqlEndpoint', sparqlEndpoint)
     wikibaseQueryServiceFunctions = {
-      sparqlQuery: SparqlQuery(sparqlEndpoint),
-      getReverseClaims: GetReverseClaims(sparqlEndpoint),
+      sparqlQuery: sparqlQueryFactory(sparqlEndpoint),
+      getReverseClaims: getReverseClaimsFactory(sparqlEndpoint),
     }
   } else {
     wikibaseQueryServiceFunctions = {

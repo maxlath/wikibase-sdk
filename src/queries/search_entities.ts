@@ -2,7 +2,7 @@ import { isPlainObject } from '../utils/utils.js'
 
 const types = [ 'item', 'property', 'lexeme', 'form', 'sense' ]
 
-export const SearchEntities = buildUrl => (search, language, limit, format, uselang) => {
+export const searchEntitiesFactory = buildUrl => (search, language, limit, format, uselang) => {
   // Using the variable 'offset' instead of 'continue' as the later is a reserved word
   let type, offset
 

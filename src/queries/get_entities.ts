@@ -1,7 +1,7 @@
 import validate from '../helpers/validate.js'
 import { isPlainObject, forceArray, shortLang } from '../utils/utils.js'
 
-export const GetEntities = buildUrl => (ids, languages, props, format, redirects) => {
+export const getEntitiesFactory = buildUrl => (ids, languages, props, format, redirects) => {
   // Polymorphism: arguments can be passed as an object keys
   if (isPlainObject(ids)) {
     ({ ids, languages, props, format, redirects } = ids)

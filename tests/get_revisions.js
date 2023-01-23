@@ -1,11 +1,11 @@
 import should from 'should'
-import { GetRevisions } from '../dist/queries/get_revisions.js'
+import { getRevisionsFactory } from '../dist/queries/get_revisions.js'
 import { buildUrl } from './lib/tests_env.js'
 import { parseQuery } from './lib/utils.js'
 
 const sinceYesterdayInMilliSeconds = new Date().getTime() - 24 * 60 * 60 * 1000
 const sinceYesterdayInSeconds = Math.trunc(sinceYesterdayInMilliSeconds / 1000)
-const getRevisions = GetRevisions(buildUrl)
+const getRevisions = getRevisionsFactory(buildUrl)
 
 describe('getRevisions', () => {
   it('should reject invalid ids', () => {

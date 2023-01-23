@@ -1,8 +1,8 @@
 import should from 'should'
-import { GetEntities } from '../dist/queries/get_entities.js'
+import { getEntitiesFactory } from '../dist/queries/get_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 
-const getEntities = GetEntities(buildUrl)
+const getEntities = getEntitiesFactory(buildUrl)
 
 describe('wikidata getEntities', () => {
   describe('polymorphism', () => {

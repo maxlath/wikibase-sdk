@@ -1,8 +1,8 @@
 import { isPlainObject } from '../utils/utils.js'
-import { GetEntities } from './get_entities.js'
+import { getEntitiesFactory } from './get_entities.js'
 
-export const GetManyEntities = buildUrl => {
-  const getEntities = GetEntities(buildUrl)
+export const getManyEntitiesFactory = buildUrl => {
+  const getEntities = getEntitiesFactory(buildUrl)
   return (ids, languages, props, format, redirects) => {
     // Polymorphism: arguments can be passed as an object keys
     if (isPlainObject(ids)) {

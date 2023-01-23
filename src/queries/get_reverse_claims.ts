@@ -1,15 +1,15 @@
 import { isItemId } from '../helpers/helpers.js'
 import validate from '../helpers/validate.js'
 import { forceArray } from '../utils/utils.js'
-import { SparqlQuery } from './sparql_query.js'
+import { sparqlQueryFactory } from './sparql_query.js'
 
 // Fiter-out properties. Can't be filtered by
 // `?subject a wikibase:Item`, as those triples are omitted
 // https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#WDQS_data_differences
 const itemsOnly = 'FILTER NOT EXISTS { ?subject rdf:type wikibase:Property . } '
 
-export const GetReverseClaims = sparqlEndpoint => {
-  const sparqlQuery = SparqlQuery(sparqlEndpoint)
+export const getReverseClaimsFactory = sparqlEndpoint => {
+  const sparqlQuery = sparqlQueryFactory(sparqlEndpoint)
   return (property, value, options: any = {}) => {
     const { limit, caseInsensitive, keepProperties } = options
     const valueFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery

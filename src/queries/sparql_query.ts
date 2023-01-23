@@ -1,6 +1,6 @@
 import { fixedEncodeURIComponent } from '../utils/utils.js'
 
-export const SparqlQuery = sparqlEndpoint => sparql => {
+export const sparqlQueryFactory = sparqlEndpoint => sparql => {
   const query = fixedEncodeURIComponent(sparql)
   return `${sparqlEndpoint}?format=json&query=${query}`
 }

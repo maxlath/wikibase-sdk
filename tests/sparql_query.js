@@ -1,8 +1,8 @@
 import 'should'
-import { SparqlQuery } from '../dist/queries/sparql_query.js'
+import { sparqlQueryFactory } from '../dist/queries/sparql_query.js'
 import { sparqlEndpoint } from './lib/tests_env.js'
 
-const sparqlQuery = SparqlQuery(sparqlEndpoint)
+const sparqlQuery = sparqlQueryFactory(sparqlEndpoint)
 
 const sparqlExemple = `
   PREFIX wikibase: <http://wikiba.se/ontology#>

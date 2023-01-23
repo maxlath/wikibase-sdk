@@ -1,8 +1,8 @@
 import should from 'should'
-import { GetReverseClaims } from '../dist/queries/get_reverse_claims.js'
+import { getReverseClaimsFactory } from '../dist/queries/get_reverse_claims.js'
 import { sparqlEndpoint } from './lib/tests_env.js'
 
-const getReverseClaims = GetReverseClaims(sparqlEndpoint)
+const getReverseClaims = getReverseClaimsFactory(sparqlEndpoint)
 
 describe('getReverseClaims', () => {
   it('env', () => {

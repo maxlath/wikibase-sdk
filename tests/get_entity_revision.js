@@ -1,9 +1,9 @@
 import 'should'
-import { GetEntityRevision } from '../dist/queries/get_entity_revision.js'
+import { getEntityRevisionFactory } from '../dist/queries/get_entity_revision.js'
 import { instance, wgScriptPath } from './lib/tests_env.js'
 import { parseQuery } from './lib/utils.js'
 
-const getEntityRevision = GetEntityRevision(instance, wgScriptPath)
+const getEntityRevision = getEntityRevisionFactory(instance, wgScriptPath)
 
 describe('getEntityRevision', () => {
   it('should reject an invalid entity id', () => {
