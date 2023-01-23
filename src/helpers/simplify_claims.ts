@@ -52,7 +52,7 @@ const defined = obj => obj !== undefined
 
 // Expects a single claim object
 // Ex: entity.claims.P369[0]
-export const simplifyClaim = (claim, ...options) => {
+export const simplifyClaim = (claim, ...options: any) => {
   options = parseOptions(options)
   const { keepQualifiers, keepReferences, keepIds, keepHashes, keepTypes, keepSnaktypes, keepRanks } = parseKeepOptions(options)
 
@@ -87,7 +87,7 @@ export const simplifyClaim = (claim, ...options) => {
   if (isQualifierSnak) {
     if (!(keepHashes || keepTypes || keepSnaktypes)) return value
 
-    const valueObj = { value }
+    const valueObj: any = { value }
 
     if (keepHashes) valueObj.hash = claim.hash
     if (keepTypes) valueObj.type = datatype
@@ -108,7 +108,7 @@ export const simplifyClaim = (claim, ...options) => {
 
   // When keeping qualifiers or references, the value becomes an object
   // instead of a direct value
-  const valueObj = { value }
+  const valueObj: any = { value }
 
   if (keepTypes) valueObj.type = datatype
 
@@ -164,7 +164,7 @@ export const simplifyReferenceRecord = (refRecord, options) => {
   else return snaks
 }
 
-const getSubSnakOptions = (options = {}) => {
+const getSubSnakOptions = (options: any = {}) => {
   if (options.areSubSnaks) return options
   // Using a new object so that the original options object isn't modified
   else return Object.assign({}, options, { areSubSnaks: true })

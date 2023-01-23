@@ -1,5 +1,5 @@
 import should from 'should'
-import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../lib/helpers/simplify_claims.js'
+import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../dist/helpers/simplify_claims.js'
 import { requireJson } from './lib/utils.js'
 
 const Q19180293 = requireJson(import.meta.url, './data/Q19180293.json')

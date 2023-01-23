@@ -1,5 +1,5 @@
 import 'should'
-import { isPlainObject } from '../lib/utils/utils.js'
+import { isPlainObject } from '../dist/utils/utils.js'
 
 describe('utils', () => {
   describe('isPlainObject', () => {

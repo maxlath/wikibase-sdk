@@ -1,5 +1,5 @@
 import 'should'
-import { SparqlQuery } from '../lib/queries/sparql_query.js'
+import { SparqlQuery } from '../dist/queries/sparql_query.js'
 import { sparqlEndpoint } from './lib/tests_env.js'
 
 const sparqlQuery = SparqlQuery(sparqlEndpoint)

@@ -18,7 +18,7 @@ import {
   getNumericId,
   getImageUrl,
   getEntityIdFromGuid,
-} from '../lib/helpers/helpers.js'
+} from '../dist/helpers/helpers.js'
 import { requireJson } from './lib/utils.js'
 
 const Q970917 = requireJson(import.meta.url, './data/Q970917.json')

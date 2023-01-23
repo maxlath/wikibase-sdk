@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash-es'
 import should from 'should'
-import { isEntityId, isGuid } from '../lib/helpers/helpers.js'
-import simplify from '../lib/helpers/simplify_sparql_results.js'
+import { isEntityId, isGuid } from '../dist/helpers/helpers.js'
+import simplify from '../dist/helpers/simplify_sparql_results.js'
 import { requireJson } from './lib/utils.js'
 
 const multiVarsData = requireJson(import.meta.url, './data/multi_vars_sparql_results.json')

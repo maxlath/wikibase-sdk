@@ -27,7 +27,7 @@ import {
   simplifyGlosses as glosses,
 } from './simplify_text_attributes.js'
 
-export default {
+const simplify: any = {
   labels,
   descriptions,
   aliases,
@@ -60,3 +60,5 @@ export default {
   // entity,
   // entities,
 }
+
+export default simplify

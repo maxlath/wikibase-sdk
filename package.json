@@ -5,10 +5,10 @@
   "main": "lib/wikibase-sdk.js",
   "type": "module",
   "files": [
-    "lib"
+    "dist"
   ],
   "directories": {
-    "lib": "lib",
+    "lib": "dist",
     "doc": "docs",
     "test": "test"
   },

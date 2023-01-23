@@ -1,6 +1,6 @@
 import 'should'
 import { URL } from 'node:url'
-import { SearchEntities } from '../lib/queries/search_entities.js'
+import { SearchEntities } from '../dist/queries/search_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 
 const searchEntities = SearchEntities(buildUrl)

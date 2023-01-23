@@ -1,6 +1,6 @@
 import { getSitelinkUrl } from './sitelinks.js'
 
-export default (sitelinks, options = {}) => {
+export default (sitelinks, options: any = {}) => {
   let { addUrl, keepBadges, keepAll } = options
   keepBadges = keepBadges || keepAll
   return Object.keys(sitelinks).reduce(aggregateValues({

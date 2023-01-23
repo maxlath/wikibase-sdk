@@ -1,4 +1,4 @@
-export default (input, options = {}) => {
+export default (input, options: any = {}) => {
   if (typeof input === 'string') input = JSON.parse(input)
 
   const { vars } = input.head
@@ -91,7 +91,7 @@ const isAssociatedVar = varNameA => {
 const getSimplifiedResult = (richVars, associatedVars, standaloneVars) => result => {
   const simplifiedResult = {}
   for (const varName of richVars) {
-    const richVarData = {}
+    const richVarData: any = {}
     const value = parseValue(result[varName])
     if (value != null) richVarData.value = value
     for (const associatedVarName of associatedVars) {

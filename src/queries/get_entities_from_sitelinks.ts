@@ -27,7 +27,7 @@ export const GetEntitiesFromSitelinks = buildUrl => (titles, sites, languages, p
   sites = forceArray(sites).map(parseSite)
   props = forceArray(props)
 
-  const query = {
+  const query: any = {
     action: 'wbgetentities',
     titles: titles.join('|'),
     sites: sites.join('|'),

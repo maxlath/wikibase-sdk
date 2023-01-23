@@ -1,5 +1,5 @@
 import should from 'should'
-import { GetEntitiesFromSitelinks } from '../lib/queries/get_entities_from_sitelinks.js'
+import { GetEntitiesFromSitelinks } from '../dist/queries/get_entities_from_sitelinks.js'
 import { buildUrl } from './lib/tests_env.js'
 
 const getEntitiesFromSitelinks = GetEntitiesFromSitelinks(buildUrl)

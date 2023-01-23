@@ -1,6 +1,6 @@
 import _ from 'lodash-es'
 import should from 'should'
-import { GetManyEntities } from '../lib/queries/get_many_entities.js'
+import { GetManyEntities } from '../dist/queries/get_many_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 
 const getManyEntities = GetManyEntities(buildUrl)

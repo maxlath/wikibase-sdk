@@ -1,5 +1,5 @@
 import should from 'should'
-import { CirrusSearchPages } from '../lib/queries/cirrus_search.js'
+import { CirrusSearchPages } from '../dist/queries/cirrus_search.js'
 import { buildUrl } from './lib/tests_env.js'
 
 const cirrusSearchPages = CirrusSearchPages(buildUrl)

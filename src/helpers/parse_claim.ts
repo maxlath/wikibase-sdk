@@ -24,7 +24,7 @@ const quantity = (datavalue, options) => {
   const { value } = datavalue
   const amount = parseFloat(value.amount)
   if (options.keepRichValues) {
-    const richValue = {
+    const richValue: any = {
       amount: parseFloat(value.amount),
       // ex: http://www.wikidata.org/entity/
       unit: value.unit.replace(/^https?:\/\/.*\/entity\//, ''),

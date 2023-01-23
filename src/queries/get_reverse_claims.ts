@@ -10,7 +10,7 @@ const itemsOnly = 'FILTER NOT EXISTS { ?subject rdf:type wikibase:Property . } '
 
 export const GetReverseClaims = sparqlEndpoint => {
   const sparqlQuery = SparqlQuery(sparqlEndpoint)
-  return (property, value, options = {}) => {
+  return (property, value, options: any = {}) => {
     const { limit, caseInsensitive, keepProperties } = options
     const valueFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery
     const filter = keepProperties ? '' : itemsOnly

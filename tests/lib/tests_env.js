@@ -1,4 +1,4 @@
-import { BuildUrl } from '../../lib/utils/build_url.js'
+import { BuildUrl } from '../../dist/utils/build_url.js'
 
 export const instance = 'https://www.wikidata.org'
 export const wgScriptPath = 'w'

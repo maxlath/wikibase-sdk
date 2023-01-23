@@ -28,7 +28,7 @@ export const GetEntities = buildUrl => (ids, languages, props, format, redirects
   // or an array or properties;
   // either case me just want to deal with arrays
 
-  const query = {
+  const query: any = {
     action: 'wbgetentities',
     ids: ids.join('|'),
     format,

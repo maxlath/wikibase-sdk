@@ -1,5 +1,5 @@
 import 'should'
-import * as parse from '../lib/helpers/parse_responses.js'
+import * as parse from '../dist/helpers/parse_responses.js'
 import { requireJson } from './lib/utils.js'
 
 const cirrusSearchPagesResponse = requireJson(import.meta.url, './data/cirrus_search_response.json')

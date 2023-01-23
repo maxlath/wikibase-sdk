@@ -1,5 +1,5 @@
 import should from 'should'
-import WBK from '../lib/wikibase-sdk.js'
+import WBK from '../dist/wikibase-sdk.js'
 import { instance, sparqlEndpoint } from './lib/tests_env.js'
 
 describe('builder', () => {

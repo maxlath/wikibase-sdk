@@ -1,5 +1,5 @@
 import 'should'
-import { simplifyForms, simplifyForm } from '../lib/helpers/simplify_forms.js'
+import { simplifyForms, simplifyForm } from '../dist/helpers/simplify_forms.js'
 import { requireJson } from './lib/utils.js'
 
 const L525 = requireJson(import.meta.url, './data/L525.json')

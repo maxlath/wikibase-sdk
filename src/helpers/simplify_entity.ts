@@ -1,8 +1,8 @@
 import simplify from './simplify.js'
 
-export const simplifyEntity = (entity, options) => {
+export const simplifyEntity = (entity, options?) => {
   const { type } = entity
-  const simplified = {
+  const simplified: any = {
     id: entity.id,
     type,
     modified: entity.modified,
@@ -34,13 +34,13 @@ export const simplifyEntity = (entity, options) => {
   return simplified
 }
 
-const simplifyIfDefined = (entity, simplified, attribute, options) => {
+const simplifyIfDefined = (entity, simplified, attribute, options?) => {
   if (entity[attribute] != null) {
     simplified[attribute] = simplify[attribute](entity[attribute], options)
   }
 }
 
-export const simplifyEntities = (entities, options = {}) => {
+export const simplifyEntities = (entities, options: any = {}) => {
   if (entities.entities) entities = entities.entities
   const { entityPrefix } = options
   return Object.keys(entities).reduce((obj, key) => {

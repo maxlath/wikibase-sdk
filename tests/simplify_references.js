@@ -1,5 +1,5 @@
 import 'should'
-import { simplifyReferences } from '../lib/helpers/simplify_claims.js'
+import { simplifyReferences } from '../dist/helpers/simplify_claims.js'
 import { requireJson } from './lib/utils.js'
 
 const Q217447 = requireJson(import.meta.url, './data/Q217447.json')
