@@ -10,7 +10,7 @@ module.exports = {
   },
   extends: [
     // See https://github.com/standard/eslint-config-standard/blob/master/eslintrc.json
-    'standard'
+    'standard',
   ],
   rules: {
     'array-bracket-spacing': [ 'error', 'always' ],
@@ -20,7 +20,7 @@ module.exports = {
       objects: 'always-multiline',
       imports: 'only-multiline',
       exports: 'only-multiline',
-      functions: 'never'
+      functions: 'never',
     } ],
     eqeqeq: [ 'error', 'smart' ],
     'implicit-arrow-linebreak': [ 'error', 'beside' ],
@@ -42,7 +42,7 @@ module.exports = {
     'object-curly-spacing': [ 'error', 'always' ],
     'object-shorthand': [ 'error', 'properties' ],
     'prefer-arrow-callback': [ 'error' ],
-    'prefer-const': [ 'error' ]
+    'prefer-const': [ 'error' ],
   },
   globals: {
     // Mocha globals
@@ -52,5 +52,5 @@ module.exports = {
     xdescribe: 'readonly',
     before: 'readonly',
     beforeEach: 'readonly',
-  }
+  },
 }
