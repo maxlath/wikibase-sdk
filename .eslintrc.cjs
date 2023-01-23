@@ -8,9 +8,14 @@ module.exports = {
     node: true,
     es2022: true,
   },
+  plugins: [
+    '@typescript-eslint',
+  ],
   extends: [
     // See https://github.com/standard/eslint-config-standard/blob/master/eslintrc.json
     'standard',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   rules: {
     'array-bracket-spacing': [ 'error', 'always' ],
@@ -18,8 +23,8 @@ module.exports = {
     'comma-dangle': [ 'error', {
       arrays: 'always-multiline',
       objects: 'always-multiline',
-      imports: 'only-multiline',
-      exports: 'only-multiline',
+      imports: 'always-multiline',
+      exports: 'always-multiline',
       functions: 'never',
     } ],
     eqeqeq: [ 'error', 'smart' ],
@@ -43,6 +48,8 @@ module.exports = {
     'object-shorthand': [ 'error', 'properties' ],
     'prefer-arrow-callback': [ 'error' ],
     'prefer-const': [ 'error' ],
+    '@typescript-eslint/consistent-type-imports': [ 'error', { prefer: 'type-imports' } ],
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   globals: {
     // Mocha globals
