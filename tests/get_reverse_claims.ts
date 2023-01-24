@@ -1,5 +1,5 @@
 import should from 'should'
-import { getReverseClaimsFactory } from '../dist/queries/get_reverse_claims.js'
+import { getReverseClaimsFactory } from '../src/queries/get_reverse_claims.js'
 import { sparqlEndpoint } from './lib/tests_env.js'
 
 const getReverseClaims = getReverseClaimsFactory(sparqlEndpoint)

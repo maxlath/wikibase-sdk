@@ -1,5 +1,5 @@
 import should from 'should'
-import { simplifyAliases, simplifyDescriptions, simplifyLabels } from '../dist/helpers/simplify_text_attributes.js'
+import { simplifyAliases, simplifyDescriptions, simplifyLabels } from '../src/helpers/simplify_text_attributes.js'
 import { requireJson, objLenght } from './lib/utils.js'
 
 const Q571 = requireJson(import.meta.url, './data/Q571.json')

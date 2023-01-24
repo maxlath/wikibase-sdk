@@ -1,5 +1,5 @@
 import should from 'should'
-import { getEntitiesFactory } from '../dist/queries/get_entities.js'
+import { getEntitiesFactory } from '../src/queries/get_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 
 const getEntities = getEntitiesFactory(buildUrl)

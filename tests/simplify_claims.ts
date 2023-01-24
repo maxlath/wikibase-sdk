@@ -1,6 +1,6 @@
 import _ from 'lodash-es'
 import should from 'should'
-import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../dist/helpers/simplify_claims.js'
+import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../src/helpers/simplify_claims.js'
 import { requireJson } from './lib/utils.js'
 
 const L525 = requireJson(import.meta.url, './data/L525.json')

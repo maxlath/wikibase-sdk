@@ -1,4 +1,4 @@
-import { buildUrlFactory } from '../../dist/utils/build_url.js'
+import { buildUrlFactory } from '../../src/utils/build_url.js'
 
 export const instance = 'https://www.wikidata.org'
 export const wgScriptPath = 'w'

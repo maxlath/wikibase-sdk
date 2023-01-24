@@ -72,11 +72,13 @@ export function cirrusSearchPagesFactory (buildUrl: BuildUrlFunction) {
       throw new Error(`invalid sort: ${sort} (${typeof sort}, expected string)`)
     }
 
+    let srprop
     if (prop != null) {
       if (prop instanceof Array) prop = prop.join('|')
       if (typeof prop !== 'string') {
         throw new Error(`invalid prop: ${prop} (${typeof prop}, expected string)`)
       }
+      srprop = prop.toString()
     }
 
     return buildUrl({
@@ -89,7 +91,7 @@ export function cirrusSearchPagesFactory (buildUrl: BuildUrlFunction) {
       sroffset: offset,
       srqiprofile: profile,
       srsort: sort,
-      srprop: prop.toString(),
+      srprop,
     })
   }
 }

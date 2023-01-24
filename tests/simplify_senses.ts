@@ -1,5 +1,5 @@
 import 'should'
-import { simplifySenses, simplifySense } from '../dist/helpers/simplify_senses.js'
+import { simplifySenses, simplifySense } from '../src/helpers/simplify_senses.js'
 import { requireJson } from './lib/utils.js'
 
 const L525 = requireJson(import.meta.url, './data/L525.json')

@@ -1,5 +1,5 @@
 import 'should'
-import { searchEntitiesFactory } from '../dist/queries/search_entities.js'
+import { searchEntitiesFactory } from '../src/queries/search_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 import { parseUrlQuery } from './lib/utils.js'
 
@@ -92,6 +92,7 @@ describe('searchEntities', () => {
     })
 
     it('should reject an invalid type parameter', () => {
+      // @ts-ignore
       (() => searchEntities({ search: 'alphabet', type: 'foo' })).should.throw()
     })
   })

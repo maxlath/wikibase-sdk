@@ -1,5 +1,5 @@
 import should from 'should'
-import { getRevisionsFactory } from '../dist/queries/get_revisions.js'
+import { getRevisionsFactory } from '../src/queries/get_revisions.js'
 import { buildUrl } from './lib/tests_env.js'
 import { parseQuery } from './lib/utils.js'
 

@@ -1,6 +1,6 @@
 import 'should'
 import _ from 'lodash-es'
-import { truthyClaims, truthyPropertyClaims } from '../dist/helpers/rank.js'
+import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'
 import { requireJson } from './lib/utils.js'
 
 const Q4115189 = requireJson(import.meta.url, './data/Q4115189.json')

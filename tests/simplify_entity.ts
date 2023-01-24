@@ -1,6 +1,6 @@
 import 'should'
 import _ from 'lodash-es'
-import { simplifyEntity, simplifyEntities } from '../dist/helpers/simplify_entity.js'
+import { simplifyEntity, simplifyEntities } from '../src/helpers/simplify_entity.js'
 import { requireJson } from './lib/utils.js'
 
 const L525 = requireJson(import.meta.url, './data/L525.json')
