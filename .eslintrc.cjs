@@ -51,6 +51,8 @@ module.exports = {
     'object-shorthand': [ 'error', 'properties' ],
     'prefer-arrow-callback': [ 'error' ],
     'prefer-const': [ 'error' ],
+    'prefer-rest-params': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/consistent-type-imports': [ 'error', { prefer: 'type-imports' } ],
     '@typescript-eslint/no-explicit-any': 'off',
   },
