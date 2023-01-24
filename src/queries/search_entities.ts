@@ -3,6 +3,16 @@ import type { BuildUrlFunction } from '../utils/build_url.js'
 
 const types = [ 'item', 'property', 'lexeme', 'form', 'sense' ]
 
+interface SearchEntitiesOptions {
+  search: string;
+  language?: string;
+  limit?: string | number;
+  continue?: string | number;
+  format?: UrlResultFormat;
+  uselang?: string;
+  type?: SearchType;
+}
+
 export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {
   return function ({
     search,
@@ -12,15 +22,7 @@ export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {
     continue: continu = '0',
     format = 'json',
     type = 'item',
-  }: {
-    search: string;
-    language?: string;
-    limit?: string | number;
-    continue?: string | number;
-    format?: UrlResultFormat;
-    uselang?: string;
-    type?: SearchType;
-  }): Url {
+  }: SearchEntitiesOptions): Url {
     uselang = uselang || language
 
     if (!(search && search.length > 0)) throw new Error("search can't be empty")

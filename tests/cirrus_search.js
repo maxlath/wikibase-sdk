@@ -1,20 +1,21 @@
 import should from 'should'
 import { cirrusSearchPagesFactory } from '../dist/queries/cirrus_search.js'
 import { buildUrl } from './lib/tests_env.js'
+import { parseUrlQuery } from './lib/utils.js'
 
 const cirrusSearchPages = cirrusSearchPagesFactory(buildUrl)
 
 describe('cirrusSearchPages', () => {
   it('should generate a URL with the query/search endpoint', () => {
-    const { searchParams } = new URL(cirrusSearchPages({ search: 'hello' }))
-    searchParams.get('action').should.equal('query')
-    searchParams.get('list').should.equal('search')
-    searchParams.get('srsearch').should.equal('hello')
-    searchParams.has('srlimit').should.be.false()
-    searchParams.has('srnamespace').should.be.false()
-    searchParams.has('sroffset').should.be.false()
-    searchParams.has('srqiprofile').should.be.false()
-    searchParams.has('srsort').should.be.false()
+    const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+    query.action.should.equal('query')
+    query.list.should.equal('search')
+    query.srsearch.should.equal('hello')
+    should(query.srlimit).not.be.ok()
+    should(query.srnamespace).not.be.ok()
+    should(query.sroffset).not.be.ok()
+    should(query.srqiprofile).not.be.ok()
+    should(query.srsort).not.be.ok()
   })
 
   it('should accept only the object interface', () => {
@@ -23,64 +24,64 @@ describe('cirrusSearchPages', () => {
 
   describe('haswbstatement', () => {
     it('should accept a statement argument', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', haswbstatement: 'P31=Q5' }))
-      searchParams.get('srsearch').should.equal('hello haswbstatement:P31=Q5')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', haswbstatement: 'P31=Q5' }))
+      query.srsearch.should.equal('hello haswbstatement:P31=Q5')
     })
 
     it('should accept a statement argument alone', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ haswbstatement: 'P31=Q5' }))
-      searchParams.get('srsearch').should.equal('haswbstatement:P31=Q5')
+      const query = parseUrlQuery(cirrusSearchPages({ haswbstatement: 'P31=Q5' }))
+      query.srsearch.should.equal('haswbstatement:P31=Q5')
     })
 
     it('should accept an array of statements', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ haswbstatement: [ 'P31=Q5', 'P279=Q2934' ] }))
-      searchParams.get('srsearch').should.equal('haswbstatement:P31=Q5 haswbstatement:P279=Q2934')
+      const query = parseUrlQuery(cirrusSearchPages({ haswbstatement: [ 'P31=Q5', 'P279=Q2934' ] }))
+      query.srsearch.should.equal('haswbstatement:P31=Q5 haswbstatement:P279=Q2934')
     })
 
     it('should accept negative statements', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ haswbstatement: '-P31=Q5' }))
-      searchParams.get('srsearch').should.equal('-haswbstatement:P31=Q5')
-      const { searchParams: searchParams2 } = new URL(cirrusSearchPages({ haswbstatement: [ 'P31=Q5', '-P279=Q2934' ] }))
-      searchParams2.get('srsearch').should.equal('haswbstatement:P31=Q5 -haswbstatement:P279=Q2934')
+      const query = parseUrlQuery(cirrusSearchPages({ haswbstatement: '-P31=Q5' }))
+      query.srsearch.should.equal('-haswbstatement:P31=Q5')
+      const query2 = parseUrlQuery(cirrusSearchPages({ haswbstatement: [ 'P31=Q5', '-P279=Q2934' ] }))
+      query2.srsearch.should.equal('haswbstatement:P31=Q5 -haswbstatement:P279=Q2934')
     })
   })
 
   describe('format', () => {
     it('should default to json', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello' }))
-      searchParams.get('format').should.equal('json')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+      query.format.should.equal('json')
     })
 
     it('should accept a custom format', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', format: 'xml' }))
-      searchParams.get('format').should.equal('xml')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', format: 'xml' }))
+      query.format.should.equal('xml')
     })
   })
 
   describe('namespace', () => {
     it('should default to not being set', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello' }))
-      should(searchParams.get('srnamespace')).not.be.ok()
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+      should(query.srnamespace).not.be.ok()
     })
 
     it('should accept a single namespace number', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', namespace: 0 }))
-      searchParams.get('srnamespace').should.equal('0')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', namespace: 0 }))
+      query.srnamespace.should.equal('0')
     })
 
     it('should accept a single namespace string', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', namespace: '0' }))
-      searchParams.get('srnamespace').should.equal('0')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', namespace: '0' }))
+      query.srnamespace.should.equal('0')
     })
 
     it('should accept multiple namespaces as a string', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', namespace: '0|1' }))
-      searchParams.get('srnamespace').should.equal('0|1')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', namespace: '0|1' }))
+      query.srnamespace.should.equal('0|1')
     })
 
     it('should accept multiple namespaces as an array', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', namespace: [ 0, 1 ] }))
-      searchParams.get('srnamespace').should.equal('0|1')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', namespace: [ 0, 1 ] }))
+      query.srnamespace.should.equal('0|1')
     })
 
     it('should reject an invalid namespace', () => {
@@ -90,13 +91,13 @@ describe('cirrusSearchPages', () => {
 
   describe('limit', () => {
     it('should default to not being set', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello' }))
-      should(searchParams.get('srlimit')).not.be.ok()
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+      should(query.srlimit).not.be.ok()
     })
 
     it('should accept a custom limit', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', limit: 10 }))
-      searchParams.get('srlimit').should.equal('10')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', limit: 10 }))
+      query.srlimit.should.equal('10')
     })
 
     it('should reject an invalid limit', () => {
@@ -106,13 +107,13 @@ describe('cirrusSearchPages', () => {
 
   describe('offset', () => {
     it('should default to not being set', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello' }))
-      should(searchParams.get('sroffset')).not.be.ok()
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+      should(query.sroffset).not.be.ok()
     })
 
     it('should accept a custom offset', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', offset: 10 }))
-      searchParams.get('sroffset').should.equal('10')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', offset: 10 }))
+      query.sroffset.should.equal('10')
     })
 
     it('should reject an invalid offset', () => {
@@ -122,13 +123,13 @@ describe('cirrusSearchPages', () => {
 
   describe('profile', () => {
     it('should default to not being set', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello' }))
-      should(searchParams.get('srqiprofile')).not.be.ok()
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+      should(query.srqiprofile).not.be.ok()
     })
 
     it('should accept a profile', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', profile: 'wikibase_prefix_boost' }))
-      searchParams.get('srqiprofile').should.equal('wikibase_prefix_boost')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', profile: 'wikibase_prefix_boost' }))
+      query.srqiprofile.should.equal('wikibase_prefix_boost')
     })
 
     it('should reject an invalid profile', () => {
@@ -138,13 +139,13 @@ describe('cirrusSearchPages', () => {
 
   describe('sort', () => {
     it('should default to not being set', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello' }))
-      should(searchParams.get('srsort')).not.be.ok()
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+      should(query.srsort).not.be.ok()
     })
 
     it('should accept a sort', () => {
-      const { searchParams } = new URL(cirrusSearchPages({ search: 'hello', sort: 'last_edit_desc' }))
-      searchParams.get('srsort').should.equal('last_edit_desc')
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', sort: 'last_edit_desc' }))
+      query.srsort.should.equal('last_edit_desc')
     })
 
     it('should reject an invalid sort', () => {
