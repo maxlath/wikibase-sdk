@@ -1,18 +1,20 @@
-import { isPlainObject } from '../utils/utils.js'
+import { rejectObsoleteInterface } from '../utils/utils.js'
 import { getEntitiesFactory } from './get_entities.js'
+import type { GetEntitiesOptions } from './get_entities.js'
+import type { Url } from '../types/options.js'
+import type { BuildUrlFunction } from '../utils/build_url.js'
 
-export const getManyEntitiesFactory = buildUrl => {
+interface GetManyEntitiesOptions extends GetEntitiesOptions {
+  ids: string[]
+}
+
+export function getManyEntitiesFactory (buildUrl: BuildUrlFunction) {
   const getEntities = getEntitiesFactory(buildUrl)
-  return (ids, languages, props, format, redirects) => {
-    // Polymorphism: arguments can be passed as an object keys
-    if (isPlainObject(ids)) {
-      ({ ids, languages, props, format, redirects } = ids)
-    }
-
+  return function ({ ids, languages, props, format, redirects }: GetManyEntitiesOptions): Url[] {
+    rejectObsoleteInterface(arguments)
     if (!(ids instanceof Array)) throw new Error('getManyEntities expects an array of ids')
-
     return getIdsGroups(ids)
-    .map(idsGroup => getEntities(idsGroup, languages, props, format, redirects))
+    .map(idsGroup => getEntities({ ids: idsGroup, languages, props, format, redirects }))
   }
 }
 

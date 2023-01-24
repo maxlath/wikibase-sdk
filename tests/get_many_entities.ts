@@ -2,6 +2,7 @@ import _ from 'lodash-es'
 import should from 'should'
 import { getManyEntitiesFactory } from '../src/queries/get_many_entities.js'
 import { buildUrl } from './lib/tests_env.js'
+import { parseUrlQuery } from './lib/utils.js'
 
 const getManyEntities = getManyEntitiesFactory(buildUrl)
 const manyIds = _.range(1, 80).map(id => `Q${id}`)
@@ -9,25 +10,20 @@ const manyIds = _.range(1, 80).map(id => `Q${id}`)
 describe('wikidata getManyEntities', () => {
   describe('general', () => {
     it('should reject invalid ids', () => {
-      getManyEntities.bind(null, [ 'foo' ]).should.throw('invalid entity id: foo')
+      getManyEntities.bind(null, { ids: [ 'foo' ] }).should.throw('invalid entity id: foo')
     })
 
     it('should return an array of urls', () => {
-      const urls = getManyEntities(manyIds, 'fr', 'info', 'json')
+      const urls = getManyEntities({ ids: manyIds })
       urls.should.be.an.Array()
       urls.forEach(url => /^https/.test(url).should.be.true())
     })
   })
+
   describe('polymorphism', () => {
-    it('should accept parameters as multiple arguments', () => {
-      const urls = getManyEntities(manyIds, 'fr', 'info', 'json')
-      urls.should.be.an.Array()
-      urls.forEach(url => {
-        url.split('&ids=Q').length.should.equal(2)
-        url.split('&languages=fr').length.should.equal(2)
-        url.split('&props=info').length.should.equal(2)
-        url.split('&format=json').length.should.equal(2)
-      })
+    it('should reject parameters as multiple arguments', () => {
+      // @ts-ignore
+      (() => getManyEntities(manyIds, 'fr', 'info', 'json')).should.throw()
     })
 
     it('should accept parameters as a unique object argument', () => {
@@ -39,27 +35,32 @@ describe('wikidata getManyEntities', () => {
       })
       urls.should.be.an.Array()
       urls.forEach(url => {
-        url.split('&ids=Q').length.should.equal(2)
-        url.split('&languages=fr').length.should.equal(2)
-        url.split('&props=labels').length.should.equal(2)
-        url.split('&format=xml').length.should.equal(2)
+        const query = parseUrlQuery(url)
+        decodeURIComponent(query.ids).should.startWith('Q')
+        query.languages.should.equal('fr')
+        query.props.should.equal('labels')
+        query.format.should.equal('xml')
       })
     })
   })
+
   describe('ids', () => {
     it('should throw if passed an id string', () => {
-      (() => getManyEntities('Q535')).should.throw()
+      // @ts-ignore
+      (() => getManyEntities({ ids: 'Q535' })).should.throw()
     })
   })
+
   describe('redirects', () => {
     it('should default to no redirects parameter', () => {
-      const urls = getManyEntities([ 'Q535' ])
+      const urls = getManyEntities({ ids: [ 'Q535' ] })
       should(urls[0].match('redirects')).not.be.ok()
     })
 
     it('should add a redirects parameter if false', () => {
       const urls = getManyEntities({ ids: [ 'Q535' ], redirects: false })
-      urls[0].match('redirects=no').should.be.ok()
+      const url = urls[0] as string
+      parseUrlQuery(url).redirects.should.equal('no')
     })
   })
 })
