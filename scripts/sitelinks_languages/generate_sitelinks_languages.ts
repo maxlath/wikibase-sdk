@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 import { uniq } from 'lodash-es'
 import { requireJson } from '../../tests/lib/utils.js'
 

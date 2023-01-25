@@ -1,5 +1,5 @@
 import { fixedEncodeURIComponent, replaceSpaceByUnderscores, isPlainObject } from '../utils/utils.js'
-import languages from './sitelinks_languages.js'
+import { languages } from './sitelinks_languages.js'
 
 const wikidataBase = 'https://www.wikidata.org/wiki/'
 
