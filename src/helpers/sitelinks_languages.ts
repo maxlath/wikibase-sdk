@@ -333,4 +333,4 @@ export const languages = [
   'zh_yue',
   'zh',
   'zu',
-]
+] as const

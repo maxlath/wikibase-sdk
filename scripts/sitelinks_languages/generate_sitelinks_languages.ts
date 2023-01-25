@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import { uniq } from 'lodash-es'
-import { requireJson } from '../../tests/lib/utils.js'
+import { sites } from '../../src/helpers/sitelinks_sites.js'
 
 const monolingualProjects = [
   'commonswiki',
@@ -13,12 +13,13 @@ const monolingualProjects = [
 
 const isntMonolingualProject = site => !monolingualProjects.includes(site)
 
-const languagesCodes = requireJson(import.meta.url, './sites.json')
+const languagesCodes = sites
   .filter(isntMonolingualProject)
   .map(site => site.split(/wik(i|t)/)[0])
 
 const stringifiedArray = JSON.stringify(uniq(languagesCodes), null, 2)
   // Prevent linting errors
   .replace(/"/g, '\'')
+  .replace(/'\n/, '\',\n')
 
-console.log(stringifiedArray)
+console.log(`${stringifiedArray} as const`)
