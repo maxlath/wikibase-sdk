@@ -2,3 +2,4 @@ node_modules
 repo-backup
 scripts/sitelinks_languages/sites.json
 types/**/*.js
+dist
