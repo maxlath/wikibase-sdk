@@ -2,37 +2,51 @@ import { isItemId } from '../helpers/helpers.js'
 import validate from '../helpers/validate.js'
 import { forceArray } from '../utils/utils.js'
 import { sparqlQueryFactory } from './sparql_query.js'
+import type { PropertyId } from '../types/entity.js'
+import type { Url } from '../types/options.js'
 
 // Fiter-out properties. Can't be filtered by
 // `?subject a wikibase:Item`, as those triples are omitted
 // https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#WDQS_data_differences
 const itemsOnly = 'FILTER NOT EXISTS { ?subject rdf:type wikibase:Property . } '
 
+interface GetReverseClaimsOptions {
+  properties: PropertyId | PropertyId[];
+  values: string | number | string[] | number[];
+  limit?: number;
+  caseInsensitive?: boolean;
+  keepProperties?: boolean;
+}
+
 export const getReverseClaimsFactory = sparqlEndpoint => {
   const sparqlQuery = sparqlQueryFactory(sparqlEndpoint)
-  return (property, value, options: any = {}) => {
-    const { limit, caseInsensitive, keepProperties } = options
+  return function getReverseClaims (options: GetReverseClaimsOptions): Url {
+    let { properties } = options
+    const { values, limit, caseInsensitive, keepProperties } = options
     const valueFn = caseInsensitive ? caseInsensitiveValueQuery : directValueQuery
     const filter = keepProperties ? '' : itemsOnly
 
     // Allow to request values for several properties at once
-    let properties = forceArray(property)
+    // @ts-ignore
+    properties = forceArray(properties)
+    // @ts-ignore
     properties.forEach(validate.propertyId)
-    properties = properties.map(prefixifyProperty).join('|')
 
-    const valueBlock = getValueBlock(value, valueFn, properties, filter)
+    const valueBlock = getValueBlock(values, valueFn, properties, filter)
     let sparql = `SELECT DISTINCT ?subject WHERE { ${valueBlock} }`
     if (limit) sparql += ` LIMIT ${limit}`
     return sparqlQuery(sparql)
   }
 }
 
-const getValueBlock = (value, valueFn, properties, filter) => {
-  if (!(value instanceof Array)) {
-    return valueFn(properties, getValueString(value), filter)
+const getValueBlock = (values, valueFn, properties, filter) => {
+  properties = properties.map(prefixifyProperty).join('|')
+
+  if (!(values instanceof Array)) {
+    return valueFn(properties, getValueString(values), filter)
   }
 
-  const valuesBlocks = value
+  const valuesBlocks = values
     .map(getValueString)
     .map(valStr => valueFn(properties, valStr, filter))
 

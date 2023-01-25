@@ -1,3 +1,4 @@
+// @ts-nocheck
 import should from 'should'
 import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../src/helpers/simplify_claims.js'
 import { requireJson } from './lib/utils.js'

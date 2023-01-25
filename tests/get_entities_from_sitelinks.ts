@@ -1,133 +1,102 @@
 import should from 'should'
 import { getEntitiesFromSitelinksFactory } from '../src/queries/get_entities_from_sitelinks.js'
 import { buildUrl } from './lib/tests_env.js'
+import { parseUrlQuery } from './lib/utils.js'
 
 const getEntitiesFromSitelinks = getEntitiesFromSitelinksFactory(buildUrl)
 
 describe('getEntitiesFromSitelinks', () => {
   describe('polymorphism', () => {
-    it('accepts parameters as multiple arguments', () => {
-      const url = getEntitiesFromSitelinks('Lyon', 'dewiki', 'en', 'info', 'json')
-      url.split('&titles=Lyon').length.should.equal(2)
-      url.split('&sites=dewiki').length.should.equal(2)
-      url.split('&languages=en').length.should.equal(2)
-      url.split('&props=info').length.should.equal(2)
-      url.split('&format=json').length.should.equal(2)
-    })
-
-    it('accepts parameters as a unique object argument', () => {
-      const url = getEntitiesFromSitelinks('Lyon', 'dewiki', 'en', 'info', 'json')
-      const url2 = getEntitiesFromSitelinks({
-        titles: 'Lyon',
-        sites: 'dewiki',
-        languages: 'en',
-        props: 'info',
-        format: 'json',
-      })
-      url.should.equal(url2)
+    it('rejects parameters as multiple arguments', () => {
+      // @ts-ignore
+      (() => getEntitiesFromSitelinks('Lyon')).should.throw()
+      // @ts-ignore
+      ;(() => getEntitiesFromSitelinks('Lyon', 'en')).should.throw()
     })
   })
 
   describe('action', () => {
     it('action should be wbgetentities', () => {
-      const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      url.should.match(/action=wbgetentities&/)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
+      query.action.should.equal('wbgetentities')
     })
   })
 
   describe('titles', () => {
     it('accepts one title as a string', () => {
-      const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      url.should.match(/&titles=Lyon/)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
+      query.titles.should.equal('Lyon')
     })
 
     it('accepts titles as an array', () => {
-      const url = getEntitiesFromSitelinks([ 'Lyon', 'Hamburg' ])
-      url.should.equal(getEntitiesFromSitelinks({ titles: [ 'Lyon', 'Hamburg' ] }))
-      const url2 = decodeURI(url)
-      // use splitinstead of a regexp to work around pipe escaping issues
-      url2.split('&titles=Lyon|Hamburg&').length.should.equal(2)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: [ 'Lyon', 'Hamburg' ] }))
+      query.titles.should.equal('Lyon|Hamburg')
     })
   })
 
   describe('sitelinks', () => {
     it('accepts one site as a string', () => {
-      const url = getEntitiesFromSitelinks('Lyon', 'itwiki')
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: 'itwiki' }))
-      url.should.match(/&sites=itwiki/)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', sites: 'itwiki' }))
+      query.sites.should.equal('itwiki')
     })
 
     it('accepts titles as an array', () => {
-      const url = getEntitiesFromSitelinks('Lyon', [ 'itwiki', 'eswikisource' ])
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'itwiki', 'eswikisource' ] }))
-      const url2 = decodeURI(url)
-      // use splitinstead of a regexp to work around pipe escaping issues
-      url2.split('&sites=itwiki|eswikisource&').length.should.equal(2)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'itwiki', 'eswikisource' ] }))
+      query.sites.should.equal('itwiki|eswikisource')
     })
 
     it('defaults to the English Wikipedia', () => {
-      const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      const url2 = decodeURI(url)
-      // use splitinstead of a regexp to work around pipe escaping issues
-      url2.split('&sites=enwiki&').length.should.equal(2)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
+      query.sites.should.equal('enwiki')
     })
 
     it('converts 2-letters language codes to Wikipedia sites', () => {
-      const url = getEntitiesFromSitelinks('Lyon', [ 'it', 'fr' ])
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'it', 'fr' ] }))
-      const url2 = decodeURI(url)
-      // use splitinstead of a regexp to work around pipe escaping issues
-      url2.split('&sites=itwiki|frwiki&').length.should.equal(2)
+      // @ts-ignore
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'it', 'fr' ] }))
+      query.sites.should.equal('itwiki|frwiki')
     })
   })
 
   describe('languages', () => {
     it('default to no language parameter', () => {
-      const url = getEntitiesFromSitelinks('Lyon')
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      url.should.not.match(/languages/)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
+      should(query.languages).not.be.ok()
     })
 
     it('accepts one language as a string', () => {
-      const url = getEntitiesFromSitelinks('Lyon', null, 'fr')
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', languages: 'fr' }))
-      url.should.match(/&languages=fr/)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', languages: 'fr' }))
+      query.languages.should.equal('fr')
     })
 
     it('accepts language as an array', () => {
-      const url = getEntitiesFromSitelinks('Lyon', null, [ 'fr', 'de' ])
-      url.should.equal(getEntitiesFromSitelinks({ titles: 'Lyon', languages: [ 'fr', 'de' ] }))
-      const url2 = decodeURI(url)
-      url2.split('&languages=fr|de').length.should.equal(2)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', languages: [ 'fr', 'de' ] }))
+      query.languages.should.equal('fr|de')
     })
   })
 
   describe('properties', () => {
     it('defaults to no property specified', () => {
-      const url = getEntitiesFromSitelinks('Hamburg')
-      url.should.not.match(/&props/)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
+      should(query.props).not.be.ok()
     })
   })
 
   describe('format', () => {
     it('default to json', () => {
-      const url = getEntitiesFromSitelinks('Hamburg')
-      url.should.match(/&format=json/)
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
+      query.format.should.equal('json')
     })
   })
 
   describe('redirects', () => {
     it('should default to no redirects parameter', () => {
-      const url = getEntitiesFromSitelinks('Hamburg')
-      should(url.match('redirects')).not.be.ok()
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
+      should(query.redirects).not.be.ok()
     })
 
     it('should add a redirects parameter if false', () => {
-      const url = getEntitiesFromSitelinks({ titles: 'Hamburg', redirects: false })
-      url.match('redirects=no').should.be.ok()
+      const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', redirects: false }))
+      query.redirects.should.equal('no')
     })
   })
 })

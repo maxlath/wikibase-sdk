@@ -36,7 +36,7 @@ describe('wikidata getManyEntities', () => {
       urls.should.be.an.Array()
       urls.forEach(url => {
         const query = parseUrlQuery(url)
-        decodeURIComponent(query.ids).should.startWith('Q')
+        query.ids.should.startWith('Q')
         query.languages.should.equal('fr')
         query.props.should.equal('labels')
         query.format.should.equal('xml')

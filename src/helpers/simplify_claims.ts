@@ -146,7 +146,7 @@ export function simplifyQualifiers (qualifiers: Qualifiers, options: SimplifySna
 export function simplifyPropertyQualifiers (propertyQualifiers: PropertyQualifiers, options: SimplifySnaksOptions = {}) {
   return simplifyPropertySnaks(propertyQualifiers, getSubSnakOptions(options))
 }
-export function simplifyQualifier (qualifier: Qualifier, options: SimplifySnakOptions) {
+export function simplifyQualifier (qualifier: Qualifier, options: SimplifySnakOptions = {}) {
   return simplifySnak(qualifier, options)
 }
 

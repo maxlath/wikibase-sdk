@@ -1,18 +1,18 @@
 import validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface, shortLang } from '../utils/utils.js'
-import type { Property, Url, UrlResultFormat } from '../types/options.js'
+import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
-interface GetEntitiesOptions {
+export interface GetEntitiesOptions {
   ids: string | string[];
-  languages?: string | string[];
-  props?: Property | Property[];
+  languages?: WmLanguageCode | WmLanguageCode[];
+  props?: Props | Props[];
   format?: UrlResultFormat;
   redirects?: boolean;
 }
 
 export function getEntitiesFactory (buildUrl: BuildUrlFunction) {
-  return function ({
+  return function getEntities ({
     ids,
     languages,
     props,

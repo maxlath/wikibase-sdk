@@ -1,36 +1,56 @@
 import validate from '../helpers/validate.js'
-import { forceArray } from '../utils/utils.js'
+import { forceArray, rejectObsoleteInterface } from '../utils/utils.js'
+import type { EntityId, NamedspacedEntityId } from '../types/entity.js'
+import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { URLFormatOptions } from 'url'
 
 // See https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
 
-export const getRevisionsFactory = buildUrl => (ids, options: any = {}) => {
-  ids = forceArray(ids)
-  ids.forEach(validate.entityPageTitle)
+interface GetRevisionsOptions {
+  ids: EntityId | EntityId[] | NamedspacedEntityId | NamedspacedEntityId[];
+  format?: URLFormatOptions ;
+  limit?: number;
+  start?: Date | string | number;
+  end?: Date | string | number;
+  prop?: string | string[];
+  user?: string;
+  excludeuser?: string;
+  tag?: string;
+}
 
-  const uniqueId = ids.length === 1
-  const query: any = {
-    action: 'query',
-    prop: 'revisions',
+export function getRevisionsFactory (buildUrl: BuildUrlFunction) {
+  return function getRevisions ({ ids, format, limit, start, end, prop, user, excludeuser, tag }: GetRevisionsOptions) {
+    rejectObsoleteInterface(arguments)
+    // @ts-ignore
+    ids = forceArray(ids)
+    // @ts-ignore
+    ids.forEach(validate.entityPageTitle)
+
+    const uniqueId = ids.length === 1
+    const query: any = {
+      action: 'query',
+      prop: 'revisions',
+    }
+
+    // @ts-ignore
+    query.titles = ids.join('|')
+    query.format = format || 'json'
+    if (uniqueId) query.rvlimit = limit || 'max'
+    if (uniqueId && start) query.rvstart = getEpochSeconds(start)
+    if (uniqueId && end) query.rvend = getEpochSeconds(end)
+
+    if (prop) {
+      query.rvprop = forceArray(prop).join('|')
+    } else {
+      query.rvprop = 'ids|flags|timestamp|user|userid|size|slotsize|sha1|slotsha1|contentmodel|comment|parsedcomment|content|tags|roles|oresscores'
+    }
+    query.rvslots = '*'
+    if (user) query.rvuser = user
+    if (excludeuser) query.rvexcludeuser = excludeuser
+    if (tag) query.rvtag = tag
+
+    return buildUrl(query)
   }
-
-  query.titles = ids.join('|')
-  query.format = options.format || 'json'
-  if (uniqueId) query.rvlimit = options.limit || 'max'
-  if (uniqueId && options.start) query.rvstart = getEpochSeconds(options.start)
-  if (uniqueId && options.end) query.rvend = getEpochSeconds(options.end)
-
-  const { prop, user, excludeuser, tag } = options
-  if (prop) {
-    query.rvprop = forceArray(prop).join('|')
-  } else {
-    query.rvprop = 'ids|flags|timestamp|user|userid|size|slotsize|sha1|slotsha1|contentmodel|comment|parsedcomment|content|tags|roles|oresscores'
-  }
-  query.rvslots = '*'
-  if (user) query.rvuser = user
-  if (excludeuser) query.rvexcludeuser = excludeuser
-  if (tag) query.rvtag = tag
-
-  return buildUrl(query)
 }
 
 const getEpochSeconds = date => {

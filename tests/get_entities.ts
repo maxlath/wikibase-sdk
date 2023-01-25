@@ -46,12 +46,12 @@ describe('wikidata getEntities', () => {
 
     it('accepts ids as an array', () => {
       const query = parseUrlQuery(getEntities({ ids: [ 'Q535', 'Q7546' ] }))
-      decodeURIComponent(query.ids).should.equal('Q535|Q7546')
+      query.ids.should.equal('Q535|Q7546')
     })
 
     it('accepts all supported entities types', () => {
       const query = parseUrlQuery(getEntities({ ids: [ 'Q535', 'P123', 'L525' ] }))
-      decodeURIComponent(query.ids).should.equal('Q535|P123|L525')
+      query.ids.should.equal('Q535|P123|L525')
     })
   })
 
@@ -68,7 +68,7 @@ describe('wikidata getEntities', () => {
 
     it('accepts language as an array', () => {
       const query = parseUrlQuery(getEntities({ ids: 'Q535', languages: [ 'fr', 'de' ] }))
-      decodeURIComponent(query.languages).should.equal('fr|de')
+      query.languages.should.equal('fr|de')
     })
   })
 
@@ -83,7 +83,7 @@ describe('wikidata getEntities', () => {
     })
     it('include the requested properties', () => {
       const query = parseUrlQuery(getEntities({ ids: 'Q702741', props: [ 'claims', 'info' ] }))
-      decodeURIComponent(query.props).should.equal('claims|info')
+      query.props.should.equal('claims|info')
     })
   })
 

@@ -16,13 +16,15 @@ import { buildUrlFactory } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
 import type { InstanceConfig } from './types/options.js'
 
+export * from './helpers/simplify.js'
+
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
 those are also exposed directly on the module object. Exemple:
 import { isItemId, simplify } from 'wikibase-sdk'`
 
 const common = Object.assign({ simplify, parse }, helpers, sitelinksHelpers, rankHelpers)
 
-function WBK (config: InstanceConfig) {
+export function WBK (config: InstanceConfig) {
   if (!isPlainObject(config)) throw new Error('invalid config')
   const { instance, sparqlEndpoint } = config
   let { wgScriptPath = 'w' } = config

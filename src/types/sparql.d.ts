@@ -1,4 +1,4 @@
-import { Dictionary } from './helper'
+import type { Dictionary } from './helper.js'
 
 export type SparqlValueRaw = string | number
 export type SparqlValueType = SparqlValueRaw | Dictionary<SparqlValueRaw>
@@ -8,6 +8,8 @@ export interface SparqlResults {
     vars: string[];
   };
   results: {
-    bindings: any[];
+    bindings: unknown[];
   };
 }
+
+export type SimplifiedSparqlResults = Dictionary<SparqlValueType>[] | SparqlValueRaw[]

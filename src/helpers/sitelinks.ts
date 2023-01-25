@@ -1,13 +1,17 @@
-import { fixedEncodeURIComponent, replaceSpaceByUnderscores, isPlainObject } from '../utils/utils.js'
+import { fixedEncodeURIComponent, replaceSpaceByUnderscores, rejectObsoleteInterface } from '../utils/utils.js'
 import { languages } from './sitelinks_languages.js'
+import type { Url, WmLanguageCode } from '../types/options.js'
+import type { Site } from '../types/sitelinks.js'
 
 const wikidataBase = 'https://www.wikidata.org/wiki/'
 
-export const getSitelinkUrl = (site, title) => {
-  if (isPlainObject(site)) {
-    title = site.title
-    site = site.site
-  }
+interface GetSitelinkUrlOptions {
+  site: Site;
+  title: string;
+}
+
+export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
+  rejectObsoleteInterface(arguments)
 
   if (!site) throw new Error('missing a site')
   if (!title) throw new Error('missing a title')
@@ -46,7 +50,15 @@ const prefixByEntityLetter = {
 
 const sitelinkUrlPattern = /^https?:\/\/([\w-]{2,10})\.(\w+)\.org\/\w+\/(.*)/
 
-export const getSitelinkData = site => {
+interface SitelinkData {
+  lang: WmLanguageCode;
+  project: Project;
+  key: string;
+  title?: string;
+  url?: Url;
+}
+
+export function getSitelinkData (site: Site | Url): SitelinkData {
   if (site.startsWith('http')) {
     const url = site
     const matchData = url.match(sitelinkUrlPattern)
@@ -66,6 +78,7 @@ export const getSitelinkData = site => {
       lang = lang.replace(/-/g, '_')
       key = `${lang}${project}`.replace('wikipedia', 'wiki')
     }
+    // @ts-ignore
     return { lang, project, key, title, url }
   } else {
     const key = site
@@ -77,6 +90,7 @@ export const getSitelinkData = site => {
     // Detecting cases like 'frwikiwiki' that would return [ 'fr', 'i', 'i' ]
     if (rest != null) throw new Error(`invalid sitelink key: ${key}`)
 
+    // @ts-ignore
     if (languages.indexOf(lang) === -1) {
       throw new Error(`sitelink lang not found: ${lang}. Updating wikibase-sdk to a more recent version might fix the issue.`)
     }
@@ -87,11 +101,12 @@ export const getSitelinkData = site => {
     const project = projectsBySuffix[projectSuffix]
     if (!project) throw new Error(`sitelink project not found: ${project}`)
 
+    // @ts-ignore
     return { lang, project, key }
   }
 }
 
-const specialSites = {
+export const specialSites = {
   commonswiki: 'commons',
   mediawikiwiki: 'mediawiki',
   metawiki: 'meta',
@@ -120,3 +135,7 @@ const projectsBySuffix = {
   ivoyage: 'wikivoyage',
   inews: 'wikinews',
 }
+
+const projectsNames = Object.values(projectsBySuffix).concat(Object.values(specialSites))
+
+type Project = typeof projectsNames[number]

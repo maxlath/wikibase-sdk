@@ -125,7 +125,7 @@ export const wikibaseTimeToISOString = bestEffort(toISOString)
 
 export const wikibaseTimeToSimpleDay = bestEffort(toSimpleDay)
 
-export function getImageUrl (filename: string, width: string): Url {
+export function getImageUrl (filename: string, width?: number): Url {
   let url = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}`
   if (typeof width === 'number') url += `?width=${width}`
   return url

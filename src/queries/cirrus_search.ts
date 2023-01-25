@@ -1,7 +1,7 @@
 // See https://www.wikidata.org/w/api.php?action=help&modules=query%2Bsearch
 
-import { isPlainObject } from '../utils/utils.js'
-import type { UrlResultFormat } from '../types/options.js'
+import { rejectObsoleteInterface } from '../utils/utils.js'
+import type { Url, UrlResultFormat } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 const namespacePattern = /^\d+[|\d]*$/
@@ -19,22 +19,20 @@ interface CirrusSearchPagesOptions {
 }
 
 export function cirrusSearchPagesFactory (buildUrl: BuildUrlFunction) {
-  return function (params: CirrusSearchPagesOptions) {
-    if (!isPlainObject(params)) {
-      throw new Error(`expected parameters to be passed as an object, got ${params} (${typeof params})`)
-    }
+  return function cirrusSearchPages (options: CirrusSearchPagesOptions): Url {
+    rejectObsoleteInterface(arguments)
 
     // Accept sr parameters with or without prefix
-    for (const key in params) {
+    for (const key in options) {
       if (key.startsWith('sr')) {
         const shortKey = key.replace(/^sr/, '')
-        if (params[shortKey] != null) throw new Error(`${shortKey} and ${key} are the same`)
-        params[shortKey] = params[key]
+        if (options[shortKey] != null) throw new Error(`${shortKey} and ${key} are the same`)
+        options[shortKey] = options[key]
       }
     }
 
-    const { search, haswbstatement, format = 'json', limit, offset, profile, sort } = params
-    let { namespace, prop } = params
+    const { search, haswbstatement, format = 'json', limit, offset, profile, sort } = options
+    let { namespace, prop } = options
 
     if (!(search || haswbstatement)) throw new Error('missing "search" or "haswbstatement" parameter')
 

@@ -1,9 +1,10 @@
 import type { DataType, Rank } from './claim.js'
+import type { Guid } from './entity.js'
 import type { timeConverters } from '../helpers/parse_claim.js'
 
 export interface SimplifySnakOptions {
-  entityPrefix?: string | null;
-  propertyPrefix?: string | null;
+  entityPrefix?: string;
+  propertyPrefix?: string;
   keepRichValues?: boolean;
   keepTypes?: boolean;
   keepQualifiers?: boolean;
@@ -12,6 +13,7 @@ export interface SimplifySnakOptions {
   keepHashes?: boolean;
   keepRanks?: boolean;
   keepSnaktypes?: boolean;
+  keepAll?: boolean;
   timeConverter?: keyof typeof timeConverters;
   novalueValue?: any;
   somevalueValue?: any;
@@ -22,11 +24,11 @@ export interface SimplifySnaksOptions extends SimplifySnakOptions {
   keepNonDeprecated?: boolean;
 }
 
-export interface SimplifiedClaim extends SimplifiedSnak {
-  id: string;
-  type?: DataType;
+export type SimplifyClaimsOptions = SimplifySnaksOptions
+
+export interface CustomSimplifiedClaim extends CustomSimplifiedSnak {
+  id: Guid;
   rank?: Rank;
-  value: unknown;
   qualifiers?: SimplifiedQualifiers;
   references?: SimplifiedReferences;
 }
@@ -47,9 +49,10 @@ export interface SimplifiedReference {
 }
 export type SimplifiedReferences = SimplifiedReference[]
 
-export type SimplifiedSnak = string | RichSimplifiedSnak
+export type SimplifiedSnak = string | number | CustomSimplifiedSnak
+export type SimplifiedClaim = string | number | CustomSimplifiedClaim
 
-export interface RichSimplifiedSnak {
+export interface CustomSimplifiedSnak {
   id: string;
   type?: DataType;
   value: unknown;

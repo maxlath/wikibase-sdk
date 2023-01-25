@@ -1,14 +1,14 @@
 import simplify from './simplify.js'
+import type { Entities, Entity, SimplifiedEntity } from '../types/entity.js'
+import type { SimplifyEntityOptions } from '../types/options.js'
 
-export const simplifyEntity = (entity, options?) => {
+export const simplifyEntity = (entity: Entity, options: SimplifyEntityOptions = {}): SimplifiedEntity => {
   const { type } = entity
   const simplified: any = {
     id: entity.id,
     type,
     modified: entity.modified,
   }
-
-  if (entity.datatype) simplified.datatype = entity.datatype
 
   if (type === 'item') {
     simplifyIfDefined(entity, simplified, 'labels')
@@ -40,7 +40,8 @@ const simplifyIfDefined = (entity, simplified, attribute, options?) => {
   }
 }
 
-export const simplifyEntities = (entities, options: any = {}) => {
+export const simplifyEntities = (entities: Entities, options: SimplifyEntityOptions = {}) => {
+  // @ts-ignore
   if (entities.entities) entities = entities.entities
   const { entityPrefix } = options
   return Object.keys(entities).reduce((obj, key) => {

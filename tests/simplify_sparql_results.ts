@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { cloneDeep } from 'lodash-es'
 import should from 'should'
 import { isEntityId, isGuid } from '../src/helpers/helpers.js'
-import simplify from '../src/helpers/simplify_sparql_results.js'
+import { simplifySparqlResults } from '../src/helpers/simplify_sparql_results.js'
 import { requireJson } from './lib/utils.js'
 
 const multiVarsData = requireJson(import.meta.url, './data/multi_vars_sparql_results.json')
@@ -16,20 +17,20 @@ const sparqlResultsWithStatements = requireJson(import.meta.url, './data/sparql_
 describe('wikidata simplify SPARQL results', () => {
   describe('common', () => {
     it('should return a plain object', () => {
-      simplify(singleVarData).should.be.an.Array()
-      simplify(multiVarsData).should.be.an.Array()
+      simplifySparqlResults(singleVarData).should.be.an.Array()
+      simplifySparqlResults(multiVarsData).should.be.an.Array()
     })
 
     it('should parse the input if passed a JSON string', () => {
       const json = JSON.stringify(singleVarData)
-      simplify(json).should.be.an.Array()
+      simplifySparqlResults(json).should.be.an.Array()
       const json2 = JSON.stringify(multiVarsData)
-      simplify(json2).should.be.an.Array()
+      simplifySparqlResults(json2).should.be.an.Array()
     })
   })
 
   it('should return an array of results objects', () => {
-    const output = simplify(multiVarsData)
+    const output = simplifySparqlResults(multiVarsData)
     output[0].should.be.an.Object()
     output[0].entity.value.should.equal('Q3731207')
     output[0].entity.label.should.equal('Ercole Patti')
@@ -37,25 +38,25 @@ describe('wikidata simplify SPARQL results', () => {
   })
 
   it('should not throw when the datatype is missing', () => {
-    const output = simplify(noDatatypeData)
+    const output = simplifySparqlResults(noDatatypeData)
     output[0].year.should.equal('1937')
   })
 
   it('should not throw when an optional variable has no result', () => {
-    const result = simplify(sparqlResultsWithOptionalValues)[0]
+    const result = simplifySparqlResults(sparqlResultsWithOptionalValues)[0]
     result.composer.should.be.an.Object()
     should(result.genre).not.be.ok()
   })
 
   describe('minimize', () => {
     it('should return an array of results values, filtering out blank nodes', () => {
-      const output = simplify(singleVarData, { minimize: true })
+      const output = simplifySparqlResults(singleVarData, { minimize: true })
       output[0].should.equal('Q112983')
       output.forEach(result => isEntityId(result).should.be.true())
     })
 
     it('should return an array of results value object', () => {
-      const output = simplify(singleVarData, { minimize: false })
+      const output = simplifySparqlResults(singleVarData, { minimize: false })
       output[0].should.deepEqual({ genre: 'Q112983' })
       output.forEach(result => {
         result.should.be.an.Object()
@@ -66,7 +67,7 @@ describe('wikidata simplify SPARQL results', () => {
 
   describe('with associated variables', () => {
     it('should add labels, descriptions and aliases', () => {
-      const results = simplify(resultsWithLabelsDescriptionsAndAliases)
+      const results = simplifySparqlResults(resultsWithLabelsDescriptionsAndAliases)
       resultsWithLabelsDescriptionsAndAliases.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
         simplified.item.should.be.an.Object()
@@ -82,7 +83,7 @@ describe('wikidata simplify SPARQL results', () => {
     })
 
     it('should add some non-standard associated variables', () => {
-      const results = simplify(propertiesList)
+      const results = simplifySparqlResults(propertiesList)
       propertiesList.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
         simplified.property.should.be.an.Object()
@@ -96,7 +97,7 @@ describe('wikidata simplify SPARQL results', () => {
       const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
       rawResults.head.vars = rawResults.head.vars
         .filter(varName => varName !== 'itemLabel')
-      const results = simplify(rawResults)
+      const results = simplifySparqlResults(rawResults)
       rawResults.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
         simplified.item.should.be.an.Object()
@@ -111,7 +112,7 @@ describe('wikidata simplify SPARQL results', () => {
       const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
       rawResults.head.vars = rawResults.head.vars
         .filter(varName => varName !== 'item')
-      const results = simplify(rawResults)
+      const results = simplifySparqlResults(rawResults)
       rawResults.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
         simplified.pseudonyme.should.be.a.String()
@@ -125,7 +126,7 @@ describe('wikidata simplify SPARQL results', () => {
 
     it('should ignore nested associated variables', () => {
       const rawResults = cloneDeep(sparqlResultsWithNestedAssociatedVariables)
-      const results = simplify(rawResults, { minimize: true })
+      const results = simplifySparqlResults(rawResults, { minimize: true })
       results.length.should.equal(2)
     })
   })
@@ -133,7 +134,7 @@ describe('wikidata simplify SPARQL results', () => {
   describe('statements', () => {
     it('should convert statement URIs into claims GUIDs', () => {
       const rawResults = cloneDeep(sparqlResultsWithStatements)
-      const results = simplify(rawResults, { minimize: true })
+      const results = simplifySparqlResults(rawResults, { minimize: true })
       results.forEach(result => isGuid(result).should.be.true())
     })
   })

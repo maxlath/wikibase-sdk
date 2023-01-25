@@ -1,4 +1,6 @@
-import type { SearchType, Url, UrlResultFormat } from '../types/options.js'
+import { rejectObsoleteInterface } from '../utils/utils.js'
+import type { EntityType } from '../types/entity.js'
+import type { Url, UrlResultFormat } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 const types = [ 'item', 'property', 'lexeme', 'form', 'sense' ]
@@ -10,11 +12,11 @@ interface SearchEntitiesOptions {
   continue?: string | number;
   format?: UrlResultFormat;
   uselang?: string;
-  type?: SearchType;
+  type?: EntityType;
 }
 
 export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {
-  return function ({
+  return function searchEntities ({
     search,
     language = 'en',
     uselang,
@@ -23,6 +25,7 @@ export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {
     format = 'json',
     type = 'item',
   }: SearchEntitiesOptions): Url {
+    rejectObsoleteInterface(arguments)
     uselang = uselang || language
 
     if (!(search && search.length > 0)) throw new Error("search can't be empty")

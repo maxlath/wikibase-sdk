@@ -10,14 +10,14 @@ import {
 } from './simplify_claims.js'
 import {
   simplifyForm as form,
-  simplifyForms as forms
+  simplifyForms as forms,
 } from './simplify_forms.js'
 import {
   simplifySense as sense,
-  simplifySenses as senses
+  simplifySenses as senses,
 } from './simplify_senses.js'
 import sitelinks from './simplify_sitelinks.js'
-import sparqlResults from './simplify_sparql_results.js'
+import { simplifySparqlResults } from './simplify_sparql_results.js'
 import {
   simplifyLabels as labels,
   simplifyDescriptions as descriptions,
@@ -54,7 +54,7 @@ const simplify: any = {
   sense,
   senses,
 
-  sparqlResults,
+  sparqlResults: simplifySparqlResults,
 
   // Set in ./simplify_entity
   // entity,

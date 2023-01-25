@@ -10,11 +10,12 @@ describe('getReverseClaims', () => {
   })
 
   it('should reject invalid property ids', () => {
-    getReverseClaims.bind(null, 'foo', 'Q535').should.throw('invalid property id: foo')
+    // @ts-ignore
+    (() => getReverseClaims({ properties: 'foo', values: 'Q535' })).should.throw('invalid property id: foo')
   })
 
   it('should return a SPARQL query url', () => {
-    const url = getReverseClaims('P50', 'Q535')
+    const url = getReverseClaims({ properties: 'P50', values: 'Q535' })
     url.should.be.a.String()
     url.startsWith('https://query.wikidata.org').should.be.exactly(true)
     should(url.match(/SELECT/)).be.ok()
@@ -24,12 +25,12 @@ describe('getReverseClaims', () => {
   })
 
   it('should accept an option object', () => {
-    const url = getReverseClaims('P50', 'Q535', { limit: 500 })
+    const url = getReverseClaims({ properties: 'P50', values: 'Q535', limit: 500 })
     should(url.match(/LIMIT%20500/)).be.ok()
   })
 
   it('should return a SPARQL query with filter for insensitive case', () => {
-    const url = getReverseClaims('P2002', 'BouletCorp', { caseInsensitive: true })
+    const url = getReverseClaims({ properties: 'P2002', values: 'BouletCorp', caseInsensitive: true })
     url.should.be.a.String()
     url.startsWith('https://query.wikidata.org').should.be.exactly(true)
     should(url.match(/SELECT/)).be.ok()
@@ -39,24 +40,24 @@ describe('getReverseClaims', () => {
   })
 
   it('should filter properties by default', () => {
-    const url = getReverseClaims('P50', 'Q535')
+    const url = getReverseClaims({ properties: 'P50', values: 'Q535' })
     should(url.match(/FILTER%20NOT%20EXISTS/)).be.ok()
   })
 
   it('should keep properties if requested', () => {
-    const url = getReverseClaims('P50', 'Q535', { keepProperties: true })
+    const url = getReverseClaims({ properties: 'P50', values: 'Q535', keepProperties: true })
     should(url.match(/FILTER%20NOT%20EXISTS/)).not.be.ok()
   })
 
   it('should allow to request subjects for several properties at once', () => {
-    const url = getReverseClaims([ 'P50', 'P110' ], 'Q281411')
+    const url = getReverseClaims({ properties: [ 'P50', 'P110' ], values: 'Q281411' })
     url.should.match(/wdt%3AP50%7Cwdt%3AP110/)
   })
 
   it('should allow to request subjects for several values at once', () => {
-    const url = getReverseClaims('P50', [ 'Q281411', 'Q206685' ])
+    const url = getReverseClaims({ properties: 'P50', values: [ 'Q281411', 'Q206685' ] })
     url.should.match(/UNION/)
-    const url2 = getReverseClaims('P2002', [ 'wikicite', 'slpng_giants' ], { caseInsensitive: true })
+    const url2 = getReverseClaims({ properties: 'P2002', values: [ 'wikicite', 'slpng_giants' ], caseInsensitive: true })
     url2.should.match(/UNION/)
   })
 

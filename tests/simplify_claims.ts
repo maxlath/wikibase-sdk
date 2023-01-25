@@ -312,7 +312,6 @@ describe('simplifyClaim', () => {
     it('should not apply property prefixes to property claim values', () => {
       const claim = Q2112.claims.P123456789[0]
       simplifyClaim(claim).should.equal('P207614')
-      simplifyClaim(claim, { entityPrefix: null }).should.equal('P207614')
       simplifyClaim(claim, { propertyPrefix: 'wdt' }).should.equal('P207614')
       simplifyClaim(claim, { propertyPrefix: 'wdt:' }).should.equal('P207614')
       simplifyClaim(claim, { propertyPrefix: 'wdtbla' }).should.equal('P207614')

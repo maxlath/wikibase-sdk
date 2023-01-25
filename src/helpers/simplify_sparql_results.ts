@@ -1,5 +1,13 @@
-export default (input, options: any = {}) => {
-  if (typeof input === 'string') input = JSON.parse(input)
+import type { SimplifiedSparqlResults, SparqlResults } from '../types/sparql.js'
+
+interface SimplifySparqlResultsOptions {
+  minimize?: boolean;
+}
+
+export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}): SimplifiedSparqlResults {
+  if (typeof input === 'string') {
+    input = JSON.parse(input)
+  }
 
   const { vars } = input.head
   const results = input.results.bindings

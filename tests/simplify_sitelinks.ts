@@ -1,3 +1,4 @@
+// @ts-nocheck
 import should from 'should'
 import simplifySitelinks from '../src/helpers/simplify_sitelinks.js'
 import { requireJson, objLenght } from './lib/utils.js'

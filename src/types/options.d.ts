@@ -1,4 +1,5 @@
 import type { Dictionary } from './helper.js'
+import type { SimplifySnaksOptions } from './simplify_claims.js'
 import type { languages } from '../helpers/sitelinks_languages.js'
 
 export interface InstanceConfig {
@@ -9,7 +10,7 @@ export interface InstanceConfig {
 
 export type Props = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'labels' | 'descriptions' | 'claims' | 'datatype';
 export type UrlResultFormat = 'xml' | 'json';
-export type Language = typeof languages[number]
+export type WmLanguageCode = typeof languages[number]
 
 export type ApiQueryParameters = Dictionary<string | number>
 
@@ -19,14 +20,14 @@ export type Url = string
 export interface GetEntitiesFromSitelinksOptions {
   titles: string | string[];
   sites: string | string[];
-  languages?: Language | Language[];
+  languages?: WmLanguageCode | WmLanguageCode[];
   props?: string | string[];
   format?: UrlResultFormat;
 }
 
 export interface GetEntitiesOptions {
   ids: string | string[];
-  languages?: Language | Language[];
+  languages?: WmLanguageCode | WmLanguageCode[];
   props?: Props | Props[];
   format?: UrlResultFormat;
 }
@@ -43,8 +44,10 @@ export interface GetRevisionsOptions {
   end?: string | number;
 }
 
-export interface SimplifyEntitiesOptions extends SimplifySnaksOptions, SimplifySitelinkOptions {}
+export interface SimplifyEntityOptions extends SimplifySnaksOptions, SimplifySitelinkOptions {}
 
 export interface SimplifySitelinkOptions {
   addUrl?: boolean;
+  keepBadges?: boolean;
+  keepAll?: boolean;
 }

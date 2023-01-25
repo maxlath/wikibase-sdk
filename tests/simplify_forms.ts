@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'should'
 import { simplifyForms, simplifyForm } from '../src/helpers/simplify_forms.js'
 import { requireJson } from './lib/utils.js'
