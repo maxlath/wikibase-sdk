@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'should'
 import { simplifyReferences } from '../src/helpers/simplify_claims.js'
 import { requireJson } from './lib/utils.js'

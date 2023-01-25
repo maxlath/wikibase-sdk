@@ -43,22 +43,7 @@ export interface GetRevisionsOptions {
   end?: string | number;
 }
 
-export interface SimplifyClaimsOptions {
-  entityPrefix?: string;
-  propertyPrefix?: string;
-  keepRichValues?: boolean;
-  keepTypes?: boolean;
-  keepQualifiers?: boolean;
-  keepReferences?: boolean;
-  keepIds?: boolean;
-  keepHashes?: boolean;
-  keepNonTruthy?: boolean;
-  timeConverter?: 'iso' | 'epoch' | 'simple-day' | 'none';
-  novalueValue: any;
-  somevalueValue: any;
-}
-
-export interface SimplifyEntitiesOptions extends SimplifyClaimsOptions, SimplifySitelinkOptions {}
+export interface SimplifyEntitiesOptions extends SimplifySnaksOptions, SimplifySitelinkOptions {}
 
 export interface SimplifySitelinkOptions {
   addUrl?: boolean;

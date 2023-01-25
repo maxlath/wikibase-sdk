@@ -1,59 +1,56 @@
 import { uniq } from '../utils/utils.js'
 import { parse as parseClaim } from './parse_claim.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
+import type { Claim, Claims, PropertyClaims, PropertyQualifiers, Qualifier, Qualifiers } from '../types/claim.js'
+import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
 
-// Expects an entity 'claims' object
-// Ex: entity.claims
-export const simplifyClaims = (claims, ...options) => {
-  const { propertyPrefix } = parseOptions(options)
-  const simpleClaims = {}
-  for (let id in claims) {
-    const propClaims = claims[id]
+function simplifySnaks (snaks, options) {
+  const { propertyPrefix } = options
+  const simplifiedSnaks = {}
+  for (let id in snaks) {
+    const propertySnaks = snaks[id]
     if (propertyPrefix) {
       id = propertyPrefix + ':' + id
     }
-    simpleClaims[id] = simplifyPropertyClaims(propClaims, ...options)
+    simplifiedSnaks[id] = simplifyPropertySnaks(propertySnaks, options)
   }
-  return simpleClaims
+  return simplifiedSnaks
 }
 
-// Expects the 'claims' array of a particular property
-// Ex: entity.claims.P369
-export const simplifyPropertyClaims = (propClaims, ...options) => {
+function simplifyPropertySnaks (propertySnaks, options) {
   // Avoid to throw on empty inputs to allow to simplify claims array
   // without having to know if the entity as claims for this property
   // Ex: simplifyPropertyClaims(entity.claims.P124211616)
-  if (propClaims == null || propClaims.length === 0) return []
+  if (propertySnaks == null || propertySnaks.length === 0) return []
 
-  const { keepNonTruthy, keepNonDeprecated, areSubSnaks } = parseOptions(options)
+  const { keepNonTruthy, keepNonDeprecated, areSubSnaks } = options
 
   if (keepNonDeprecated) {
-    propClaims = nonDeprecatedPropertyClaims(propClaims)
+    propertySnaks = nonDeprecatedPropertyClaims(propertySnaks)
   } else if (!(keepNonTruthy || areSubSnaks)) {
-    propClaims = truthyPropertyClaims(propClaims)
+    propertySnaks = truthyPropertyClaims(propertySnaks)
   }
 
-  propClaims = propClaims
-    .map(claim => simplifyClaim(claim, ...options))
+  propertySnaks = propertySnaks
+    .map(claim => simplifyClaim(claim, options))
     // Filter-out novalue and somevalue claims,
     // unless a novalueValue or a somevalueValue is passed in options
-    .filter(defined)
+    .filter(isDefined)
 
   // Deduplicate values unless we return a rich value object
-  if (propClaims[0] && typeof propClaims[0] !== 'object') {
-    return uniq(propClaims)
+  if (propertySnaks[0] && typeof propertySnaks[0] !== 'object') {
+    return uniq(propertySnaks)
   } else {
-    return propClaims
+    return propertySnaks
   }
 }
 
 // Considers null as defined
-const defined = obj => obj !== undefined
+const isDefined = obj => obj !== undefined
 
-// Expects a single claim object
+// Expects a single snak object
 // Ex: entity.claims.P369[0]
-export const simplifyClaim = (claim, ...options: any) => {
-  options = parseOptions(options)
+function simplifySnak (claim, options) {
   const { keepQualifiers, keepReferences, keepIds, keepHashes, keepTypes, keepSnaktypes, keepRanks } = parseKeepOptions(options)
 
   // tries to replace wikidata deep claim object by a simple value
@@ -133,33 +130,32 @@ export const simplifyClaim = (claim, ...options: any) => {
   return valueObj
 }
 
-const parseOptions = options => {
-  if (options == null) return {}
-
-  if (options[0] && typeof options[0] === 'object') return options[0]
-
-  // Legacy interface
-  const [ entityPrefix, propertyPrefix, keepQualifiers ] = options
-  return { entityPrefix, propertyPrefix, keepQualifiers }
+export function simplifyClaims (claims: Claims, options: SimplifySnaksOptions = {}): SimplifiedClaims {
+  return simplifySnaks(claims, options)
+}
+export function simplifyPropertyClaims (propertyClaims: PropertyClaims, options: SimplifySnaksOptions = {}): SimplifiedPropertyClaims {
+  return simplifyPropertySnaks(propertyClaims, options)
+}
+export function simplifyClaim (claim: Claim, options: SimplifySnakOptions = {}): SimplifiedClaim {
+  return simplifySnak(claim, options)
 }
 
-export const simplifyQualifiers = (qualifiers, options) => {
-  return simplifyClaims(qualifiers, getSubSnakOptions(options))
+export function simplifyQualifiers (qualifiers: Qualifiers, options: SimplifySnaksOptions = {}) {
+  return simplifySnaks(qualifiers, getSubSnakOptions(options))
+}
+export function simplifyPropertyQualifiers (propertyQualifiers: PropertyQualifiers, options: SimplifySnaksOptions = {}) {
+  return simplifyPropertySnaks(propertyQualifiers, getSubSnakOptions(options))
+}
+export function simplifyQualifier (qualifier: Qualifier, options: SimplifySnakOptions) {
+  return simplifySnak(qualifier, options)
 }
 
-export const simplifyPropertyQualifiers = (propertyQualifiers, options) => {
-  return simplifyPropertyClaims(propertyQualifiers, getSubSnakOptions(options))
+export function simplifyReferences (references, options) {
+  return references.map(refRecord => simplifyReferenceRecord(refRecord, options))
 }
-
-export const simplifyReferences = (references, options) => {
-  return references.map(refRecord => {
-    return simplifyReferenceRecord(refRecord, options)
-  })
-}
-
-export const simplifyReferenceRecord = (refRecord, options) => {
+export function simplifyReferenceRecord (refRecord, options) {
   const subSnaksOptions = getSubSnakOptions(options)
-  const snaks = simplifyClaims(refRecord.snaks, subSnaksOptions)
+  const snaks = simplifySnaks(refRecord.snaks, subSnaksOptions)
   if (subSnaksOptions.keepHashes) return { snaks, hash: refRecord.hash }
   else return snaks
 }
@@ -180,5 +176,3 @@ const parseKeepOptions = options => {
   }
   return options
 }
-
-export const simplifyQualifier = simplifyClaim

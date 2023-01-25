@@ -69,7 +69,7 @@ const getTimeConverter = (key = 'iso') => {
 // Each time converter should be able to accept 2 keys of arguments:
 // - either datavalue.value objects (prefered as it gives access to the precision)
 // - or the time string (datavalue.value.time)
-const timeConverters = {
+export const timeConverters = {
   iso: wikibaseTimeToISOString,
   epoch: wikibaseTimeToEpochTime,
   'simple-day': wikibaseTimeToSimpleDay,

@@ -1,34 +1,44 @@
-import { Dictionary } from './helper'
+import type { Dictionary } from './helper.js'
+import type { parsers } from '../helpers/parse_claim.js'
 
-export type ClaimRank = 'normal' | 'preferred' | 'deprecated'
+export type Rank = 'normal' | 'preferred' | 'deprecated'
 
-export type ClaimSimplified = unknown;
-export type ClaimSnakSimplified = unknown;
+export type DataType = keyof typeof parsers
+
+export type SnakType = 'value' | 'somevalue' | 'novalue'
 
 export interface Claim {
   id: string;
-  mainsnak: ClaimSnak;
-  rank: ClaimRank;
-  type: string;
-  qualifiers?: Dictionary<ClaimSnak[]>;
+  mainsnak: Snak;
+  rank: Rank;
+  type: DataType;
+  qualifiers?: Dictionary<Snak[]>;
   'qualifiers-order'?: string[];
-  references?: ClaimReference[];
+  references?: Reference[];
 }
 
-export interface ClaimSnak {
+export type PropertyClaims = Claim[]
+
+export interface Claims {
+  [property: string]: PropertyClaims
+}
+
+export interface Snak {
+  // A mainsnak object won't have an id, as its already on the claim
+  id?: string;
   datatype: string;
-  datavalue?: ClaimSnakValue;
+  datavalue?: SnakValue;
   hash: string;
   property: string;
-  snaktype: string;
+  snaktype: SnakType;
 }
 
-export interface ClaimSnakValue {
-  type: string;
+export interface SnakValue {
+  type: DataType;
   value: unknown;
 }
 
-export interface ClaimSnakTimeValue extends ClaimSnakValue {
+export interface ClaimSnakTimeValue extends SnakValue {
   type: 'time';
   value: {
     after: number;
@@ -40,7 +50,7 @@ export interface ClaimSnakTimeValue extends ClaimSnakValue {
   };
 }
 
-export interface ClaimSnakEntityValue extends ClaimSnakValue {
+export interface SnakEntityValue extends SnakValue {
   type: 'wikibase-entityid';
   value: {
     id: string;
@@ -49,8 +59,22 @@ export interface ClaimSnakEntityValue extends ClaimSnakValue {
   };
 }
 
-export interface ClaimReference {
+export interface Qualifier extends Snak {
+  id: string;
+}
+
+export type PropertyQualifiers = Qualifier[]
+
+export interface Qualifiers {
+  [property: string]: PropertyQualifiers
+}
+
+export interface ReferenceSnak extends Snak {
+  id: string;
+}
+
+export interface Reference {
   hash: string;
-  snaks: Dictionary<ClaimSnak[]>;
+  snaks: Dictionary<ReferenceSnak[]>;
   'snaks-order': string[];
 }

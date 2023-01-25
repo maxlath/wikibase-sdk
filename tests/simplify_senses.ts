@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'should'
 import { simplifySenses, simplifySense } from '../src/helpers/simplify_senses.js'
 import { requireJson } from './lib/utils.js'

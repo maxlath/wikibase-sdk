@@ -1,5 +1,9 @@
-import { Claim, ClaimSimplified } from './claim.d'
-import { Dictionary } from './helper'
+import type { Claim } from './claim.js'
+import type { Dictionary, TypedKeyDictionnary } from './helper.js'
+import type { SimplifiedClaims } from './simplify_claims.js'
+import type { sites } from '../helpers/sitelinks_sites.js'
+
+export type EntityType = 'item' | 'property' | 'lexeme' | 'form' | 'sense'
 
 export interface LanguageEntry {
   language: string;
@@ -24,10 +28,10 @@ export interface Entity {
   claims?: Dictionary<Claim[]>;
   descriptions?: Dictionary<LanguageEntry>;
   labels?: Dictionary<LanguageEntry>;
-  sitelinks?: Dictionary<Sitelink>;
+  sitelinks?: TypedKeyDictionnary<Site, Sitelink>;
 }
 
-export interface EntitySimplified {
+export interface SimplifiedEntity {
   type: string;
   id: string;
 
@@ -35,11 +39,13 @@ export interface EntitySimplified {
   modified?: string;
 
   aliases?: Dictionary<string[]>;
-  claims?: Dictionary<ClaimSimplified[]>;
+  claims?: SimplifiedClaims;
   descriptions?: Dictionary<string>;
   labels?: Dictionary<string>;
-  sitelinks?: {[site: string]: string};
+  sitelinks?: TypedKeyDictionnary<Site, string>;
 }
+
+export type Site = typeof sites[number]
 
 export interface Sitelink {
   site: string;
