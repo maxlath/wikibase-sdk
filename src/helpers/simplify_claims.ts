@@ -1,5 +1,5 @@
 import { uniq } from '../utils/utils.js'
-import { parse as parseClaim } from './parse_claim.js'
+import { parseClaim } from './parse_claim.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, Qualifier, Qualifiers } from '../types/claim.js'
 import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'

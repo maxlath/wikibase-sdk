@@ -16,8 +16,6 @@ import { buildUrlFactory } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
 import type { InstanceConfig } from './types/options.js'
 
-export * from './helpers/simplify.js'
-
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
 those are also exposed directly on the module object. Exemple:
 import { isItemId, simplify } from 'wikibase-sdk'`
@@ -91,10 +89,6 @@ export function WBK (config: InstanceConfig) {
 
   return Object.assign(parsedData, common, wikibaseApiFunctions, wikibaseQueryServiceFunctions)
 }
-
-// Make heplpers that don't require an instance to be specified available
-// directly on the exported function object
-Object.assign(WBK, common)
 
 const validateEndpoint = (name, url) => {
   if (!(typeof url === 'string' && url.startsWith('http'))) {

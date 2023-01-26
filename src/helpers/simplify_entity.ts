@@ -53,5 +53,7 @@ export const simplifyEntities = (entities: Entities, options: SimplifyEntityOpti
 }
 
 // Set those here instead of in ./simplify to avoid a circular dependency
+// @ts-ignore
 simplify.entity = simplifyEntity
+// @ts-ignore
 simplify.entities = simplifyEntities

@@ -27,7 +27,7 @@ import {
   simplifyGlosses as glosses,
 } from './simplify_text_attributes.js'
 
-const simplify: any = {
+const simplify = {
   labels,
   descriptions,
   aliases,

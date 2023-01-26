@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'should'
 import _ from 'lodash-es'
 import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'

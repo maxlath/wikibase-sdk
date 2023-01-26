@@ -2,7 +2,7 @@
   "name": "wikibase-sdk",
   "version": "8.1.1",
   "description": "utils functions to query a Wikibase instance and simplify its results",
-  "main": "lib/wikibase-sdk.js",
+  "main": "./dist/index.js",
   "type": "module",
   "files": [
     "dist"

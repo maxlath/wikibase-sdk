@@ -97,7 +97,7 @@ export const parsers = {
   'wikibase-sense': entity,
 }
 
-export function parse (datatype, datavalue, options, claimId) {
+export function parseClaim (datatype, datavalue, options, claimId) {
   // Known case of missing datatype: form.claims, sense.claims
   datatype = datatype || datavalue.type
   // Known case requiring this: legacy "muscial notation" datatype

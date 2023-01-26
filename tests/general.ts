@@ -1,5 +1,5 @@
 import should from 'should'
-import WBK from '../src/wikibase-sdk.js'
+import { WBK, simplify, parse, isEntityId, getSitelinkData } from '../src/index.js'
 import { instance, sparqlEndpoint } from './lib/tests_env.js'
 
 describe('builder', () => {
@@ -8,12 +8,13 @@ describe('builder', () => {
   })
 
   it('should reference instance-independant helpers', () => {
-    should(WBK.parse).be.an.Object()
-    should(WBK.simplify).be.an.Object()
-    WBK.parse.wb.entities.should.be.an.Function()
-    WBK.simplify.labels.should.be.an.Function()
-    WBK.isEntityId.should.be.a.Function()
-    WBK.getSitelinkData.should.be.a.Function()
+    should(parse).be.an.Object()
+    should(simplify).be.an.Object()
+    parse.wb.entities.should.be.an.Function()
+    // @ts-ignore
+    simplify.labels.should.be.an.Function()
+    isEntityId.should.be.a.Function()
+    getSitelinkData.should.be.a.Function()
   })
 
   it('should throw when initialized without a config', () => {
@@ -46,8 +47,8 @@ describe('builder', () => {
 
   it('should produce valid URLs', () => {
     const wbk = WBK({ instance, sparqlEndpoint })
-    wbk.searchEntities('ingmar Bergman').should.startWith(instance)
-    wbk.getReverseClaims('P50', 'Q504').should.startWith(sparqlEndpoint)
+    wbk.searchEntities({ search: 'ingmar Bergman' }).should.startWith(instance)
+    wbk.getReverseClaims({ properties: 'P50', values: 'Q504' }).should.startWith(sparqlEndpoint)
   })
 
   it('should exposed sanitized instance URL', () => {
