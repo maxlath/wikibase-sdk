@@ -12,7 +12,7 @@ npm run build
 
 green_log 'commit...'
 git checkout -B dist
-git add dist/wikibase-sdk.js dist/wikibase-sdk.min.js dist/wikidata-sdk.js dist/wikidata-sdk.min.js
+git add dist -f
 git commit -m 'dist: updated'
 
 last_version="v$(jq '.version' -r < package.json)"
