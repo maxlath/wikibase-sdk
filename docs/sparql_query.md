@@ -2,8 +2,9 @@
 
 To get JSON results from a SPARQL query you can [make a HTTP request to https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with `wikidata-sdk` can be done like this:
 ```js
+import { WBK } from 'wikibase-sdk'
 // Make sure you initialize wbk with a sparqlEndpoint
-const wbk = require('wikibase-sdk')({
+const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
   sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql'
 })

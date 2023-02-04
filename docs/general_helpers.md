@@ -39,61 +39,79 @@
 ## Work with ids
 Those helpers help you figure-out if an id format looks right, not that the associated entity really exists. Typically to be used in conditions:
 ```js
-if (wbk.isItemId(someId)) doThis()
-else if (wbk.isPropertyId(someId)) doThat()
+import { if } from 'wikibase-sdk'
+
+if (isItemId(someId)) doThis()
+else if (isPropertyId(someId)) doThat()
 ```
+
+Note that those helpers are independant from the Wikibase instance you are working with, so they can either be imported directly — `import { isEntityId } from 'wikibase-sdk'` — or found on the wbk object — `wbk.isEntityId`.
 
 ### isEntityId
 Accepts `Q` (item), `P` (property), and `L` (lexeme) ids.
 ```js
-wbk.isEntityId('Q1') // true
-wbk.isEntityId('P1') // true
-wbk.isEntityId('L1') // true
-wbk.isEntityId('L1-F1') // false
-wbk.isEntityId('L1-S1') // false
+import { isEntityId } from 'wikibase-sdk'
+
+isEntityId('Q1') // true
+isEntityId('P1') // true
+isEntityId('L1') // true
+isEntityId('L1-F1') // false
+isEntityId('L1-S1') // false
 ```
 
 ### isItemId
 item ids a.k.a. `Q` ids
 ```js
-wbk.isItemId('Q1') // true
-wbk.isItemId('P1') // false
+import { isItemId } from 'wikibase-sdk'
+
+isItemId('Q1') // true
+isItemId('P1') // false
 ```
 
 ### isPropertyId
 Property ids a.k.a. `P` ids
 ```js
-wbk.isPropertyId('P1') // true
-wbk.isPropertyId('Q1') // false
+import { isPropertyId } from 'wikibase-sdk'
+
+isPropertyId('P1') // true
+isPropertyId('Q1') // false
 ```
 
 ### isLexemeId
 Property ids a.k.a. `L` ids
 ```js
-wbk.isLexemeId('L1') // true
-wbk.isLexemeId('L1-F1') // false
-wbk.isLexemeId('L1-S1') // false
+import { isLexemeId } from 'wikibase-sdk'
+
+isLexemeId('L1') // true
+isLexemeId('L1-F1') // false
+isLexemeId('L1-S1') // false
 ```
 
 ### isFormId
 Property ids a.k.a. `L` ids
 ```js
-wbk.isFormId('L1-F1') // true
-wbk.isFormId('L1') // false
-wbk.isFormId('L1-S1') // false
+import { isFormId } from 'wikibase-sdk'
+
+isFormId('L1-F1') // true
+isFormId('L1') // false
+isFormId('L1-S1') // false
 ```
 
 ### isSenseId
 Property ids a.k.a. `L` ids
 ```js
-wbk.isSenseId('L1-S1') // true
-wbk.isSenseId('L1') // false
-wbk.isSenseId('L1-F1') // false
+import { isSenseId } from 'wikibase-sdk'
+
+isSenseId('L1-S1') // true
+isSenseId('L1') // false
+isSenseId('L1-F1') // false
 ```
 
 ### isGuid
 The global unique `id` of a claim
 ```js
+import { isGuid } from 'wikibase-sdk'
+
 isGuid('q520$7f95c04f-4cb6-b018-80eb-fefe0e0bf377') // true
 isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec6') // true
 ```
@@ -101,12 +119,16 @@ isGuid('Q520$4a0b85a0-4a47-3254-0379-52680370fec6') // true
 ### isHash
 The hash of a claim, qualifier, or reference
 ```js
+import { isHash } from 'wikibase-sdk'
+
 isHash('14ddd544b82e2f811669d2bb4c939c4997536ce3') // true
 ```
 
 ### isPropertyClaimsId
 Property claims id is a non-official term to refer to a group of claims an entity has for a given property
 ```js
+import { isPropertyClaimsId } from 'wikibase-sdk'
+
 isPropertyClaimsId('Q1#P1') // true
 isPropertyClaimsId('P12#P12') // true
 isPropertyClaimsId('L123#P123') // true
@@ -114,6 +136,8 @@ isPropertyClaimsId('L123#P123') // true
 
 ### isEntitySchemaId
 ```js
+import { isEntitySchemaId } from 'wikibase-sdk'
+
 isEntitySchemaId('E123') // true
 ```
 
@@ -127,57 +151,49 @@ isEntitySchemaId('E123') // true
 ### truthyClaims
 Filter-out non-[truthy](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) claims from an `entity.claims` object
 ```js
-const entityTruthyClaims = wbk.truthyClaims(entity.claims)
+import { truthyClaims } from 'wikibase-sdk'
+
+const entityTruthyClaims = truthyClaims(entity.claims)
 ```
 
 ### truthyPropertyClaims
 Filter-out non-[truthy](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) claims from an `entity.claims[prop]` array
 ```js
-const entityP135TruthyClaims = wbk.truthyPropertyClaims(entity.claims.P135)
+import { truthyPropertyClaims } from 'wikibase-sdk'
+
+const entityP135TruthyClaims = truthyPropertyClaims(entity.claims.P135)
 ```
 
 ## Sitelink helpers
 ### getSitelinkUrl
 ```js
-// multiple arguments interface
-wbk.getSitelinkUrl(site, title)
+import { getSitelinkUrl } from 'wikibase-sdk'
 
-wbk.getSitelinkUrl('commons', 'Lyon')
-// => 'https://commons.wikimedia.org/wiki/Lyon'
-
-wbk.getSitelinkUrl('frwiki', 'Septembre')
+getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
 // => 'https://fr.wikipedia.org/wiki/Septembre'
 
-wbk.getSitelinkUrl('zhwikiquote', '維克多·雨果')
-// => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
-```
-```js
-// object interface: allow you to directly pass the API sitelink object
-wbk.getSitelinkUrl({ site, title })
-
-wbk.getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })
-// => 'https://fr.wikipedia.org/wiki/Septembre'
-
-wbk.getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
+getSitelinkUrl({ site: 'eswikiquote', title: 'Gilles Deleuze' })
 // => 'https://es.wikiquote.org/wiki/Gilles_Deleuze'
 
-wbk.getSitelinkUrl({ site: 'commons', title: 'Lyon' })
+getSitelinkUrl({ site: 'commons', title: 'Lyon' })
 // => 'https://commons.wikimedia.org/wiki/Lyon'
 
-wbk.getSitelinkUrl({ site: 'wikidata', title: 'Q1' })
+getSitelinkUrl({ site: 'wikidata', title: 'Q1' })
 // => 'https://wikidata.org/wiki/Q1'
 
-wbk.getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
+getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })
 // => 'https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C'
 ```
 
 ### getSitelinkData
 ```js
+import { getSitelinkData } from 'wikibase-sdk'
+
 getSitelinkData('https://de.wikipedia.org/wiki/Kernfusion')
 // => {
 //      lang: 'de',
 //      project: 'wikipedia',
-//      key: 'dewiki',
+//      key: 'dewiki',wwwwwwwwwwwwwwwww
 //      title: 'Kernfusion',
 //      url: 'https://de.wikipedia.org/wiki/Kernfusion'
 //   }
@@ -206,6 +222,8 @@ getSitelinkData('wikidatawiki')
 
 ### isSitelinkKey
 ```js
+import { isSitelinkKey } from 'wikibase-sdk'
+
 isSitelinkKey('frwiki')
 // => true
 isSitelinkKey('dewikiquote')
@@ -232,23 +250,27 @@ isSitelinkKey('imaginarylangwiki')
 ### wikibaseTimeToISOString
 Uses [extended years following ECMAScript standard](https://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15.1)
 ```js
+import { wikibaseTimeToISOString } from 'wikibase-sdk'
+
 var wikibaseTime = '+1885-05-22T00:00:00Z'
-wbk.wikibaseTimeToISOString(wikibaseTime)
+wikibaseTimeToISOString(wikibaseTime)
 // => '1885-05-22T00:00:00.000Z'
 
 wikibaseTime = '+0180-03-17T00:00:00Z'
-wbk.wikibaseTimeToISOString(wikibaseTime)
+wikibaseTimeToISOString(wikibaseTime)
 // => '0180-03-17T00:00:00.000Z'
 
 wikibaseTime = '-0398-00-00T00:00:00Z'
-wbk.wikibaseTimeToISOString(wikibaseTime)
+wikibaseTimeToISOString(wikibaseTime)
 // => '-000398-01-01T00:00:00.000Z'
 
 ```
 that should also work for dates far in the past or the future:
 ```js
+import { wikibaseTimeToISOString } from 'wikibase-sdk'
+
 wikibaseTime = '-13798000000-00-00T00:00:00Z'
-wbk.wikibaseTimeToISOString(wikibaseTime)
+wikibaseTimeToISOString(wikibaseTime)
 // => '-13798000000-01-01T00:00:00Z'
 
 ```
@@ -259,6 +281,8 @@ Returns dates on the format 'yyyy-mm-dd', 'yyyy-mm', 'yyyy' depending on the dat
 
 It is thus possible, and prefered, to pass it the full datavalue value object to let it take the precision in account:
 ```js
+import { wikibaseTimeToSimpleDay } from 'wikibase-sdk'
+
 const claims = {
   "P569": [
     {
@@ -288,26 +312,30 @@ const claims = {
 
 // Passing only the time string: the result misses the month precision
 // and thus wrongly returns the day set to '01'
-wbk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
+wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value.time)
 // => '1869-11-01'
 
 // Passing the whole value object, the function can
-wbk.wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
+wikibaseTimeToSimpleDay(claims.P569[0].mainsnak.datavalue.value)
 // => '1869-11'
 ```
 
 ### getImageUrl
 Get an image URL from a Wikimedia Commons filename:
 ```js
-wbk.getImageUrl('Peredot.jpg')
+import { getImageUrl } from 'wikibase-sdk'
+
+getImageUrl('Peredot.jpg')
 // => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg
-wbk.getImageUrl('Peredot.jpg', 250)
+getImageUrl('Peredot.jpg', 250)
 // => https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250
 ```
 
 ### getEntityIdFromGuid
 You would think it's trivial, but actually GUIDs' case is inconsistent, so we need to take care of that once for all
 ```js
+import { getEntityIdFromGuid } from 'wikibase-sdk'
+
 getEntityIdFromGuid('Q520$91F0CCEA-19E4-4CEB-97D9-74B014C14686')
 // => 'Q520'
 getEntityIdFromGuid('q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C')
@@ -323,6 +351,8 @@ getEntityIdFromGuid('P6216$a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')
 ```
 Hyphenated GUIDs, such as returned by the Query Service, can also be passed:
 ```js
+import { getEntityIdFromGuid } from 'wikibase-sdk'
+
 getEntityIdFromGuid('q520-BCA8D9DE-B467-473B-943C-6FD0C5B3D02C')
 // => Q520
 getEntityIdFromGuid('Q520-91F0CCEA-19E4-4CEB-97D9-74B014C14686')

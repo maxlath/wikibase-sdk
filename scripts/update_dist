@@ -10,9 +10,6 @@ green_log 'update dist...'
 green_log 'build...'
 npm run build
 
-green_log 'minify...'
-npm run minify
-
 green_log 'commit...'
 git checkout -B dist
 git add dist/wikibase-sdk.js dist/wikibase-sdk.min.js dist/wikidata-sdk.js dist/wikidata-sdk.min.js

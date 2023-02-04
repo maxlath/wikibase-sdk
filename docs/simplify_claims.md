@@ -117,14 +117,14 @@ in your workflow, that could give something like:
 
 ```js
 const url = wbk.getEntities('Q535')
-request(url, function(err, response){
-  if (err) { dealWithError(err) }
-  const entity = response.entities.Q535
-  simplifiedClaims = wbk.simplify.claims(entity.claims)
-})
+const { entities } = await fetch(url)
+const entity = entities.Q535
+const simplifiedClaims = wbk.simplify.claims(entity.claims)
 ```
 
 To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
+
+Note that you don't need to instantiate a `wbk` object to access those `simplify` functions, as they can directly imported: `import { simplify } from 'wikibase-sdk'`
 
 ## simplify.propertyClaims
 Same as simplify.claims but expects an array of claims, typically the array of claims of a specific property:

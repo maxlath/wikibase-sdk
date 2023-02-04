@@ -21,7 +21,7 @@
 *associated Wikibase API doc: [wbsearchentities](https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities)*
 
 ```js
-const url = wbk.searchEntities('Ingmar Bergman')
+const url = wbk.searchEntities({ search: 'Ingmar Bergman' })
 ```
 
 this returns a query url that you are then free to request with the tool you like
@@ -33,31 +33,16 @@ This search endpoint, `wbsearchentities`, is the one used by the search bar and 
 
 With more parameters:
 ```js
-const search = 'Ingmar Bergman'
-const language = 'fr' // will default to 'en'
-const limit = 10 // defaults to 20
-const format = 'json' // defaults to json
-
-const url = wbk.searchEntities(search, language, limit, format)
-```
-which can also be passed as an object:
-```js
 const url = wbk.searchEntities({
   search: 'Ingmar Bergman',
-  format: 'xml',
-  language: 'sv',
-  limit: 30,
-  continue: 10
+  language: 'sv', // Default: en
+  limit: 30, // Default: 20
+  continue: 10, // Default: 0
+  format: 'xml', // Defaut: json
 })
 ```
 
 By default, the `uselang` parameter (the language in which the search results are returned) is set to the same as the language passed, but if for some weird use case you need to set a different language, you can still pass a 2 letters language code:
-* as last argument (inline interface)
-```js
-const uselang = 'eo'
-const url = wbk.searchEntities(search, language, limit, format, uselang)
-```
-* or set `uselang` in the option object (object interface).
 ```js
 const url = wbk.searchEntities({
   search: 'Ingmar Bergman',
@@ -85,30 +70,22 @@ const url = wbk.cirrusSearchPages({ search: 'ingmar bergman' })
 
 Due to the endpoint not returning much data other than the page title, a full example could look something like this:
 ```js
-const fetch = require('node-fetch')
-// or just window.fetch, if you are working in the browser
-
 const url = wbk.cirrusSearchPages({ search: 'Ingmar Bergman' })
 
-fetch(url)
-.then(res => res.json())
-.then(wbk.parse.wb.pagesTitles)
-.then(titles => {
-  // If you where searching in an entity namespace, which is the default namespace on Wikibase instances,
-  // those titles are either entities ids (ex: Q1) or prefixed entities ids (ex: Item:Q1)
-  // In the first case, we can just do
-  const ids = titles
-  // In the second case, to get the ids, we need to drop the prefix
-  const ids = titles.map(title => title.split(':')[1])
-  // From there, to get the full entities data, you could do
-  const entitiesUrl = wbk.getEntities({ ids })
-  return fetch(entitiesUrl)
-})
-.then(res => res.json())
-.then(entities => {
-  // Yeah data!
-})
+const titles = await fetch(url)
+  .then(res => res.json())
+  .then(wbk.parse.pagesTitles)
 
+// If you where searching in an entity namespace, which is the default namespace on Wikibase instances,
+// those titles are either entities ids (ex: Q1) or prefixed entities ids (ex: Item:Q1)
+// In the first case, we can just do
+const ids = titles
+// In the second case, to get the ids, we need to drop the prefix
+const ids = titles.map(title => title.split(':')[1])
+// From there, to get the full entities data, you could do
+const entitiesUrl = wbk.getEntities({ ids })
+// Yeah data!
+const entities = await fetch(entitiesUrl).then(res => res.json())
 ```
 
 ### haswbstatement

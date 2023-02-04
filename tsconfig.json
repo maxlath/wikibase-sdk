@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "es2016",
+    "module": "esnext",
+    "moduleResolution": "nodenext",
+    "declaration": true,
+    "importsNotUsedAsValues": "error",
+  },
+  "include": ["./src/**/*"],
+  "ts-node": {
+    "esm": true,
+  }
+}
