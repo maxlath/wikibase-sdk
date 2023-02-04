@@ -1,4 +1,8 @@
-window.wdk = WBK({
+import WBK from '../wikibase-sdk.js'
+
+const wdk = WBK({
   instance: 'https://www.wikidata.org',
   sparqlEndpoint: 'https://query.wikidata.org/sparql',
 })
+
+export default wdk

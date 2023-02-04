@@ -2,7 +2,7 @@
 
 JS utils functions to query a [Wikibase](http://wikiba.se) instance and simplify its results
 
-This package was primarily developed as `wikidata-sdk` but has now being generalized to support any Wikibase instance: [wikidata.org](https://www.wikidata.org) among others.
+This package was primarily developed as `wikidata-sdk` but has now being generalized to support any Wikibase instance, [wikidata.org](https://www.wikidata.org) among others, and was thus renamed `wikibase-sdk`.
 
 This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wiki/Grants:Project/WikidataJS).
 
@@ -14,14 +14,12 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 </div>
 
 [![NPM](https://nodei.co/npm/wikibase-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikibase-sdk/)
-[![NPM](https://nodei.co/npm/wikidata-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikidata-sdk/)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node](https://img.shields.io/badge/node-%3E=%20v6.4.0-brightgreen.svg)](http://nodejs.org)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-* [wikibase-sdk download stats](https://npm-stat.com/charts.html?package=wikibase-sdk)
-* [wikidata-sdk download stats](https://npm-stat.com/charts.html?package=wikidata-sdk)
+[download stats](https://npm-stat.com/charts.html?package=wikibase-sdk)
 
 ## Summary
 
@@ -71,19 +69,15 @@ const wbk = WBK({
 The `wdk` object of previous versions of this documentation - from the time this module was bound to wikidata.org only - thus corresponds to the following:
 ```js
 import { WBK } from 'wikibase-sdk'
+
 const wdk = WBK({
   instance: 'https://www.wikidata.org',
   sparqlEndpoint: 'https://query.wikidata.org/sparql'
 })
 ```
-For convenience, and for the sake of retro-compatibility, that same `wdk` object can be obtain directly from the `wikidata-sdk` package:
+For convenience, and for the sake of retro-compatibility, that same `wdk` object can be obtain directly from the `wikibase-sdk/wikidata.org` package:
 ```js
-// After having run `npm install wikidata-sdk`
-import { wdk } from 'wikidata-sdk'
-```
-and instance-independant helper functions are directly available from the module root:
-```js
-import { simplify, parse, isEntityId, isPropertyId, ... } from 'wikibase-sdk'
+import wdk from 'wikibase-sdk/wikidata.org'
 ```
 
 By default `wikibase-sdk` assumes that your Wikibase instance has [`$wgScriptPath`](https://www.mediawiki.org/wiki/Manual:$wgScriptPath) set to `/w`, but if that's not the case, you can set it by passing a `wgScriptPath` parameter:
