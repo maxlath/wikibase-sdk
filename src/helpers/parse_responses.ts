@@ -1,4 +1,4 @@
-import { simplifyEntity } from './simplify_entity.js'
+import { simplifyEntities } from './simplify_entity.js'
 import type { Entities, SimplifiedEntities } from '../types/entity.js'
 
 export interface WbGetEntitiesResponse {
@@ -24,12 +24,7 @@ export const wb = {
     // @ts-ignore
     res = res.body || res
     const { entities } = res
-    Object.keys(entities).forEach(entityId => {
-      // @ts-ignore
-      entities[entityId] = simplifyEntity(entities[entityId])
-    })
-    // @ts-ignore
-    return entities
+    return simplifyEntities(entities)
   },
 
   pagesTitles: (res: CirrusSearchPagesResponse): Titles => {
