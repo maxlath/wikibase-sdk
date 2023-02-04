@@ -14,18 +14,3 @@ green_log 'commit...'
 git checkout -B dist
 git add dist -f
 git commit -m 'dist: updated'
-
-last_version="v$(jq '.version' -r < package.json)"
-echo "last_version: $last_version"
-
-# Deleting the tag on `npm version` commit
-echo "deleting $last_version tag..."
-git tag -d $last_version
-# to re-create it on the dist commit
-echo "re-creating $last_version tag on dist commit..."
-git tag $last_version
-
-git push origin -f dist
-git push --tags
-
-green_log 'done update dist'

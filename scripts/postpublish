@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -eu
+
+green_log(){ echo -e "\e[0;32m$1\e[0;0m" ; }
+
+last_version="v$(jq '.version' -r < package.json)"
+echo "last_version: $last_version"
+
+# Deleting the tag on `npm version` commit
+echo "deleting $last_version tag..."
+git tag -d $last_version
+# to re-create it on the dist commit
+echo "re-creating $last_version tag on dist commit..."
+git tag $last_version
+
+git push origin -f dist
+git push --tags
+
+git checkout main
+
+green_log 'done update dist'
