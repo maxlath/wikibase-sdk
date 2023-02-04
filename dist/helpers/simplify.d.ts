@@ -1,0 +1,27 @@
+import { simplifyClaim as claim, simplifyPropertyClaims as propertyClaims, simplifyClaims as claims, simplifyQualifier as qualifier, simplifyPropertyQualifiers as propertyQualifiers, simplifyQualifiers as qualifiers, simplifyReferences as references } from './simplify_claims.js';
+import { simplifySparqlResults } from './simplify_sparql_results.js';
+import { simplifyLabels as labels, simplifyDescriptions as descriptions, simplifyAliases as aliases, simplifyLemmas as lemmas, simplifyRepresentations as representations, simplifyGlosses as glosses } from './simplify_text_attributes.js';
+export declare const simplify: {
+    labels: typeof labels;
+    descriptions: typeof descriptions;
+    aliases: typeof aliases;
+    claim: typeof claim;
+    propertyClaims: typeof propertyClaims;
+    claims: typeof claims;
+    qualifier: typeof qualifier;
+    propertyQualifiers: typeof propertyQualifiers;
+    qualifiers: typeof qualifiers;
+    references: typeof references;
+    sitelinks: (sitelinks: import("../types/sitelinks.js").Sitelinks, options?: import("../types/options.js").SimplifySitelinkOptions) => import("../types/sitelinks.js").SimplifiedSitelinks;
+    snak: typeof claim;
+    propertySnaks: typeof propertyClaims;
+    snaks: typeof claims;
+    lemmas: typeof lemmas;
+    representations: typeof representations;
+    glosses: typeof glosses;
+    form: (form: import("../types/lexeme.js").Form, options?: import("../types/simplify_claims.js").SimplifySnaksOptions) => import("../types/lexeme.js").SimplifiedForm;
+    forms: (forms: any, options: any) => any;
+    sense: (sense: import("../types/lexeme.js").Sense, options: import("../types/simplify_claims.js").SimplifySnaksOptions) => import("../types/lexeme.js").SimplifiedSense;
+    senses: (senses: any, options: any) => any;
+    sparqlResults: typeof simplifySparqlResults;
+};
