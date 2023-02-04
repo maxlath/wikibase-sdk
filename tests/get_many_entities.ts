@@ -1,11 +1,11 @@
-import _ from 'lodash-es'
+import { range } from 'lodash-es'
 import should from 'should'
 import { getManyEntitiesFactory } from '../src/queries/get_many_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 import { parseUrlQuery } from './lib/utils.js'
 
 const getManyEntities = getManyEntitiesFactory(buildUrl)
-const manyIds = _.range(1, 80).map(id => `Q${id}`)
+const manyIds = range(1, 80).map(id => `Q${id}`)
 
 describe('wikidata getManyEntities', () => {
   describe('general', () => {

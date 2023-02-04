@@ -1,5 +1,5 @@
 // @ts-nocheck
-import _ from 'lodash-es'
+import { every } from 'lodash-es'
 import should from 'should'
 import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../src/helpers/simplify_claims.js'
 import { uniq } from '../src/utils/utils.js'
@@ -107,7 +107,7 @@ describe('simplifyPropertyClaims', () => {
     const simplified = simplifyPropertyClaims(Q22002395.claims.P50)
     // Q22002395 P50 has 2 values with "snaktype": "somevalue"
     // that should be removed
-    _.every(simplified, qid => qid != null).should.equal(true)
+    every(simplified, qid => qid != null).should.equal(true)
   })
 
   it('should deduplicated values', () => {

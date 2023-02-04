@@ -1,6 +1,6 @@
 // @ts-nocheck
 import 'should'
-import _ from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
 import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'
 import { requireJson } from './lib/utils.js'
 
@@ -8,7 +8,7 @@ const Q4115189 = requireJson(import.meta.url, './data/Q4115189.json')
 
 describe('truthyClaims', () => {
   it('should filter-out non-truthy claims', () => {
-    const Q4115189Claims = _.cloneDeep(Q4115189.claims)
+    const Q4115189Claims = cloneDeep(Q4115189.claims)
     Q4115189Claims.P135.length.should.equal(3)
     const truthyOnly = truthyClaims(Q4115189Claims)
     // @ts-ignore
@@ -20,7 +20,7 @@ describe('truthyClaims', () => {
 
 describe('truthyPropertyClaims', () => {
   it('should filter-out non-truthy property claims', () => {
-    const Q4115189Claims = _.cloneDeep(Q4115189.claims)
+    const Q4115189Claims = cloneDeep(Q4115189.claims)
     Q4115189Claims.P135.length.should.equal(3)
     const truthyOnly = truthyPropertyClaims(Q4115189Claims.P135)
     truthyOnly.length.should.equal(1)

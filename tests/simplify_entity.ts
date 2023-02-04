@@ -1,6 +1,6 @@
 // @ts-nocheck
 import 'should'
-import _ from 'lodash-es'
+import { cloneDeep, pick } from 'lodash-es'
 import { simplifyEntity, simplifyEntities } from '../src/helpers/simplify_entity.js'
 import { requireJson } from './lib/utils.js'
 
@@ -14,7 +14,7 @@ describe('simplify.entity', () => {
   })
 
   it('should support items', () => {
-    const Q571Clone = _.cloneDeep(Q571)
+    const Q571Clone = cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone)
     simplifiedEntity.type.should.equal('item')
     simplifiedEntity.labels.fr.should.equal('livre')
@@ -27,7 +27,7 @@ describe('simplify.entity', () => {
   })
 
   it('should support properties', () => {
-    const P8098Clone = _.cloneDeep(P8098)
+    const P8098Clone = cloneDeep(P8098)
     const simplifiedEntity = simplifyEntity(P8098Clone)
     simplifiedEntity.type.should.equal('property')
     simplifiedEntity.datatype.should.equal('external-id')
@@ -41,7 +41,7 @@ describe('simplify.entity', () => {
   })
 
   it('should support lexemes', () => {
-    const L525Clone = _.cloneDeep(L525)
+    const L525Clone = cloneDeep(L525)
     const simplifiedEntity = simplifyEntity(L525Clone)
     simplifiedEntity.type.should.equal('lexeme')
     simplifiedEntity.lemmas.should.be.an.Object()
@@ -59,7 +59,7 @@ describe('simplify.entity', () => {
   })
 
   it('should pass options down to subfunctions', () => {
-    const Q571Clone = _.cloneDeep(Q571)
+    const Q571Clone = cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone, { keepQualifiers: true, keepIds: true, addUrl: true })
     simplifiedEntity.labels.fr.should.equal('livre')
     simplifiedEntity.descriptions.fr.should.equal('document écrit formé de pages reliées entre elles')
@@ -74,10 +74,10 @@ describe('simplify.entity', () => {
   })
 
   it('should accept partial entities', () => {
-    const Q571Clone = _.cloneDeep(Q571)
+    const Q571Clone = cloneDeep(Q571)
     const emptyEntity = simplifyEntity({})
     Object.keys(emptyEntity).length.should.equal(3)
-    const partialEntity = simplifyEntity(_.pick(Q571Clone, 'id', 'type', 'labels'))
+    const partialEntity = simplifyEntity(pick(Q571Clone, 'id', 'type', 'labels'))
     Object.keys(partialEntity).length.should.equal(4)
     partialEntity.labels.should.be.an.Object()
     partialEntity.labels.fr.should.equal('livre')
@@ -86,7 +86,7 @@ describe('simplify.entity', () => {
 
 describe('simplify.entities', () => {
   it('should accept enities objects', () => {
-    const Q571Clone = _.cloneDeep(Q571)
+    const Q571Clone = cloneDeep(Q571)
     const entities = { Q571: Q571Clone }
     const simplifiedEntities = simplifyEntities(entities)
     simplifiedEntities.Q571.labels.fr.should.equal('livre')
