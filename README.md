@@ -47,8 +47,7 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 See [CHANGELOG.md](CHANGELOG.md) for version info
 
 ## Dependencies
-* A somewhat modern JS runtime: NodeJS `>= v12.0.0` or not too outdated web browsers (see [`Object.fromEntries` browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries))
-
+NodeJS `>= v12.0.0` or not too outdated web browsers (see [`Object.fromEntries` browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries))
 For older JS runtimes, you can use [ES5 bundles from `wikibase-sdk <= v8`](https://github.com/maxlath/wikibase-sdk/tree/v8.1.1#download-pre-bundled-files).
 
 ## Install
