@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-npm run update-dist
-echo "Giving 10s to NPM to make the new version available..."
-sleep 10
-npm run update-wikidata-sdk

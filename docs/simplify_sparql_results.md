@@ -61,9 +61,9 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
 That's still hairy, because we requested many variables, but that can get even simpler if there is only one variable!
 Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`:
 ```js
-simplify.sparqlResults(results)
+wbk.simplify.sparqlResults(results)
 // => [ { "author": "Q3731207" } ]
-simplify.sparqlResults(results, { minimize: true })
+wbk.simplify.sparqlResults(results, { minimize: true })
 // => [ "Q3731207" ]
 ```
 And then to make it even more simpler, we can... hum no, that's all we got.
@@ -76,12 +76,9 @@ or for a more complete example (using [promises](https://www.promisejs.org))
 ```js
 // see the "SPARQL Query" section above
 const url = wbk.sparqlQuery(SPARQL)
-
-// If you aren't familiar with Promise requests
-// see https://github.com/maxlath/wikidata-sdk/issues/31
-promiseRequest(url)
-.then(wbk.simplify.sparqlResults)
-.then(simplifiedResults => { // do awesome stuffs here })
+const simplifiedResults = await fetch(url)
+  .then(res => res.text())
+  .then(wbk.simplify.sparqlResults)
 ```
 
 ## options

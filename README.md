@@ -31,7 +31,8 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 - [Changelog](#changelog)
 - [Dependencies](#dependencies)
 - [Install](#install)
-  - [as a module](#as-a-module)
+  - [as an ES module](#as-an-es-module)
+  - [as an CommonJS module](#as-an-commonjs-module)
   - [download pre-bundled files](#download-pre-bundled-files)
 - [Features](#features)
   - [Wikibase API](#wikibase-api)
@@ -48,19 +49,20 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
 See [CHANGELOG.md](CHANGELOG.md) for version info
 
 ## Dependencies
-This module uses [JavaScript ES6](https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_-_ECMAScript_2015), which means NodeJS `>= v6.4.0` or not too outdated web browsers.
+* A somewhat modern JS runtime: NodeJS `>= v12.0.0` or not too outdated web browsers (see [`Object.fromEntries` browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries))
 
-For older version, you can use ES5 [bundles](#download-pre-bundled-files).
+For older JS runtimes, you can use [ES5 bundles from `wikibase-sdk <= v8`](https://github.com/maxlath/wikibase-sdk/tree/v8.1.1#download-pre-bundled-files).
 
 ## Install
-### as a module
-Install via npm to be able to use the module with `require` (CommonJS) or `import` (ES6 Modules)
+### as an ES module
+Install via npm to be able to use the `import` the module.
 ```sh
 npm install wikibase-sdk
 ```
+
 Then in your javascript:
 ```js
-const WBK = require('wikibase-sdk')
+import { WBK } from 'wikibase-sdk'
 const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
   sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql' // Required to use `sparqlQuery` and `getReverseClaims` functions, optional otherwise
@@ -68,7 +70,7 @@ const wbk = WBK({
 ```
 The `wdk` object of previous versions of this documentation - from the time this module was bound to wikidata.org only - thus corresponds to the following:
 ```js
-const WBK = require('wikibase-sdk')
+import { WBK } from 'wikibase-sdk'
 const wdk = WBK({
   instance: 'https://www.wikidata.org',
   sparqlEndpoint: 'https://query.wikidata.org/sparql'
@@ -77,37 +79,40 @@ const wdk = WBK({
 For convenience, and for the sake of retro-compatibility, that same `wdk` object can be obtain directly from the `wikidata-sdk` package:
 ```js
 // After having run `npm install wikidata-sdk`
-const wdk = require('wikidata-sdk')
+import { wdk } from 'wikidata-sdk'
 ```
 and instance-independant helper functions are directly available from the module root:
 ```js
-const { simplify, parse, isEntityId, isPropertyId, ... } = require('wikibase-sdk')
+import { simplify, parse, isEntityId, isPropertyId, ... } from 'wikibase-sdk'
 ```
 
 By default `wikibase-sdk` assumes that your Wikibase instance has [`$wgScriptPath`](https://www.mediawiki.org/wiki/Manual:$wgScriptPath) set to `/w`, but if that's not the case, you can set it by passing a `wgScriptPath` parameter:
 ```js
-const wbk = require('wikibase-sdk')({
+import { WBK } from 'wikibase-sdk'
+const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
   wgScriptPath: '/some_custom_script_path'
 })
 ```
 
-### download pre-bundled files
-If you just want to import the lib from an HTML file and don't have a setup that can import with CommonJS or ES6 Modules, you can simply download those pre-bundled files:
+### as an CommonJS module
+Importing with CommonJS `require` is not supported anymore in version `>= v9.0.0`, but can still be done by installing an older version:
 ```sh
-wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikibase-sdk.js
-wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikidata-sdk.js
-wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikibase-sdk.min.js
-wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/dist/dist/wikidata-sdk.min.js
+npm install wikibase-sdk@v8
 ```
 
-then you can import it in your html:
-```html
-<script src="/path/to/wikibase-sdk.js"></script>
-<script>console.log('can access WBK', WBK)</script>
-<script src="/path/to/wikidata-sdk.js"></script>
-<script>console.log('can access wdk, the wikidata.org bound product of WBK', wdk)</script>
+See the [corresponding version documentation](https://github.com/maxlath/wikibase-sdk/tree/v8.1.1#as-a-module)
+
+### download pre-bundled files
+Pre-bundled files is not supported anymore in version `>= v9.0.0`, but can still be done by pre-bundled files from older versions:
+```sh
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/v8.1.1/dist/wikibase-sdk.js
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/v8.1.1/dist/wikidata-sdk.js
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/v8.1.1/dist/wikibase-sdk.min.js
+wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/v8.1.1/dist/wikidata-sdk.min.js
 ```
+
+See the [corresponding version documentation](https://github.com/maxlath/wikibase-sdk/tree/v8.1.1#download-pre-bundled-files)
 
 ## Features
 ### Wikibase API
@@ -143,18 +148,16 @@ This library had for primary purpose to serve the needs of the [inventaire](http
 
 **Design constraints**
 
-* `wikibase-sdk` should stay "small" and dependency-free, so that a web application can include it in its bundle without paying a too high cost for it. A consequence is that the lib generates URLs where other libs would integrate doing the request and parsing it's response. But that actually feels quite right to do this way: simply generating the URLs let's users free to handle requests as they like (with callbacks, promises, async/await, whatever!)
+* `wikibase-sdk` should stay "small" and dependency-free, so that a web application can include it in its bundle without paying a too high cost for it. A consequence is that the lib generates URLs where other libs would integrate doing the request and parsing it's response. But that actually feels quite right to do this way: simply generating the URLs let's users free to handle requests as they like (with callbacks, promises, async/await, custom request agent, whatever!)
 * Therefore, it should focus on providing basic, general helper functions most application working with a Wikibase instance would need.
 * Write operations should go into [wikibase-edit](https://github.com/maxlath/wikibase-edit) as it involves working with Wikibase credentials/tokens.
-* General command-line interface tools should go to [wikibase-cli](https://github.com/maxlath/wikibase-cli), very specific ones — [`wikidata-filter`, `import-wikidata-dump-to-couchdb`, and alikes](#see-also) — should get their own modules.
+* General command-line interface tools should go to [wikibase-cli](https://github.com/maxlath/wikibase-cli), very specific ones — [`wikibase-dump-filter` and alikes](#see-also) — should get their own modules.
 
 ## See Also
 * [wikibase-edit](https://github.com/maxlath/wikibase-edit): Edit a Wikibase instance from NodeJS
 * [wikibase-cli](https://github.com/maxlath/wikibase-cli): The command-line interface to Wikibase instances
 * [wikibase-dump-filter](https://npmjs.com/package/wikibase-dump-filter): Filter and format a newline-delimited JSON stream of Wikibase entities
-* [wikidata-subset-search-engine](https://github.com/inventaire/entities-search-engine/tree/wikidata-subset-search-engine): Tools to setup an ElasticSearch instance fed with subsets of Wikidata
 * [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy): Command-line tool to extract taxonomies from Wikidata
-* [import-wikidata-dump-to-couchdb](https://github.com/maxlath/import-wikidata-dump-to-couchdb): Import a subset or a full Wikidata dump into a CouchDB database
 * [Other Wikidata external tools](https://www.wikidata.org/wiki/Wikidata:Tools/External_tools)
 
 ## You may also like

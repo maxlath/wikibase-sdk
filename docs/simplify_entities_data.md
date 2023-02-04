@@ -50,14 +50,10 @@ wbk.simplify.entity(entity, simplificationOptions)
 ## Simplify entities
 Same as [`wbk.simplify.entity`](#simplify-entity), but accepts all the entities sent by the Wikibase API at once:
 ```js
-const url = wbk.getEntities([ 'Q1', 'P2', 'L3' ])
-fetch(url)
-.then(res => res.json())
-.then(res => {
-  const { entities } = res
-  // simplificationOptions: see wbk.simplify.entity doc above
-  const simplifiedEntities = wbk.simplify.entities(entities, simplificationOptions)
-})
+const url = wbk.getEntities({ ids: [ 'Q1', 'P2', 'L3' ] })
+const { entities } = await fetch(url).then(res => res.json())
+const simplifiedEntities = wbk.simplifyEntities(entities)
+// Do your thing with those entities data)
 ```
 
 ## Simplify claims
