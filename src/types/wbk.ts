@@ -29,7 +29,7 @@ export interface Wbk {
   searchEntities (options: SearchEntitiesOptions): Url;
   cirrusSearchPages (options: CirrusSearchPagesOptions): Url;
   getEntities (options: GetEntitiesOptions): Url;
-  getManyEntities (options: GetManyEntitiesOptions): Url;
+  getManyEntities (options: GetManyEntitiesOptions): Url[];
   getRevisions (options: GetRevisionsOptions): Url;
   getEntityRevision (options: GetEntityRevisionOptions): Url;
   getEntitiesFromSitelinks (options: GetEntitiesFromSitelinksOptions): Url;
