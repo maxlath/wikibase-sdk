@@ -1,5 +1,6 @@
 import { fixedEncodeURIComponent, replaceSpaceByUnderscores, rejectObsoleteInterface } from '../utils/utils.js'
 import { languages } from './sitelinks_languages.js'
+import { specialSites } from './special_sites.js'
 import type { Url, WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
 
@@ -104,15 +105,6 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     // @ts-ignore
     return { lang, project, key }
   }
-}
-
-export const specialSites = {
-  commonswiki: 'commons',
-  mediawikiwiki: 'mediawiki',
-  metawiki: 'meta',
-  specieswiki: 'specieswiki',
-  wikidatawiki: 'wikidata',
-  wikimaniawiki: 'wikimania',
 }
 
 export const isSitelinkKey = (site: string): boolean => {

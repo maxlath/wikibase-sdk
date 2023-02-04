@@ -1,4 +1,4 @@
-import { specialSites } from '../helpers/sitelinks.js'
+import { specialSites } from '../helpers/special_sites.js'
 import type { ItemId } from './entity.js'
 import type { TypedKeyDictionnary } from './helper.js'
 import type { Url } from './options.js'
