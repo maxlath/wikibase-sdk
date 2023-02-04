@@ -28,6 +28,4 @@ git tag $last_version
 git push origin -f dist
 git push --tags
 
-git checkout main
-
 green_log 'done update dist'

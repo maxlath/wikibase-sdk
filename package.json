@@ -27,6 +27,7 @@
     "lint-fix": "eslint -c .eslintrc.cjs src scripts tests --fix",
     "test": "./scripts/run_tests",
     "prepublishOnly": "npm run lint && npm test && npm run update-dist",
+    "postpublish": "git checkout main",
     "update-dist": "./scripts/update_dist",
     "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
     "update-toc": "./scripts/update_toc",
