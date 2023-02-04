@@ -1,14 +1,16 @@
 {
   "name": "wikibase-sdk",
   "version": "8.1.1",
+  "type": "module",
   "description": "utils functions to query a Wikibase instance and simplify its results",
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js",
     "./wikidata.org": "./dist/wellknown/wikidata.org.js"
   },
-  "type": "module",
+  "types": "dist/index.d.ts",
   "files": [
+    "src",
     "dist"
   ],
   "directories": {
