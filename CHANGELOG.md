@@ -3,9 +3,8 @@
 
 ## 9.0.0 - 2023-02-04
 
-The source code was converted to TypeScript to recover types declarations, and keep them maintained in the future. This change was taken as an opportunity to do a bit of cleanup in the function interfaces.
-
 **BREAKING CHANGES**:
+* `wikibase-sdk` now uses ES modules: to keep using CommonJS, you will need to use `wikibase-sdk <= v9`
 * Some functions that were accepting arguments as several arguments were changed to accept arguments as an object only. The concerned functions are:
   * `getReverseClaims`: `getReverseClaims('P50', 'Q535')` should be replaced by `getReverseClaims({ properties: 'P50', values: 'Q535' })`
   * `getRevisions`: `getRevisions('Q3548931', { limit: 10 })` should be replaced by `getRevisions({ ids: 'Q3548931', { limit: 10 })`
@@ -20,6 +19,10 @@ The source code was converted to TypeScript to recover types declarations, and k
   * `getReverseClaims`
 * `simplify.claims`, `simplify.simplifyPropertyClaims`, and `simplify.claim` legacy interfaces were dropped: options are now expected in a single option object (rather than as several arguments)
 * Functions previously avaialble on `wbk.parsers.wb` and `wbk.parsers.wd` — namely `entities` and `pagesTitles` — are now directly on `wbk.parsers`
+
+Other changes:
+* The source code was converted to TypeScript to recover types declarations, and keep them maintained in the future. This change was taken as an opportunity to do a bit of cleanup in the function interfaces.
+* The convenience module `wikidata-sdk` has been deprecated. The `wdk` object can now be imported from `wikibase-sdk/wikidata.org`: `import wdk from 'wikibase-sdk/wikidata.org'`
 
 ## 8.1.0 - 2022-10-31
 * new [`simplify.siteliks`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_entities_data.md#simplify-sitelinks) option: [`keepBadges`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_entities_data.md#keep-badges)
