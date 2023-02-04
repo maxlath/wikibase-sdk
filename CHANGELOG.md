@@ -1,6 +1,26 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 9.0.0 - 2023-02-04
+
+The source code was converted to TypeScript to recover types declarations, and keep them maintained in the future. This change was taken as an opportunity to do a bit of cleanup in the function interfaces.
+
+**BREAKING CHANGES**:
+* Some functions that were accepting arguments as several arguments were changed to accept arguments as an object only. The concerned functions are:
+  * `getReverseClaims`: `getReverseClaims('P50', 'Q535')` should be replaced by `getReverseClaims({ properties: 'P50', values: 'Q535' })`
+  * `getRevisions`: `getRevisions('Q3548931', { limit: 10 })` should be replaced by `getRevisions({ ids: 'Q3548931', { limit: 10 })`
+* Functions that were accepting arguments either as several arguments or as an object now only accept arguments as an object. The concerned functions are:
+  * `searchEntities`
+  * `cirrusSearchPages`
+  * `getEntitiesFromSitelinks`
+  * `getEntitiesFactory`
+  * `getEntityRevision`
+  * `getManyEntities`
+  * `getSitelinkUrl`
+  * `getReverseClaims`
+* `simplify.claims`, `simplify.simplifyPropertyClaims`, and `simplify.claim` legacy interfaces were dropped: options are now expected in a single option object (rather than as several arguments)
+* Functions previously avaialble on `wbk.parsers.wb` and `wbk.parsers.wd` — namely `entities` and `pagesTitles` — are now directly on `wbk.parsers`
+
 ## 8.1.0 - 2022-10-31
 * new [`simplify.siteliks`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_entities_data.md#simplify-sitelinks) option: [`keepBadges`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_entities_data.md#keep-badges)
 
