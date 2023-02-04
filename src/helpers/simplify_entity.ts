@@ -1,4 +1,4 @@
-import simplify from './simplify.js'
+import { simplify } from './simplify.js'
 import type { Entities, Entity, SimplifiedEntity } from '../types/entity.js'
 import type { SimplifyEntityOptions } from '../types/options.js'
 
