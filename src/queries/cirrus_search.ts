@@ -6,7 +6,7 @@ import type { BuildUrlFunction } from '../utils/build_url.js'
 
 const namespacePattern = /^\d+[|\d]*$/
 
-interface CirrusSearchPagesOptions {
+export interface CirrusSearchPagesOptions {
   search?: string;
   haswbstatement?: string | string[];
   limit?: string | number;

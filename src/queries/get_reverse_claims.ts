@@ -10,7 +10,7 @@ import type { Url } from '../types/options.js'
 // https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#WDQS_data_differences
 const itemsOnly = 'FILTER NOT EXISTS { ?subject rdf:type wikibase:Property . } '
 
-interface GetReverseClaimsOptions {
+export interface GetReverseClaimsOptions {
   properties: PropertyId | PropertyId[];
   values: string | number | string[] | number[];
   limit?: number;

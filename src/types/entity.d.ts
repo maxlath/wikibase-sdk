@@ -95,3 +95,4 @@ export interface SimplifiedLexeme extends SimplifiedEntityInfo {
 }
 
 export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme
+export type SimplifiedEntities = TypedKeyDictionnary<EntityId, SimplifiedEntity>

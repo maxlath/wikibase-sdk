@@ -17,8 +17,10 @@ export interface Claim {
 }
 
 export type PropertyClaims = Claim[]
+export type PropertySnaks = Snak[]
 
 export type Claims = TypedKeyDictionnary<PropertyId, PropertyClaims>;
+export type Snaks = TypedKeyDictionnary<PropertyId, PropertySnaks>;
 
 export interface Snak {
   // A mainsnak object won't have an id, as its already on the claim
@@ -73,3 +75,5 @@ export interface Reference {
   snaks: Dictionary<ReferenceSnak[]>;
   'snaks-order': string[];
 }
+
+export type References = Reference[]

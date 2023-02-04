@@ -17,33 +17,6 @@ export type ApiQueryParameters = Dictionary<string | number>
 // export type Url = `http${string}`
 export type Url = string
 
-export interface GetEntitiesFromSitelinksOptions {
-  titles: string | string[];
-  sites: string | string[];
-  languages?: WmLanguageCode | WmLanguageCode[];
-  props?: string | string[];
-  format?: UrlResultFormat;
-}
-
-export interface GetEntitiesOptions {
-  ids: string | string[];
-  languages?: WmLanguageCode | WmLanguageCode[];
-  props?: Props | Props[];
-  format?: UrlResultFormat;
-}
-
-export interface GetReverseClaimOptions {
-  limit?: number;
-  keepProperties?: boolean;
-  caseInsensitive?: boolean;
-}
-
-export interface GetRevisionsOptions {
-  limit?: number;
-  start?: string | number;
-  end?: string | number;
-}
-
 export interface SimplifyEntityOptions extends SimplifySnaksOptions, SimplifySitelinkOptions {}
 
 export interface SimplifySitelinkOptions {

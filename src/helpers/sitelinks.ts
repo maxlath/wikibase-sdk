@@ -5,7 +5,7 @@ import type { Site } from '../types/sitelinks.js'
 
 const wikidataBase = 'https://www.wikidata.org/wiki/'
 
-interface GetSitelinkUrlOptions {
+export interface GetSitelinkUrlOptions {
   site: Site;
   title: string;
 }
@@ -50,7 +50,7 @@ const prefixByEntityLetter = {
 
 const sitelinkUrlPattern = /^https?:\/\/([\w-]{2,10})\.(\w+)\.org\/\w+\/(.*)/
 
-interface SitelinkData {
+export interface SitelinkData {
   lang: WmLanguageCode;
   project: Project;
   key: string;
@@ -115,7 +115,7 @@ export const specialSites = {
   wikimaniawiki: 'wikimania',
 }
 
-export const isSitelinkKey = site => {
+export const isSitelinkKey = (site: string): boolean => {
   try {
     // relies on getSitelinkData validation
     getSitelinkData(site)

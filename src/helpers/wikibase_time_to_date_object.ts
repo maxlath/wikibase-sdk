@@ -1,4 +1,6 @@
-export default wikibaseTime => {
+import type { TimeInputValue } from './helpers.js'
+
+export function wikibaseTimeToDateObject (wikibaseTime: TimeInputValue): Date {
   // Also accept claim datavalue.value objects
   if (typeof wikibaseTime === 'object') {
     wikibaseTime = wikibaseTime.time

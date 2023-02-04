@@ -1,5 +1,6 @@
 import type { DataType, Rank } from './claim.js'
-import type { Guid } from './entity.js'
+import type { Guid, PropertyId } from './entity.js'
+import type { TypedKeyDictionnary } from './helper.js'
 import type { timeConverters } from '../helpers/parse_claim.js'
 
 export interface SimplifySnakOptions {
@@ -33,9 +34,10 @@ export interface CustomSimplifiedClaim extends CustomSimplifiedSnak {
   references?: SimplifiedReferences;
 }
 export type SimplifiedPropertyClaims = SimplifiedClaim[]
-export interface SimplifiedClaims {
-  [property: string]: SimplifiedPropertyClaims
-}
+export type SimplifiedPropertySnaks = SimplifiedSnak[]
+
+export type SimplifiedClaims = TypedKeyDictionnary<PropertyId, SimplifiedPropertyClaims>
+export type SimplifiedSnaks = TypedKeyDictionnary<PropertyId, SimplifiedPropertySnaks>
 
 export type SimplifiedQualifier = SimplifiedSnak
 export type SimplifiedPropertyQualifiers = SimplifiedQualifier[]

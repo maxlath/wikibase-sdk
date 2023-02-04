@@ -3,7 +3,7 @@ import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/optio
 import type { Site } from '../types/sitelinks.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
-interface GetEntitiesFromSitelinksOptions {
+export interface GetEntitiesFromSitelinksOptions {
   titles: string | string[];
   sites?: Site | Site[];
   languages?: WmLanguageCode | WmLanguageCode[];

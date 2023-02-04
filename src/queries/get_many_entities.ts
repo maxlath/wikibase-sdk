@@ -4,7 +4,7 @@ import type { GetEntitiesOptions } from './get_entities.js'
 import type { Url } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
-interface GetManyEntitiesOptions extends GetEntitiesOptions {
+export interface GetManyEntitiesOptions extends GetEntitiesOptions {
   ids: string[]
 }
 

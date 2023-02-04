@@ -1,5 +1,4 @@
-import toDateObject from './wikibase_time_to_date_object.js'
-import type { ClaimSnakTimeValue } from '../types/claim.js'
+import { wikibaseTimeToDateObject as toDateObject } from './wikibase_time_to_date_object.js'
 import type { Url } from '../types/options.js'
 
 export const isNumericId = (id: string): boolean => /^[1-9][0-9]*$/.test(id)
@@ -57,16 +56,14 @@ export function getNumericId (id: string): string {
   return id.replace(/^(Q|P|L)/, '')
 }
 
-export const wikibaseTimeToDateObject = toDateObject
-
 export interface WikibaseTimeObject {
   time: string;
   precision: number;
 }
 
-type TimeInputValue = string | WikibaseTimeObject | ClaimSnakTimeValue
+export type TimeInputValue = string | WikibaseTimeObject
 
-type TimeFunction = (wikibaseTime: TimeInputValue) => any
+export type TimeFunction = (wikibaseTime: TimeInputValue) => any
 
 // Try to parse the date or return the input
 const bestEffort = (fn: TimeFunction) => (value: TimeInputValue) => {
@@ -124,6 +121,8 @@ export const wikibaseTimeToEpochTime = bestEffort(toEpochTime)
 export const wikibaseTimeToISOString = bestEffort(toISOString)
 
 export const wikibaseTimeToSimpleDay = bestEffort(toSimpleDay)
+
+export const wikibaseTimeToDateObject = toDateObject
 
 export function getImageUrl (filename: string, width?: number): Url {
   let url = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}`

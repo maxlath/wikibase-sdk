@@ -5,7 +5,7 @@ import type { BuildUrlFunction } from '../utils/build_url.js'
 
 const types = [ 'item', 'property', 'lexeme', 'form', 'sense' ]
 
-interface SearchEntitiesOptions {
+export interface SearchEntitiesOptions {
   search: string;
   language?: string;
   limit?: string | number;

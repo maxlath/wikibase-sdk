@@ -3,7 +3,7 @@ import { rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityId } from '../types/entity.js'
 import type { Url } from '../types/options.js'
 
-interface GetEntityRevisionOptions {
+export interface GetEntityRevisionOptions {
   id: EntityId;
   revision: `${number}`;
 }

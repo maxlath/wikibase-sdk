@@ -6,7 +6,7 @@ import type { URLFormatOptions } from 'url'
 
 // See https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
 
-interface GetRevisionsOptions {
+export interface GetRevisionsOptions {
   ids: EntityId | EntityId[] | NamedspacedEntityId | NamedspacedEntityId[];
   format?: URLFormatOptions ;
   limit?: number;
