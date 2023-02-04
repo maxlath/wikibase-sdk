@@ -5,5 +5,5 @@ export const WBK = _WBK
 export * from './helpers/helpers.js'
 export * from './helpers/rank.js'
 export * from './helpers/sitelinks.js'
-export * as parse from './helpers/parse_responses.js'
+export { parse } from './helpers/parse_responses.js'
 export { simplify } from './helpers/simplify.js'

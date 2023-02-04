@@ -1,5 +1,5 @@
 import * as helpers from './helpers/helpers.js'
-import * as parse from './helpers/parse_responses.js'
+import { parse } from './helpers/parse_responses.js'
 import * as rankHelpers from './helpers/rank.js'
 import { simplify } from './helpers/simplify.js'
 import * as sitelinksHelpers from './helpers/sitelinks.js'

@@ -19,11 +19,6 @@ import type { GetRevisionsOptions } from '../queries/get_revisions.js'
 import type { SearchEntitiesOptions } from '../queries/search_entities.js'
 import type { SimplifiedPropertySnaks, SimplifiedReferences, SimplifiedSnak, SimplifiedSnaks } from '../types/simplify_claims.js'
 
-export interface WbParsers {
-  entities (res: WbGetEntitiesResponse): SimplifiedEntities;
-  pagesTitles (res: CirrusSearchPagesResponse): Titles;
-}
-
 export interface Wbk {
   instance: {
     root: Url;
@@ -71,8 +66,8 @@ export interface Wbk {
   };
 
   parse: {
-    wb: WbParsers,
-    wd: WbParsers,
+    entities (res: WbGetEntitiesResponse): SimplifiedEntities;
+    pagesTitles (res: CirrusSearchPagesResponse): Titles;
   },
 
   // Helpers

@@ -18,7 +18,7 @@ export interface CirrusSearchPagesResponse {
   };
 }
 
-export const wb = {
+export const parse = {
   entities: (res: WbGetEntitiesResponse): SimplifiedEntities => {
     // Legacy convenience for the time the 'request' lib was all the rage
     // @ts-ignore
@@ -34,6 +34,3 @@ export const wb = {
     return res.query.search.map(result => result.title)
   },
 }
-
-// Legacy
-export const wd = wb

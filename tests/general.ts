@@ -12,7 +12,7 @@ describe('builder', () => {
   it('should reference instance-independant helpers', () => {
     should(parse).be.an.Object()
     should(simplify).be.an.Object()
-    parse.wb.entities.should.be.an.Function()
+    parse.entities.should.be.an.Function()
     // @ts-ignore
     simplify.labels.should.be.an.Function()
     isEntityId.should.be.a.Function()
@@ -104,15 +104,11 @@ describe('index', () => {
     wbk.truthyClaims.should.be.a.Function()
     wbk.truthyPropertyClaims.should.be.a.Function()
 
-    wbk.parse.wb.entities.should.be.an.Function()
+    wbk.parse.entities.should.be.an.Function()
 
-    wbk.parse.wb.should.be.an.Object()
-    wbk.parse.wb.entities.should.be.an.Function()
-    wbk.parse.wb.pagesTitles.should.be.an.Function()
-
-    // Legacy
-    wbk.parse.wd.should.be.an.Object()
-    wbk.parse.wd.entities.should.be.an.Function()
+    wbk.parse.should.be.an.Object()
+    wbk.parse.entities.should.be.an.Function()
+    wbk.parse.pagesTitles.should.be.an.Function()
 
     wbk.isEntityId.should.be.a.Function()
     wbk.isItemId.should.be.a.Function()

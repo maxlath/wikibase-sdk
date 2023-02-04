@@ -74,7 +74,7 @@ const url = wbk.cirrusSearchPages({ search: 'Ingmar Bergman' })
 
 const titles = await fetch(url)
   .then(res => res.json())
-  .then(wbk.parse.wb.pagesTitles)
+  .then(wbk.parse.pagesTitles)
 
 // If you where searching in an entity namespace, which is the default namespace on Wikibase instances,
 // those titles are either entities ids (ex: Q1) or prefixed entities ids (ex: Item:Q1)
