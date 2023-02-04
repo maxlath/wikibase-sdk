@@ -1,10 +1,12 @@
 import should from 'should'
-import { WBK, simplify, parse, isEntityId, getSitelinkData } from '../src/index.js'
+import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData } from '../src/index.js'
 import { instance, sparqlEndpoint } from './lib/tests_env.js'
 
 describe('builder', () => {
   it('should be a function', () => {
+    defaultWBK.should.be.a.Function()
     WBK.should.be.a.Function()
+    defaultWBK.should.equal(WBK)
   })
 
   it('should reference instance-independant helpers', () => {

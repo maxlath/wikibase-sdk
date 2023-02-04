@@ -1,4 +1,7 @@
-export { WBK } from './wikibase-sdk.js'
+import { WBK as _WBK } from './wikibase-sdk.js'
+
+export default _WBK
+export const WBK = _WBK
 export * from './helpers/helpers.js'
 export * from './helpers/rank.js'
 export * from './helpers/sitelinks.js'
