@@ -9,14 +9,14 @@
   * `getReverseClaims`: `getReverseClaims('P50', 'Q535')` should be replaced by `getReverseClaims({ properties: 'P50', values: 'Q535' })`
   * `getRevisions`: `getRevisions('Q3548931', { limit: 10 })` should be replaced by `getRevisions({ ids: 'Q3548931', { limit: 10 })`
 * Functions that were accepting arguments either as several arguments or as an object now only accept arguments as an object. The concerned functions are:
-  * `searchEntities`
-  * `cirrusSearchPages`
-  * `getEntitiesFromSitelinks`
-  * `getEntitiesFactory`
-  * `getEntityRevision`
-  * `getManyEntities`
-  * `getSitelinkUrl`
-  * `getReverseClaims`
+  * [`searchEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/search_entities.md)
+  * [`cirrusSearchPages`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/search_entities.md#cirrussearchpages)
+  * [`getEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities.md#by-ids)
+  * [`getEntitiesFromSitelinks`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities.md#by-sitelinks)
+  * [`getEntityRevision`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities.md#by-id-and-revision)
+  * [`getManyEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities.md#get-many-entities-by-ids)
+  * [`getSitelinkUrl`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/general_helpers.md#getsitelinkurl)
+  * [`getReverseClaims`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities_reverse_claims.md)
 * `simplify.claims`, `simplify.simplifyPropertyClaims`, and `simplify.claim` legacy interfaces were dropped: options are now expected in a single option object (rather than as several arguments)
 * Functions previously avaialble on `wbk.parsers.wb` and `wbk.parsers.wd` — namely `entities` and `pagesTitles` — are now directly on `wbk.parsers`
 
@@ -106,7 +106,7 @@ Other changes:
 * [`simplify.claims` custom `timeConverter`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_claims.md): allow to pass a custom time converter function ([PR by @simon04](https://github.com/maxlath/wikibase-sdk/pull/59))
 
 ## 6.6.0 - 2019-05-17
-* Added [`getEntityRevision`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/general_helpers.md#isrevisionid) helper function
+* Added [`getEntityRevision`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities.md#by-id-and-revision) helper function
 * Added [`isRevisionId`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/general_helpers.md#isrevisionid) helper function
 
 ## 6.5.0 - 2019-05-17
@@ -119,7 +119,7 @@ Other changes:
 * `simplify.claims`: Add support for `musical-notation` datatype
 
 ## 6.2.0 - 2019-04-03
-* Allow to set the `redirects` parameter in [`getEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities#by-ids), [`getManyEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities#get-many-entities-by-id), and [`getEntitiesFromSitelinks`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities#by-other-wikimedia-projects-titles) functions
+* Allow to set the `redirects` parameter in [`getEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities#by-ids), [`getManyEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities#get-many-entities-by-id), and [`getEntitiesFromSitelinks`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities.md#by-other-wikimedia-projects-titles) functions
 
 ## 6.1.0 - 2019-03-28
 * Added Typescript types ([6d0ae70](https://github.com/maxlath/wikibase-sdk/commit/bb22a6897593b0041c159b12e2ed5fa681702074)), thanks **[@EdJoPaTo](https://github.com/EdJoPaTo)** and **[@noinkling](https://github.com/noinkling)**!
