@@ -1,7 +1,5 @@
-import type { Dictionary } from './helper.js'
-
 export type SparqlValueRaw = string | number
-export type SparqlValueType = SparqlValueRaw | Dictionary<SparqlValueRaw>
+export type SparqlValueType = SparqlValueRaw | Record<string, SparqlValueRaw>
 
 export interface SparqlResults {
   head: {
@@ -12,4 +10,4 @@ export interface SparqlResults {
   };
 }
 
-export type SimplifiedSparqlResults = Dictionary<SparqlValueType>[] | SparqlValueRaw[]
+export type SimplifiedSparqlResults = Record<string, SparqlValueType>[] | SparqlValueRaw[]

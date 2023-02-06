@@ -1,11 +1,10 @@
 import type { Claims } from './claim.js'
 import type { FormId, ItemId, PropertyId, SenseId } from './entity.js'
-import type { TypedKeyDictionnary } from './helper.js'
 import type { SimplifiedClaims } from './simplify_claims.js'
 import type { Glosses, Representations, SimplifiedGlosses, SimplifiedRepresentations } from './terms.js'
 
-export type Forms = TypedKeyDictionnary<PropertyId, Form[]>
-export type Senses = TypedKeyDictionnary<PropertyId, Sense[]>
+export type Forms = Record<PropertyId, Form[]>
+export type Senses = Record<PropertyId, Sense[]>
 
 export interface Form {
   id: FormId;
@@ -20,8 +19,8 @@ export interface Sense {
   claims?: Claims;
 }
 
-export type SimplifiedForms = TypedKeyDictionnary<PropertyId, SimplifiedForm[]>
-export type SimplifiedSenses = TypedKeyDictionnary<PropertyId, SimplifiedSense[]>
+export type SimplifiedForms = Record<PropertyId, SimplifiedForm[]>
+export type SimplifiedSenses = Record<PropertyId, SimplifiedSense[]>
 
 export interface SimplifiedForm {
   id: FormId;

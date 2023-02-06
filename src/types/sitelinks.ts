@@ -1,6 +1,5 @@
 import { specialSites } from '../helpers/special_sites.js'
 import type { ItemId } from './entity.js'
-import type { TypedKeyDictionnary } from './helper.js'
 import type { Url } from './options.js'
 import type { sites } from '../helpers/sitelinks_sites.js'
 
@@ -15,6 +14,6 @@ export interface Sitelink {
   url?: Url;
 }
 
-export type Sitelinks = TypedKeyDictionnary<Site, Sitelink>
+export type Sitelinks = Record<Site, Sitelink>
 
-export type SimplifiedSitelinks = TypedKeyDictionnary<Site, string>
+export type SimplifiedSitelinks = Record<Site, string>

@@ -1,5 +1,4 @@
 import type { PropertyId } from './entity.js'
-import type { Dictionary, TypedKeyDictionnary } from './helper.js'
 import type { parsers } from '../helpers/parse_claim.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
@@ -19,8 +18,8 @@ export interface Claim {
 export type PropertyClaims = Claim[]
 export type PropertySnaks = Snak[]
 
-export type Claims = TypedKeyDictionnary<PropertyId, PropertyClaims>;
-export type Snaks = TypedKeyDictionnary<PropertyId, PropertySnaks>;
+export type Claims = Record<PropertyId, PropertyClaims>;
+export type Snaks = Record<PropertyId, PropertySnaks>;
 
 export interface Snak {
   // A mainsnak object won't have an id, as its already on the claim
@@ -64,7 +63,7 @@ export interface Qualifier extends Snak {
 
 export type PropertyQualifiers = Qualifier[]
 
-export type Qualifiers = TypedKeyDictionnary<PropertyId, PropertyQualifiers>
+export type Qualifiers = Record<PropertyId, PropertyQualifiers>
 
 export interface ReferenceSnak extends Snak {
   id: string;
@@ -72,7 +71,7 @@ export interface ReferenceSnak extends Snak {
 
 export interface Reference {
   hash: string;
-  snaks: Dictionary<ReferenceSnak[]>;
+  snaks: Record<PropertyId, ReferenceSnak[]>;
   'snaks-order': string[];
 }
 

@@ -1,4 +1,3 @@
-import type { Dictionary } from './helper.js'
 import type { SimplifySnaksOptions } from './simplify_claims.js'
 import type { languages } from '../helpers/sitelinks_languages.js'
 
@@ -12,7 +11,7 @@ export type Props = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'label
 export type UrlResultFormat = 'xml' | 'json';
 export type WmLanguageCode = typeof languages[number]
 
-export type ApiQueryParameters = Dictionary<string | number>
+export type ApiQueryParameters = Record<string, string | number>
 
 // export type Url = `http${string}`
 export type Url = string

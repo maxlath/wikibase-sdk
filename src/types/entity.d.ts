@@ -1,5 +1,4 @@
 import type { Claims, DataType } from './claim.js'
-import type { TypedKeyDictionnary } from './helper.js'
 import type { Forms, Senses, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
 import type { SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
@@ -19,7 +18,7 @@ export type NamedspacedEntityId = `${string}:${EntityId}`
 export type Guid = string
 
 export type Entity = (Property | Item | Lexeme)
-export type Entities = TypedKeyDictionnary<EntityId, Entity>
+export type Entities = Record<EntityId, Entity>
 
 export interface Property extends EntityInfo {
   id: PropertyId,
@@ -95,4 +94,4 @@ export interface SimplifiedLexeme extends SimplifiedEntityInfo {
 }
 
 export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme
-export type SimplifiedEntities = TypedKeyDictionnary<EntityId, SimplifiedEntity>
+export type SimplifiedEntities = Record<EntityId, SimplifiedEntity>

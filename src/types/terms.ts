@@ -1,4 +1,3 @@
-import type { TypedKeyDictionnary } from './helper.js'
 import type { WmLanguageCode } from './options.js'
 
 export interface Term {
@@ -6,8 +5,8 @@ export interface Term {
   value: string;
 }
 
-export type SingleTermDictonary = TypedKeyDictionnary<WmLanguageCode, Term>;
-export type MultiTermsDictonary = TypedKeyDictionnary<WmLanguageCode, Term[]>;
+export type SingleTermDictonary = Record<WmLanguageCode, Term>;
+export type MultiTermsDictonary = Record<WmLanguageCode, Term[]>;
 
 export type Labels = SingleTermDictonary
 export type Descriptions = SingleTermDictonary
@@ -18,8 +17,8 @@ export type Glosses = SingleTermDictonary
 
 export type SimplifiedTerm = string
 
-export type SimplifiedSingleTermDictonary = TypedKeyDictionnary<WmLanguageCode, SimplifiedTerm>;
-export type SimplifiedMultiTermsDictonary = TypedKeyDictionnary<WmLanguageCode, SimplifiedTerm[]>;
+export type SimplifiedSingleTermDictonary = Record<WmLanguageCode, SimplifiedTerm>;
+export type SimplifiedMultiTermsDictonary = Record<WmLanguageCode, SimplifiedTerm[]>;
 
 export type SimplifiedLabels = SimplifiedSingleTermDictonary
 export type SimplifiedDescriptions = SimplifiedSingleTermDictonary
