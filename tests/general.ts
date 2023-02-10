@@ -1,5 +1,5 @@
 import should from 'should'
-import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData } from '../src/index.js'
+import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData, simplifySparqlResults } from '../src/index.js'
 import { instance, sparqlEndpoint } from './lib/tests_env.js'
 
 describe('builder', () => {
@@ -14,6 +14,7 @@ describe('builder', () => {
     should(simplify).be.an.Object()
     parse.entities.should.be.a.Function()
     simplify.labels.should.be.a.Function()
+    simplifySparqlResults.should.be.a.Function()
     isEntityId.should.be.a.Function()
     getSitelinkData.should.be.a.Function()
   })
