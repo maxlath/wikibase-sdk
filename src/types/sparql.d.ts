@@ -1,4 +1,4 @@
-export type SparqlValueRaw = string | number
+export type SparqlValueRaw = string | number | boolean
 export type SparqlValueType = SparqlValueRaw | Record<string, SparqlValueRaw>
 
 export interface SparqlResults {

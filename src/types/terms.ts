@@ -1,28 +1,24 @@
 import type { WmLanguageCode } from './options.js'
 
-export interface Term {
-  language: WmLanguageCode;
-  value: string;
+type WmLanguageRecord<V> = Partial<Readonly<Record<WmLanguageCode, V>>>
+
+export type Term = {
+  readonly language: WmLanguageCode
+  readonly value: string
 }
 
-export type SingleTermDictonary = Record<WmLanguageCode, Term>;
-export type MultiTermsDictonary = Record<WmLanguageCode, Term[]>;
-
-export type Labels = SingleTermDictonary
-export type Descriptions = SingleTermDictonary
-export type Aliases = MultiTermsDictonary
-export type Lemmas = SingleTermDictonary
-export type Representations = SingleTermDictonary
-export type Glosses = SingleTermDictonary
+export type Labels = WmLanguageRecord<Term>
+export type Descriptions = WmLanguageRecord<Term>
+export type Aliases = WmLanguageRecord<readonly Term[]>
+export type Lemmas = WmLanguageRecord<Term>
+export type Representations = WmLanguageRecord<Term>
+export type Glosses = WmLanguageRecord<Term>
 
 export type SimplifiedTerm = string
 
-export type SimplifiedSingleTermDictonary = Record<WmLanguageCode, SimplifiedTerm>;
-export type SimplifiedMultiTermsDictonary = Record<WmLanguageCode, SimplifiedTerm[]>;
-
-export type SimplifiedLabels = SimplifiedSingleTermDictonary
-export type SimplifiedDescriptions = SimplifiedSingleTermDictonary
-export type SimplifiedAliases = SimplifiedMultiTermsDictonary
-export type SimplifiedLemmas = SimplifiedSingleTermDictonary
-export type SimplifiedRepresentations = SimplifiedSingleTermDictonary
-export type SimplifiedGlosses = SimplifiedSingleTermDictonary
+export type SimplifiedLabels = WmLanguageRecord<SimplifiedTerm>
+export type SimplifiedDescriptions = WmLanguageRecord<SimplifiedTerm>
+export type SimplifiedAliases = WmLanguageRecord<readonly SimplifiedTerm[]>
+export type SimplifiedLemmas = WmLanguageRecord<SimplifiedTerm>
+export type SimplifiedRepresentations = WmLanguageRecord<SimplifiedTerm>
+export type SimplifiedGlosses = WmLanguageRecord<SimplifiedTerm>

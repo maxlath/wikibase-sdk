@@ -1,22 +1,27 @@
+import type { WmLanguageCode } from '../types/options.js'
 import type { Aliases, Descriptions, Glosses, Labels, Lemmas, Representations, SimplifiedAliases, SimplifiedDescriptions, SimplifiedGlosses, SimplifiedLabels, SimplifiedLemmas, SimplifiedRepresentations } from '../types/terms.js'
 
-const simplifyTextAttributes = multivalue => data => {
-  const simplified = {}
-  Object.keys(data).forEach(lang => {
-    const obj = data[lang]
-    if (obj != null) {
-      simplified[lang] = multivalue ? obj.map(getValue) : obj.value
-    } else {
-      simplified[lang] = multivalue ? [] : null
-    }
-  })
+type InValue<T> = { readonly value: T }
+
+function singleValue<V> (
+  data: Partial<Readonly<Record<WmLanguageCode, InValue<V>>>>
+) {
+  const simplified: Partial<Record<WmLanguageCode, V>> = {}
+  for (const [ lang, obj ] of Object.entries(data)) {
+    simplified[lang] = obj != null ? obj.value : null
+  }
   return simplified
 }
 
-const getValue = obj => obj.value
-
-const singleValue = simplifyTextAttributes(false)
-const multiValue = simplifyTextAttributes(true)
+function multiValue<V> (
+  data: Partial<Readonly<Record<WmLanguageCode, ReadonlyArray<InValue<V>>>>>
+) {
+  const simplified: Partial<Record<WmLanguageCode, readonly V[]>> = {}
+  for (const [ lang, obj ] of Object.entries(data)) {
+    simplified[lang] = obj != null ? obj.map(o => o.value) : []
+  }
+  return simplified
+}
 
 export function simplifyLabels (labels: Labels): SimplifiedLabels {
   return singleValue(labels)

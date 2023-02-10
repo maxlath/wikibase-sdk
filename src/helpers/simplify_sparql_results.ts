@@ -1,7 +1,7 @@
 import type { SimplifiedSparqlResults, SparqlResults } from '../types/sparql.js'
 
-interface SimplifySparqlResultsOptions {
-  minimize?: boolean;
+export type SimplifySparqlResultsOptions = {
+  readonly minimize?: boolean;
 }
 
 export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}): SimplifiedSparqlResults {
@@ -15,61 +15,57 @@ export function simplifySparqlResults (input: SparqlResults, options: SimplifySp
   if (vars.length === 1 && options.minimize === true) {
     const varName = vars[0]
     return results
-    .map(result => parseValue(result[varName]))
-    // filtering-out bnodes
-    .filter(result => result != null)
+      .map(result => parseValue(result[varName]))
+      // filtering-out bnodes
+      .filter(result => result != null)
   }
 
   const { richVars, associatedVars, standaloneVars } = identifyVars(vars)
   return results.map(getSimplifiedResult(richVars, associatedVars, standaloneVars))
 }
 
-const parseValue = valueObj => {
-  if (!(valueObj)) return
-  let { datatype } = valueObj
-  datatype = datatype && datatype.replace('http://www.w3.org/2001/XMLSchema#', '')
-  const parser = parsers[valueObj.type] || getDatatypesParsers(datatype)
-  return parser(valueObj)
+type ValueObj = {
+  readonly type: 'uri' | 'bnode'
+  readonly datatype?: string
+  readonly value: string
 }
 
-const parsers = {
-  uri: valueObj => parseUri(valueObj.value),
+function parseValue (valueObj: ValueObj | undefined): string | number | boolean | null {
   // blank nodes will be filtered-out in order to get things simple
-  bnode: () => null,
+  if (!valueObj || valueObj.type === 'bnode') return null
+
+  const { value } = valueObj
+
+  if (valueObj.type === 'uri') return parseUri(value)
+
+  const datatype = (valueObj.datatype || '').replace('http://www.w3.org/2001/XMLSchema#', '')
+
+  if (datatype === 'decimal' || datatype === 'integer' || datatype === 'float' || datatype === 'double') {
+    return parseFloat(value)
+  }
+
+  if (datatype === 'boolean') {
+    return value === 'true'
+  }
+
+  // return the raw value if the datatype is missing
+  return value
 }
 
-const numberParser = valueObj => parseFloat(valueObj.value)
-
-const getDatatypesParsers = datatype => {
-  datatype = datatype && datatype.replace('http://www.w3.org/2001/XMLSchema#', '')
-  return datatypesParsers[datatype] || passValue
-}
-
-const datatypesParsers = {
-  decimal: numberParser,
-  integer: numberParser,
-  float: numberParser,
-  double: numberParser,
-  boolean: valueObj => valueObj.value === 'true',
-}
-
-// return the raw value if the datatype is missing
-const passValue = valueObj => valueObj.value
-
-const parseUri = uri => {
+function parseUri (uri: string) {
   // ex: http://www.wikidata.org/entity/statement/
   if (uri.match(/http.*\/entity\/statement\//)) {
     return convertStatementUriToGuid(uri)
   }
 
   return uri
-  // ex: http://www.wikidata.org/entity/
-  .replace(/^https?:\/\/.*\/entity\//, '')
-  // ex: http://www.wikidata.org/prop/direct/
-  .replace(/^https?:\/\/.*\/prop\/direct\//, '')
+    // ex: http://www.wikidata.org/entity/
+    .replace(/^https?:\/\/.*\/entity\//, '')
+    // ex: http://www.wikidata.org/prop/direct/
+    .replace(/^https?:\/\/.*\/prop\/direct\//, '')
 }
 
-const convertStatementUriToGuid = uri => {
+function convertStatementUriToGuid (uri: string) {
   // ex: http://www.wikidata.org/entity/statement/
   uri = uri.replace(/^https?:\/\/.*\/entity\/statement\//, '')
   const parts = uri.split('-')
