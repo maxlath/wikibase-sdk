@@ -1,7 +1,7 @@
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, References, Snak, Snaks } from './claim.js'
 import type { Entities, Entity, EntityId, Guid, SimplifiedEntities, SimplifiedEntity } from './entity.js'
 import type { Form, Forms, Sense, Senses, SimplifiedForm, SimplifiedForms, SimplifiedSense, SimplifiedSenses } from './lexeme.js'
-import type { Url } from './options.js'
+import type { SimplifyEntityOptions, Url } from './options.js'
 import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertyQualifiers, SimplifiedQualifier, SimplifiedQualifiers } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Site, Sitelinks } from './sitelinks.js'
 import type { SimplifiedSparqlResults, SparqlResults } from './sparql.js'
@@ -61,8 +61,8 @@ export interface Wbk {
     sense (sense: Sense): SimplifiedSense;
     senses (senses: Senses): SimplifiedSenses;
     sparqlResults (sparqlResults: SparqlResults): SimplifiedSparqlResults;
-    entity (entity: Entity): SimplifiedEntity;
-    entities (entities: Entities): SimplifiedEntities;
+    entity (entity: Entity, options: SimplifyEntityOptions): SimplifiedEntity;
+    entities (entities: Entities, options: SimplifyEntityOptions): SimplifiedEntities;
   };
 
   parse: {
