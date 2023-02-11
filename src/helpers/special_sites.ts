@@ -5,4 +5,4 @@ export const specialSites = {
   specieswiki: 'specieswiki',
   wikidatawiki: 'wikidata',
   wikimaniawiki: 'wikimania',
-}
+} as const
