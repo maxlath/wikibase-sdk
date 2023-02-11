@@ -5,10 +5,16 @@
   "description": "utils functions to query a Wikibase instance and simplify its results",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js",
-    "./wikidata.org": "./dist/wellknown/wikidata.org.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./wikidata.org": {
+      "types": "./dist/wellknown/wikidata.org.d.ts",
+      "import": "./dist/wellknown/wikidata.org.js"
+    }
   },
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "src",
     "dist"
