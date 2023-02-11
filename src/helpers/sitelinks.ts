@@ -7,8 +7,8 @@ import type { Site } from '../types/sitelinks.js'
 const wikidataBase = 'https://www.wikidata.org/wiki/'
 
 export interface GetSitelinkUrlOptions {
-  site: Site;
-  title: string;
+  site: Site
+  title: string
 }
 
 export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
@@ -52,11 +52,11 @@ const prefixByEntityLetter = {
 const sitelinkUrlPattern = /^https?:\/\/([\w-]{2,10})\.(\w+)\.org\/\w+\/(.*)/
 
 export interface SitelinkData {
-  lang: WmLanguageCode;
-  project: Project;
-  key: string;
-  title?: string;
-  url?: Url;
+  lang: WmLanguageCode
+  project: Project
+  key: string
+  title?: string
+  url?: Url
 }
 
 export function getSitelinkData (site: Site | Url): SitelinkData {

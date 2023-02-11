@@ -11,11 +11,11 @@ import type { Url } from '../types/options.js'
 const itemsOnly = 'FILTER NOT EXISTS { ?subject rdf:type wikibase:Property . } '
 
 export interface GetReverseClaimsOptions {
-  properties: PropertyId | PropertyId[];
-  values: string | number | string[] | number[];
-  limit?: number;
-  caseInsensitive?: boolean;
-  keepProperties?: boolean;
+  properties: PropertyId | PropertyId[]
+  values: string | number | string[] | number[]
+  limit?: number
+  caseInsensitive?: boolean
+  keepProperties?: boolean
 }
 
 export const getReverseClaimsFactory = sparqlEndpoint => {

@@ -7,15 +7,15 @@ import type { URLFormatOptions } from 'url'
 // See https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
 
 export interface GetRevisionsOptions {
-  ids: EntityId | EntityId[] | NamedspacedEntityId | NamedspacedEntityId[];
-  format?: URLFormatOptions ;
-  limit?: number;
-  start?: Date | string | number;
-  end?: Date | string | number;
-  prop?: string | string[];
-  user?: string;
-  excludeuser?: string;
-  tag?: string;
+  ids: EntityId | EntityId[] | NamedspacedEntityId | NamedspacedEntityId[]
+  format?: URLFormatOptions
+  limit?: number
+  start?: Date | string | number
+  end?: Date | string | number
+  prop?: string | string[]
+  user?: string
+  excludeuser?: string
+  tag?: string
 }
 
 export function getRevisionsFactory (buildUrl: BuildUrlFunction) {

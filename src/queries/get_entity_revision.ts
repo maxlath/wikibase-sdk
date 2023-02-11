@@ -4,8 +4,8 @@ import type { EntityId } from '../types/entity.js'
 import type { Url } from '../types/options.js'
 
 export interface GetEntityRevisionOptions {
-  id: EntityId;
-  revision: `${number}`;
+  id: EntityId
+  revision: `${number}`
 }
 
 export function getEntityRevisionFactory (instance, wgScriptPath) {

@@ -6,59 +6,59 @@ export type SnakType = 'value' | 'somevalue' | 'novalue'
 export type DataType = keyof typeof parsers
 
 export interface Claim {
-  id: string;
-  mainsnak: Snak;
-  rank: Rank;
-  type: DataType;
-  qualifiers?: Qualifiers;
-  'qualifiers-order'?: string[];
-  references?: Reference[];
+  id: string
+  mainsnak: Snak
+  rank: Rank
+  type: DataType
+  qualifiers?: Qualifiers
+  'qualifiers-order'?: string[]
+  references?: Reference[]
 }
 
 export type PropertyClaims = Claim[]
 export type PropertySnaks = Snak[]
 
-export type Claims = Record<PropertyId, PropertyClaims>;
-export type Snaks = Record<PropertyId, PropertySnaks>;
+export type Claims = Record<PropertyId, PropertyClaims>
+export type Snaks = Record<PropertyId, PropertySnaks>
 
 export interface Snak {
   // A mainsnak object won't have an id, as its already on the claim
-  id?: string;
-  datatype: string;
-  datavalue?: SnakValue;
-  hash: string;
-  property: string;
-  snaktype: SnakType;
+  id?: string
+  datatype: string
+  datavalue?: SnakValue
+  hash: string
+  property: string
+  snaktype: SnakType
 }
 
 export interface SnakValue {
-  type: DataType;
-  value: unknown;
+  type: DataType
+  value: unknown
 }
 
 export interface ClaimSnakTimeValue extends SnakValue {
-  type: 'time';
+  type: 'time'
   value: {
-    after: number;
-    before: number;
-    calendermodel: string;
-    precision: number;
-    time: string;
-    timezone: number;
-  };
+    after: number
+    before: number
+    calendermodel: string
+    precision: number
+    time: string
+    timezone: number
+  }
 }
 
 export interface SnakEntityValue extends SnakValue {
-  type: 'wikibase-entityid';
+  type: 'wikibase-entityid'
   value: {
-    id: string;
-    'numeric-id': number;
-    'entity-type': string;
-  };
+    id: string
+    'numeric-id': number
+    'entity-type': string
+  }
 }
 
 export interface Qualifier extends Snak {
-  id: string;
+  id: string
 }
 
 export type PropertyQualifiers = Qualifier[]
@@ -66,13 +66,13 @@ export type PropertyQualifiers = Qualifier[]
 export type Qualifiers = Record<PropertyId, PropertyQualifiers>
 
 export interface ReferenceSnak extends Snak {
-  id: string;
+  id: string
 }
 
 export interface Reference {
-  hash: string;
-  snaks: Record<PropertyId, ReferenceSnak[]>;
-  'snaks-order': string[];
+  hash: string
+  snaks: Record<PropertyId, ReferenceSnak[]>
+  'snaks-order': string[]
 }
 
 export type References = Reference[]

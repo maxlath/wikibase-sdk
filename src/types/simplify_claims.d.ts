@@ -3,34 +3,34 @@ import type { Guid, PropertyId } from './entity.js'
 import type { timeConverters } from '../helpers/parse_claim.js'
 
 export interface SimplifySnakOptions {
-  entityPrefix?: string;
-  propertyPrefix?: string;
-  keepRichValues?: boolean;
-  keepTypes?: boolean;
-  keepQualifiers?: boolean;
-  keepReferences?: boolean;
-  keepIds?: boolean;
-  keepHashes?: boolean;
-  keepRanks?: boolean;
-  keepSnaktypes?: boolean;
-  keepAll?: boolean;
-  timeConverter?: keyof typeof timeConverters;
-  novalueValue?: any;
-  somevalueValue?: any;
+  entityPrefix?: string
+  propertyPrefix?: string
+  keepRichValues?: boolean
+  keepTypes?: boolean
+  keepQualifiers?: boolean
+  keepReferences?: boolean
+  keepIds?: boolean
+  keepHashes?: boolean
+  keepRanks?: boolean
+  keepSnaktypes?: boolean
+  keepAll?: boolean
+  timeConverter?: keyof typeof timeConverters
+  novalueValue?: any
+  somevalueValue?: any
 }
 
 export interface SimplifySnaksOptions extends SimplifySnakOptions {
-  keepNonTruthy?: boolean;
-  keepNonDeprecated?: boolean;
+  keepNonTruthy?: boolean
+  keepNonDeprecated?: boolean
 }
 
 export type SimplifyClaimsOptions = SimplifySnaksOptions
 
 export interface CustomSimplifiedClaim extends CustomSimplifiedSnak {
-  id: Guid;
-  rank?: Rank;
-  qualifiers?: SimplifiedQualifiers;
-  references?: SimplifiedReferences;
+  id: Guid
+  rank?: Rank
+  qualifiers?: SimplifiedQualifiers
+  references?: SimplifiedReferences
 }
 export type SimplifiedPropertyClaims = SimplifiedClaim[]
 export type SimplifiedPropertySnaks = SimplifiedSnak[]
@@ -54,7 +54,7 @@ export type SimplifiedSnak = string | number | CustomSimplifiedSnak
 export type SimplifiedClaim = string | number | CustomSimplifiedClaim
 
 export interface CustomSimplifiedSnak {
-  id: string;
-  type?: DataType;
-  value: unknown;
+  id: string
+  type?: DataType
+  value: unknown
 }

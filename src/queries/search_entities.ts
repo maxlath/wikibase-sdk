@@ -6,13 +6,13 @@ import type { BuildUrlFunction } from '../utils/build_url.js'
 const types = [ 'item', 'property', 'lexeme', 'form', 'sense' ]
 
 export interface SearchEntitiesOptions {
-  search: string;
-  language?: string;
-  limit?: string | number;
-  continue?: string | number;
-  format?: UrlResultFormat;
-  uselang?: string;
-  type?: EntityType;
+  search: string
+  language?: string
+  limit?: string | number
+  continue?: string | number
+  format?: UrlResultFormat
+  uselang?: string
+  type?: EntityType
 }
 
 export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {

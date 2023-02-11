@@ -4,11 +4,11 @@ import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/optio
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 export interface GetEntitiesOptions {
-  ids: string | string[];
-  languages?: WmLanguageCode | WmLanguageCode[];
-  props?: Props | Props[];
-  format?: UrlResultFormat;
-  redirects?: boolean;
+  ids: string | string[]
+  languages?: WmLanguageCode | WmLanguageCode[]
+  props?: Props | Props[]
+  format?: UrlResultFormat
+  redirects?: boolean
 }
 
 export function getEntitiesFactory (buildUrl: BuildUrlFunction) {

@@ -21,85 +21,85 @@ import type { SimplifiedPropertySnaks, SimplifiedReferences, SimplifiedSnak, Sim
 
 export interface Wbk {
   instance: {
-    root: Url;
-    apiEndpoint: Url;
-  };
+    root: Url
+    apiEndpoint: Url
+  }
 
   // API Queries
-  searchEntities (options: SearchEntitiesOptions): Url;
-  cirrusSearchPages (options: CirrusSearchPagesOptions): Url;
-  getEntities (options: GetEntitiesOptions): Url;
-  getManyEntities (options: GetManyEntitiesOptions): Url[];
-  getRevisions (options: GetRevisionsOptions): Url;
-  getEntityRevision (options: GetEntityRevisionOptions): Url;
-  getEntitiesFromSitelinks (options: GetEntitiesFromSitelinksOptions): Url;
+  searchEntities (options: SearchEntitiesOptions): Url
+  cirrusSearchPages (options: CirrusSearchPagesOptions): Url
+  getEntities (options: GetEntitiesOptions): Url
+  getManyEntities (options: GetManyEntitiesOptions): Url[]
+  getRevisions (options: GetRevisionsOptions): Url
+  getEntityRevision (options: GetEntityRevisionOptions): Url
+  getEntitiesFromSitelinks (options: GetEntitiesFromSitelinksOptions): Url
 
   // SPARQL Queries
-  sparqlQuery (sparql: string): Url;
+  sparqlQuery (sparql: string): Url
   getReverseClaims (options: GetReverseClaimsOptions): Url
 
   simplify: {
-    labels (labels: Labels): SimplifiedLabels;
-    descriptions (descriptions: Descriptions): SimplifiedDescriptions;
-    aliases (aliases: Aliases): SimplifiedAliases;
-    claim (claim: Claim): SimplifiedClaim;
-    propertyClaims (propertyClaims: PropertyClaims): SimplifiedPropertyClaims;
-    claims (claims: Claims): SimplifiedClaims;
-    qualifier (qualifier: Qualifier): SimplifiedQualifier;
-    propertyQualifiers (propertyQualifiers: PropertyQualifiers): SimplifiedPropertyQualifiers;
-    qualifiers (qualifiers: Qualifiers): SimplifiedQualifiers;
-    references (references: References): SimplifiedReferences;
-    sitelinks (sitelinks: Sitelinks): SimplifiedSitelinks;
-    snak (snak: Snak): SimplifiedSnak;
-    propertySnaks (propertySnaks: PropertySnaks): SimplifiedPropertySnaks;
-    snaks (snaks: Snaks): SimplifiedSnaks;
-    lemmas (lemmas: Lemmas): SimplifiedLemmas;
-    representations (representations: Representations): SimplifiedRepresentations;
-    glosses (glosses: Glosses): SimplifiedGlosses;
-    form (form: Form): SimplifiedForm;
-    forms (forms: Forms): SimplifiedForms;
-    sense (sense: Sense): SimplifiedSense;
-    senses (senses: Senses): SimplifiedSenses;
-    sparqlResults (sparqlResults: SparqlResults): SimplifiedSparqlResults;
-    entity (entity: Entity, options: SimplifyEntityOptions): SimplifiedEntity;
-    entities (entities: Entities, options: SimplifyEntityOptions): SimplifiedEntities;
-  };
+    labels (labels: Labels): SimplifiedLabels
+    descriptions (descriptions: Descriptions): SimplifiedDescriptions
+    aliases (aliases: Aliases): SimplifiedAliases
+    claim (claim: Claim): SimplifiedClaim
+    propertyClaims (propertyClaims: PropertyClaims): SimplifiedPropertyClaims
+    claims (claims: Claims): SimplifiedClaims
+    qualifier (qualifier: Qualifier): SimplifiedQualifier
+    propertyQualifiers (propertyQualifiers: PropertyQualifiers): SimplifiedPropertyQualifiers
+    qualifiers (qualifiers: Qualifiers): SimplifiedQualifiers
+    references (references: References): SimplifiedReferences
+    sitelinks (sitelinks: Sitelinks): SimplifiedSitelinks
+    snak (snak: Snak): SimplifiedSnak
+    propertySnaks (propertySnaks: PropertySnaks): SimplifiedPropertySnaks
+    snaks (snaks: Snaks): SimplifiedSnaks
+    lemmas (lemmas: Lemmas): SimplifiedLemmas
+    representations (representations: Representations): SimplifiedRepresentations
+    glosses (glosses: Glosses): SimplifiedGlosses
+    form (form: Form): SimplifiedForm
+    forms (forms: Forms): SimplifiedForms
+    sense (sense: Sense): SimplifiedSense
+    senses (senses: Senses): SimplifiedSenses
+    sparqlResults (sparqlResults: SparqlResults): SimplifiedSparqlResults
+    entity (entity: Entity, options: SimplifyEntityOptions): SimplifiedEntity
+    entities (entities: Entities, options: SimplifyEntityOptions): SimplifiedEntities
+  }
 
   parse: {
-    entities (res: WbGetEntitiesResponse): SimplifiedEntities;
-    pagesTitles (res: CirrusSearchPagesResponse): Titles;
+    entities (res: WbGetEntitiesResponse): SimplifiedEntities
+    pagesTitles (res: CirrusSearchPagesResponse): Titles
   },
 
   // Helpers
-  getEntityIdFromGuid (guid: Guid): EntityId;
-  getImageUrl (filename: string, width?: number): Url;
-  getNumericId (id: string): string;
-  isEntityId (str: string): boolean;
-  isEntityPageTitle (str: string): boolean;
-  isEntitySchemaId (str: string): boolean;
-  isFormId (str: string): boolean;
-  isGuid (str: string): boolean;
-  isHash (str: string): boolean;
-  isItemId (str: string): boolean;
-  isLexemeId (str: string): boolean;
-  isNumericId (str: string): boolean;
-  isPropertyClaimsId (str: string): boolean;
-  isPropertyId (str: string): boolean;
-  isRevisionId (str: string): boolean;
-  isSenseId (str: string): boolean;
+  getEntityIdFromGuid (guid: Guid): EntityId
+  getImageUrl (filename: string, width?: number): Url
+  getNumericId (id: string): string
+  isEntityId (str: string): boolean
+  isEntityPageTitle (str: string): boolean
+  isEntitySchemaId (str: string): boolean
+  isFormId (str: string): boolean
+  isGuid (str: string): boolean
+  isHash (str: string): boolean
+  isItemId (str: string): boolean
+  isLexemeId (str: string): boolean
+  isNumericId (str: string): boolean
+  isPropertyClaimsId (str: string): boolean
+  isPropertyId (str: string): boolean
+  isRevisionId (str: string): boolean
+  isSenseId (str: string): boolean
 
-  wikibaseTimeToEpochTime (wikibaseTime: TimeInputValue): number;
-  wikibaseTimeToISOString (wikibaseTime: TimeInputValue): string;
-  wikibaseTimeToSimpleDay (wikibaseTime: TimeInputValue): string;
-  wikibaseTimeToDateObject (wikibaseTime: TimeInputValue): Date;
+  wikibaseTimeToEpochTime (wikibaseTime: TimeInputValue): number
+  wikibaseTimeToISOString (wikibaseTime: TimeInputValue): string
+  wikibaseTimeToSimpleDay (wikibaseTime: TimeInputValue): string
+  wikibaseTimeToDateObject (wikibaseTime: TimeInputValue): Date
 
   // Sitelinks helpers
-  getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url;
-  getSitelinkData (site: Site | Url): SitelinkData;
-  isSitelinkKey (str: string): boolean;
+  getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url
+  getSitelinkData (site: Site | Url): SitelinkData
+  isSitelinkKey (str: string): boolean
 
   // Ranks helpers
-  truthyPropertyClaims (propertyClaims: PropertyClaims): PropertyClaims;
-  nonDeprecatedPropertyClaims (propertyClaims: PropertyClaims): PropertyClaims;
-  truthyClaims (claims: Claims): Claims;
+  truthyPropertyClaims (propertyClaims: PropertyClaims): PropertyClaims
+  nonDeprecatedPropertyClaims (propertyClaims: PropertyClaims): PropertyClaims
+  truthyClaims (claims: Claims): Claims
 }

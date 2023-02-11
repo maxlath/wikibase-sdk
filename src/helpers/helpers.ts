@@ -57,8 +57,8 @@ export function getNumericId (id: string): string {
 }
 
 export interface WikibaseTimeObject {
-  time: string;
-  precision: number;
+  time: string
+  precision: number
 }
 
 export type TimeInputValue = string | WikibaseTimeObject

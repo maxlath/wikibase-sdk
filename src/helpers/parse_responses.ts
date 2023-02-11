@@ -2,20 +2,20 @@ import { simplifyEntities } from './simplify_entity.js'
 import type { Entities, SimplifiedEntities } from '../types/entity.js'
 
 export interface WbGetEntitiesResponse {
-  entities: Entities;
+  entities: Entities
 }
 
 export type Title = string
 export type Titles = string[]
 
 export interface CirrusSearchResult {
-  title: Title;
+  title: Title
 }
 
 export interface CirrusSearchPagesResponse {
   query: {
-    search: CirrusSearchResult[];
-  };
+    search: CirrusSearchResult[]
+  }
 }
 
 export const parse = {

@@ -23,74 +23,74 @@ export type Entities = Record<EntityId, Entity>
 export interface Property extends EntityInfo {
   id: PropertyId,
   type: 'property',
-  datatype?: DataType;
-  labels?: Labels;
-  descriptions?: Descriptions;
-  aliases?: Aliases;
-  claims?: Claims;
+  datatype?: DataType
+  labels?: Labels
+  descriptions?: Descriptions
+  aliases?: Aliases
+  claims?: Claims
 }
 
 export interface Item extends EntityInfo {
   id: ItemId,
   type: 'item',
-  labels?: Labels;
-  descriptions?: Descriptions;
-  aliases?: Aliases;
-  claims?: Claims;
-  sitelinks?: Sitelinks;
+  labels?: Labels
+  descriptions?: Descriptions
+  aliases?: Aliases
+  claims?: Claims
+  sitelinks?: Sitelinks
 }
 
 export interface Lexeme extends EntityInfo {
   id: LexemeId,
   type: 'lexeme',
-  lexicalCategory: ItemId;
-  language: ItemId;
-  lemmas?: Lemmas;
-  forms?: Forms;
-  senses?: Senses;
+  lexicalCategory: ItemId
+  language: ItemId
+  lemmas?: Lemmas
+  forms?: Forms
+  senses?: Senses
 }
 
 export interface EntityInfo {
-  pageid?: number;
-  ns?: number;
-  title?: string;
-  lastrevid?: number;
-  modified?: string;
-  redirects?: { from: string, to: string };
+  pageid?: number
+  ns?: number
+  title?: string
+  lastrevid?: number
+  modified?: string
+  redirects?: { from: string, to: string }
 }
 
 export interface SimplifiedEntityInfo {
-  id: EntityId;
-  modified?: string;
+  id: EntityId
+  modified?: string
 }
 
 export interface SimplifiedItem extends SimplifiedEntityInfo {
   type: 'item',
-  labels?: SimplifiedLabels;
-  descriptions?: SimplifiedDescriptions;
-  aliases?: SimplifiedAliases;
-  claims?: SimplifiedClaims;
-  sitelinks?: SimplifiedSitelinks;
-  lexicalCategory: string;
+  labels?: SimplifiedLabels
+  descriptions?: SimplifiedDescriptions
+  aliases?: SimplifiedAliases
+  claims?: SimplifiedClaims
+  sitelinks?: SimplifiedSitelinks
+  lexicalCategory: string
 }
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo {
   type: 'item',
   datatype: DataType,
-  labels?: SimplifiedLabels;
-  descriptions?: SimplifiedDescriptions;
-  aliases?: SimplifiedAliases;
-  claims?: SimplifiedClaims;
-  lexicalCategory: string;
+  labels?: SimplifiedLabels
+  descriptions?: SimplifiedDescriptions
+  aliases?: SimplifiedAliases
+  claims?: SimplifiedClaims
+  lexicalCategory: string
 }
 
 export interface SimplifiedLexeme extends SimplifiedEntityInfo {
   type: 'item',
-  lexicalCategory: ItemId;
-  language: ItemId;
-  lemmas?: SimplifiedLemmas;
-  forms?: SimplifiedForms;
-  senses?: SimplifiedSenses;
+  lexicalCategory: ItemId
+  language: ItemId
+  lemmas?: SimplifiedLemmas
+  forms?: SimplifiedForms
+  senses?: SimplifiedSenses
 }
 
 export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme

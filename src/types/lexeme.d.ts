@@ -7,30 +7,30 @@ export type Forms = Record<PropertyId, Form[]>
 export type Senses = Record<PropertyId, Sense[]>
 
 export interface Form {
-  id: FormId;
-  representations?: Representations;
-  grammaticalFeatures?: ItemId[];
-  claims?: Claims;
+  id: FormId
+  representations?: Representations
+  grammaticalFeatures?: ItemId[]
+  claims?: Claims
 }
 
 export interface Sense {
-  id: SenseId;
-  glosses?: Glosses;
-  claims?: Claims;
+  id: SenseId
+  glosses?: Glosses
+  claims?: Claims
 }
 
 export type SimplifiedForms = Record<PropertyId, SimplifiedForm[]>
 export type SimplifiedSenses = Record<PropertyId, SimplifiedSense[]>
 
 export interface SimplifiedForm {
-  id: FormId;
-  representations?: SimplifiedRepresentations;
-  grammaticalFeatures?: ItemId[];
-  claims?: SimplifiedClaims;
+  id: FormId
+  representations?: SimplifiedRepresentations
+  grammaticalFeatures?: ItemId[]
+  claims?: SimplifiedClaims
 }
 
 export interface SimplifiedSense {
-  id: SenseId;
-  glosses?: SimplifiedGlosses;
-  claims?: SimplifiedClaims;
+  id: SenseId
+  glosses?: SimplifiedGlosses
+  claims?: SimplifiedClaims
 }

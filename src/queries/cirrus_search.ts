@@ -7,15 +7,15 @@ import type { BuildUrlFunction } from '../utils/build_url.js'
 const namespacePattern = /^\d+[|\d]*$/
 
 export interface CirrusSearchPagesOptions {
-  search?: string;
-  haswbstatement?: string | string[];
-  limit?: string | number;
-  offset?: string | number;
-  format?: UrlResultFormat;
-  profile?: string;
-  sort?: string;
-  namespace?: string | string[] | number | number[];
-  prop?: string | string[];
+  search?: string
+  haswbstatement?: string | string[]
+  limit?: string | number
+  offset?: string | number
+  format?: UrlResultFormat
+  profile?: string
+  sort?: string
+  namespace?: string | string[] | number | number[]
+  prop?: string | string[]
 }
 
 export function cirrusSearchPagesFactory (buildUrl: BuildUrlFunction) {

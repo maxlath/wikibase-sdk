@@ -3,11 +3,11 @@ export type SparqlValueType = SparqlValueRaw | Record<string, SparqlValueRaw>
 
 export interface SparqlResults {
   head: {
-    vars: string[];
-  };
+    vars: string[]
+  }
   results: {
-    bindings: unknown[];
-  };
+    bindings: unknown[]
+  }
 }
 
 export type SimplifiedSparqlResults = Record<string, SparqlValueType>[] | SparqlValueRaw[]
