@@ -8,11 +8,11 @@ export function buildUrlFactory (instanceApiEndpoint: Url): BuildUrlFunction {
     // See https://www.wikidata.org/w/api.php ('origin' parameter)
     if (isBrowser) queryObj.origin = '*'
 
-    const queryArray = Object.entries(queryObj)
+    const queryEntries = Object.entries(queryObj)
       // Remove null or undefined parameters
       .filter(([ _key, value ]) => value != null)
       .map(([ key, value ]) => [ key, String(value) ])
-    const query = new URLSearchParams(queryArray).toString()
+    const query = new URLSearchParams(queryEntries).toString()
     return instanceApiEndpoint + '?' + query
   }
 }
