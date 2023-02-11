@@ -10,7 +10,7 @@ export function buildUrlFactory (instanceApiEndpoint: Url): BuildUrlFunction {
 
     const queryEntries = Object.entries(queryObj)
       // Remove null or undefined parameters
-      .filter(([ _key, value ]) => value != null)
+      .filter(([ , value ]) => value != null)
       .map(([ key, value ]) => [ key, String(value) ])
     const query = new URLSearchParams(queryEntries).toString()
     return instanceApiEndpoint + '?' + query
