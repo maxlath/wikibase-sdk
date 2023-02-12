@@ -46,7 +46,7 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
 
     // Normalizing only works if there is only one site and title
     if (sites.length === 1 && titles.length === 1) {
-      query.normalize = '1'
+      query.normalize = true
     }
 
     if (languages) {
