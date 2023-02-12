@@ -1,6 +1,6 @@
 import type { UrlResultFormat } from './options.js'
 
-export type wbgetentities = {
+export type WbGetEntities = {
   action: 'wbgetentities',
   titles?: string,
   sites?: string,

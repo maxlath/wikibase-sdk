@@ -1,7 +1,7 @@
 import { forceArray, shortLang, rejectObsoleteInterface } from '../utils/utils.js'
 import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
-import type { wbgetentities } from '../types/wbgetentities.js'
+import type { WbGetEntities } from '../types/wbgetentities.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 export interface GetEntitiesFromSitelinksOptions {
@@ -37,7 +37,7 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
     // @ts-ignore
     props = forceArray(props)
 
-    const query: wbgetentities = {
+    const query: WbGetEntities = {
       action: 'wbgetentities',
       titles: titles.join('|'),
       sites: sites.join('|'),
