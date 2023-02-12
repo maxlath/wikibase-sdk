@@ -34,7 +34,6 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
     // either case me just want to deal with arrays
     titles = forceArray(titles)
     sites = forceArray(sites).map(parseSite)
-    // @ts-ignore
     props = forceArray(props)
 
     const query: WbGetEntities = {
@@ -54,7 +53,7 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
       query.languages = languages.join('|')
     }
 
-    if (props && props.length > 0 && typeof props === 'object') {
+    if (props.length > 0) {
       query.props = props.join('|')
     }
 

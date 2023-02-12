@@ -1,4 +1,5 @@
 import { wikibaseTimeToISOString, wikibaseTimeToEpochTime, wikibaseTimeToSimpleDay } from './helpers.js'
+import type { TimeInputValue } from './helpers.js'
 
 const simple = datavalue => datavalue.value
 
@@ -12,7 +13,7 @@ const entityLetter = {
   item: 'Q',
   lexeme: 'L',
   property: 'P',
-}
+} as const
 
 const prefixedId = (datavalue, prefix) => {
   const { value } = datavalue
@@ -73,8 +74,8 @@ export const timeConverters = {
   iso: wikibaseTimeToISOString,
   epoch: wikibaseTimeToEpochTime,
   'simple-day': wikibaseTimeToSimpleDay,
-  none: wikibaseTime => wikibaseTime.time || wikibaseTime,
-}
+  none: (wikibaseTime: TimeInputValue) => typeof wikibaseTime === 'string' ? wikibaseTime : wikibaseTime.time,
+} as const
 
 export const parsers = {
   commonsMedia: simple,
@@ -95,7 +96,7 @@ export const parsers = {
   'wikibase-lexeme': entity,
   'wikibase-property': entity,
   'wikibase-sense': entity,
-}
+} as const
 
 export function parseClaim (datatype, datavalue, options, claimId) {
   // Known case of missing datatype: form.claims, sense.claims

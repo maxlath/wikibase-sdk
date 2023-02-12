@@ -2,7 +2,7 @@ import { getSitelinkUrl } from './sitelinks.js'
 import type { SimplifySitelinkOptions } from '../types/options.js'
 import type { SimplifiedSitelinks, Sitelinks } from '../types/sitelinks.js'
 
-export default (sitelinks: Sitelinks, options: SimplifySitelinkOptions = {}): SimplifiedSitelinks => {
+export function simplifySitelinks (sitelinks: Sitelinks, options: SimplifySitelinkOptions = {}): SimplifiedSitelinks {
   let { addUrl, keepBadges, keepAll } = options
   keepBadges = keepBadges || keepAll
   return Object.keys(sitelinks).reduce(aggregateValues({

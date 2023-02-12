@@ -23,8 +23,7 @@ describe('utils', () => {
     })
 
     it('should return false for undefined', () => {
-      // @ts-ignore
-      isPlainObject().should.equal(false)
+      isPlainObject(undefined).should.equal(false)
     })
   })
 })

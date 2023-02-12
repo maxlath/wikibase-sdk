@@ -22,7 +22,7 @@ describe('wikidata getManyEntities', () => {
 
   describe('polymorphism', () => {
     it('should reject parameters as multiple arguments', () => {
-      // @ts-ignore
+      // @ts-expect-error
       (() => getManyEntities(manyIds, 'fr', 'info', 'json')).should.throw()
     })
 
@@ -46,7 +46,7 @@ describe('wikidata getManyEntities', () => {
 
   describe('ids', () => {
     it('should throw if passed an id string', () => {
-      // @ts-ignore
+      // @ts-expect-error
       (() => getManyEntities({ ids: 'Q535' })).should.throw()
     })
   })

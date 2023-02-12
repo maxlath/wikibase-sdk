@@ -17,15 +17,15 @@ export function wikibaseTimeToDateObject (wikibaseTime: TimeInputValue): Date {
   return fullDateData(sign, rest)
 }
 
-const fullDateData = (sign, rest) => {
+const fullDateData = (sign: string, rest: string) => {
   const year = rest.split('-')[0]
   const needsExpandedYear = sign === '-' || year.length > 4
 
   return needsExpandedYear ? expandedYearDate(sign, rest, year) : new Date(rest)
 }
 
-const expandedYearDate = (sign, rest, year) => {
-  let date
+const expandedYearDate = (sign: string, rest: string, year: string) => {
+  let date: string
   // Using ISO8601 expanded notation for negative years or positive
   // years with more than 4 digits: adding up to 2 leading zeros
   // when needed. Can't find the documentation again, but testing

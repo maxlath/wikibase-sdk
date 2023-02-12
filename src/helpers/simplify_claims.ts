@@ -6,7 +6,7 @@ import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, Simpl
 
 function simplifySnaks (snaks, options) {
   const { propertyPrefix } = options
-  const simplifiedSnaks = {}
+  const simplifiedSnaks: any = {}
   for (let id in snaks) {
     const propertySnaks = snaks[id]
     if (propertyPrefix) {
@@ -35,7 +35,8 @@ function simplifyPropertySnaks (propertySnaks, options) {
     .map(claim => simplifyClaim(claim, options))
     // Filter-out novalue and somevalue claims,
     // unless a novalueValue or a somevalueValue is passed in options
-    .filter(isDefined)
+    // Considers null as defined
+    .filter(obj => obj !== undefined)
 
   // Deduplicate values unless we return a rich value object
   if (propertySnaks[0] && typeof propertySnaks[0] !== 'object') {
@@ -44,9 +45,6 @@ function simplifyPropertySnaks (propertySnaks, options) {
     return propertySnaks
   }
 }
-
-// Considers null as defined
-const isDefined = obj => obj !== undefined
 
 // Expects a single snak object
 // Ex: entity.claims.P369[0]

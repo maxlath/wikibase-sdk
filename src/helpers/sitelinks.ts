@@ -1,6 +1,7 @@
-import { fixedEncodeURIComponent, replaceSpaceByUnderscores, rejectObsoleteInterface } from '../utils/utils.js'
+import { fixedEncodeURIComponent, isOfType, rejectObsoleteInterface, replaceSpaceByUnderscores } from '../utils/utils.js'
 import { languages } from './sitelinks_languages.js'
 import { specialSites } from './special_sites.js'
+import type { EntityId } from '../types/entity.js'
 import type { Url, WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
 
@@ -26,14 +27,14 @@ export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
   return `https://${lang}.${project}.org/wiki/${title}`
 }
 
-const wikimediaSite = subdomain => title => `https://${subdomain}.wikimedia.org/wiki/${title}`
+const wikimediaSite = (subdomain: string) => (title: string) => `https://${subdomain}.wikimedia.org/wiki/${title}`
 
 const siteUrlBuilders = {
   commons: wikimediaSite('commons'),
-  mediawiki: title => `https://www.mediawiki.org/wiki/${title}`,
+  mediawiki: (title: string) => `https://www.mediawiki.org/wiki/${title}`,
   meta: wikimediaSite('meta'),
   species: wikimediaSite('species'),
-  wikidata: entityId => {
+  wikidata: (entityId: EntityId) => {
     const prefix = prefixByEntityLetter[entityId[0]]
     let title = prefix ? `${prefix}:${entityId}` : entityId
     // Required for forms and senses
@@ -41,13 +42,13 @@ const siteUrlBuilders = {
     return `${wikidataBase}${title}`
   },
   wikimania: wikimediaSite('wikimania'),
-}
+} as const
 
 const prefixByEntityLetter = {
   E: 'EntitySchema',
   L: 'Lexeme',
   P: 'Property',
-}
+} as const
 
 const sitelinkUrlPattern = /^https?:\/\/([\w-]{2,10})\.(\w+)\.org\/\w+\/(.*)/
 
@@ -66,7 +67,7 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     if (!matchData) throw new Error(`invalid sitelink url: ${url}`)
     let [ lang, project, title ] = matchData.slice(1)
     title = decodeURIComponent(title)
-    let key
+    let key: string
     // Known case: wikidata, mediawiki
     if (lang === 'www') {
       lang = 'en'
@@ -79,20 +80,21 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
       lang = lang.replace(/-/g, '_')
       key = `${lang}${project}`.replace('wikipedia', 'wiki')
     }
-    // @ts-ignore
+    // @ts-expect-error
     return { lang, project, key, title, url }
   } else {
     const key = site
     const specialProjectName = specialSites[key]
-    if (specialProjectName) return { lang: 'en', project: specialProjectName, key }
+    if (specialProjectName) {
+      return { lang: 'en', project: specialProjectName, key }
+    }
 
     let [ lang, projectSuffix, rest ] = key.split('wik')
 
     // Detecting cases like 'frwikiwiki' that would return [ 'fr', 'i', 'i' ]
     if (rest != null) throw new Error(`invalid sitelink key: ${key}`)
 
-    // @ts-ignore
-    if (languages.indexOf(lang) === -1) {
+    if (!isOfType(languages, lang)) {
       throw new Error(`sitelink lang not found: ${lang}. Updating wikibase-sdk to a more recent version might fix the issue.`)
     }
 
@@ -102,7 +104,7 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     const project = projectsBySuffix[projectSuffix]
     if (!project) throw new Error(`sitelink project not found: ${project}`)
 
-    // @ts-ignore
+    // @ts-expect-error
     return { lang, project, key }
   }
 }
@@ -126,8 +128,11 @@ const projectsBySuffix = {
   iversity: 'wikiversity',
   ivoyage: 'wikivoyage',
   inews: 'wikinews',
-}
+} as const
 
-const projectsNames = Object.values(projectsBySuffix).concat(Object.values(specialSites))
+const projectNames = [
+  ...Object.values(projectsBySuffix),
+  ...Object.values(specialSites),
+] as const
 
-type Project = typeof projectsNames[number]
+export type Project = typeof projectNames[number]

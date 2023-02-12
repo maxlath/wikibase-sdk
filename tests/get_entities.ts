@@ -8,7 +8,7 @@ const getEntities = getEntitiesFactory(buildUrl)
 describe('wikidata getEntities', () => {
   describe('polymorphism', () => {
     it('rejects parameters as multiple arguments', () => {
-      // @ts-ignore
+      // @ts-expect-error
       (() => getEntities('Q1', 'fr', 'info', 'json')).should.throw()
     })
 

@@ -1,4 +1,4 @@
-import validate from '../helpers/validate.js'
+import * as validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface, shortLang } from '../utils/utils.js'
 import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
 import type { WbGetEntities } from '../types/wbgetentities.js'

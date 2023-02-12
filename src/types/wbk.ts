@@ -1,5 +1,5 @@
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, References, Snak, Snaks } from './claim.js'
-import type { Entities, Entity, EntityId, Guid, SimplifiedEntities, SimplifiedEntity } from './entity.js'
+import type { Entities, Entity, EntityId, EntityPageTitle, EntitySchemaId, FormId, Guid, Hash, ItemId, LexemeId, NumericId, PropertyClaimsId, PropertyId, RevisionId, SenseId, SimplifiedEntities, SimplifiedEntity } from './entity.js'
 import type { Form, Forms, Sense, Senses, SimplifiedForm, SimplifiedForms, SimplifiedSense, SimplifiedSenses } from './lexeme.js'
 import type { SimplifyEntityOptions, Url } from './options.js'
 import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertyQualifiers, SimplifiedQualifier, SimplifiedQualifiers } from './simplify_claims.js'
@@ -73,20 +73,20 @@ export interface Wbk {
   // Helpers
   getEntityIdFromGuid (guid: Guid): EntityId
   getImageUrl (filename: string, width?: number): Url
-  getNumericId (id: string): string
-  isEntityId (str: string): boolean
-  isEntityPageTitle (str: string): boolean
-  isEntitySchemaId (str: string): boolean
-  isFormId (str: string): boolean
-  isGuid (str: string): boolean
-  isHash (str: string): boolean
-  isItemId (str: string): boolean
-  isLexemeId (str: string): boolean
-  isNumericId (str: string): boolean
-  isPropertyClaimsId (str: string): boolean
-  isPropertyId (str: string): boolean
-  isRevisionId (str: string): boolean
-  isSenseId (str: string): boolean
+  getNumericId (s: unknown): NumericId
+  isEntityId (s: unknown): s is EntityId
+  isEntityPageTitle (s: unknown): s is EntityPageTitle
+  isEntitySchemaId (s: unknown): s is EntitySchemaId
+  isFormId (s: unknown): s is FormId
+  isGuid (s: unknown): s is Guid
+  isHash (s: unknown): s is Hash
+  isItemId (s: unknown): s is ItemId
+  isLexemeId (s: unknown): s is LexemeId
+  isNumericId (s: unknown): s is NumericId
+  isPropertyClaimsId (s: unknown): s is PropertyClaimsId
+  isPropertyId (s: unknown): s is PropertyId
+  isRevisionId (s: unknown): s is RevisionId
+  isSenseId (s: unknown): s is SenseId
 
   wikibaseTimeToEpochTime (wikibaseTime: TimeInputValue): number
   wikibaseTimeToISOString (wikibaseTime: TimeInputValue): string

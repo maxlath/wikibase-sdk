@@ -13,17 +13,17 @@ export function getManyEntitiesFactory (buildUrl: BuildUrlFunction) {
   return function getManyEntities ({ ids, languages, props, format, redirects }: GetManyEntitiesOptions): Url[] {
     rejectObsoleteInterface(arguments)
     if (!(ids instanceof Array)) throw new Error('getManyEntities expects an array of ids')
-    return getIdsGroups(ids)
-    .map(idsGroup => getEntities({ ids: idsGroup, languages, props, format, redirects }))
+    return getChunks(ids)
+      .map(idsGroup => getEntities({ ids: idsGroup, languages, props, format, redirects }))
   }
 }
 
-const getIdsGroups = ids => {
-  const groups = []
+function getChunks (ids: readonly string[]): string[][] {
+  const chunks = []
   while (ids.length > 0) {
-    const group = ids.slice(0, 50)
+    const chunk = ids.slice(0, 50)
     ids = ids.slice(50)
-    groups.push(group)
+    chunks.push(chunk)
   }
-  return groups
+  return chunks
 }

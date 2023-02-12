@@ -14,7 +14,7 @@ import { searchEntitiesFactory } from './queries/search_entities.js'
 import { sparqlQueryFactory } from './queries/sparql_query.js'
 import { buildUrlFactory } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
-import type { InstanceConfig } from './types/options.js'
+import type { InstanceConfig, Url } from './types/options.js'
 import type { Wbk } from './types/wbk.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
@@ -92,7 +92,7 @@ export function WBK (config: InstanceConfig): Wbk {
   }
 }
 
-const validateEndpoint = (name, url) => {
+const validateEndpoint = (name: string, url: Url) => {
   if (!(typeof url === 'string' && url.startsWith('http'))) {
     throw new Error(`invalid ${name}: ${url}`)
   }

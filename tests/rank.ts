@@ -1,4 +1,3 @@
-// @ts-nocheck
 import 'should'
 import { cloneDeep } from 'lodash-es'
 import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'
@@ -11,9 +10,8 @@ describe('truthyClaims', () => {
     const Q4115189Claims = cloneDeep(Q4115189.claims)
     Q4115189Claims.P135.length.should.equal(3)
     const truthyOnly = truthyClaims(Q4115189Claims)
-    // @ts-ignore
     truthyOnly.P135.length.should.equal(1)
-    // @ts-ignore
+    // @ts-expect-error
     truthyOnly.P135[0].mainsnak.datavalue.value.id.should.equal('Q2044250')
   })
 })
@@ -24,6 +22,7 @@ describe('truthyPropertyClaims', () => {
     Q4115189Claims.P135.length.should.equal(3)
     const truthyOnly = truthyPropertyClaims(Q4115189Claims.P135)
     truthyOnly.length.should.equal(1)
+    // @ts-expect-error
     truthyOnly[0].mainsnak.datavalue.value.id.should.equal('Q2044250')
   })
 })

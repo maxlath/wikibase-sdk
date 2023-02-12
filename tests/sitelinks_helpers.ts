@@ -1,10 +1,9 @@
-// @ts-nocheck
 import 'should'
 import { getSitelinkUrl, getSitelinkData, isSitelinkKey } from '../src/helpers/sitelinks.js'
 
 describe('getSitelinkUrl', () => {
   it('should be a function', () => {
-    getSitelinkUrl.should.be.an.Function()
+    getSitelinkUrl.should.be.a.Function()
   })
 
   it('should return a sitelink URL', () => {
@@ -99,7 +98,9 @@ describe('getSitelinkUrl', () => {
   })
 
   it('should reject invalid sitelinks', () => {
+    // @ts-expect-error
     (() => getSitelinkUrl({ site: 'frperlinpinpin', title: 'Lyon' })).should.throw()
+    // @ts-expect-error
     ;(() => getSitelinkUrl({ site: 'frwikiwiki', title: 'Lyon' })).should.throw()
   })
 

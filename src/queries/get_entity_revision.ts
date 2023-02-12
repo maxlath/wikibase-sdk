@@ -1,14 +1,14 @@
-import validate from '../helpers/validate.js'
+import * as validate from '../helpers/validate.js'
 import { rejectObsoleteInterface } from '../utils/utils.js'
-import type { EntityId } from '../types/entity.js'
+import type { EntityId, RevisionId } from '../types/entity.js'
 import type { Url } from '../types/options.js'
 
 export interface GetEntityRevisionOptions {
   id: EntityId
-  revision: `${number}`
+  revision: RevisionId
 }
 
-export function getEntityRevisionFactory (instance, wgScriptPath) {
+export function getEntityRevisionFactory (instance: Url, wgScriptPath: string) {
   return function getEntityRevision ({ id, revision }: GetEntityRevisionOptions): Url {
     rejectObsoleteInterface(arguments)
     validate.entityId(id)
