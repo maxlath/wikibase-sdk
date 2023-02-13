@@ -6,7 +6,7 @@ export type WbGetEntities = {
   sites?: string,
   ids?: string,
   format: UrlResultFormat,
-  normalize?: boolean,
+  normalize?: true,
   languages?: string,
   props?: string,
   redirects?: 'yes' | 'no', // Default: yes
