@@ -48,6 +48,21 @@ export interface ClaimSnakTimeValue extends SnakValue {
   }
 }
 
+export interface ClaimSnakQuantity extends SnakValue {
+  type: 'quantity'
+  value: {
+    amount: string
+    unit: string
+    upperBound?: string
+    lowerBound?: string
+  }
+}
+
+export interface ClaimSnakString extends SnakValue {
+  type: 'string'
+  value: string
+}
+
 export interface SnakEntityValue extends SnakValue {
   type: 'wikibase-entityid'
   value: {
@@ -56,6 +71,8 @@ export interface SnakEntityValue extends SnakValue {
     'entity-type': string
   }
 }
+
+export type ClaimSnakWikibaseItem = SnakEntityValue
 
 export interface Qualifier extends Snak {
   id: string
