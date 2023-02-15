@@ -52,9 +52,12 @@ module.exports = {
     'prefer-arrow-callback': [ 'error' ],
     'prefer-const': [ 'error' ],
     'prefer-rest-params': 'off',
+    // See https://typescript-eslint.io/rules/semi/#how-to-use
+    semi: 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/consistent-type-imports': [ 'error', { prefer: 'type-imports' } ],
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/semi': [ 'error', 'never' ],
   },
   globals: {
     // Mocha globals
