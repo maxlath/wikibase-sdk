@@ -1,6 +1,7 @@
 import validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface, shortLang } from '../utils/utils.js'
 import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
+import type { WbGetEntities } from '../types/wbgetentities.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 export interface GetEntitiesOptions {
@@ -40,7 +41,7 @@ export function getEntitiesFactory (buildUrl: BuildUrlFunction) {
     // or an array or properties;
     // either case me just want to deal with arrays
 
-    const query: any = {
+    const query: WbGetEntities = {
       action: 'wbgetentities',
       ids: ids.join('|'),
       format,

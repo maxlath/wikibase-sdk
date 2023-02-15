@@ -1,6 +1,7 @@
 import { forceArray, shortLang, rejectObsoleteInterface } from '../utils/utils.js'
 import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
+import type { WbGetEntities } from '../types/wbgetentities.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 export interface GetEntitiesFromSitelinksOptions {
@@ -36,7 +37,7 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
     // @ts-ignore
     props = forceArray(props)
 
-    const query: any = {
+    const query: WbGetEntities = {
       action: 'wbgetentities',
       titles: titles.join('|'),
       sites: sites.join('|'),
@@ -53,8 +54,9 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
       query.languages = languages.join('|')
     }
 
-    // @ts-ignore
-    if (props && props.length > 0) query.props = props.join('|')
+    if (props && props.length > 0 && typeof props === 'object') {
+      query.props = props.join('|')
+    }
 
     if (redirects === false) query.redirects = 'no'
 
@@ -63,4 +65,4 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
 }
 
 // convert 2 letters language code to Wikipedia sitelinks code
-const parseSite = site => site.length === 2 ? `${site}wiki` : site
+const parseSite = (site: string) => (site.length === 2 ? `${site}wiki` : site)
