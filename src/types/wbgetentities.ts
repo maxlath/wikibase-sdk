@@ -10,4 +10,4 @@ export type WbGetEntities = {
   languages?: string,
   props?: string,
   redirects?: 'yes' | 'no', // Default: yes
-};
+}
