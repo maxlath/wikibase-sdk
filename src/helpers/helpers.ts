@@ -79,7 +79,7 @@ function bestEffort<T> (fn: TimeFunction<T>) {
   return (value: TimeInputValue) => {
     try {
       return fn(value)
-    } catch (err) {
+    } catch {
       value = typeof value === 'string' ? value : value.time
 
       const sign = value[0]
