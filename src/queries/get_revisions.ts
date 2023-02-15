@@ -1,14 +1,14 @@
 import * as validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityPageTitle } from '../types/entity.js'
+import type { ApiQueryParameters, UrlResultFormat } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
-import type { URLFormatOptions } from 'url'
 
 // See https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
 
 export interface GetRevisionsOptions {
   ids: EntityPageTitle | EntityPageTitle[]
-  format?: URLFormatOptions
+  format?: UrlResultFormat
   limit?: number
   start?: Date | string | number
   end?: Date | string | number
@@ -25,7 +25,7 @@ export function getRevisionsFactory (buildUrl: BuildUrlFunction) {
     ids.forEach(validate.entityPageTitle)
 
     const uniqueId = ids.length === 1
-    const query: any = {
+    const query: ApiQueryParameters = {
       action: 'query',
       prop: 'revisions',
     }
