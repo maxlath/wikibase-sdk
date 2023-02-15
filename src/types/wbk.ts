@@ -73,20 +73,20 @@ export interface Wbk {
   // Helpers
   getEntityIdFromGuid (guid: Guid): EntityId
   getImageUrl (filename: string, width?: number): Url
-  getNumericId (s: unknown): NumericId
-  isEntityId (s: unknown): s is EntityId
-  isEntityPageTitle (s: unknown): s is EntityPageTitle
-  isEntitySchemaId (s: unknown): s is EntitySchemaId
-  isFormId (s: unknown): s is FormId
-  isGuid (s: unknown): s is Guid
-  isHash (s: unknown): s is Hash
-  isItemId (s: unknown): s is ItemId
-  isLexemeId (s: unknown): s is LexemeId
-  isNumericId (s: unknown): s is NumericId
-  isPropertyClaimsId (s: unknown): s is PropertyClaimsId
-  isPropertyId (s: unknown): s is PropertyId
-  isRevisionId (s: unknown): s is RevisionId
-  isSenseId (s: unknown): s is SenseId
+  getNumericId (s: string): NumericId
+  isEntityId (s: string): s is EntityId
+  isEntityPageTitle (s: string): s is EntityPageTitle
+  isEntitySchemaId (s: string): s is EntitySchemaId
+  isFormId (s: string): s is FormId
+  isGuid (s: string): s is Guid
+  isHash (s: string): s is Hash
+  isItemId (s: string): s is ItemId
+  isLexemeId (s: string): s is LexemeId
+  isNumericId (s: string): s is NumericId
+  isPropertyClaimsId (s: string): s is PropertyClaimsId
+  isPropertyId (s: string): s is PropertyId
+  isRevisionId (s: string): s is RevisionId
+  isSenseId (s: string): s is SenseId
 
   wikibaseTimeToEpochTime (wikibaseTime: TimeInputValue): number
   wikibaseTimeToISOString (wikibaseTime: TimeInputValue): string

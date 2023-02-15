@@ -170,6 +170,7 @@ describe('helpers', () => {
       isEntityId('L525-S1').should.be.true()
       isEntityId('L525-Z1').should.be.false()
       isEntityId('31').should.be.false()
+      // @ts-expect-error non string input
       isEntityId(31).should.be.false()
       isEntityId('Z31').should.be.false()
       isEntityId('q31').should.be.false()
@@ -182,6 +183,7 @@ describe('helpers', () => {
       isItemId('Q571').should.be.true()
       isItemId('P31').should.be.false()
       isItemId('31').should.be.false()
+      // @ts-expect-error non string input
       isItemId(31).should.be.false()
       isItemId('Z31').should.be.false()
       isItemId('q31').should.be.false()
@@ -194,6 +196,7 @@ describe('helpers', () => {
       isPropertyId('P31').should.be.true()
       isPropertyId('Q571').should.be.false()
       isPropertyId('31').should.be.false()
+      // @ts-expect-error non string input
       isPropertyId(31).should.be.false()
       isPropertyId('Z31').should.be.false()
       isPropertyId('q31').should.be.false()
@@ -207,6 +210,7 @@ describe('helpers', () => {
       isLexemeId('P31').should.be.false()
       isLexemeId('Q571').should.be.false()
       isLexemeId('31').should.be.false()
+      // @ts-expect-error non string input
       isLexemeId(31).should.be.false()
       isLexemeId('Z31').should.be.false()
       isLexemeId('q31').should.be.false()

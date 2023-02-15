@@ -17,60 +17,30 @@ import type {
 } from '../types/entity.js'
 import type { Url } from '../types/options.js'
 
-export function isNumericId (id: unknown): id is NumericId {
-  return typeof id === 'string' && /^[1-9][0-9]*$/.test(id)
+function isIdBuilder<T extends string> (regex: {readonly source: string, readonly flags: string}) {
+  return (id: string): id is T => typeof id === 'string' && new RegExp(regex.source, regex.flags).test(id)
 }
 
-export function isEntityId (id: unknown): id is EntityId {
-  return typeof id === 'string' &&
-    /^((Q|P|L|M)[1-9][0-9]*|L[1-9][0-9]*-(F|S)[1-9][0-9]*)$/.test(id)
-}
+export const isNumericId = isIdBuilder<NumericId>(/^[1-9][0-9]*$/)
+export const isEntityId = isIdBuilder<EntityId>(/^((Q|P|L|M)[1-9][0-9]*|L[1-9][0-9]*-(F|S)[1-9][0-9]*)$/)
+export const isEntitySchemaId = isIdBuilder<EntitySchemaId>(/^E[1-9][0-9]*$/)
+export const isItemId = isIdBuilder<ItemId>(/^Q[1-9][0-9]*$/)
+export const isPropertyId = isIdBuilder<PropertyId>(/^P[1-9][0-9]*$/)
+export const isLexemeId = isIdBuilder<LexemeId>(/^L[1-9][0-9]*$/)
+export const isFormId = isIdBuilder<FormId>(/^L[1-9][0-9]*-F[1-9][0-9]*$/)
+export const isSenseId = isIdBuilder<SenseId>(/^L[1-9][0-9]*-S[1-9][0-9]*$/)
+export const isGuid = isIdBuilder<Guid>(/^((Q|P|L)[1-9][0-9]*|L[1-9][0-9]*-(F|S)[1-9][0-9]*)\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)
+export const isHash = isIdBuilder<Hash>(/^[0-9a-f]{40}$/)
+export const isRevisionId = isIdBuilder<RevisionId>(/^\d+$/)
+export const isNonNestedEntityId = isIdBuilder<NonNestedEntityId>(/^(Q|P|L)[1-9][0-9]*$/)
 
-export function isEntitySchemaId (id: unknown): id is EntitySchemaId {
-  return typeof id === 'string' && /^E[1-9][0-9]*$/.test(id)
-}
-
-export function isItemId (id: unknown): id is ItemId {
-  return typeof id === 'string' && /^Q[1-9][0-9]*$/.test(id)
-}
-
-export function isPropertyId (id: unknown): id is PropertyId {
-  return typeof id === 'string' && /^P[1-9][0-9]*$/.test(id)
-}
-
-export function isLexemeId (id: unknown): id is LexemeId {
-  return typeof id === 'string' && /^L[1-9][0-9]*$/.test(id)
-}
-
-export function isFormId (id: unknown): id is FormId {
-  return typeof id === 'string' && /^L[1-9][0-9]*-F[1-9][0-9]*$/.test(id)
-}
-
-export function isSenseId (id: unknown): id is SenseId {
-  return typeof id === 'string' && /^L[1-9][0-9]*-S[1-9][0-9]*$/.test(id)
-}
-
-export function isGuid (guid: unknown): guid is Guid {
-  return typeof guid === 'string' &&
-    /^((Q|P|L)[1-9][0-9]*|L[1-9][0-9]*-(F|S)[1-9][0-9]*)\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-      .test(guid)
-}
-
-export function isHash (hash: unknown): hash is Hash {
-  return typeof hash === 'string' && /^[0-9a-f]{40}$/.test(hash)
-}
-
-export function isPropertyClaimsId (id: unknown): id is PropertyClaimsId {
+export function isPropertyClaimsId (id: string): id is PropertyClaimsId {
   if (typeof id !== 'string') return false
   const [ entityId, propertyId ] = id.split('#')
   return isEntityId(entityId) && isPropertyId(propertyId)
 }
 
-export function isRevisionId (id: unknown): id is RevisionId {
-  return typeof id === 'string' && /^\d+$/.test(id)
-}
-
-export function isEntityPageTitle (title: unknown): title is EntityPageTitle {
+export function isEntityPageTitle (title: string): title is EntityPageTitle {
   if (typeof title !== 'string') return false
 
   if (title.startsWith('Item:')) {
@@ -88,11 +58,7 @@ export function isEntityPageTitle (title: unknown): title is EntityPageTitle {
   return isItemId(title)
 }
 
-function isNonNestedEntityId (id: unknown): id is NonNestedEntityId {
-  return typeof id === 'string' && /^(Q|P|L)[1-9][0-9]*$/.test(id)
-}
-
-export function getNumericId (id: unknown): NumericId {
+export function getNumericId (id: string): NumericId {
   if (!isNonNestedEntityId(id)) throw new Error(`invalid entity id: ${id}`)
   return id.replace(/^(Q|P|L)/, '') as NumericId
 }
