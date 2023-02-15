@@ -1,24 +1,25 @@
 import 'should'
 
 import {
+  getEntityIdFromGuid,
+  getImageUrl,
+  getNumericId,
+  isEntityId,
+  isEntityPageTitle,
+  isEntitySchemaId,
+  isFormId,
+  isGuid,
+  isHash,
+  isItemId,
+  isLexemeId,
+  isMediaInfoId,
+  isNumericId,
+  isPropertyClaimsId,
+  isPropertyId,
+  isSenseId,
   wikibaseTimeToEpochTime,
   wikibaseTimeToISOString,
   wikibaseTimeToSimpleDay,
-  isEntityId,
-  isItemId,
-  isPropertyId,
-  isLexemeId,
-  isFormId,
-  isSenseId,
-  isGuid,
-  isHash,
-  isPropertyClaimsId,
-  isEntitySchemaId,
-  isEntityPageTitle,
-  isNumericId,
-  getNumericId,
-  getImageUrl,
-  getEntityIdFromGuid,
 } from '../src/helpers/helpers.js'
 import { requireJson } from './lib/utils.js'
 
@@ -169,6 +170,7 @@ describe('helpers', () => {
       isEntityId('L525-F1').should.be.true()
       isEntityId('L525-S1').should.be.true()
       isEntityId('L525-Z1').should.be.false()
+      isEntityId('M42').should.be.true()
       isEntityId('31').should.be.false()
       // @ts-expect-error non string input
       isEntityId(31).should.be.false()
@@ -233,6 +235,14 @@ describe('helpers', () => {
       isSenseId('L525').should.be.false()
       isSenseId('L525S1').should.be.false()
       isSenseId('L525-F1').should.be.false()
+    })
+  })
+
+  describe('isMediaInfoId', () => {
+    it('should accept media info ids', () => {
+      isMediaInfoId('M42').should.be.true()
+      isMediaInfoId('Q42').should.be.false()
+      isMediaInfoId('42').should.be.false()
     })
   })
 
@@ -303,6 +313,7 @@ describe('helpers', () => {
       getNumericId('Q1').should.equal('1')
       getNumericId('P1').should.equal('1')
       getNumericId('L1').should.equal('1')
+      getNumericId('M1').should.equal('1')
       getNumericId.bind(null, 'L1-F1').should.throw()
       getNumericId.bind(null, 'L1-S1').should.throw()
     })

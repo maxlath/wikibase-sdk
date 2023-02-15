@@ -1,5 +1,5 @@
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, References, Snak, Snaks } from './claim.js'
-import type { Entities, Entity, EntityId, EntityPageTitle, EntitySchemaId, FormId, Guid, Hash, ItemId, LexemeId, NumericId, PropertyClaimsId, PropertyId, RevisionId, SenseId, SimplifiedEntities, SimplifiedEntity } from './entity.js'
+import type { Entities, Entity, EntityId, EntityPageTitle, EntitySchemaId, FormId, Guid, Hash, ItemId, LexemeId, MediaInfoId, NumericId, PropertyClaimsId, PropertyId, RevisionId, SenseId, SimplifiedEntities, SimplifiedEntity } from './entity.js'
 import type { Form, Forms, Sense, Senses, SimplifiedForm, SimplifiedForms, SimplifiedSense, SimplifiedSenses } from './lexeme.js'
 import type { SimplifyEntityOptions, Url } from './options.js'
 import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertyQualifiers, SimplifiedQualifier, SimplifiedQualifiers } from './simplify_claims.js'
@@ -82,6 +82,7 @@ export interface Wbk {
   isHash (s: string): s is Hash
   isItemId (s: string): s is ItemId
   isLexemeId (s: string): s is LexemeId
+  isMediaInfoId (s: string): s is MediaInfoId
   isNumericId (s: string): s is NumericId
   isPropertyClaimsId (s: string): s is PropertyClaimsId
   isPropertyId (s: string): s is PropertyId

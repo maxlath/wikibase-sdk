@@ -14,12 +14,13 @@ export type LexemeId = `L${number}`
 export type FormId = `L${number}-F${number}`
 export type SenseId = `L${number}-S${number}`
 export type EntitySchemaId = `E${number}`
+export type MediaInfoId = `M${number}`
 export type RevisionId = `${number}`
 
 export type PropertyClaimsId = `${EntityId}#${PropertyId}`
 
 export type EntityId = NonNestedEntityId | FormId | SenseId
-export type NonNestedEntityId = ItemId | PropertyId | LexemeId
+export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId
 export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}`
 
 export type Guid = string

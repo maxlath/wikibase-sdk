@@ -8,6 +8,7 @@ import type {
   Hash,
   ItemId,
   LexemeId,
+  MediaInfoId,
   NonNestedEntityId,
   NumericId,
   PropertyClaimsId,
@@ -29,10 +30,11 @@ export const isPropertyId = isIdBuilder<PropertyId>(/^P[1-9][0-9]*$/)
 export const isLexemeId = isIdBuilder<LexemeId>(/^L[1-9][0-9]*$/)
 export const isFormId = isIdBuilder<FormId>(/^L[1-9][0-9]*-F[1-9][0-9]*$/)
 export const isSenseId = isIdBuilder<SenseId>(/^L[1-9][0-9]*-S[1-9][0-9]*$/)
-export const isGuid = isIdBuilder<Guid>(/^((Q|P|L)[1-9][0-9]*|L[1-9][0-9]*-(F|S)[1-9][0-9]*)\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)
+export const isMediaInfoId = isIdBuilder<MediaInfoId>(/^M[1-9][0-9]*$/)
+export const isGuid = isIdBuilder<Guid>(/^((Q|P|L|M)[1-9][0-9]*|L[1-9][0-9]*-(F|S)[1-9][0-9]*)\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)
 export const isHash = isIdBuilder<Hash>(/^[0-9a-f]{40}$/)
 export const isRevisionId = isIdBuilder<RevisionId>(/^\d+$/)
-export const isNonNestedEntityId = isIdBuilder<NonNestedEntityId>(/^(Q|P|L)[1-9][0-9]*$/)
+export const isNonNestedEntityId = isIdBuilder<NonNestedEntityId>(/^(Q|P|L|M)[1-9][0-9]*$/)
 
 export function isPropertyClaimsId (id: string): id is PropertyClaimsId {
   if (typeof id !== 'string') return false
@@ -60,7 +62,7 @@ export function isEntityPageTitle (title: string): title is EntityPageTitle {
 
 export function getNumericId (id: string): NumericId {
   if (!isNonNestedEntityId(id)) throw new Error(`invalid entity id: ${id}`)
-  return id.replace(/^(Q|P|L)/, '') as NumericId
+  return id.replace(/^(Q|P|L|M)/, '') as NumericId
 }
 
 export interface WikibaseTimeObject {
