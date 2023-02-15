@@ -1,11 +1,12 @@
 import * as validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface, shortLang } from '../utils/utils.js'
+import type { EntityId } from '../types/entity.js'
 import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
 import type { WbGetEntities } from '../types/wbgetentities.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 export interface GetEntitiesOptions {
-  ids: string | string[]
+  ids: EntityId | EntityId[]
   languages?: WmLanguageCode | WmLanguageCode[]
   props?: Props | Props[]
   format?: UrlResultFormat
@@ -28,7 +29,7 @@ export function getEntitiesFactory (buildUrl: BuildUrlFunction) {
     // Allow to pass ids as a single string
     ids = forceArray(ids)
 
-    ids.forEach(validate.entityId)
+    ids.forEach(o => validate.entityId(o))
 
     if (ids.length > 50) {
       console.warn(`getEntities accepts 50 ids max to match Wikidata API limitations:

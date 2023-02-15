@@ -28,7 +28,7 @@ export const getReverseClaimsFactory = (sparqlEndpoint: Url) => {
 
     // Allow to request values for several properties at once
     properties = forceArray(properties)
-    properties.forEach(validate.propertyId)
+    properties.forEach(o => validate.propertyId(o))
 
     const valueBlock = getValueBlock(values, valueFn, properties, filter)
     let sparql = `SELECT DISTINCT ?subject WHERE { ${valueBlock} }`

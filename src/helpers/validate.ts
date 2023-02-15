@@ -1,9 +1,9 @@
 import { isEntityId, isEntityPageTitle, isPropertyId, isRevisionId } from './helpers.js'
 
-function validate<T> (name: string, testFn: (value: unknown) => value is T) {
-  return function (value: unknown): value is T {
+/** Ensure both via TypeScript and at runtime that the input value is of the expected type. Throws error when it is not */
+function validate<T extends string> (name: string, testFn: (value: string) => value is T) {
+  return function (value: T): void {
     if (!testFn(value)) throw new Error(`invalid ${name}: ${value}`)
-    return true
   }
 }
 

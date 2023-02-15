@@ -1,11 +1,12 @@
 import { rejectObsoleteInterface } from '../utils/utils.js'
 import { getEntitiesFactory } from './get_entities.js'
 import type { GetEntitiesOptions } from './get_entities.js'
+import type { EntityId } from '../types/entity.js'
 import type { Url } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 export interface GetManyEntitiesOptions extends GetEntitiesOptions {
-  ids: string[]
+  ids: EntityId[]
 }
 
 export function getManyEntitiesFactory (buildUrl: BuildUrlFunction) {
@@ -18,7 +19,7 @@ export function getManyEntitiesFactory (buildUrl: BuildUrlFunction) {
   }
 }
 
-function getChunks (ids: readonly string[]): string[][] {
+function getChunks<T extends string> (ids: readonly T[]): T[][] {
   const chunks = []
   while (ids.length > 0) {
     const chunk = ids.slice(0, 50)
