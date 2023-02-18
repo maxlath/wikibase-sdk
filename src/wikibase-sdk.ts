@@ -1,7 +1,7 @@
 import * as helpers from './helpers/helpers.js'
-import { parse } from './helpers/parse_responses.js'
+import * as parse from './helpers/parse_responses.js'
 import * as rankHelpers from './helpers/rank.js'
-import { simplify } from './helpers/simplify.js'
+import * as simplify from './helpers/simplify.js'
 import * as sitelinksHelpers from './helpers/sitelinks.js'
 import { cirrusSearchPagesFactory } from './queries/cirrus_search.js'
 import { getEntitiesFactory } from './queries/get_entities.js'
@@ -15,13 +15,37 @@ import { sparqlQueryFactory } from './queries/sparql_query.js'
 import { buildUrlFactory } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
 import type { InstanceConfig, Url } from './types/options.js'
-import type { Wbk } from './types/wbk.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
 those are also exposed directly on the module object. Exemple:
 import { isItemId, simplify } from 'wikibase-sdk'`
 
-const common = Object.assign({ simplify, parse }, helpers, sitelinksHelpers, rankHelpers)
+const common = {
+  simplify,
+  parse,
+  ...helpers,
+  ...sitelinksHelpers,
+  ...rankHelpers,
+} as const
+
+type ApiQueries = {
+  readonly searchEntities: ReturnType<typeof searchEntitiesFactory>
+  readonly cirrusSearchPages: ReturnType<typeof cirrusSearchPagesFactory>
+  readonly getEntities: ReturnType<typeof getEntitiesFactory>
+  readonly getManyEntities: ReturnType<typeof getManyEntitiesFactory>
+  readonly getRevisions: ReturnType<typeof getRevisionsFactory>
+  readonly getEntityRevision: ReturnType<typeof getEntityRevisionFactory>
+  readonly getEntitiesFromSitelinks: ReturnType<typeof getEntitiesFromSitelinksFactory>
+}
+type SparqlQueries = {
+  readonly sparqlQuery: ReturnType<typeof sparqlQueryFactory>
+  readonly getReverseClaims: ReturnType<typeof getReverseClaimsFactory>
+}
+type Instance = {
+  readonly root: Url
+  readonly apiEndpoint: Url
+}
+export type Wbk = {readonly instance: Instance} & ApiQueries & SparqlQueries & typeof common
 
 export function WBK (config: InstanceConfig): Wbk {
   if (!isPlainObject(config)) throw new Error('invalid config')
@@ -34,7 +58,9 @@ export function WBK (config: InstanceConfig): Wbk {
     throw new Error(`one of instance or sparqlEndpoint should be set at initialization.\n${tip}`)
   }
 
-  let wikibaseApiFunctions, instanceRoot, instanceApiEndpoint
+  let wikibaseApiFunctions: ApiQueries
+  let instanceRoot: string | undefined
+  let instanceApiEndpoint: string | undefined
   if (instance) {
     validateEndpoint('instance', instance)
 
@@ -67,7 +93,7 @@ export function WBK (config: InstanceConfig): Wbk {
     }
   }
 
-  let wikibaseQueryServiceFunctions
+  let wikibaseQueryServiceFunctions: SparqlQueries
   if (sparqlEndpoint) {
     validateEndpoint('sparqlEndpoint', sparqlEndpoint)
     wikibaseQueryServiceFunctions = {
@@ -104,5 +130,3 @@ const missingConfig = (missingParameter: string) => (name: string) => () => {
 
 const missingSparqlEndpoint = missingConfig('a sparqlEndpoint')
 const missingInstance = missingConfig('an instance')
-
-export default WBK

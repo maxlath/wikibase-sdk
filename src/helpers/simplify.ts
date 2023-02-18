@@ -1,62 +1,38 @@
-
-import {
+export {
   simplifyClaim as claim,
-  simplifyPropertyClaims as propertyClaims,
   simplifyClaims as claims,
-  simplifyQualifier as qualifier,
+  simplifyPropertyClaims as propertyClaims,
   simplifyPropertyQualifiers as propertyQualifiers,
+  simplifyQualifier as qualifier,
   simplifyQualifiers as qualifiers,
   simplifyReferences as references,
 } from './simplify_claims.js'
-import {
+export {
   simplifyForm as form,
   simplifyForms as forms,
 } from './simplify_forms.js'
-import {
+export {
   simplifySense as sense,
   simplifySenses as senses,
 } from './simplify_senses.js'
-import { simplifySitelinks as sitelinks } from './simplify_sitelinks.js'
-import { simplifySparqlResults as sparqlResults } from './simplify_sparql_results.js'
-import {
-  simplifyLabels as labels,
-  simplifyDescriptions as descriptions,
+export { simplifySitelinks as sitelinks } from './simplify_sitelinks.js'
+export { simplifySparqlResults as sparqlResults } from './simplify_sparql_results.js'
+export {
   simplifyAliases as aliases,
+  simplifyDescriptions as descriptions,
+  simplifyGlosses as glosses,
+  simplifyLabels as labels,
   simplifyLemmas as lemmas,
   simplifyRepresentations as representations,
-  simplifyGlosses as glosses,
 } from './simplify_text_attributes.js'
+export {
+  simplifyEntities as entities,
+  simplifyEntity as entity,
+} from './simplify_entity.js'
 
-export const simplify = {
-  labels,
-  descriptions,
-  aliases,
-  claim,
-  propertyClaims,
-  claims,
-  qualifier,
-  propertyQualifiers,
-  qualifiers,
-  references,
-  sitelinks,
-
-  // Aliases
-  snak: claim,
-  propertySnaks: propertyClaims,
-  snaks: claims,
-
-  // Lexemes
-  lemmas,
-  representations,
-  glosses,
-  form,
-  forms,
-  sense,
-  senses,
-
-  sparqlResults,
-
-  // Set in ./simplify_entity
-  // entity,
-  // entities,
-}
+// Aliases
+export {
+  simplifyClaim as snak,
+  simplifyClaims as snaks,
+  simplifyPropertyClaims as propertySnaks,
+} from './simplify_claims.js'

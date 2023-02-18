@@ -18,17 +18,15 @@ export interface CirrusSearchPagesResponse {
   }
 }
 
-function entities (res: WbGetEntitiesResponse): SimplifiedEntities {
+export function entities (res: WbGetEntitiesResponse): SimplifiedEntities {
   // @ts-expect-error Legacy convenience for the time the 'request' lib was all the rage
   res = res.body || res
   const { entities } = res
   return simplifyEntities(entities)
 }
 
-function pagesTitles (res: CirrusSearchPagesResponse): Titles {
+export function pagesTitles (res: CirrusSearchPagesResponse): Titles {
   // @ts-expect-error Same behavior as above
   res = res.body || res
   return res.query.search.map(result => result.title)
 }
-
-export const parse = { entities, pagesTitles } as const

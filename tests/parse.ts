@@ -1,5 +1,5 @@
 import 'should'
-import { parse } from '../src/helpers/parse_responses.js'
+import * as parse from '../src/helpers/parse_responses.js'
 import { readJsonFile } from './lib/utils.js'
 
 const cirrusSearchPagesResponse = readJsonFile('./tests/data/cirrus_search_response.json')

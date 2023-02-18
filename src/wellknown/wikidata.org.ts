@@ -1,4 +1,4 @@
-import WBK from '../wikibase-sdk.js'
+import { WBK } from '../wikibase-sdk.js'
 
 export const wdk = WBK({
   instance: 'https://www.wikidata.org',
