@@ -4,6 +4,7 @@ import should from 'should'
 import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../src/helpers/simplify_claims.js'
 import { uniq } from '../src/utils/utils.js'
 import { requireJson } from './lib/utils.js'
+import type { SimplifySnakOptions } from '../src/types/simplify_claims.js'
 
 const L525 = requireJson(import.meta.url, './data/L525.json')
 const Q1 = requireJson(import.meta.url, './data/Q1.json')
@@ -151,6 +152,7 @@ describe('simplifyPropertyClaims', () => {
   })
 
   it('should tolerate empty inputs', () => {
+    // @ts-expect-error empty input is not typed
     const simplified = simplifyPropertyClaims()
     simplified.should.be.an.Array()
     simplified.length.should.equal(0)
@@ -487,8 +489,8 @@ describe('simplifyClaim', () => {
   describe('time converter', () => {
     it('should use a custom time converter when one is set', () => {
       const claim = Q646148.claims.P569[0]
-      const simplifyTimeClaim = timeConverter => simplifyClaim(claim, { timeConverter })
-      simplifyTimeClaim().should.equal('1939-11-08T00:00:00.000Z')
+      const simplifyTimeClaim = (timeConverter: SimplifySnakOptions['timeConverter']) => simplifyClaim(claim, { timeConverter })
+      simplifyTimeClaim(undefined).should.equal('1939-11-08T00:00:00.000Z')
       simplifyTimeClaim('iso').should.equal('1939-11-08T00:00:00.000Z')
       simplifyTimeClaim('epoch').should.equal(-951436800000)
       simplifyTimeClaim('simple-day').should.equal('1939-11-08')
@@ -499,8 +501,8 @@ describe('simplifyClaim', () => {
 
     it('should be able to parse long dates', () => {
       const claim = Q1.claims.P580[0]
-      const simplifyTimeClaim = timeConverter => simplifyClaim(claim, { timeConverter })
-      simplifyTimeClaim().should.equal('-13798000000-01-01T00:00:00Z')
+      const simplifyTimeClaim = (timeConverter: SimplifySnakOptions['timeConverter']) => simplifyClaim(claim, { timeConverter })
+      simplifyTimeClaim(undefined).should.equal('-13798000000-01-01T00:00:00Z')
       simplifyTimeClaim('none').should.equal('-13798000000-00-00T00:00:00Z')
       simplifyTimeClaim('iso').should.equal('-13798000000-01-01T00:00:00Z')
       simplifyTimeClaim('simple-day').should.equal('-13798000000')

@@ -12,9 +12,8 @@ describe('builder', () => {
   it('should reference instance-independant helpers', () => {
     should(parse).be.an.Object()
     should(simplify).be.an.Object()
-    parse.entities.should.be.an.Function()
-    // @ts-ignore
-    simplify.labels.should.be.an.Function()
+    parse.entities.should.be.a.Function()
+    simplify.labels.should.be.a.Function()
     isEntityId.should.be.a.Function()
     getSitelinkData.should.be.a.Function()
   })
@@ -104,11 +103,11 @@ describe('index', () => {
     wbk.truthyClaims.should.be.a.Function()
     wbk.truthyPropertyClaims.should.be.a.Function()
 
-    wbk.parse.entities.should.be.an.Function()
+    wbk.parse.entities.should.be.a.Function()
 
     wbk.parse.should.be.an.Object()
-    wbk.parse.entities.should.be.an.Function()
-    wbk.parse.pagesTitles.should.be.an.Function()
+    wbk.parse.entities.should.be.a.Function()
+    wbk.parse.pagesTitles.should.be.a.Function()
 
     wbk.isEntityId.should.be.a.Function()
     wbk.isItemId.should.be.a.Function()

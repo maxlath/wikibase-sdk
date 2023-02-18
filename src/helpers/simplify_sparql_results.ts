@@ -122,4 +122,4 @@ const addAssociatedValue = (result, varName, associatedVarName, richVarData) => 
 
 const specialNames = {
   altLabel: 'aliases',
-}
+} as const

@@ -18,19 +18,17 @@ export interface CirrusSearchPagesResponse {
   }
 }
 
-export const parse = {
-  entities: (res: WbGetEntitiesResponse): SimplifiedEntities => {
-    // Legacy convenience for the time the 'request' lib was all the rage
-    // @ts-ignore
-    res = res.body || res
-    const { entities } = res
-    return simplifyEntities(entities)
-  },
-
-  pagesTitles: (res: CirrusSearchPagesResponse): Titles => {
-    // Same behavior as above
-    // @ts-ignore
-    res = res.body || res
-    return res.query.search.map(result => result.title)
-  },
+function entities (res: WbGetEntitiesResponse): SimplifiedEntities {
+  // @ts-expect-error Legacy convenience for the time the 'request' lib was all the rage
+  res = res.body || res
+  const { entities } = res
+  return simplifyEntities(entities)
 }
+
+function pagesTitles (res: CirrusSearchPagesResponse): Titles {
+  // @ts-expect-error Same behavior as above
+  res = res.body || res
+  return res.query.search.map(result => result.title)
+}
+
+export const parse = { entities, pagesTitles } as const

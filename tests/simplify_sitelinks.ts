@@ -1,6 +1,6 @@
 // @ts-nocheck
 import should from 'should'
-import simplifySitelinks from '../src/helpers/simplify_sitelinks.js'
+import { simplifySitelinks } from '../src/helpers/simplify_sitelinks.js'
 import { requireJson, objLenght } from './lib/utils.js'
 
 const Q571 = requireJson(import.meta.url, './data/Q571.json')
@@ -39,6 +39,7 @@ describe('simplify.sitelinks', () => {
 
   it('should not throw when a sitelink is null ', () => {
     const sitelinks = { frwiki: null }
+    // @ts-expect-error
     simplifySitelinks(sitelinks).should.deepEqual(sitelinks)
   })
 })

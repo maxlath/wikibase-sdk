@@ -16,8 +16,8 @@ import {
   simplifySense as sense,
   simplifySenses as senses,
 } from './simplify_senses.js'
-import sitelinks from './simplify_sitelinks.js'
-import { simplifySparqlResults } from './simplify_sparql_results.js'
+import { simplifySitelinks as sitelinks } from './simplify_sitelinks.js'
+import { simplifySparqlResults as sparqlResults } from './simplify_sparql_results.js'
 import {
   simplifyLabels as labels,
   simplifyDescriptions as descriptions,
@@ -54,7 +54,7 @@ export const simplify = {
   sense,
   senses,
 
-  sparqlResults: simplifySparqlResults,
+  sparqlResults,
 
   // Set in ./simplify_entity
   // entity,

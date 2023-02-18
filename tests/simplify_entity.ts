@@ -16,6 +16,7 @@ describe('simplify.entity', () => {
   it('should support items', () => {
     const Q571Clone = cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone)
+    if (simplifiedEntity.type !== 'item') throw new TypeError()
     simplifiedEntity.type.should.equal('item')
     simplifiedEntity.labels.fr.should.equal('livre')
     simplifiedEntity.descriptions.fr.should.equal('document écrit formé de pages reliées entre elles')
@@ -29,6 +30,7 @@ describe('simplify.entity', () => {
   it('should support properties', () => {
     const P8098Clone = cloneDeep(P8098)
     const simplifiedEntity = simplifyEntity(P8098Clone)
+    if (simplifiedEntity.type !== 'property') throw new TypeError()
     simplifiedEntity.type.should.equal('property')
     simplifiedEntity.datatype.should.equal('external-id')
     simplifiedEntity.labels.fr.should.equal('identifiant Biographical Dictionary of Architects in Canada')
@@ -43,10 +45,10 @@ describe('simplify.entity', () => {
   it('should support lexemes', () => {
     const L525Clone = cloneDeep(L525)
     const simplifiedEntity = simplifyEntity(L525Clone)
+    if (simplifiedEntity.type !== 'lexeme') throw new TypeError()
     simplifiedEntity.type.should.equal('lexeme')
     simplifiedEntity.lemmas.should.be.an.Object()
     simplifiedEntity.lemmas.fr.should.equal('maison')
-    simplifiedEntity.claims.should.be.an.Object()
     simplifiedEntity.lexicalCategory.should.equal('Q1084')
     simplifiedEntity.language.should.equal('Q150')
     simplifiedEntity.claims.should.be.an.Object()

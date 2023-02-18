@@ -41,10 +41,10 @@ const simplifyIfDefined = (entity, simplified, attribute, options?) => {
 }
 
 export const simplifyEntities = (entities: Entities, options: SimplifyEntityOptions = {}) => {
-  // @ts-ignore
+  // @ts-expect-error
   if (entities.entities) entities = entities.entities
   const { entityPrefix } = options
-  return Object.keys(entities).reduce((obj, key) => {
+  return Object.keys(entities).reduce<any>((obj, key) => {
     const entity = entities[key]
     if (entityPrefix) key = `${entityPrefix}:${key}`
     obj[key] = simplifyEntity(entity, options)
@@ -53,7 +53,7 @@ export const simplifyEntities = (entities: Entities, options: SimplifyEntityOpti
 }
 
 // Set those here instead of in ./simplify to avoid a circular dependency
-// @ts-ignore
+// @ts-expect-error
 simplify.entity = simplifyEntity
-// @ts-ignore
+// @ts-expect-error
 simplify.entities = simplifyEntities

@@ -1,5 +1,5 @@
 import { isItemId } from '../helpers/helpers.js'
-import validate from '../helpers/validate.js'
+import * as validate from '../helpers/validate.js'
 import { forceArray } from '../utils/utils.js'
 import { sparqlQueryFactory } from './sparql_query.js'
 import type { PropertyId } from '../types/entity.js'
@@ -18,7 +18,7 @@ export interface GetReverseClaimsOptions {
   keepProperties?: boolean
 }
 
-export const getReverseClaimsFactory = sparqlEndpoint => {
+export const getReverseClaimsFactory = (sparqlEndpoint: Url) => {
   const sparqlQuery = sparqlQueryFactory(sparqlEndpoint)
   return function getReverseClaims (options: GetReverseClaimsOptions): Url {
     let { properties } = options
@@ -27,10 +27,8 @@ export const getReverseClaimsFactory = sparqlEndpoint => {
     const filter = keepProperties ? '' : itemsOnly
 
     // Allow to request values for several properties at once
-    // @ts-ignore
     properties = forceArray(properties)
-    // @ts-ignore
-    properties.forEach(validate.propertyId)
+    properties.forEach(o => validate.propertyId(o))
 
     const valueBlock = getValueBlock(values, valueFn, properties, filter)
     let sparql = `SELECT DISTINCT ?subject WHERE { ${valueBlock} }`

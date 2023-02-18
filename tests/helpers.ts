@@ -1,23 +1,25 @@
 import 'should'
 
 import {
+  getEntityIdFromGuid,
+  getImageUrl,
+  getNumericId,
+  isEntityId,
+  isEntityPageTitle,
+  isEntitySchemaId,
+  isFormId,
+  isGuid,
+  isHash,
+  isItemId,
+  isLexemeId,
+  isMediaInfoId,
+  isNumericId,
+  isPropertyClaimsId,
+  isPropertyId,
+  isSenseId,
   wikibaseTimeToEpochTime,
   wikibaseTimeToISOString,
   wikibaseTimeToSimpleDay,
-  isEntityId,
-  isItemId,
-  isPropertyId,
-  isLexemeId,
-  isFormId,
-  isSenseId,
-  isGuid,
-  isHash,
-  isPropertyClaimsId,
-  isEntitySchemaId,
-  isNumericId,
-  getNumericId,
-  getImageUrl,
-  getEntityIdFromGuid,
 } from '../src/helpers/helpers.js'
 import { requireJson } from './lib/utils.js'
 
@@ -168,8 +170,9 @@ describe('helpers', () => {
       isEntityId('L525-F1').should.be.true()
       isEntityId('L525-S1').should.be.true()
       isEntityId('L525-Z1').should.be.false()
+      isEntityId('M42').should.be.true()
       isEntityId('31').should.be.false()
-      // @ts-ignore
+      // @ts-expect-error non string input
       isEntityId(31).should.be.false()
       isEntityId('Z31').should.be.false()
       isEntityId('q31').should.be.false()
@@ -182,7 +185,7 @@ describe('helpers', () => {
       isItemId('Q571').should.be.true()
       isItemId('P31').should.be.false()
       isItemId('31').should.be.false()
-      // @ts-ignore
+      // @ts-expect-error non string input
       isItemId(31).should.be.false()
       isItemId('Z31').should.be.false()
       isItemId('q31').should.be.false()
@@ -195,7 +198,7 @@ describe('helpers', () => {
       isPropertyId('P31').should.be.true()
       isPropertyId('Q571').should.be.false()
       isPropertyId('31').should.be.false()
-      // @ts-ignore
+      // @ts-expect-error non string input
       isPropertyId(31).should.be.false()
       isPropertyId('Z31').should.be.false()
       isPropertyId('q31').should.be.false()
@@ -209,7 +212,7 @@ describe('helpers', () => {
       isLexemeId('P31').should.be.false()
       isLexemeId('Q571').should.be.false()
       isLexemeId('31').should.be.false()
-      // @ts-ignore
+      // @ts-expect-error non string input
       isLexemeId(31).should.be.false()
       isLexemeId('Z31').should.be.false()
       isLexemeId('q31').should.be.false()
@@ -232,6 +235,14 @@ describe('helpers', () => {
       isSenseId('L525').should.be.false()
       isSenseId('L525S1').should.be.false()
       isSenseId('L525-F1').should.be.false()
+    })
+  })
+
+  describe('isMediaInfoId', () => {
+    it('should accept media info ids', () => {
+      isMediaInfoId('M42').should.be.true()
+      isMediaInfoId('Q42').should.be.false()
+      isMediaInfoId('42').should.be.false()
     })
   })
 
@@ -276,6 +287,20 @@ describe('helpers', () => {
     })
   })
 
+  describe('isEntityPageTitle', () => {
+    it('should accept correct titles', () => {
+      isEntityPageTitle('Item:Q42').should.be.true()
+      isEntityPageTitle('Lexeme:L42').should.be.true()
+      isEntityPageTitle('Property:P42').should.be.true()
+      isEntityPageTitle('Q42').should.be.true()
+
+      isEntityPageTitle('Item:L42').should.be.false()
+      isEntityPageTitle('Lexeme:P42').should.be.false()
+      isEntityPageTitle('Property:Q42').should.be.false()
+      isEntityPageTitle('P42').should.be.false()
+    })
+  })
+
   describe('isNumericId', () => {
     it('should accept numeric ids', () => {
       isNumericId('1').should.be.true()
@@ -288,6 +313,7 @@ describe('helpers', () => {
       getNumericId('Q1').should.equal('1')
       getNumericId('P1').should.equal('1')
       getNumericId('L1').should.equal('1')
+      getNumericId('M1').should.equal('1')
       getNumericId.bind(null, 'L1-F1').should.throw()
       getNumericId.bind(null, 'L1-S1').should.throw()
     })

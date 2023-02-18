@@ -1,9 +1,8 @@
-import { rejectObsoleteInterface } from '../utils/utils.js'
+import { EntityTypes } from '../types/entity.js'
+import { isOfType, rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityType } from '../types/entity.js'
 import type { Url, UrlResultFormat } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
-
-const types = [ 'item', 'property', 'lexeme', 'form', 'sense' ]
 
 export interface SearchEntitiesOptions {
   search: string
@@ -29,7 +28,7 @@ export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {
     uselang = uselang || language
 
     if (!(search && search.length > 0)) throw new Error("search can't be empty")
-    if (!types.includes(type)) throw new Error(`invalid type: ${type}`)
+    if (!isOfType(EntityTypes, type)) throw new Error(`invalid type: ${type}`)
 
     return buildUrl({
       action: 'wbsearchentities',

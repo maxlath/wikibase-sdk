@@ -14,6 +14,6 @@ export interface Sitelink {
   url?: Url
 }
 
-export type Sitelinks = Record<Site, Sitelink>
+export type Sitelinks = Partial<Record<Site, Sitelink>>
 
-export type SimplifiedSitelinks = Record<Site, string>
+export type SimplifiedSitelinks = Partial<Record<Site, string>>

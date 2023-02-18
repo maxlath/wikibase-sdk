@@ -59,6 +59,7 @@
   },
   "homepage": "https://github.com/maxlath/wikibase-sdk",
   "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.18",
     "@types/should": "^13.0.0",

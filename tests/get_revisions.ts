@@ -9,7 +9,7 @@ const getRevisions = getRevisionsFactory(buildUrl)
 
 describe('getRevisions', () => {
   it('should reject invalid ids', () => {
-    // @ts-ignore
+    // @ts-expect-error
     (() => getRevisions({ ids: 'foo' })).should.throw('invalid entity page title: foo')
   })
 
@@ -17,6 +17,7 @@ describe('getRevisions', () => {
     (() => getRevisions({ ids: 'Item:Q123' })).should.not.throw()
     ;(() => getRevisions({ ids: 'Property:P123' })).should.not.throw()
     ;(() => getRevisions({ ids: 'Lexeme:L123' })).should.not.throw()
+    // @ts-expect-error title is invalid
     ;(() => getRevisions({ ids: 'Property:Q123' })).should.throw('invalid entity page title: Property:Q123')
   })
 

@@ -3,9 +3,10 @@ import should from 'should'
 import { getManyEntitiesFactory } from '../src/queries/get_many_entities.js'
 import { buildUrl } from './lib/tests_env.js'
 import { parseUrlQuery } from './lib/utils.js'
+import type { ItemId } from '../src/types/entity.js'
 
 const getManyEntities = getManyEntitiesFactory(buildUrl)
-const manyIds = range(1, 80).map(id => `Q${id}`)
+const manyIds = range(1, 80).map(id => `Q${id}` as ItemId)
 
 describe('wikidata getManyEntities', () => {
   describe('general', () => {
@@ -22,7 +23,7 @@ describe('wikidata getManyEntities', () => {
 
   describe('polymorphism', () => {
     it('should reject parameters as multiple arguments', () => {
-      // @ts-ignore
+      // @ts-expect-error
       (() => getManyEntities(manyIds, 'fr', 'info', 'json')).should.throw()
     })
 
@@ -46,7 +47,7 @@ describe('wikidata getManyEntities', () => {
 
   describe('ids', () => {
     it('should throw if passed an id string', () => {
-      // @ts-ignore
+      // @ts-expect-error
       (() => getManyEntities({ ids: 'Q535' })).should.throw()
     })
   })
