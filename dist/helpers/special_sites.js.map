@@ -1,0 +1,1 @@
+{"version":3,"file":"special_sites.js","sourceRoot":"","sources":["../../src/helpers/special_sites.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,YAAY,GAAG;IAC1B,WAAW,EAAE,SAAS;IACtB,aAAa,EAAE,WAAW;IAC1B,QAAQ,EAAE,MAAM;IAChB,WAAW,EAAE,aAAa;IAC1B,YAAY,EAAE,UAAU;IACxB,aAAa,EAAE,WAAW;CAClB,CAAA"}
