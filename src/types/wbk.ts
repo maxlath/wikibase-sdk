@@ -65,6 +65,31 @@ export interface Wbk {
     entities (entities: Entities, options: SimplifyEntityOptions): SimplifiedEntities
   }
 
+  simplifyLabels (labels: Labels): SimplifiedLabels;
+  simplifyDescriptions (descriptions: Descriptions): SimplifiedDescriptions;
+  simplifyAliases (aliases: Aliases): SimplifiedAliases;
+  simplifyClaim (claim: Claim): SimplifiedClaim;
+  simplifyPropertyClaims (propertyClaims: PropertyClaims): SimplifiedPropertyClaims;
+  simplifyClaims (claims: Claims): SimplifiedClaims;
+  simplifyQualifier (qualifier: Qualifier): SimplifiedQualifier;
+  simplifyPropertyQualifiers (propertyQualifiers: PropertyQualifiers): SimplifiedPropertyQualifiers;
+  simplifyQualifiers (qualifiers: Qualifiers): SimplifiedQualifiers;
+  simplifyReferences (references: References): SimplifiedReferences;
+  simplifySitelinks (sitelinks: Sitelinks): SimplifiedSitelinks;
+  simplifySnak (snak: Snak): SimplifiedSnak;
+  simplifyPropertySnaks (propertySnaks: PropertySnaks): SimplifiedPropertySnaks;
+  simplifySnaks (snaks: Snaks): SimplifiedSnaks;
+  simplifyLemmas (lemmas: Lemmas): SimplifiedLemmas;
+  simplifyRepresentations (representations: Representations): SimplifiedRepresentations;
+  simplifyGlosses (glosses: Glosses): SimplifiedGlosses;
+  simplifyForm (form: Form): SimplifiedForm;
+  simplifyForms (forms: Forms): SimplifiedForms;
+  simplifySense (sense: Sense): SimplifiedSense;
+  simplifySenses (senses: Senses): SimplifiedSenses;
+  simplifySparqlResults (sparqlResults: SparqlResults): SimplifiedSparqlResults;
+  simplifyEntity (entity: Entity): SimplifiedEntity;
+  simplifyEntities (entities: Entities): SimplifiedEntities;
+
   parse: {
     entities (res: WbGetEntitiesResponse): SimplifiedEntities
     pagesTitles (res: CirrusSearchPagesResponse): Titles
