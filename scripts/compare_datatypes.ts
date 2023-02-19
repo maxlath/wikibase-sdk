@@ -1,12 +1,13 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 import { kebabCase } from 'lodash-es'
 import { red, green } from 'tiny-chalk'
 import { parsers } from '../src/helpers/parse_claim.js'
-import { requireJson } from '../tests/lib/utils.js'
+import { readJsonFile } from '../tests/lib/utils.js'
 
 const supportedTypes = Object.keys(parsers)
 
-requireJson(import.meta.url, '/tmp/all_wikidata_datatypes.json')
+const allDatatypes = readJsonFile('/tmp/all_wikidata_datatypes.json') as string[]
+allDatatypes
 .map(typeUri => {
   const typeName = typeUri.split('#')[1]
   // Case inconsistency: commonsMedia is camel cased

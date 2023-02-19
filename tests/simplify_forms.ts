@@ -1,9 +1,9 @@
 // @ts-nocheck
 import 'should'
 import { simplifyForms, simplifyForm } from '../src/helpers/simplify_forms.js'
-import { requireJson } from './lib/utils.js'
+import { readJsonFile } from './lib/utils.js'
 
-const L525 = requireJson(import.meta.url, './data/L525.json')
+const L525 = readJsonFile('./tests/data/L525.json')
 
 describe('simplify.form', () => {
   it('should reject an object that isnt a form', () => {

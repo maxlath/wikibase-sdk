@@ -1,9 +1,9 @@
 // @ts-nocheck
 import 'should'
 import { simplifySenses, simplifySense } from '../src/helpers/simplify_senses.js'
-import { requireJson } from './lib/utils.js'
+import { readJsonFile } from './lib/utils.js'
 
-const L525 = requireJson(import.meta.url, './data/L525.json')
+const L525 = readJsonFile('./tests/data/L525.json')
 
 describe('simplify.sense', () => {
   it('should reject an object that isnt a sense', () => {

@@ -1,8 +1,8 @@
 import should from 'should'
 import { simplifyAliases, simplifyDescriptions, simplifyLabels } from '../src/helpers/simplify_text_attributes.js'
-import { requireJson, objLenght } from './lib/utils.js'
+import { readJsonFile, objLenght } from './lib/utils.js'
 
-const Q571 = requireJson(import.meta.url, './data/Q571.json')
+const Q571 = readJsonFile('./tests/data/Q571.json')
 
 describe('simplifyLabels', () => {
   it('should simplify labels', () => {

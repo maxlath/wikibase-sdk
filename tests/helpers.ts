@@ -21,9 +21,9 @@ import {
   wikibaseTimeToISOString,
   wikibaseTimeToSimpleDay,
 } from '../src/helpers/helpers.js'
-import { requireJson } from './lib/utils.js'
+import { readJsonFile } from './lib/utils.js'
 
-const Q970917 = requireJson(import.meta.url, './data/Q970917.json')
+const Q970917 = readJsonFile('./tests/data/Q970917.json')
 
 describe('helpers', () => {
   const ISOtime = '2014-05-14T00:00:00.000Z'
