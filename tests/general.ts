@@ -80,7 +80,6 @@ describe('index', () => {
     wbk.getRevisions.should.be.a.Function()
     wbk.getEntitiesFromSitelinks.should.be.a.Function()
 
-    wbk.simplify.should.be.a.Object()
     wbk.simplify.entity.should.be.a.Function()
     wbk.simplify.entities.should.be.a.Function()
     wbk.simplify.labels.should.be.a.Function()
@@ -106,7 +105,6 @@ describe('index', () => {
 
     wbk.parse.entities.should.be.a.Function()
 
-    wbk.parse.should.be.an.Object()
     wbk.parse.entities.should.be.a.Function()
     wbk.parse.pagesTitles.should.be.a.Function()
 

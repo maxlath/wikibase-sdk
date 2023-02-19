@@ -1,4 +1,4 @@
-import { simplify } from './simplify.js'
+import * as simplify from './simplify.js'
 import type { Entities, Entity, SimplifiedEntity } from '../types/entity.js'
 import type { SimplifyEntityOptions } from '../types/options.js'
 
@@ -44,16 +44,15 @@ export const simplifyEntities = (entities: Entities, options: SimplifyEntityOpti
   // @ts-expect-error
   if (entities.entities) entities = entities.entities
   const { entityPrefix } = options
-  return Object.keys(entities).reduce<any>((obj, key) => {
-    const entity = entities[key]
-    if (entityPrefix) key = `${entityPrefix}:${key}`
-    obj[key] = simplifyEntity(entity, options)
-    return obj
-  }, {})
-}
 
-// Set those here instead of in ./simplify to avoid a circular dependency
-// @ts-expect-error
-simplify.entity = simplifyEntity
-// @ts-expect-error
-simplify.entities = simplifyEntities
+  // TODO: key as string is only a best effort.
+  // key is either EntityID or `${prefix}:${EntityId}` based on options.entityPrefix
+  const result: Record<string, SimplifiedEntity> = {}
+
+  for (const [ key, entity ] of Object.entries(entities)) {
+    const resultKey = entityPrefix ? `${entityPrefix}:${key}` : key
+    result[resultKey] = simplifyEntity(entity, options)
+  }
+
+  return result
+}
