@@ -71,7 +71,6 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-standard": "^5.0.0",
     "lodash-es": "^4.17.21",
     "mocha": "^10.2.0",
     "should": "^13.2.3",

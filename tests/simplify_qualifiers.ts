@@ -103,8 +103,7 @@ describe('simplifyQualifiers', () => {
     it('should keep snaktype if requested', () => {
       const qualifier = Q19180293.claims.P1433[0].qualifiers.P1100[0]
       simplifyQualifier(qualifier, { keepSnaktypes: true })
-      .should.deepEqual({ value: undefined, snaktype: 'novalue' }
-      )
+      .should.deepEqual({ value: undefined, snaktype: 'novalue' })
     })
   })
 })
