@@ -13,13 +13,12 @@ This project received a [Wikimedia Project Grant](https://meta.wikimedia.org/wik
   <a href="https://wikidata.org"><img src="https://raw.githubusercontent.com/maxlath/wikibase-sdk/main/assets/wikidata.jpg" alt="wikidata"></a>
 </div>
 
-[![NPM](https://nodei.co/npm/wikibase-sdk.png?stars&downloads&downloadRank)](https://npmjs.com/package/wikibase-sdk/)
-
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Node](https://img.shields.io/badge/node-%3E=%20v6.4.0-brightgreen.svg)](http://nodejs.org)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-
-[download stats](https://npm-stat.com/charts.html?package=wikibase-sdk)
+[![License](https://img.shields.io/npm/l/wikibase-sdk)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/wikibase-sdk)](https://www.npmjs.com/package/wikibase-sdk)
+[![Required Node.js version](https://img.shields.io/node/v/wikibase-sdk)](http://nodejs.org)
+[![npm downloads](https://img.shields.io/npm/dw/wikibase-sdk)](https://npm-stat.com/charts.html?package=wikibase-sdk)
+[![code style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![type definitions](https://img.shields.io/npm/types/wikibase-sdk)](https://www.typescriptlang.org/)
 
 ## Summary
 
