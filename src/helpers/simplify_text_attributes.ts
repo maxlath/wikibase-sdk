@@ -3,9 +3,7 @@ import type { Aliases, Descriptions, Glosses, Labels, Lemmas, Representations, S
 
 type InValue<T> = { readonly value: T }
 
-function singleValue<V> (
-  data: Partial<Readonly<Record<WmLanguageCode, InValue<V>>>>
-) {
+function singleValue<V> (data: Partial<Readonly<Record<WmLanguageCode, InValue<V>>>>) {
   const simplified: Partial<Record<WmLanguageCode, V>> = {}
   for (const [ lang, obj ] of Object.entries(data)) {
     simplified[lang] = obj != null ? obj.value : null
@@ -13,9 +11,7 @@ function singleValue<V> (
   return simplified
 }
 
-function multiValue<V> (
-  data: Partial<Readonly<Record<WmLanguageCode, ReadonlyArray<InValue<V>>>>>
-) {
+function multiValue<V> (data: Partial<Readonly<Record<WmLanguageCode, ReadonlyArray<InValue<V>>>>>) {
   const simplified: Partial<Record<WmLanguageCode, readonly V[]>> = {}
   for (const [ lang, obj ] of Object.entries(data)) {
     simplified[lang] = obj != null ? obj.map(o => o.value) : []

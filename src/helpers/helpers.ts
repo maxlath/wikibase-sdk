@@ -18,7 +18,7 @@ import type {
 } from '../types/entity.js'
 import type { Url } from '../types/options.js'
 
-function isIdBuilder<T extends string> (regex: {readonly source: string, readonly flags: string}) {
+function isIdBuilder<T extends string> (regex: { readonly source: string, readonly flags: string }) {
   return (id: string): id is T => typeof id === 'string' && new RegExp(regex.source, regex.flags).test(id)
 }
 
