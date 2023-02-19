@@ -1,11 +1,12 @@
-import { specialSites } from '../helpers/special_sites.js'
 import type { ItemId } from './entity.js'
 import type { Url } from './options.js'
 import type { sites } from '../helpers/sitelinks_sites.js'
+import type { specialSites } from '../helpers/special_sites.js'
 
-const multilangSitesNames = Object.values(specialSites)
+type ValueOf<T> = T[keyof T]
+type SpecialSiteName = ValueOf<typeof specialSites>
 
-export type Site = typeof sites[number] | typeof multilangSitesNames[number]
+export type Site = typeof sites[number] | SpecialSiteName
 
 export interface Sitelink {
   site: Site
