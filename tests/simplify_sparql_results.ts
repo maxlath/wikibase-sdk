@@ -3,16 +3,16 @@ import { cloneDeep } from 'lodash-es'
 import should from 'should'
 import { isEntityId, isGuid } from '../src/helpers/helpers.js'
 import { simplifySparqlResults } from '../src/helpers/simplify_sparql_results.js'
-import { requireJson } from './lib/utils.js'
+import { readJsonFile } from './lib/utils.js'
 
-const multiVarsData = requireJson(import.meta.url, './data/multi_vars_sparql_results.json')
-const noDatatypeData = requireJson(import.meta.url, './data/no_datatype_sparql_results.json')
-const propertiesList = requireJson(import.meta.url, './data/properties_list.json')
-const resultsWithLabelsDescriptionsAndAliases = requireJson(import.meta.url, './data/results_with_labels_descriptions_and_aliases.json')
-const singleVarData = requireJson(import.meta.url, './data/single_var_sparql_results.json')
-const sparqlResultsWithNestedAssociatedVariables = requireJson(import.meta.url, './data/sparql_results_with_nested_associated_variables.json')
-const sparqlResultsWithOptionalValues = requireJson(import.meta.url, './data/sparql_results_with_optional_values.json')
-const sparqlResultsWithStatements = requireJson(import.meta.url, './data/sparql_results_with_statements.json')
+const multiVarsData = readJsonFile('./tests/data/multi_vars_sparql_results.json')
+const noDatatypeData = readJsonFile('./tests/data/no_datatype_sparql_results.json')
+const propertiesList = readJsonFile('./tests/data/properties_list.json')
+const resultsWithLabelsDescriptionsAndAliases = readJsonFile('./tests/data/results_with_labels_descriptions_and_aliases.json')
+const singleVarData = readJsonFile('./tests/data/single_var_sparql_results.json')
+const sparqlResultsWithNestedAssociatedVariables = readJsonFile('./tests/data/sparql_results_with_nested_associated_variables.json')
+const sparqlResultsWithOptionalValues = readJsonFile('./tests/data/sparql_results_with_optional_values.json')
+const sparqlResultsWithStatements = readJsonFile('./tests/data/sparql_results_with_statements.json')
 
 describe('wikidata simplify SPARQL results', () => {
   describe('common', () => {

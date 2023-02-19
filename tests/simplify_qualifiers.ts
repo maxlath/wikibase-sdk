@@ -1,10 +1,10 @@
 import should from 'should'
 import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../src/helpers/simplify_claims.js'
-import { requireJson } from './lib/utils.js'
+import { readJsonFile } from './lib/utils.js'
 
-const Q19180293 = requireJson(import.meta.url, './data/Q19180293.json')
-const Q2112 = requireJson(import.meta.url, './data/Q2112.json')
-const Q571 = requireJson(import.meta.url, './data/Q571.json')
+const Q19180293 = readJsonFile('./tests/data/Q19180293.json')
+const Q2112 = readJsonFile('./tests/data/Q2112.json')
+const Q571 = readJsonFile('./tests/data/Q571.json')
 
 describe('simplifyQualifier', () => {
   it('should simplify a qualifier', () => {

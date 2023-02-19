@@ -3,24 +3,24 @@ import { every } from 'lodash-es'
 import should from 'should'
 import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../src/helpers/simplify_claims.js'
 import { uniq } from '../src/utils/utils.js'
-import { requireJson } from './lib/utils.js'
+import { readJsonFile } from './lib/utils.js'
 import type { SimplifySnakOptions } from '../src/types/simplify_claims.js'
 
-const L525 = requireJson(import.meta.url, './data/L525.json')
-const Q1 = requireJson(import.meta.url, './data/Q1.json')
-const Q2112 = requireJson(import.meta.url, './data/Q2112.json')
-const Q217447 = requireJson(import.meta.url, './data/Q217447.json')
-const Q22002395 = requireJson(import.meta.url, './data/Q22002395.json')
-const Q271094 = requireJson(import.meta.url, './data/Q271094.json')
-const Q275937 = requireJson(import.meta.url, './data/Q275937.json')
-const Q328212 = requireJson(import.meta.url, './data/Q328212.json')
-const Q4115189 = requireJson(import.meta.url, './data/Q4115189.json')
-const Q4132785 = requireJson(import.meta.url, './data/Q4132785.json')
-const Q571 = requireJson(import.meta.url, './data/Q571.json')
-const Q646148 = requireJson(import.meta.url, './data/Q646148.json')
-const emptyValues = requireJson(import.meta.url, './data/empty_values.json')
-const lexemeClaim = requireJson(import.meta.url, './data/lexeme_claim.json')
-const oldClaimFormat = requireJson(import.meta.url, './data/old_claim_format.json')
+const L525 = readJsonFile('./tests/data/L525.json')
+const Q1 = readJsonFile('./tests/data/Q1.json')
+const Q2112 = readJsonFile('./tests/data/Q2112.json')
+const Q217447 = readJsonFile('./tests/data/Q217447.json')
+const Q22002395 = readJsonFile('./tests/data/Q22002395.json')
+const Q271094 = readJsonFile('./tests/data/Q271094.json')
+const Q275937 = readJsonFile('./tests/data/Q275937.json')
+const Q328212 = readJsonFile('./tests/data/Q328212.json')
+const Q4115189 = readJsonFile('./tests/data/Q4115189.json')
+const Q4132785 = readJsonFile('./tests/data/Q4132785.json')
+const Q571 = readJsonFile('./tests/data/Q571.json')
+const Q646148 = readJsonFile('./tests/data/Q646148.json')
+const emptyValues = readJsonFile('./tests/data/empty_values.json')
+const lexemeClaim = readJsonFile('./tests/data/lexeme_claim.json')
+const oldClaimFormat = readJsonFile('./tests/data/old_claim_format.json')
 
 describe('simplifyClaims', () => {
   it('env', () => {

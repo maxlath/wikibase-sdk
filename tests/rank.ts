@@ -1,9 +1,9 @@
 import 'should'
 import { cloneDeep } from 'lodash-es'
 import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'
-import { requireJson } from './lib/utils.js'
+import { readJsonFile } from './lib/utils.js'
 
-const Q4115189 = requireJson(import.meta.url, './data/Q4115189.json')
+const Q4115189 = readJsonFile('./tests/data/Q4115189.json')
 
 describe('truthyClaims', () => {
   it('should filter-out non-truthy claims', () => {
