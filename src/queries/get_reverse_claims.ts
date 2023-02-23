@@ -10,9 +10,12 @@ import type { Url } from '../types/options.js'
 // https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#WDQS_data_differences
 const itemsOnly = 'FILTER NOT EXISTS { ?subject rdf:type wikibase:Property . } '
 
+type Value = string | number
+type Values = Value | readonly Value[]
+
 export interface GetReverseClaimsOptions {
-  properties: PropertyId | PropertyId[]
-  values: string | number | string[] | number[]
+  properties: PropertyId | readonly PropertyId[]
+  values: Values
   limit?: number
   caseInsensitive?: boolean
   keepProperties?: boolean
@@ -37,40 +40,38 @@ export const getReverseClaimsFactory = (sparqlEndpoint: Url) => {
   }
 }
 
-const getValueBlock = (values, valueFn, properties, filter) => {
-  properties = properties.map(prefixifyProperty).join('|')
+const getValueBlock = (values: Values, valueFn: ValueFn, properties: readonly PropertyId[], filter: string) => {
+  const propertiesString = properties.map(property => 'wdt:' + property).join('|')
 
   if (!(values instanceof Array)) {
-    return valueFn(properties, getValueString(values), filter)
+    return valueFn(propertiesString, getValueString(values), filter)
   }
 
   const valuesBlocks = values
     .map(getValueString)
-    .map(valStr => valueFn(properties, valStr, filter))
+    .map(valStr => valueFn(propertiesString, valStr, filter))
 
   return '{ ' + valuesBlocks.join('} UNION {') + ' }'
 }
 
-const getValueString = value => {
-  if (isItemId(value)) {
-    value = `wd:${value}`
-  } else if (typeof value === 'string') {
-    value = `'${value}'`
+const getValueString = (value: Value) => {
+  if (typeof value === 'string') {
+    return isItemId(value) ? `wd:${value}` : `'${value}'`
   }
-  return value
+  return String(value)
 }
 
-const directValueQuery = (properties, value, filter) => {
+type ValueFn = (properties: string, value: string, filter: string) => string
+
+const directValueQuery: ValueFn = (properties, value, filter) => {
   return `?subject ${properties} ${value} .
     ${filter}`
 }
 
 // Discussion on how to make this query optimal:
 // http://stackoverflow.com/q/43073266/3324977
-const caseInsensitiveValueQuery = (properties, value, filter) => {
+const caseInsensitiveValueQuery: ValueFn = (properties, value, filter) => {
   return `?subject ${properties} ?value .
     FILTER (lcase(?value) = ${value.toLowerCase()})
     ${filter}`
 }
-
-const prefixifyProperty = property => 'wdt:' + property

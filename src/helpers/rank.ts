@@ -1,7 +1,14 @@
-import type { Claims, PropertyClaims } from '../types/claim.js'
+import { typedEntries } from '../utils/utils.js'
+import type { Claim, Claims, PropertyClaims, Rank } from '../types/claim.js'
 
 export function truthyPropertyClaims (propertyClaims: PropertyClaims): PropertyClaims {
-  const aggregate = propertyClaims.reduce(aggregatePerRank, {})
+  const aggregate: Partial<Record<Rank, Claim[]>> = {}
+  for (const claim of propertyClaims) {
+    const { rank } = claim
+    aggregate[rank] ??= []
+    aggregate[rank].push(claim)
+  }
+
   // on truthyness: https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements
   return aggregate.preferred || aggregate.normal || []
 }
@@ -10,17 +17,10 @@ export function nonDeprecatedPropertyClaims (propertyClaims: PropertyClaims): Pr
   return propertyClaims.filter(claim => claim.rank !== 'deprecated')
 }
 
-const aggregatePerRank = (aggregate, claim) => {
-  const { rank } = claim
-  aggregate[rank] || (aggregate[rank] = [])
-  aggregate[rank].push(claim)
-  return aggregate
-}
-
 export function truthyClaims (claims: Claims): Claims {
-  const truthClaimsOnly = {}
-  Object.keys(claims).forEach(property => {
-    truthClaimsOnly[property] = truthyPropertyClaims(claims[property])
-  })
+  const truthClaimsOnly: Claims = {}
+  for (const [ property, value ] of typedEntries(claims)) {
+    truthClaimsOnly[property] = truthyPropertyClaims(value)
+  }
   return truthClaimsOnly
 }

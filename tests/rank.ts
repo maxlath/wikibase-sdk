@@ -1,28 +1,29 @@
-import 'should'
 import { cloneDeep } from 'lodash-es'
+import should from 'should'
 import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'
 import { readJsonFile } from './lib/utils.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q4115189 = readJsonFile('./tests/data/Q4115189.json')
+const Q4115189 = readJsonFile('./tests/data/Q4115189.json') as Item
 
 describe('truthyClaims', () => {
   it('should filter-out non-truthy claims', () => {
     const Q4115189Claims = cloneDeep(Q4115189.claims)
-    Q4115189Claims.P135.length.should.equal(3)
+    should(Q4115189Claims.P135.length).equal(3)
     const truthyOnly = truthyClaims(Q4115189Claims)
-    truthyOnly.P135.length.should.equal(1)
+    should(truthyOnly.P135.length).equal(1)
     // @ts-expect-error
-    truthyOnly.P135[0].mainsnak.datavalue.value.id.should.equal('Q2044250')
+    should(truthyOnly.P135[0].mainsnak.datavalue.value.id).equal('Q2044250')
   })
 })
 
 describe('truthyPropertyClaims', () => {
   it('should filter-out non-truthy property claims', () => {
     const Q4115189Claims = cloneDeep(Q4115189.claims)
-    Q4115189Claims.P135.length.should.equal(3)
+    should(Q4115189Claims.P135.length).equal(3)
     const truthyOnly = truthyPropertyClaims(Q4115189Claims.P135)
-    truthyOnly.length.should.equal(1)
+    should(truthyOnly.length).equal(1)
     // @ts-expect-error
-    truthyOnly[0].mainsnak.datavalue.value.id.should.equal('Q2044250')
+    should(truthyOnly[0].mainsnak.datavalue.value.id).equal('Q2044250')
   })
 })

@@ -23,8 +23,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     // "strict": true,
+
+    // part of strict
+    "alwaysStrict": true,
+    // "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    // "strictNullChecks": true,
+    // "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
   },
-  "include": ["src"],
+  "include": ["src", "tests", "scripts"],
   "ts-node": {
     "esm": true,
   }

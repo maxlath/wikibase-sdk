@@ -11,7 +11,7 @@ export interface Claim {
   rank: Rank
   type: DataType
   qualifiers?: Qualifiers
-  'qualifiers-order'?: string[]
+  'qualifiers-order'?: PropertyId[]
   references?: Reference[]
 }
 

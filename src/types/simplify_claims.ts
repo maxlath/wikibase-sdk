@@ -1,6 +1,6 @@
 import type { DataType, Rank } from './claim.js'
 import type { Guid, PropertyId } from './entity.js'
-import type { timeConverters } from '../helpers/parse_claim.js'
+import type { TimeConverter, TimeConverterFn } from '../helpers/wikibase_time.js'
 
 export interface SimplifySnakOptions {
   entityPrefix?: string
@@ -14,7 +14,7 @@ export interface SimplifySnakOptions {
   keepRanks?: boolean
   keepSnaktypes?: boolean
   keepAll?: boolean
-  timeConverter?: keyof typeof timeConverters
+  timeConverter?: TimeConverter | TimeConverterFn
   novalueValue?: any
   somevalueValue?: any
 }

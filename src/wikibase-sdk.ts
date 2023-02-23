@@ -3,6 +3,7 @@ import * as parse from './helpers/parse_responses.js'
 import * as rankHelpers from './helpers/rank.js'
 import * as simplify from './helpers/simplify.js'
 import * as sitelinksHelpers from './helpers/sitelinks.js'
+import * as timeHelpers from './helpers/wikibase_time.js'
 import { cirrusSearchPagesFactory } from './queries/cirrus_search.js'
 import { getEntitiesFactory } from './queries/get_entities.js'
 import { getEntitiesFromSitelinksFactory } from './queries/get_entities_from_sitelinks.js'
@@ -24,8 +25,9 @@ const common = {
   simplify,
   parse,
   ...helpers,
-  ...sitelinksHelpers,
   ...rankHelpers,
+  ...sitelinksHelpers,
+  ...timeHelpers,
 } as const
 
 type ApiQueries = {

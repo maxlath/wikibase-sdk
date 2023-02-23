@@ -1,29 +1,29 @@
-import 'should'
+import should from 'should'
 import { isPlainObject } from '../src/utils/utils.js'
 
 describe('utils', () => {
   describe('isPlainObject', () => {
     it('should return true for plain objects', () => {
-      isPlainObject({}).should.equal(true)
-      isPlainObject({ a: 1, b: 2 }).should.equal(true)
+      should(isPlainObject({})).be.true()
+      should(isPlainObject({ a: 1, b: 2 })).be.true()
     })
 
     it('should return false for arrays', () => {
-      isPlainObject([]).should.equal(false)
-      isPlainObject([ 1, 2 ]).should.equal(false)
+      should(isPlainObject([])).be.false()
+      should(isPlainObject([ 1, 2 ])).be.false()
     })
 
     it('should return false for strings', () => {
-      isPlainObject('').should.equal(false)
-      isPlainObject('hello').should.equal(false)
+      should(isPlainObject('')).be.false()
+      should(isPlainObject('hello')).be.false()
     })
 
     it('should return false for null', () => {
-      isPlainObject(null).should.equal(false)
+      should(isPlainObject(null)).be.false()
     })
 
     it('should return false for undefined', () => {
-      isPlainObject(undefined).should.equal(false)
+      should(isPlainObject(undefined)).be.false()
     })
   })
 })

@@ -1,31 +1,33 @@
 import should from 'should'
 import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../src/helpers/simplify_claims.js'
 import { readJsonFile } from './lib/utils.js'
+import type { TimeConverter, TimeConverterFn } from '../src/helpers/wikibase_time.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q19180293 = readJsonFile('./tests/data/Q19180293.json')
-const Q2112 = readJsonFile('./tests/data/Q2112.json')
-const Q571 = readJsonFile('./tests/data/Q571.json')
+const Q19180293 = readJsonFile('./tests/data/Q19180293.json') as Item
+const Q2112 = readJsonFile('./tests/data/Q2112.json') as Item
+const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 
 describe('simplifyQualifier', () => {
   it('should simplify a qualifier', () => {
     const qualifier = Q2112.claims.P190[1].qualifiers.P580[0]
     const simplified = simplifyQualifier(qualifier)
-    simplified.should.equal('1953-01-01T00:00:00.000Z')
+    should(simplified).equal('1953-01-01T00:00:00.000Z')
   })
 
   describe('empty values', () => {
     it('should return the desired novalueValue', () => {
       const noValueQualifier = Q19180293.claims.P1433[0].qualifiers.P1100[0]
       should(simplifyQualifier(noValueQualifier)).not.be.ok()
-      simplifyQualifier(noValueQualifier, { novalueValue: '-' }).should.equal('-')
-      simplifyQualifier(noValueQualifier, { novalueValue: '' }).should.equal('')
+      should(simplifyQualifier(noValueQualifier, { novalueValue: '-' })).equal('-')
+      should(simplifyQualifier(noValueQualifier, { novalueValue: '' })).equal('')
     })
 
     it('should return the desired somevalueValue', () => {
       const someValueQualifier = Q19180293.claims.P1433[0].qualifiers.P156[0]
       should(simplifyQualifier(someValueQualifier)).not.be.ok()
-      simplifyQualifier(someValueQualifier, { somevalueValue: '?' }).should.equal('?')
-      simplifyQualifier(someValueQualifier, { somevalueValue: '' }).should.equal('')
+      should(simplifyQualifier(someValueQualifier, { somevalueValue: '?' })).equal('?')
+      should(simplifyQualifier(someValueQualifier, { somevalueValue: '' })).equal('')
     })
 
     it('should accept null as a possible value', () => {
@@ -37,13 +39,18 @@ describe('simplifyQualifier', () => {
   describe('time', () => {
     it('should respect timeConverter for qualifiers claims', () => {
       const qualifier = Q571.claims.P1709[0].qualifiers.P813[0]
-      const timeClaim = timeConverter => simplifyQualifier(qualifier, { timeConverter })
-      timeClaim('iso').should.equal('2015-06-11T00:00:00.000Z')
-      timeClaim('epoch').should.equal(1433980800000)
-      timeClaim('simple-day').should.equal('2015-06-11')
-      timeClaim('none').should.equal('+2015-06-11T00:00:00Z')
-      const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
-      timeClaim(timeConverterFn).should.equal('foo/+2015-06-11T00:00:00Z/11/bar')
+      const timeClaim = (timeConverter: TimeConverter | TimeConverterFn) => simplifyQualifier(qualifier, { timeConverter })
+      should(timeClaim('iso')).equal('2015-06-11T00:00:00.000Z')
+      should(timeClaim('epoch')).equal(1433980800000)
+      should(timeClaim('simple-day')).equal('2015-06-11')
+      should(timeClaim('none')).equal('+2015-06-11T00:00:00Z')
+      should(timeClaim(
+        timeObj => {
+          if (typeof timeObj !== 'object') throw new Error('expect WikibaseTimeObject')
+          const { time, precision } = timeObj
+          return `foo/${time}/${precision}/bar`
+        },
+      )).equal('foo/+2015-06-11T00:00:00Z/11/bar')
     })
   })
 })
@@ -52,25 +59,25 @@ describe('simplifyPropertyQualifiers', () => {
   it('should simplify propertyQualifiers', () => {
     const propertyQualifiers = Q2112.claims.P190[1].qualifiers.P580
     const simplified = simplifyPropertyQualifiers(propertyQualifiers)
-    simplified.should.deepEqual([ '1953-01-01T00:00:00.000Z' ])
+    should(simplified).deepEqual([ '1953-01-01T00:00:00.000Z' ])
   })
 
   describe('empty values', () => {
     it('should return the desired novalueValue', () => {
       const propQualifiers = Q19180293.claims.P1433[0].qualifiers.P1100
-      simplifyPropertyQualifiers(propQualifiers, { novalueValue: '-' }).should.deepEqual([ '-' ])
-      simplifyPropertyQualifiers(propQualifiers, { novalueValue: '' }).should.deepEqual([ '' ])
+      should(simplifyPropertyQualifiers(propQualifiers, { novalueValue: '-' })).deepEqual([ '-' ])
+      should(simplifyPropertyQualifiers(propQualifiers, { novalueValue: '' })).deepEqual([ '' ])
     })
 
     it('should return the desired somevalueValue', () => {
       const propQualifiers = Q19180293.claims.P1433[0].qualifiers.P156
-      simplifyPropertyQualifiers(propQualifiers, { somevalueValue: '?' }).should.deepEqual([ '?' ])
-      simplifyPropertyQualifiers(propQualifiers, { somevalueValue: '' }).should.deepEqual([ '' ])
+      should(simplifyPropertyQualifiers(propQualifiers, { somevalueValue: '?' })).deepEqual([ '?' ])
+      should(simplifyPropertyQualifiers(propQualifiers, { somevalueValue: '' })).deepEqual([ '' ])
     })
 
     it('should accept null as a possible value', () => {
       const propQualifiers = Q19180293.claims.P1433[0].qualifiers.P1100
-      simplifyPropertyQualifiers(propQualifiers, { novalueValue: null }).should.deepEqual([ null ])
+      should(simplifyPropertyQualifiers(propQualifiers, { novalueValue: null })).deepEqual([ null ])
     })
   })
 })
@@ -79,31 +86,30 @@ describe('simplifyQualifiers', () => {
   it('should simplify qualifiers', () => {
     const qualifiers = Q2112.claims.P190[1].qualifiers
     const simplified = simplifyQualifiers(qualifiers)
-    simplified.P580.should.deepEqual([ '1953-01-01T00:00:00.000Z' ])
+    should(simplified.P580).deepEqual([ '1953-01-01T00:00:00.000Z' ])
   })
 
   describe('empty values', () => {
     it('should return the desired novalueValue', () => {
       const qualifiers = Q19180293.claims.P1433[0].qualifiers
-      simplifyQualifiers(qualifiers, { novalueValue: '-' }).P1100.should.deepEqual([ '-' ])
-      simplifyQualifiers(qualifiers, { novalueValue: '' }).P1100.should.deepEqual([ '' ])
+      should(simplifyQualifiers(qualifiers, { novalueValue: '-' }).P1100).deepEqual([ '-' ])
+      should(simplifyQualifiers(qualifiers, { novalueValue: '' }).P1100).deepEqual([ '' ])
     })
 
     it('should return the desired somevalueValue', () => {
       const qualifiers = Q19180293.claims.P1433[0].qualifiers
-      simplifyQualifiers(qualifiers, { somevalueValue: '?' }).P156.should.deepEqual([ '?' ])
-      simplifyQualifiers(qualifiers, { somevalueValue: '' }).P156.should.deepEqual([ '' ])
+      should(simplifyQualifiers(qualifiers, { somevalueValue: '?' }).P156).deepEqual([ '?' ])
+      should(simplifyQualifiers(qualifiers, { somevalueValue: '' }).P156).deepEqual([ '' ])
     })
 
     it('should accept null as a possible value', () => {
       const qualifiers = Q19180293.claims.P1433[0].qualifiers
-      simplifyQualifiers(qualifiers, { novalueValue: null }).P1100.should.deepEqual([ null ])
+      should(simplifyQualifiers(qualifiers, { novalueValue: null }).P1100).deepEqual([ null ])
     })
 
     it('should keep snaktype if requested', () => {
       const qualifier = Q19180293.claims.P1433[0].qualifiers.P1100[0]
-      simplifyQualifier(qualifier, { keepSnaktypes: true })
-      .should.deepEqual({ value: undefined, snaktype: 'novalue' })
+      should(simplifyQualifier(qualifier, { keepSnaktypes: true })).deepEqual({ value: undefined, snaktype: 'novalue' })
     })
   })
 })

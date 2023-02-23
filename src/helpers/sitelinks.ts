@@ -1,7 +1,6 @@
-import { fixedEncodeURIComponent, isOfType, rejectObsoleteInterface, replaceSpaceByUnderscores } from '../utils/utils.js'
+import { fixedEncodeURIComponent, isOfType, isAKey, rejectObsoleteInterface, replaceSpaceByUnderscores } from '../utils/utils.js'
 import { languages } from './sitelinks_languages.js'
 import { specialSites } from './special_sites.js'
-import type { EntityId } from '../types/entity.js'
 import type { Url, WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
 
@@ -18,9 +17,14 @@ export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
   if (!site) throw new Error('missing a site')
   if (!title) throw new Error('missing a title')
 
+  if (isAKey(siteUrlBuilders, site)) {
+    return siteUrlBuilders[site](title)
+  }
+
   const shortSiteKey = site.replace(/wiki$/, '')
-  const specialUrlBuilder = siteUrlBuilders[shortSiteKey] || siteUrlBuilders[site]
-  if (specialUrlBuilder) return specialUrlBuilder(title)
+  if (isAKey(siteUrlBuilders, shortSiteKey)) {
+    return siteUrlBuilders[shortSiteKey](title)
+  }
 
   const { lang, project } = getSitelinkData(site)
   title = fixedEncodeURIComponent(replaceSpaceByUnderscores(title))
@@ -34,9 +38,8 @@ const siteUrlBuilders = {
   mediawiki: (title: string) => `https://www.mediawiki.org/wiki/${title}`,
   meta: wikimediaSite('meta'),
   species: wikimediaSite('species'),
-  wikidata: (entityId: EntityId) => {
-    const prefix = prefixByEntityLetter[entityId[0]]
-    let title = prefix ? `${prefix}:${entityId}` : entityId
+  wikidata: (entityId: string) => {
+    let title = prefixByEntity(entityId)
     // Required for forms and senses
     title = title.replace('-', '#')
     return `${wikidataBase}${title}`
@@ -44,11 +47,12 @@ const siteUrlBuilders = {
   wikimania: wikimediaSite('wikimania'),
 } as const
 
-const prefixByEntityLetter = {
-  E: 'EntitySchema',
-  L: 'Lexeme',
-  P: 'Property',
-} as const
+function prefixByEntity (entityId: string) {
+  if (entityId.startsWith('E')) return `EntitySchema:${entityId}`
+  if (entityId.startsWith('L')) return `Lexeme:${entityId}`
+  if (entityId.startsWith('P')) return `Property:${entityId}`
+  return entityId
+}
 
 const sitelinkUrlPattern = /^https?:\/\/([\w-]{2,10})\.(\w+)\.org\/\w+\/(.*)/
 
@@ -84,9 +88,9 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     return { lang, project, key, title, url }
   } else {
     const key = site
-    const specialProjectName = specialSites[key]
-    if (specialProjectName) {
-      return { lang: 'en', project: specialProjectName, key }
+    if (isAKey(specialSites, site)) {
+      const project = specialSites[site]
+      return { lang: 'en', project, key }
     }
 
     let [ lang, projectSuffix, rest ] = key.split('wik')
@@ -101,10 +105,10 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     // Support keys such as be_x_oldwiki, which refers to be-x-old.wikipedia.org
     lang = lang.replace(/_/g, '-')
 
+    if (!isAKey(projectsBySuffix, projectSuffix)) throw new Error(`sitelink project not found: ${site}`)
     const project = projectsBySuffix[projectSuffix]
-    if (!project) throw new Error(`sitelink project not found: ${project}`)
 
-    // @ts-expect-error
+    // @ts-expect-error lang has replaced _ with - and is not a perfect WmLanguageCode anymore
     return { lang, project, key }
   }
 }

@@ -1,5 +1,5 @@
-import { wikibaseTimeToISOString, wikibaseTimeToEpochTime, wikibaseTimeToSimpleDay } from './helpers.js'
-import type { TimeInputValue } from './helpers.js'
+import { convertTime } from './wikibase_time.js'
+import type { SimplifySnakOptions } from '../types/simplify_claims.js'
 
 const simple = datavalue => datavalue.value
 
@@ -46,13 +46,8 @@ const coordinate = (datavalue, options) => {
   }
 }
 
-const time = (datavalue, options) => {
-  let timeValue
-  if (typeof options.timeConverter === 'function') {
-    timeValue = options.timeConverter(datavalue.value)
-  } else {
-    timeValue = getTimeConverter(options.timeConverter)(datavalue.value)
-  }
+const time = (datavalue, options: SimplifySnakOptions) => {
+  const timeValue = convertTime(options.timeConverter, datavalue.value)
   if (options.keepRichValues) {
     const { timezone, before, after, precision, calendarmodel } = datavalue.value
     return { time: timeValue, timezone, before, after, precision, calendarmodel }
@@ -60,22 +55,6 @@ const time = (datavalue, options) => {
     return timeValue
   }
 }
-
-const getTimeConverter = (key = 'iso') => {
-  const converter = timeConverters[key]
-  if (!converter) throw new Error(`invalid converter key: ${JSON.stringify(key).substring(0, 100)}`)
-  return converter
-}
-
-// Each time converter should be able to accept 2 keys of arguments:
-// - either datavalue.value objects (prefered as it gives access to the precision)
-// - or the time string (datavalue.value.time)
-export const timeConverters = {
-  iso: wikibaseTimeToISOString,
-  epoch: wikibaseTimeToEpochTime,
-  'simple-day': wikibaseTimeToSimpleDay,
-  none: (wikibaseTime: TimeInputValue) => typeof wikibaseTime === 'string' ? wikibaseTime : wikibaseTime.time,
-} as const
 
 export const parsers = {
   commonsMedia: simple,
@@ -106,8 +85,8 @@ export function parseClaim (datatype, datavalue, options, claimId) {
 
   try {
     return parsers[datatype](datavalue, options)
-  } catch (err) {
-    if (err.message === 'parsers[datatype] is not a function') {
+  } catch (err: unknown) {
+    if (err instanceof Error && err.message === 'parsers[datatype] is not a function') {
       err.message = `${datatype} claim parser isn't implemented
       Claim id: ${claimId}
       Please report to https://github.com/maxlath/wikibase-sdk/issues`

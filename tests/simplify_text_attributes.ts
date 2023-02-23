@@ -1,18 +1,20 @@
 import should from 'should'
 import { simplifyAliases, simplifyDescriptions, simplifyLabels } from '../src/helpers/simplify_text_attributes.js'
 import { readJsonFile, objLenght } from './lib/utils.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q571 = readJsonFile('./tests/data/Q571.json')
+const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 
 describe('simplifyLabels', () => {
   it('should simplify labels', () => {
     const simplifiedLabels = simplifyLabels(Q571.labels)
-    simplifiedLabels.en.should.equal('book')
-    simplifiedLabels.fr.should.equal('livre')
-    objLenght(simplifiedLabels).should.equal(objLenght(Q571.labels))
+    should(simplifiedLabels.en).equal('book')
+    should(simplifiedLabels.fr).equal('livre')
+    should(objLenght(simplifiedLabels)).equal(objLenght(Q571.labels))
   })
 
   it('should create a different object', () => {
+    // @ts-expect-error types are also different
     should(simplifyLabels(Q571.labels) === Q571.labels).be.false()
   })
 
@@ -21,19 +23,20 @@ describe('simplifyLabels', () => {
     // and set it to null in absence of value
     // Known case in wikibase-cli: wd data --props labels.en --simplify
     const entityWithNullEnLabel = { labels: { en: null } }
-    simplifyLabels(entityWithNullEnLabel.labels).should.deepEqual({ en: null })
+    should(simplifyLabels(entityWithNullEnLabel.labels)).deepEqual({ en: null })
   })
 })
 
 describe('simplifyDescriptions', () => {
   it('should simplify descriptions', () => {
     const simplifiedDescriptions = simplifyDescriptions(Q571.descriptions)
-    simplifiedDescriptions.en.slice(0, 23).should.equal('medium for a collection')
-    simplifiedDescriptions.fr.slice(0, 14).should.equal('document écrit')
-    objLenght(simplifiedDescriptions).should.equal(objLenght(Q571.descriptions))
+    should(simplifiedDescriptions.en.slice(0, 23)).equal('medium for a collection')
+    should(simplifiedDescriptions.fr.slice(0, 14)).equal('document écrit')
+    should(objLenght(simplifiedDescriptions)).equal(objLenght(Q571.descriptions))
   })
 
   it('should create a different object', () => {
+    // @ts-expect-error types are also different
     should(simplifyLabels(Q571.descriptions) === Q571.descriptions).be.false()
   })
 })
@@ -41,14 +44,15 @@ describe('simplifyDescriptions', () => {
 describe('simplifyAliases', () => {
   it('should simplify aliases', () => {
     const simplifiedAliases = simplifyAliases(Q571.aliases)
-    objLenght(simplifiedAliases.en).should.equal(objLenght(Q571.aliases.en))
-    objLenght(simplifiedAliases.fr).should.equal(objLenght(Q571.aliases.fr))
-    simplifiedAliases.en[0].should.equal('books')
-    simplifiedAliases.fr[0].should.equal('ouvrage')
-    objLenght(simplifiedAliases).should.equal(objLenght(Q571.aliases))
+    should(objLenght(simplifiedAliases.en)).equal(objLenght(Q571.aliases.en))
+    should(objLenght(simplifiedAliases.fr)).equal(objLenght(Q571.aliases.fr))
+    should(simplifiedAliases.en[0]).equal('books')
+    should(simplifiedAliases.fr[0]).equal('ouvrage')
+    should(objLenght(simplifiedAliases)).equal(objLenght(Q571.aliases))
   })
 
   it('should create a different object', () => {
+    // @ts-expect-error types are also different
     should(simplifyAliases(Q571.aliases) === Q571.aliases).be.false()
   })
 })
