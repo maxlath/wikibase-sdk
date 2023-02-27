@@ -1,10 +1,9 @@
 #!/usr/bin/env ts-node
 import { kebabCase } from 'lodash-es'
 import { red, green } from 'tiny-chalk'
-import { parsers } from '../src/helpers/parse_claim.js'
+import { DataTypes } from '../src/types/claim.js'
+import { isOfType } from '../src/utils/utils.js'
 import { readJsonFile } from '../tests/lib/utils.js'
-
-const supportedTypes = Object.keys(parsers)
 
 const allDatatypes = readJsonFile('/tmp/all_wikidata_datatypes.json') as string[]
 allDatatypes
@@ -15,7 +14,7 @@ allDatatypes
   return kebabCase(typeName)
 })
 .forEach(type => {
-  if (supportedTypes.includes(type)) {
+  if (isOfType(DataTypes, type)) {
     console.log(green('ok'), type)
   } else {
     console.error(red('unsupported type'), type)

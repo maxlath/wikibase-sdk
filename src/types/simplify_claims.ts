@@ -5,21 +5,22 @@ import type { TimeConverter, TimeConverterFn } from '../helpers/wikibase_time.js
 export interface SimplifySnakOptions {
   entityPrefix?: string
   propertyPrefix?: string
-  keepRichValues?: boolean
-  keepTypes?: boolean
-  keepQualifiers?: boolean
-  keepReferences?: boolean
-  keepIds?: boolean
-  keepHashes?: boolean
-  keepRanks?: boolean
-  keepSnaktypes?: boolean
   keepAll?: boolean
+  keepHashes?: boolean
+  keepIds?: boolean
+  keepQualifiers?: boolean
+  keepRanks?: boolean
+  keepReferences?: boolean
+  keepRichValues?: boolean
+  keepSnaktypes?: boolean
+  keepTypes?: boolean
   timeConverter?: TimeConverter | TimeConverterFn
   novalueValue?: any
   somevalueValue?: any
 }
 
 export interface SimplifySnaksOptions extends SimplifySnakOptions {
+  areSubSnaks?: boolean
   keepNonTruthy?: boolean
   keepNonDeprecated?: boolean
 }
