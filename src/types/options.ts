@@ -11,8 +11,6 @@ export type Props = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'label
 export type UrlResultFormat = 'xml' | 'json'
 export type WmLanguageCode = typeof languages[number]
 
-export type ApiQueryParameters = Record<string, string | number | true>
-
 // export type Url = `http${string}`
 export type Url = string
 

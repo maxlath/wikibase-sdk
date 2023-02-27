@@ -1,8 +1,6 @@
 import type { UrlResultFormat } from './options.js'
 
-// TODO: not sure why this fails as an interface
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type WbGetEntities = {
+export interface WbGetEntities {
   action: 'wbgetentities'
   titles?: string
   sites?: string
