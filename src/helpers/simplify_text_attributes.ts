@@ -2,7 +2,7 @@ import { typedEntries } from '../utils/utils.js'
 import type { WmLanguageCode } from '../types/options.js'
 import type { Aliases, Descriptions, Glosses, Labels, Lemmas, Representations, SimplifiedAliases, SimplifiedDescriptions, SimplifiedGlosses, SimplifiedLabels, SimplifiedLemmas, SimplifiedRepresentations } from '../types/terms.js'
 
-type InValue<T> = { readonly value: T }
+interface InValue<T> { readonly value: T }
 
 function singleValue<V> (data: Partial<Readonly<Record<WmLanguageCode, InValue<V>>>>) {
   const simplified: Partial<Record<WmLanguageCode, V>> = {}

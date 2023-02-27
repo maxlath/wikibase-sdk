@@ -31,8 +31,8 @@ export type EntityPageTitle = NamespacedEntityId | ItemId
 export type Entities = Record<EntityId, Entity>
 
 export interface Property extends EntityInfo {
-  id: PropertyId,
-  type: 'property',
+  id: PropertyId
+  type: 'property'
   datatype?: DataType
   labels?: Labels
   descriptions?: Descriptions
@@ -41,8 +41,8 @@ export interface Property extends EntityInfo {
 }
 
 export interface Item extends EntityInfo {
-  id: ItemId,
-  type: 'item',
+  id: ItemId
+  type: 'item'
   labels?: Labels
   descriptions?: Descriptions
   aliases?: Aliases
@@ -51,8 +51,8 @@ export interface Item extends EntityInfo {
 }
 
 export interface Lexeme extends EntityInfo {
-  id: LexemeId,
-  type: 'lexeme',
+  id: LexemeId
+  type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
   lemmas?: Lemmas
@@ -75,8 +75,8 @@ export interface SimplifiedEntityInfo {
 }
 
 export interface SimplifiedItem extends SimplifiedEntityInfo {
-  id: ItemId,
-  type: 'item',
+  id: ItemId
+  type: 'item'
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
@@ -85,9 +85,9 @@ export interface SimplifiedItem extends SimplifiedEntityInfo {
 }
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo {
-  id: PropertyId,
-  type: 'property',
-  datatype: DataType,
+  id: PropertyId
+  type: 'property'
+  datatype: DataType
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
@@ -95,8 +95,8 @@ export interface SimplifiedProperty extends SimplifiedEntityInfo {
 }
 
 export interface SimplifiedLexeme extends SimplifiedEntityInfo {
-  id: LexemeId,
-  type: 'lexeme',
+  id: LexemeId
+  type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
   lemmas?: SimplifiedLemmas

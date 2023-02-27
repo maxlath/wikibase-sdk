@@ -30,7 +30,7 @@ const common = {
   ...timeHelpers,
 } as const
 
-type ApiQueries = {
+interface ApiQueries {
   readonly searchEntities: ReturnType<typeof searchEntitiesFactory>
   readonly cirrusSearchPages: ReturnType<typeof cirrusSearchPagesFactory>
   readonly getEntities: ReturnType<typeof getEntitiesFactory>
@@ -39,11 +39,11 @@ type ApiQueries = {
   readonly getEntityRevision: ReturnType<typeof getEntityRevisionFactory>
   readonly getEntitiesFromSitelinks: ReturnType<typeof getEntitiesFromSitelinksFactory>
 }
-type SparqlQueries = {
+interface SparqlQueries {
   readonly sparqlQuery: ReturnType<typeof sparqlQueryFactory>
   readonly getReverseClaims: ReturnType<typeof getReverseClaimsFactory>
 }
-type Instance = {
+interface Instance {
   readonly root: Url
   readonly apiEndpoint: Url
 }

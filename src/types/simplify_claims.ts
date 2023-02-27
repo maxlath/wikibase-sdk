@@ -40,14 +40,10 @@ export type SimplifiedSnaks = Record<PropertyId, SimplifiedPropertySnaks>
 
 export type SimplifiedQualifier = SimplifiedSnak
 export type SimplifiedPropertyQualifiers = SimplifiedQualifier[]
-export interface SimplifiedQualifiers {
-  [property: string]: SimplifiedPropertyQualifiers
-}
+export type SimplifiedQualifiers = Record<string, SimplifiedPropertyQualifiers>
 
 export type SimplifiedReferenceSnak = SimplifiedSnak
-export interface SimplifiedReference {
-  [property: string]: SimplifiedReferenceSnak
-}
+export type SimplifiedReference = Record<string, SimplifiedReferenceSnak>
 export type SimplifiedReferences = SimplifiedReference[]
 
 export type SimplifiedSnak = string | number | CustomSimplifiedSnak

@@ -6,7 +6,7 @@ import { parseUrlQuery } from './lib/utils.js'
 import type { ItemId } from '../src/types/entity.js'
 
 const getManyEntities = getManyEntitiesFactory(buildUrl)
-const manyIds = range(1, 80).map(id => `Q${id}` as ItemId)
+const manyIds = range(1, 80).map<ItemId>(id => `Q${id}`)
 
 describe('wikidata getManyEntities', () => {
   describe('general', () => {
@@ -61,7 +61,7 @@ describe('wikidata getManyEntities', () => {
 
     it('should add a redirects parameter if false', () => {
       const urls = getManyEntities({ ids: [ 'Q535' ], redirects: false })
-      const url = urls[0] as string
+      const url = urls[0]
       should(parseUrlQuery(url).redirects).equal('no')
     })
   })

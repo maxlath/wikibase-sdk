@@ -12,11 +12,11 @@ export interface SparqlResults {
     vars: string[]
   }
   results: {
-    bindings: Record<string, SparqlValueObj>[]
+    bindings: Array<Record<string, SparqlValueObj>>
   }
 }
 
-export type SimplifiedSparqlResultRecord = Record<string, SparqlValueType>[]
+export type SimplifiedSparqlResultRecord = Array<Record<string, SparqlValueType>>
 export type SimplifiedSparqlResultMinified = SparqlValueRaw[]
 
 export type SimplifiedSparqlResults = SimplifiedSparqlResultRecord | SimplifiedSparqlResultMinified

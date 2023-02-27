@@ -22,7 +22,7 @@ export function getRevisionsFactory (buildUrl: BuildUrlFunction) {
   return function getRevisions ({ ids, format, limit, start, end, prop, user, excludeuser, tag }: GetRevisionsOptions) {
     rejectObsoleteInterface(arguments)
     ids = forceArray(ids)
-    ids.forEach(o => validate.entityPageTitle(o))
+    ids.forEach(o => { validate.entityPageTitle(o) })
 
     const uniqueId = ids.length === 1
     const query: ApiQueryParameters = {

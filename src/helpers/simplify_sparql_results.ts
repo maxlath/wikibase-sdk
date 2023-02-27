@@ -1,6 +1,6 @@
 import type { SimplifiedSparqlResultMinified, SimplifiedSparqlResultRecord, SimplifiedSparqlResults, SparqlResults, SparqlValueObj, SparqlValueRaw, SparqlValueType } from '../types/sparql.js'
 
-export type SimplifySparqlResultsOptions = {
+export interface SimplifySparqlResultsOptions {
   readonly minimize?: boolean
 }
 

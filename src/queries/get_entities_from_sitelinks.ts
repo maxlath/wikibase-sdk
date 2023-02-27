@@ -58,6 +58,8 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
       query.props = props.join('|')
     }
 
+    // Only specify 'no' when explictly false. Eslint ignores the fact that redirects could be undefined too.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
     if (redirects === false) query.redirects = 'no'
 
     return buildUrl(query)

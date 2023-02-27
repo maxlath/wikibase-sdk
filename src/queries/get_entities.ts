@@ -29,7 +29,7 @@ export function getEntitiesFactory (buildUrl: BuildUrlFunction) {
     // Allow to pass ids as a single string
     ids = forceArray(ids)
 
-    ids.forEach(o => validate.entityId(o))
+    ids.forEach(o => { validate.entityId(o) })
 
     if (ids.length > 50) {
       console.warn(`getEntities accepts 50 ids max to match Wikidata API limitations:
@@ -48,6 +48,8 @@ export function getEntitiesFactory (buildUrl: BuildUrlFunction) {
       format,
     }
 
+    // Only specify 'no' when explictly false. Eslint ignores the fact that redirects could be undefined too.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
     if (redirects === false) query.redirects = 'no'
 
     if (languages) {
