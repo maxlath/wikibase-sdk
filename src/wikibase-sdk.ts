@@ -45,7 +45,7 @@ type Instance = {
   readonly root: Url
   readonly apiEndpoint: Url
 }
-export type Wbk = {readonly instance: Instance} & ApiQueries & SparqlQueries & typeof common
+export type Wbk = { readonly instance: Instance } & ApiQueries & SparqlQueries & typeof common
 
 export function WBK (config: InstanceConfig): Wbk {
   if (!isPlainObject(config)) throw new Error('invalid config')
