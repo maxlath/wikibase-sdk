@@ -9,51 +9,51 @@ describe('getEntitiesFromSitelinks', () => {
   describe('polymorphism', () => {
     it('rejects parameters as multiple arguments', () => {
       // @ts-expect-error
-      (() => getEntitiesFromSitelinks('Lyon')).should.throw()
+      should(() => getEntitiesFromSitelinks('Lyon')).throw()
       // @ts-expect-error
-      ;(() => getEntitiesFromSitelinks('Lyon', 'en')).should.throw()
+      should(() => getEntitiesFromSitelinks('Lyon', 'en')).throw()
     })
   })
 
   describe('action', () => {
     it('action should be wbgetentities', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      query.action.should.equal('wbgetentities')
+      should(query.action).equal('wbgetentities')
     })
   })
 
   describe('titles', () => {
     it('accepts one title as a string', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      query.titles.should.equal('Lyon')
+      should(query.titles).equal('Lyon')
     })
 
     it('accepts titles as an array', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: [ 'Lyon', 'Hamburg' ] }))
-      query.titles.should.equal('Lyon|Hamburg')
+      should(query.titles).equal('Lyon|Hamburg')
     })
   })
 
   describe('sitelinks', () => {
     it('accepts one site as a string', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', sites: 'itwiki' }))
-      query.sites.should.equal('itwiki')
+      should(query.sites).equal('itwiki')
     })
 
     it('accepts titles as an array', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'itwiki', 'eswikisource' ] }))
-      query.sites.should.equal('itwiki|eswikisource')
+      should(query.sites).equal('itwiki|eswikisource')
     })
 
     it('defaults to the English Wikipedia', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      query.sites.should.equal('enwiki')
+      should(query.sites).equal('enwiki')
     })
 
     it('converts 2-letters language codes to Wikipedia sites', () => {
       // @ts-expect-error
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'it', 'fr' ] }))
-      query.sites.should.equal('itwiki|frwiki')
+      should(query.sites).equal('itwiki|frwiki')
     })
   })
 
@@ -65,12 +65,12 @@ describe('getEntitiesFromSitelinks', () => {
 
     it('accepts one language as a string', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', languages: 'fr' }))
-      query.languages.should.equal('fr')
+      should(query.languages).equal('fr')
     })
 
     it('accepts language as an array', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', languages: [ 'fr', 'de' ] }))
-      query.languages.should.equal('fr|de')
+      should(query.languages).equal('fr|de')
     })
   })
 
@@ -84,7 +84,7 @@ describe('getEntitiesFromSitelinks', () => {
   describe('format', () => {
     it('default to json', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon' }))
-      query.format.should.equal('json')
+      should(query.format).equal('json')
     })
   })
 
@@ -96,7 +96,7 @@ describe('getEntitiesFromSitelinks', () => {
 
     it('should add a redirects parameter if false', () => {
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', redirects: false }))
-      query.redirects.should.equal('no')
+      should(query.redirects).equal('no')
     })
   })
 })
