@@ -5,6 +5,7 @@
     "module": "esnext",
     "moduleResolution": "nodenext",
     "declaration": true,
+    "declarationMap": true,
     "forceConsistentCasingInFileNames": true,
     "importsNotUsedAsValues": "error",
     "newLine": "lf",
