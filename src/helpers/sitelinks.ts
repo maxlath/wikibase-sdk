@@ -1,7 +1,6 @@
-import { fixedEncodeURIComponent, isOfType, rejectObsoleteInterface, replaceSpaceByUnderscores } from '../utils/utils.js'
+import { fixedEncodeURIComponent, isAKey, isOfType, rejectObsoleteInterface, replaceSpaceByUnderscores } from '../utils/utils.js'
 import { languages } from './sitelinks_languages.js'
 import { specialSites } from './special_sites.js'
-import type { EntityId } from '../types/entity.js'
 import type { Url, WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
 
@@ -18,9 +17,14 @@ export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
   if (!site) throw new Error('missing a site')
   if (!title) throw new Error('missing a title')
 
+  if (isAKey(siteUrlBuilders, site)) {
+    return siteUrlBuilders[site](title)
+  }
+
   const shortSiteKey = site.replace(/wiki$/, '')
-  const specialUrlBuilder = siteUrlBuilders[shortSiteKey] || siteUrlBuilders[site]
-  if (specialUrlBuilder) return specialUrlBuilder(title)
+  if (isAKey(siteUrlBuilders, shortSiteKey)) {
+    return siteUrlBuilders[shortSiteKey](title)
+  }
 
   const { lang, project } = getSitelinkData(site)
   title = fixedEncodeURIComponent(replaceSpaceByUnderscores(title))
@@ -34,7 +38,7 @@ const siteUrlBuilders = {
   mediawiki: (title: string) => `https://www.mediawiki.org/wiki/${title}`,
   meta: wikimediaSite('meta'),
   species: wikimediaSite('species'),
-  wikidata: (entityId: EntityId) => {
+  wikidata: (entityId: string) => {
     const prefix = prefixByEntityLetter[entityId[0]]
     let title = prefix ? `${prefix}:${entityId}` : entityId
     // Required for forms and senses
@@ -84,9 +88,9 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     return { lang, project, key, title, url }
   } else {
     const key = site
-    const specialProjectName = specialSites[key]
-    if (specialProjectName) {
-      return { lang: 'en', project: specialProjectName, key }
+    if (isAKey(specialSites, site)) {
+      const project = specialSites[site]
+      return { lang: 'en', project, key }
     }
 
     let [ lang, projectSuffix, rest ] = key.split('wik')
