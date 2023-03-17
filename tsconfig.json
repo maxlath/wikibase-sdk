@@ -25,7 +25,7 @@
     "noUnusedParameters": true,
     // "strict": true,
   },
-  "include": ["src"],
+  "include": ["src", "tests", "scripts"],
   "ts-node": {
     "esm": true,
   }

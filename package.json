@@ -3,21 +3,20 @@
   "version": "9.0.5",
   "type": "module",
   "description": "utils functions to query a Wikibase instance and simplify its results",
-  "main": "./dist/index.js",
+  "main": "./dist/src/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
     },
     "./wikidata.org": {
-      "types": "./dist/wellknown/wikidata.org.d.ts",
-      "import": "./dist/wellknown/wikidata.org.js"
+      "types": "./dist/src/wellknown/wikidata.org.d.ts",
+      "import": "./dist/src/wellknown/wikidata.org.js"
     }
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/src/index.d.ts",
   "files": [
-    "src",
-    "dist"
+    "dist/src"
   ],
   "directories": {
     "lib": "dist",
