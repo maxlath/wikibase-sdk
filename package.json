@@ -31,9 +31,9 @@
     "lint": "eslint -c .eslintrc.cjs src scripts tests",
     "lint-fix": "npm run lint -- --fix",
     "test": "./scripts/run_tests",
+    "prepublishOnly": "git checkout main",
     "prepack": "npm run build && npm run lint && npm test",
     "postpublish": "./scripts/postpublish",
-    "update-dist": "./scripts/update_dist",
     "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
     "update-toc": "./scripts/update_toc",
     "watch": "tsc --watch"
