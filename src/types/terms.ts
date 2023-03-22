@@ -1,24 +1,24 @@
-import type { WmLanguageCode } from './options.js'
+import type { Language } from '../helpers/wikimedia_constants.js'
 
-type WmLanguageRecord<V> = Partial<Readonly<Record<WmLanguageCode, V>>>
+type LanguageRecord<V> = Partial<Readonly<Record<Language, V>>>
 
 export type Term = {
-  readonly language: WmLanguageCode
+  readonly language: Language
   readonly value: string
 }
 
-export type Labels = WmLanguageRecord<Term>
-export type Descriptions = WmLanguageRecord<Term>
-export type Aliases = WmLanguageRecord<readonly Term[]>
-export type Lemmas = WmLanguageRecord<Term>
-export type Representations = WmLanguageRecord<Term>
-export type Glosses = WmLanguageRecord<Term>
+export type Labels = LanguageRecord<Term>
+export type Descriptions = LanguageRecord<Term>
+export type Aliases = LanguageRecord<readonly Term[]>
+export type Lemmas = LanguageRecord<Term>
+export type Representations = LanguageRecord<Term>
+export type Glosses = LanguageRecord<Term>
 
 export type SimplifiedTerm = string
 
-export type SimplifiedLabels = WmLanguageRecord<SimplifiedTerm>
-export type SimplifiedDescriptions = WmLanguageRecord<SimplifiedTerm>
-export type SimplifiedAliases = WmLanguageRecord<readonly SimplifiedTerm[]>
-export type SimplifiedLemmas = WmLanguageRecord<SimplifiedTerm>
-export type SimplifiedRepresentations = WmLanguageRecord<SimplifiedTerm>
-export type SimplifiedGlosses = WmLanguageRecord<SimplifiedTerm>
+export type SimplifiedLabels = LanguageRecord<SimplifiedTerm>
+export type SimplifiedDescriptions = LanguageRecord<SimplifiedTerm>
+export type SimplifiedAliases = LanguageRecord<readonly SimplifiedTerm[]>
+export type SimplifiedLemmas = LanguageRecord<SimplifiedTerm>
+export type SimplifiedRepresentations = LanguageRecord<SimplifiedTerm>
+export type SimplifiedGlosses = LanguageRecord<SimplifiedTerm>

@@ -156,7 +156,7 @@ describe('getSitelinkData', () => {
   it('should support multi-part language codes', () => {
     const data = getSitelinkData('https://be-x-old.wikipedia.org/wiki/Беларускі_клясычны_правапіс')
     data.title.should.equal('Беларускі_клясычны_правапіс')
-    data.lang.should.equal('be_x_old')
+    data.lang.should.equal('be-x-old')
     data.project.should.equal('wikipedia')
     data.key.should.equal('be_x_oldwiki')
   })

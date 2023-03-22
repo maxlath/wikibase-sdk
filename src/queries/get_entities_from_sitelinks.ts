@@ -1,14 +1,14 @@
-import { languages } from '../helpers/sitelinks_languages.js'
-import { forceArray, shortLang, rejectObsoleteInterface, isOfType } from '../utils/utils.js'
-import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
-import type { Site } from '../types/sitelinks.js'
+import { sites } from '../helpers/wikimedia_constants.js'
+import { forceArray, rejectObsoleteInterface, isOfType } from '../utils/utils.js'
+import type { Language, LanguageWithWiki, Site } from '../helpers/wikimedia_constants.js'
+import type { Props, Url, UrlResultFormat } from '../types/options.js'
 import type { WbGetEntities } from '../types/wbgetentities.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
 export interface GetEntitiesFromSitelinksOptions {
   titles: string | string[]
   sites?: Site | Site[]
-  languages?: WmLanguageCode | WmLanguageCode[]
+  languages?: Language | Language[]
   props?: Props | Props[]
   format?: UrlResultFormat
   redirects?: boolean
@@ -50,7 +50,7 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
     }
 
     if (languages) {
-      languages = forceArray(languages).map(shortLang)
+      languages = forceArray(languages)
       query.languages = languages.join('|')
     }
 
@@ -65,12 +65,11 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
 }
 
 /** convert language code to Wikipedia sitelink code */
-function parseSite (site: Site | WmLanguageCode): Site {
-  if (isOfType(languages, site)) {
-    // The `as Site` conversion shouldnt be needed but WmLanguageCode and Site do not seem to be perfectly in sync?
-    // Both are created by scripts so this is also out of sync on the Wikimedia projects?
-    return `${site}wiki` as Site
-  } else {
+function parseSite (site: Site | LanguageWithWiki): Site {
+  if (isOfType(sites, site)) {
     return site
   }
+
+  const wiki = site.replace(/-/g, '_') + 'wiki'
+  return wiki as Site
 }

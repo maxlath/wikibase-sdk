@@ -35,7 +35,7 @@
     "prepack": "npm run lint && npm test && npm run update-dist",
     "postpublish": "./scripts/postpublish",
     "update-dist": "./scripts/update_dist",
-    "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
+    "update-wikimedia-constants": "./scripts/update_wikimedia_constants.ts",
     "update-toc": "./scripts/update_toc",
     "watch": "tsc --watch"
   },

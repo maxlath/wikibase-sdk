@@ -1,12 +1,6 @@
 import type { ItemId } from './entity.js'
 import type { Url } from './options.js'
-import type { sites } from '../helpers/sitelinks_sites.js'
-import type { specialSites } from '../helpers/special_sites.js'
-
-type ValueOf<T> = T[keyof T]
-type SpecialSiteName = ValueOf<typeof specialSites>
-
-export type Site = typeof sites[number] | SpecialSiteName
+import type { Site } from '../helpers/wikimedia_constants.js'
 
 export interface Sitelink {
   site: Site
