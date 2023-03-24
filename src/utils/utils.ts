@@ -1,3 +1,8 @@
+/** Example: keep only 'de' in 'de_CH' or 'de-ch' */
+export function shortLang (language: string): string {
+  return language.toLowerCase().split(/_-/)[0]
+}
+
 /**
  * a polymorphism helper:
  * accept either a string or an array and return an array
