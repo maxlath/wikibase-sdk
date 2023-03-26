@@ -1,4 +1,4 @@
-import 'should'
+import should from 'should'
 import { sparqlQueryFactory } from '../src/queries/sparql_query.js'
 import { sparqlEndpoint } from './lib/tests_env.js'
 
@@ -27,12 +27,12 @@ const sparqlExemple = `
 
 describe('sparqlQuery', () => {
   it('env', () => {
-    sparqlQuery.should.be.a.Function()
+    should(sparqlQuery).be.a.Function()
   })
 
   it('should return a url', () => {
     const url = sparqlQuery(sparqlExemple)
-    url.should.be.a.String()
-    url.should.match(/https:\/\//)
+    should(url).be.a.String()
+    should(url).match(/https:\/\//)
   })
 })
