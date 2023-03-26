@@ -9,9 +9,9 @@ describe('getEntitiesFromSitelinks', () => {
   describe('polymorphism', () => {
     it('rejects parameters as multiple arguments', () => {
       // @ts-expect-error
-      should(() => (getEntitiesFromSitelinks('Lyon'))).throw()
+      should(() => getEntitiesFromSitelinks('Lyon')).throw()
       // @ts-expect-error
-      should(() => (getEntitiesFromSitelinks('Lyon', 'en'))).throw()
+      should(() => getEntitiesFromSitelinks('Lyon', 'en')).throw()
     })
   })
 

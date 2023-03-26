@@ -20,31 +20,36 @@ describe('builder', () => {
   })
 
   it('should throw when initialized without a config', () => {
-    should(WBK).throw()
+    // @ts-expect-error missing argument
+    should(() => WBK()).throw()
   })
 
   it('should throw when initialized without an instance or a sparqlEndpoint', () => {
-    should(() => (WBK({}))).throw()
+    should(() => WBK({})).throw()
   })
 
   it('should throw when initialized with an invalid instance', () => {
-    should(() => (WBK({ instance: 'foo' }))).throw('invalid instance: foo')
+    should(() => WBK({ instance: 'foo' })).throw('invalid instance: foo')
   })
 
   it('should throw when initialized with an invalid sparql endpoint', () => {
-    should(() => (WBK({ instance, sparqlEndpoint: 'foo' }))).throw('invalid sparqlEndpoint: foo')
+    should(() => WBK({ instance, sparqlEndpoint: 'foo' })).throw('invalid sparqlEndpoint: foo')
   })
 
   it('should not throw when initialized without a sparql endpoint', () => {
     const wbk = WBK({ instance })
-    should(wbk.sparqlQuery).throw('sparqlQuery requires a sparqlEndpoint to be set at initialization')
-    should(wbk.getReverseClaims).throw('getReverseClaims requires a sparqlEndpoint to be set at initialization')
+    // @ts-expect-error missing argument
+    should(() => wbk.sparqlQuery()).throw('sparqlQuery requires a sparqlEndpoint to be set at initialization')
+    // @ts-expect-error missing argument
+    should(() => wbk.getReverseClaims()).throw('getReverseClaims requires a sparqlEndpoint to be set at initialization')
   })
 
   it('should not throw when initialized without a sparql endpoint', () => {
     const wbk = WBK({ sparqlEndpoint })
-    should(wbk.searchEntities).throw('searchEntities requires an instance to be set at initialization')
-    should(wbk.getEntities).throw('getEntities requires an instance to be set at initialization')
+    // @ts-expect-error missing argument
+    should(() => wbk.searchEntities()).throw('searchEntities requires an instance to be set at initialization')
+    // @ts-expect-error missing argument
+    should(() => wbk.getEntities()).throw('getEntities requires an instance to be set at initialization')
   })
 
   it('should produce valid URLs', () => {

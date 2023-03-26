@@ -108,7 +108,7 @@ describe('simplifyPropertyClaims', () => {
     const simplified = simplifyPropertyClaims(Q22002395.claims.P50)
     // Q22002395 P50 has 2 values with "snaktype": "somevalue"
     // that should be removed
-    simplified.forEach(qid => should(qid != null).be.true())
+    simplified.forEach(qid => should(qid).not.be.null())
   })
 
   it('should deduplicated values', () => {
@@ -211,11 +211,11 @@ describe('simplifyPropertyClaims', () => {
         { value: undefined, snaktype: 'somevalue' },
         { value: 'bacasable', snaktype: 'value' },
       ])
-      simplifyPropertyClaims(emptyValues.claims.P3984, {
+      should(simplifyPropertyClaims(emptyValues.claims.P3984, {
         keepSnaktypes: true,
         novalueValue: '-',
         somevalueValue: '?',
-      }).should.deepEqual([
+      })).deepEqual([
         { value: '-', snaktype: 'novalue' },
         { value: '?', snaktype: 'somevalue' },
         { value: 'bacasable', snaktype: 'value' },
@@ -247,11 +247,11 @@ describe('simplifyPropertyClaims', () => {
   })
 
   it('should use the placeholder value for empty values in object values', () => {
-    simplifyPropertyClaims(emptyValues.claims.P3984, {
+    should(simplifyPropertyClaims(emptyValues.claims.P3984, {
       keepQualifiers: true,
       novalueValue: '-',
       somevalueValue: '?',
-    }).should.deepEqual([
+    })).deepEqual([
       { value: '-', qualifiers: {} },
       { value: '?', qualifiers: {} },
       { value: 'bacasable', qualifiers: {} },

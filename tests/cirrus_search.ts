@@ -134,7 +134,7 @@ describe('cirrusSearchPages', () => {
     })
 
     it('should reject an invalid profile', () => {
-      // @ts-expect-error invalid profile argument
+      // @ts-expect-error invalid argument
       should(() => cirrusSearchPages({ search: 'hello', profile: 123 })).throw(/invalid profile/)
     })
   })
@@ -151,7 +151,7 @@ describe('cirrusSearchPages', () => {
     })
 
     it('should reject an invalid sort', () => {
-      // @ts-expect-error invalid sort argument
+      // @ts-expect-error invalid argument
       should(() => cirrusSearchPages({ search: 'hello', sort: 123 })).throw(/invalid sort/)
     })
   })

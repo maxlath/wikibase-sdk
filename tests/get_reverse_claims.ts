@@ -11,7 +11,7 @@ describe('getReverseClaims', () => {
 
   it('should reject invalid property ids', () => {
     // @ts-expect-error
-    should(() => (getReverseClaims({ properties: 'foo', values: 'Q535' }))).throw('invalid property id: foo')
+    should(() => getReverseClaims({ properties: 'foo', values: 'Q535' })).throw('invalid property id: foo')
   })
 
   it('should return a SPARQL query url', () => {

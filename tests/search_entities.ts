@@ -26,7 +26,7 @@ describe('searchEntities', () => {
     })
 
     it('throw on empty string', () => {
-      should(() => (searchEntities({ search: '' }))).throw()
+      should(() => searchEntities({ search: '' })).throw()
     })
 
     it('should default to continue=0', () => {
@@ -93,7 +93,7 @@ describe('searchEntities', () => {
 
     it('should reject an invalid type parameter', () => {
       // @ts-expect-error
-      should(() => (searchEntities({ search: 'alphabet', type: 'foo' }))).throw()
+      should(() => searchEntities({ search: 'alphabet', type: 'foo' })).throw()
     })
   })
 

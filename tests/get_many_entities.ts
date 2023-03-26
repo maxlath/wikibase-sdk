@@ -11,7 +11,7 @@ const manyIds = range(1, 80).map<ItemId>(id => `Q${id}`)
 describe('wikidata getManyEntities', () => {
   describe('general', () => {
     it('should reject invalid ids', () => {
-      // @ts-expect-error not ids
+      // @ts-expect-error id is not an EntityId
       should(() => getManyEntities({ ids: [ 'foo' ] })).throw('invalid entity id: foo')
     })
 
@@ -25,7 +25,7 @@ describe('wikidata getManyEntities', () => {
   describe('polymorphism', () => {
     it('should reject parameters as multiple arguments', () => {
       // @ts-expect-error
-      should(() => (getManyEntities(manyIds, 'fr', 'info', 'json'))).throw()
+      should(() => getManyEntities(manyIds, 'fr', 'info', 'json')).throw()
     })
 
     it('should accept parameters as a unique object argument', () => {
@@ -48,8 +48,8 @@ describe('wikidata getManyEntities', () => {
 
   describe('ids', () => {
     it('should throw if passed an id string', () => {
-      // @ts-expect-error
-      should(() => (getManyEntities({ ids: 'Q535' }))).throw()
+      // @ts-expect-error id as string and not string[]
+      should(() => getManyEntities({ ids: 'Q535' })).throw()
     })
   })
 

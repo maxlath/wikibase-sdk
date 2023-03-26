@@ -179,7 +179,6 @@ describe('helpers', () => {
   describe('getImageUrl', () => {
     it('should build a commons FilePath Url', () => {
       should(getImageUrl('Peredot.jpg')).equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg')
-
       should(getImageUrl('Peredot.jpg', 250)).equal('https://commons.wikimedia.org/wiki/Special:FilePath/Peredot.jpg?width=250')
     })
   })

@@ -8,8 +8,8 @@ const getEntities = getEntitiesFactory(buildUrl)
 describe('wikidata getEntities', () => {
   describe('polymorphism', () => {
     it('rejects parameters as multiple arguments', () => {
-      // @ts-expect-error
-      should(() => (getEntities('Q1', 'fr', 'info', 'json'))).throw()
+      // @ts-expect-error parameters as multiple arguments
+      should(() => getEntities('Q1', 'fr', 'info', 'json')).throw()
     })
 
     it('accepts parameters as a unique object argument', () => {

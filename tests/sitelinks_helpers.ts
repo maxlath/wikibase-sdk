@@ -8,61 +8,39 @@ describe('getSitelinkUrl', () => {
 
   it('should return a sitelink URL', () => {
     should(getSitelinkUrl({ site: 'commons', title: 'Lyon' })).equal('https://commons.wikimedia.org/wiki/Lyon')
-
     should(getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })).equal('https://fr.wikipedia.org/wiki/Septembre')
-
     should(getSitelinkUrl({ site: 'hywikisource', title: 'Հեղինակ:Վիկտոր Հյուգո' })).equal('https://hy.wikisource.org/wiki/%D5%80%D5%A5%D5%B2%D5%AB%D5%B6%D5%A1%D5%AF%3A%D5%8E%D5%AB%D5%AF%D5%BF%D5%B8%D6%80_%D5%80%D5%B5%D5%B8%D6%82%D5%A3%D5%B8')
-
     should(getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })).equal('https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C')
 
     // Couldn't find a wiktionary sitelink
 
     should(getSitelinkUrl({ site: 'nlwikibooks', title: 'Programmeren in SPARQL' })).equal('https://nl.wikibooks.org/wiki/Programmeren_in_SPARQL')
-
     should(getSitelinkUrl({ site: 'frwikiversity', title: 'SPARQL Protocol and RDF Query Language' })).equal('https://fr.wikiversity.org/wiki/SPARQL_Protocol_and_RDF_Query_Language')
-
     should(getSitelinkUrl({ site: 'dewikivoyage', title: 'Lyon' })).equal('https://de.wikivoyage.org/wiki/Lyon')
-
     should(getSitelinkUrl({ site: 'enwikinews', title: 'Category:Lyon' })).equal('https://en.wikinews.org/wiki/Category%3ALyon')
-
     should(getSitelinkUrl({ site: 'wikidata', title: 'Q1' })).equal('https://www.wikidata.org/wiki/Q1')
-
     should(getSitelinkUrl({ site: 'wikidatawiki', title: 'Q1' })).equal('https://www.wikidata.org/wiki/Q1')
-
     should(getSitelinkUrl({ site: 'wikidata', title: 'P50' })).equal('https://www.wikidata.org/wiki/Property:P50')
-
     should(getSitelinkUrl({ site: 'wikidatawiki', title: 'L622301' })).equal('https://www.wikidata.org/wiki/Lexeme:L622301')
-
     should(getSitelinkUrl({ site: 'wikidatawiki', title: 'L622301-F1' })).equal('https://www.wikidata.org/wiki/Lexeme:L622301#F1')
-
     should(getSitelinkUrl({ site: 'wikidatawiki', title: 'L16097-S1' })).equal('https://www.wikidata.org/wiki/Lexeme:L16097#S1')
-
     should(getSitelinkUrl({ site: 'wikidatawiki', title: 'E1' })).equal('https://www.wikidata.org/wiki/EntitySchema:E1')
   })
 
   it('should accept a sitelink object as unique argument', () => {
     should(getSitelinkUrl({ site: 'commons', title: 'Lyon' })).equal('https://commons.wikimedia.org/wiki/Lyon')
-
     should(getSitelinkUrl({ site: 'frwiki', title: 'Septembre' })).equal('https://fr.wikipedia.org/wiki/Septembre')
-
     should(getSitelinkUrl({ site: 'hywikisource', title: 'Հեղինակ:Վիկտոր Հյուգո' })).equal('https://hy.wikisource.org/wiki/%D5%80%D5%A5%D5%B2%D5%AB%D5%B6%D5%A1%D5%AF%3A%D5%8E%D5%AB%D5%AF%D5%BF%D5%B8%D6%80_%D5%80%D5%B5%D5%B8%D6%82%D5%A3%D5%B8')
-
     should(getSitelinkUrl({ site: 'zhwikiquote', title: '維克多·雨果' })).equal('https://zh.wikiquote.org/wiki/%E7%B6%AD%E5%85%8B%E5%A4%9A%C2%B7%E9%9B%A8%E6%9E%9C')
 
     // Couldn't find a wiktionary sitelink
 
     should(getSitelinkUrl({ site: 'nlwikibooks', title: 'Programmeren in SPARQL' })).equal('https://nl.wikibooks.org/wiki/Programmeren_in_SPARQL')
-
     should(getSitelinkUrl({ site: 'frwikiversity', title: 'SPARQL Protocol and RDF Query Language' })).equal('https://fr.wikiversity.org/wiki/SPARQL_Protocol_and_RDF_Query_Language')
-
     should(getSitelinkUrl({ site: 'dewikivoyage', title: 'Lyon' })).equal('https://de.wikivoyage.org/wiki/Lyon')
-
     should(getSitelinkUrl({ site: 'enwikinews', title: 'Category:Lyon' })).equal('https://en.wikinews.org/wiki/Category%3ALyon')
-
     should(getSitelinkUrl({ site: 'wikidata', title: 'Q1' })).equal('https://www.wikidata.org/wiki/Q1')
-
     should(getSitelinkUrl({ site: 'wikidatawiki', title: 'Q1' })).equal('https://www.wikidata.org/wiki/Q1')
-
     should(getSitelinkUrl({ site: 'wikidata', title: 'P50' })).equal('https://www.wikidata.org/wiki/Property:P50')
   })
 
@@ -72,9 +50,9 @@ describe('getSitelinkUrl', () => {
 
   it('should reject invalid sitelinks', () => {
     // @ts-expect-error
-    should(() => (getSitelinkUrl({ site: 'frperlinpinpin', title: 'Lyon' }))).throw()
+    should(() => getSitelinkUrl({ site: 'frperlinpinpin', title: 'Lyon' })).throw()
     // @ts-expect-error
-    should(() => (getSitelinkUrl({ site: 'frwikiwiki', title: 'Lyon' }))).throw()
+    should(() => getSitelinkUrl({ site: 'frwikiwiki', title: 'Lyon' })).throw()
   })
 
   it('should support multi-part language codes', () => {
