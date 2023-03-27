@@ -5,7 +5,7 @@ export function truthyPropertyClaims (propertyClaims: PropertyClaims): PropertyC
   const aggregate: Partial<Record<Rank, Claim[]>> = {}
   for (const claim of propertyClaims) {
     const { rank } = claim
-    aggregate[rank] ??= []
+    aggregate[rank] = aggregate[rank] || []
     aggregate[rank].push(claim)
   }
 
