@@ -17,3 +17,7 @@ export function parseUrlQuery (url: Url) {
   const { searchParams } = new URL(url)
   return searchParams ? Object.fromEntries(searchParams) : {}
 }
+
+export function assert (condition: boolean): asserts condition {
+  if (!condition) throw new Error('not true')
+}

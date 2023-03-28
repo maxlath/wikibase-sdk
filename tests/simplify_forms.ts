@@ -1,12 +1,13 @@
-// @ts-nocheck
 import should from 'should'
 import { simplifyForms, simplifyForm } from '../src/helpers/simplify_forms.js'
 import { readJsonFile } from './lib/utils.js'
+import type { Lexeme } from '../src/types/entity.js'
 
-const L525 = readJsonFile('./tests/data/L525.json')
+const L525 = readJsonFile('./tests/data/L525.json') as Lexeme
 
 describe('simplify.form', () => {
   it('should reject an object that isnt a form', () => {
+    // @ts-expect-error isnt a form
     should(() => simplifyForm({})).throw('invalid form object')
   })
 
@@ -36,12 +37,13 @@ describe('simplify.forms', () => {
   it('should simplify forms', () => {
     const simplifiedForms = simplifyForms(L525.forms)
     should(simplifiedForms).be.an.Array()
-    should(simplifiedForms).deepEqual(L525.forms.map(simplifyForm))
+    should(simplifiedForms).deepEqual(L525.forms.map(form => simplifyForm(form)))
   })
 
   it('should pass down options', () => {
     const simplifiedForms = simplifyForms(L525.forms, { keepIds: true })
     should(simplifiedForms).be.an.Array()
+    // @ts-expect-error TODO: keepIds result in different output type
     should(simplifiedForms[0].claims.P443[0].id).equal('L525-F1$079bdca7-5130-4f9f-bac9-e8d032c38263')
   })
 })

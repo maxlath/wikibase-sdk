@@ -15,4 +15,4 @@ export const simplifyForm = (form: Form, options: SimplifyClaimsOptions = {}): S
   }
 }
 
-export const simplifyForms = (forms, options) => forms.map(form => simplifyForm(form, options))
+export const simplifyForms = (forms: readonly Form[], options: SimplifyClaimsOptions = {}) => forms.map(form => simplifyForm(form, options))

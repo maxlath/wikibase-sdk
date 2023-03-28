@@ -21,8 +21,9 @@ import {
   wikibaseTimeToSimpleDay,
 } from '../src/helpers/helpers.js'
 import { readJsonFile } from './lib/utils.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q970917 = readJsonFile('./tests/data/Q970917.json')
+const Q970917 = readJsonFile('./tests/data/Q970917.json') as Item
 
 describe('helpers', () => {
   const ISOtime = '2014-05-14T00:00:00.000Z'
@@ -55,8 +56,11 @@ describe('helpers', () => {
     })
 
     it('should accept a value object', () => {
+      // @ts-expect-error TODO: value is unknown
       should(wikibaseTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)).equal(-3160944000000)
+      // @ts-expect-error TODO: value is unknown
       should(wikibaseTimeToEpochTime(Q970917.claims.P569[1].mainsnak.datavalue.value)).equal(657417600000)
+      // @ts-expect-error TODO: value is unknown
       should(wikibaseTimeToEpochTime(Q970917.claims.P569[2].mainsnak.datavalue.value)).equal(631152000000)
     })
   })
@@ -93,8 +97,11 @@ describe('helpers', () => {
     })
 
     it('should accept a value object', () => {
+      // @ts-expect-error TODO: value is unknown
       should(wikibaseTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)).equal('1869-11-01T00:00:00.000Z')
+      // @ts-expect-error TODO: value is unknown
       should(wikibaseTimeToISOString(Q970917.claims.P569[1].mainsnak.datavalue.value)).equal('1990-11-01T00:00:00.000Z')
+      // @ts-expect-error TODO: value is unknown
       should(wikibaseTimeToISOString(Q970917.claims.P569[2].mainsnak.datavalue.value)).equal('1990-01-01T00:00:00.000Z')
     })
   })
@@ -125,6 +132,7 @@ describe('helpers', () => {
     })
 
     it('should accept a value object', () => {
+      // @ts-expect-error TODO: value is unknown
       should(wikibaseTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)).equal('1869-11')
     })
   })

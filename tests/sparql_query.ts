@@ -4,7 +4,7 @@ import { sparqlEndpoint } from './lib/tests_env.js'
 
 const sparqlQuery = sparqlQueryFactory(sparqlEndpoint)
 
-const sparqlExemple = `
+const sparqlExample = `
   PREFIX wikibase: <http://wikiba.se/ontology#>
   PREFIX wd: <http://www.wikidata.org/entity/>
   PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -31,7 +31,7 @@ describe('sparqlQuery', () => {
   })
 
   it('should return a url', () => {
-    const url = sparqlQuery(sparqlExemple)
+    const url = sparqlQuery(sparqlExample)
     should(url).be.a.String()
     should(url).match(/https:\/\//)
   })

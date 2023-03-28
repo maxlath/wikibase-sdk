@@ -1,8 +1,9 @@
 import should from 'should'
 import { simplifyAliases, simplifyDescriptions, simplifyLabels } from '../src/helpers/simplify_text_attributes.js'
 import { readJsonFile, objLenght } from './lib/utils.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q571 = readJsonFile('./tests/data/Q571.json')
+const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 
 describe('simplifyLabels', () => {
   it('should simplify labels', () => {
@@ -13,6 +14,7 @@ describe('simplifyLabels', () => {
   })
 
   it('should create a different object', () => {
+    // @ts-expect-error they are not the same
     should(simplifyLabels(Q571.labels) === Q571.labels).be.false()
   })
 
@@ -34,6 +36,7 @@ describe('simplifyDescriptions', () => {
   })
 
   it('should create a different object', () => {
+    // @ts-expect-error they are not the same
     should(simplifyLabels(Q571.descriptions) === Q571.descriptions).be.false()
   })
 })
@@ -49,6 +52,7 @@ describe('simplifyAliases', () => {
   })
 
   it('should create a different object', () => {
+    // @ts-expect-error they are not the same
     should(simplifyAliases(Q571.aliases) === Q571.aliases).be.false()
   })
 })
