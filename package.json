@@ -3,21 +3,20 @@
   "version": "9.0.5",
   "type": "module",
   "description": "utils functions to query a Wikibase instance and simplify its results",
-  "main": "./dist/index.js",
+  "main": "./dist/src/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
     },
     "./wikidata.org": {
-      "types": "./dist/wellknown/wikidata.org.d.ts",
-      "import": "./dist/wellknown/wikidata.org.js"
+      "types": "./dist/src/wellknown/wikidata.org.d.ts",
+      "import": "./dist/src/wellknown/wikidata.org.js"
     }
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/src/index.d.ts",
   "files": [
-    "src",
-    "dist"
+    "dist/src"
   ],
   "directories": {
     "lib": "dist",
@@ -26,15 +25,15 @@
   },
   "scripts": {
     "add-fixture-entity": "./scripts/add_fixture_entity",
-    "build": "./scripts/build",
+    "build": "tsc",
     "check-supported-datatypes": "./scripts/check_supported_datatypes",
     "git-pre-commit": "./scripts/githooks/pre-commit",
     "lint": "eslint -c .eslintrc.cjs src scripts tests",
     "lint-fix": "npm run lint -- --fix",
     "test": "./scripts/run_tests",
-    "prepack": "npm run lint && npm test && npm run update-dist",
+    "prepublishOnly": "git checkout main",
+    "prepack": "npm run build && npm run lint && npm test",
     "postpublish": "./scripts/postpublish",
-    "update-dist": "./scripts/update_dist",
     "update-wikimedia-constants": "./scripts/update_wikimedia_constants.ts",
     "update-toc": "./scripts/update_toc",
     "watch": "tsc --watch"
@@ -62,7 +61,6 @@
     "@types/lodash-es": "^4.17.6",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.18",
-    "@types/should": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vercel/git-hooks": "^1.0.0",
