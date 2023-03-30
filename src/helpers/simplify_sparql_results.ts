@@ -1,10 +1,10 @@
-import type { SimplifiedSparqlResults, SparqlResults } from '../types/sparql.js'
+import type { SparqlResults, SparqlValueObj, SparqlValueRaw, SparqlValueType } from '../types/sparql.js'
 
 export type SimplifySparqlResultsOptions = {
   readonly minimize?: boolean
 }
 
-export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}): SimplifiedSparqlResults {
+export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}): Array<Record<string, SparqlValueType>> | SparqlValueRaw[] {
   if (typeof input === 'string') {
     input = JSON.parse(input)
   }
@@ -12,25 +12,19 @@ export function simplifySparqlResults (input: SparqlResults, options: SimplifySp
   const { vars } = input.head
   const results = input.results.bindings
 
-  if (vars.length === 1 && options.minimize === true) {
+  if (vars.length === 1 && options.minimize) {
     const varName = vars[0]
     return results
       .map(result => parseValue(result[varName]))
       // filtering-out bnodes
-      .filter(result => result != null)
+      .filter((result): result is SparqlValueRaw => result != null)
   }
 
   const { richVars, associatedVars, standaloneVars } = identifyVars(vars)
-  return results.map(getSimplifiedResult(richVars, associatedVars, standaloneVars))
+  return results.map(result => getSimplifiedResult(richVars, associatedVars, standaloneVars, result))
 }
 
-type ValueObj = {
-  readonly type: 'uri' | 'bnode'
-  readonly datatype?: string
-  readonly value: string
-}
-
-function parseValue (valueObj: ValueObj | undefined): string | number | boolean | null {
+function parseValue (valueObj: SparqlValueObj | undefined): SparqlValueRaw | null {
   // blank nodes will be filtered-out in order to get things simple
   if (!valueObj || valueObj.type === 'bnode') return null
 
@@ -72,8 +66,11 @@ function convertStatementUriToGuid (uri: string) {
   return parts[0] + '$' + parts.slice(1).join('-')
 }
 
-const identifyVars = vars => {
-  let richVars = vars.filter(varName => vars.some(isAssociatedVar(varName)))
+function identifyVars (vars: readonly string[]) {
+  let richVars = vars.filter(varName => {
+    const isAssociatedPattern = new RegExp(`^${varName}[A-Z]\\w+`)
+    return vars.some(v => isAssociatedPattern.test(v))
+  })
   richVars = richVars.filter(richVar => {
     return !richVars.some(otherRichVar => {
       return richVar !== otherRichVar && richVar.startsWith(otherRichVar)
@@ -87,39 +84,41 @@ const identifyVars = vars => {
   return { richVars, associatedVars, standaloneVars }
 }
 
-const isAssociatedVar = varNameA => {
-  const pattern = new RegExp(`^${varNameA}[A-Z]\\w+`)
-  return pattern.test.bind(pattern)
-}
-
-const getSimplifiedResult = (richVars, associatedVars, standaloneVars) => result => {
-  const simplifiedResult = {}
+function getSimplifiedResult (
+  richVars: readonly string[],
+  associatedVars: readonly string[],
+  standaloneVars: readonly string[],
+  input: Readonly<Record<string, SparqlValueObj>>,
+) {
+  const simplifiedResult: Record<string, SparqlValueType> = {}
   for (const varName of richVars) {
-    const richVarData: any = {}
-    const value = parseValue(result[varName])
+    const richVarData: Record<string, SparqlValueRaw> = {}
+    const value = parseValue(input[varName])
     if (value != null) richVarData.value = value
     for (const associatedVarName of associatedVars) {
-      if (associatedVarName.startsWith(varName)) addAssociatedValue(result, varName, associatedVarName, richVarData)
+      if (associatedVarName.startsWith(varName)) addAssociatedValue(input, varName, associatedVarName, richVarData)
     }
     if (Object.keys(richVarData).length > 0) simplifiedResult[varName] = richVarData
   }
   for (const varName of standaloneVars) {
-    simplifiedResult[varName] = parseValue(result[varName])
+    const value = parseValue(input[varName])
+    if (value != null) simplifiedResult[varName] = value
   }
   return simplifiedResult
 }
 
-const addAssociatedValue = (result, varName, associatedVarName, richVarData) => {
+function addAssociatedValue (
+  input: Readonly<Record<string, SparqlValueObj>>,
+  varName: string,
+  associatedVarName: string,
+  richVarData: Record<string, SparqlValueRaw>,
+) {
   // ex: propertyType => Type
   let shortAssociatedVarName = associatedVarName.split(varName)[1]
   // ex: Type => type
   shortAssociatedVarName = shortAssociatedVarName[0].toLowerCase() + shortAssociatedVarName.slice(1)
   // ex: altLabel => aliases
-  shortAssociatedVarName = specialNames[shortAssociatedVarName] || shortAssociatedVarName
-  const associatedVarData = result[associatedVarName]
+  shortAssociatedVarName = shortAssociatedVarName === 'altLabel' ? 'aliases' : shortAssociatedVarName
+  const associatedVarData = input[associatedVarName]
   if (associatedVarData != null) richVarData[shortAssociatedVarName] = associatedVarData.value
 }
-
-const specialNames = {
-  altLabel: 'aliases',
-} as const
