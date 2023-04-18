@@ -119,6 +119,8 @@ export const isSitelinkKey = (site: string): boolean => {
   }
 }
 
+export const wikimediaLanguageCodes = languages
+
 const projectsBySuffix = {
   i: 'wikipedia',
   isource: 'wikisource',

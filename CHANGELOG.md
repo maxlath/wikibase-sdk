@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 9.1.0 - 2023-04-18
+* export the `wikimediaLanguageCodes` array
+
 ## 9.0.0 - 2023-02-04
 
 **BREAKING CHANGES**:
