@@ -1,0 +1,1 @@
+{"version":3,"file":"simplify_sparql_results.d.ts","sourceRoot":"","sources":["../../../src/helpers/simplify_sparql_results.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,uBAAuB,EAAE,aAAa,EAAE,MAAM,oBAAoB,CAAA;AAEhF,MAAM,MAAM,4BAA4B,GAAG;IACzC,QAAQ,CAAC,QAAQ,CAAC,EAAE,OAAO,CAAA;CAC5B,CAAA;AAED,wBAAgB,qBAAqB,CAAE,KAAK,EAAE,aAAa,EAAE,OAAO,GAAE,4BAAiC,GAAG,uBAAuB,CAkBhI"}
