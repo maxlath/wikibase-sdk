@@ -17,4 +17,4 @@ export interface Sitelink {
 
 export type Sitelinks = Partial<Record<Site, Sitelink>>
 
-export type SimplifiedSitelinks = Partial<Record<Site, string>>
+export type SimplifiedSitelinks = Partial<Record<Site, string | { title: string, url?: string, badges?: ItemId[] }>>

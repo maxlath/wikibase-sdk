@@ -1,8 +1,8 @@
 import * as validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityPageTitle } from '../types/entity.js'
-import type { ApiQueryParameters, UrlResultFormat } from '../types/options.js'
-import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { UrlResultFormat } from '../types/options.js'
+import type { ApiQueryParameters, BuildUrlFunction } from '../utils/build_url.js'
 
 // See https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
 
@@ -22,7 +22,7 @@ export function getRevisionsFactory (buildUrl: BuildUrlFunction) {
   return function getRevisions ({ ids, format, limit, start, end, prop, user, excludeuser, tag }: GetRevisionsOptions) {
     rejectObsoleteInterface(arguments)
     ids = forceArray(ids)
-    ids.forEach(o => validate.entityPageTitle(o))
+    ids.forEach(o => { validate.entityPageTitle(o) })
 
     const uniqueId = ids.length === 1
     const query: ApiQueryParameters = {

@@ -1,10 +1,12 @@
 import should from 'should'
 import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../src/helpers/simplify_claims.js'
 import { readJsonFile } from './lib/utils.js'
+import type { TimeConverter, TimeConverterFn } from '../src/helpers/wikibase_time.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q19180293 = readJsonFile('./tests/data/Q19180293.json')
-const Q2112 = readJsonFile('./tests/data/Q2112.json')
-const Q571 = readJsonFile('./tests/data/Q571.json')
+const Q19180293 = readJsonFile('./tests/data/Q19180293.json') as Item
+const Q2112 = readJsonFile('./tests/data/Q2112.json') as Item
+const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 
 describe('simplifyQualifier', () => {
   it('should simplify a qualifier', () => {
@@ -37,13 +39,18 @@ describe('simplifyQualifier', () => {
   describe('time', () => {
     it('should respect timeConverter for qualifiers claims', () => {
       const qualifier = Q571.claims.P1709[0].qualifiers.P813[0]
-      const timeClaim = timeConverter => simplifyQualifier(qualifier, { timeConverter })
+      const timeClaim = (timeConverter: TimeConverter | TimeConverterFn) => simplifyQualifier(qualifier, { timeConverter })
       should(timeClaim('iso')).equal('2015-06-11T00:00:00.000Z')
       should(timeClaim('epoch')).equal(1433980800000)
       should(timeClaim('simple-day')).equal('2015-06-11')
       should(timeClaim('none')).equal('+2015-06-11T00:00:00Z')
-      const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
-      should(timeClaim(timeConverterFn)).equal('foo/+2015-06-11T00:00:00Z/11/bar')
+      should(timeClaim(
+        timeObj => {
+          if (typeof timeObj !== 'object') throw new Error('expect WikibaseTimeObject')
+          const { time, precision } = timeObj
+          return `foo/${time}/${precision}/bar`
+        },
+      )).equal('foo/+2015-06-11T00:00:00Z/11/bar')
     })
   })
 })

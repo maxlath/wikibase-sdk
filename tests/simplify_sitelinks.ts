@@ -1,9 +1,9 @@
-// @ts-nocheck
 import should from 'should'
 import { simplifySitelinks } from '../src/helpers/simplify_sitelinks.js'
 import { readJsonFile, objLenght } from './lib/utils.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q571 = readJsonFile('./tests/data/Q571.json')
+const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 
 describe('simplify.sitelinks', () => {
   it('should simplify sitelinks', () => {
@@ -15,16 +15,20 @@ describe('simplify.sitelinks', () => {
 
   it('should preserve badges if requested with keepBadges=true', () => {
     const simplifiedSitelinks = simplifySitelinks(Q571.sitelinks, { keepBadges: true })
+    if (typeof simplifiedSitelinks.enwiki != 'object') throw new Error('has to be an object')
     should(simplifiedSitelinks.enwiki.title).equal('Book')
     should(simplifiedSitelinks.enwiki.badges).deepEqual([])
+    if (typeof simplifiedSitelinks.lawiki != 'object') throw new Error('has to be an object')
     should(simplifiedSitelinks.lawiki.title).equal('Liber')
     should(simplifiedSitelinks.lawiki.badges).deepEqual([ 'Q17437796' ])
   })
 
   it('should preserve badges if requested with keepAll=true', () => {
     const simplifiedSitelinks = simplifySitelinks(Q571.sitelinks, { keepBadges: true })
+    if (typeof simplifiedSitelinks.enwiki != 'object') throw new Error('has to be an object')
     should(simplifiedSitelinks.enwiki.title).equal('Book')
     should(simplifiedSitelinks.enwiki.badges).deepEqual([])
+    if (typeof simplifiedSitelinks.lawiki != 'object') throw new Error('has to be an object')
     should(simplifiedSitelinks.lawiki.title).equal('Liber')
     should(simplifiedSitelinks.lawiki.badges).deepEqual([ 'Q17437796' ])
   })
@@ -34,12 +38,13 @@ describe('simplify.sitelinks', () => {
   })
 
   it('should return an object with a URL if requested ', () => {
-    should(simplifySitelinks(Q571.sitelinks, { addUrl: true }).enwiki.url).equal('https://en.wikipedia.org/wiki/Book')
+    const result = simplifySitelinks(Q571.sitelinks, { addUrl: true }).enwiki
+    if (typeof result != 'object') throw new Error('has to be an object')
+    should(result.url).equal('https://en.wikipedia.org/wiki/Book')
   })
 
   it('should not throw when a sitelink is null ', () => {
     const sitelinks = { frwiki: null }
-    // @ts-expect-error
     should(simplifySitelinks(sitelinks)).deepEqual(sitelinks)
   })
 })

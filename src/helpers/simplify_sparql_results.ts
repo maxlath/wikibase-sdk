@@ -1,8 +1,11 @@
-import type { SimplifiedSparqlResults, SparqlResults } from '../types/sparql.js'
+import type { SimplifiedSparqlResultMinified, SimplifiedSparqlResultRecord, SimplifiedSparqlResults, SparqlResults, SparqlValueObj, SparqlValueRaw, SparqlValueType } from '../types/sparql.js'
 
-export type SimplifySparqlResultsOptions = {
+export interface SimplifySparqlResultsOptions {
   readonly minimize?: boolean
 }
+
+export function simplifySparqlResults (input: SparqlResults): SimplifiedSparqlResultRecord
+export function simplifySparqlResults (input: SparqlResults, options: { readonly minimize: true }): SimplifiedSparqlResultMinified
 
 export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}): SimplifiedSparqlResults {
   if (typeof input === 'string') {
@@ -12,7 +15,7 @@ export function simplifySparqlResults (input: SparqlResults, options: SimplifySp
   const { vars } = input.head
   const results = input.results.bindings
 
-  if (vars.length === 1 && options.minimize === true) {
+  if (vars.length === 1 && options.minimize) {
     const varName = vars[0]
     return results
       .map(result => parseValue(result[varName]))
@@ -24,13 +27,7 @@ export function simplifySparqlResults (input: SparqlResults, options: SimplifySp
   return results.map(getSimplifiedResult(richVars, associatedVars, standaloneVars))
 }
 
-type ValueObj = {
-  readonly type: 'uri' | 'bnode'
-  readonly datatype?: string
-  readonly value: string
-}
-
-function parseValue (valueObj: ValueObj | undefined): string | number | boolean | null {
+function parseValue (valueObj: SparqlValueObj | undefined): string | number | boolean | null {
   // blank nodes will be filtered-out in order to get things simple
   if (!valueObj || valueObj.type === 'bnode') return null
 
@@ -72,7 +69,7 @@ function convertStatementUriToGuid (uri: string) {
   return parts[0] + '$' + parts.slice(1).join('-')
 }
 
-const identifyVars = vars => {
+const identifyVars = (vars: readonly string[]) => {
   let richVars = vars.filter(varName => vars.some(isAssociatedVar(varName)))
   richVars = richVars.filter(richVar => {
     return !richVars.some(otherRichVar => {
@@ -87,15 +84,15 @@ const identifyVars = vars => {
   return { richVars, associatedVars, standaloneVars }
 }
 
-const isAssociatedVar = varNameA => {
+const isAssociatedVar = (varNameA: string) => {
   const pattern = new RegExp(`^${varNameA}[A-Z]\\w+`)
   return pattern.test.bind(pattern)
 }
 
-const getSimplifiedResult = (richVars, associatedVars, standaloneVars) => result => {
-  const simplifiedResult = {}
+const getSimplifiedResult = (richVars: readonly string[], associatedVars: readonly string[], standaloneVars: readonly string[]) => (result: Record<string, SparqlValueObj>) => {
+  const simplifiedResult: Record<string, SparqlValueType> = {}
   for (const varName of richVars) {
-    const richVarData: any = {}
+    const richVarData: Record<string, SparqlValueRaw> = {}
     const value = parseValue(result[varName])
     if (value != null) richVarData.value = value
     for (const associatedVarName of associatedVars) {
@@ -109,17 +106,13 @@ const getSimplifiedResult = (richVars, associatedVars, standaloneVars) => result
   return simplifiedResult
 }
 
-const addAssociatedValue = (result, varName, associatedVarName, richVarData) => {
+const addAssociatedValue = (result: Record<string, SparqlValueObj>, varName: string, associatedVarName: string, richVarData: Record<string, SparqlValueRaw>) => {
   // ex: propertyType => Type
   let shortAssociatedVarName = associatedVarName.split(varName)[1]
   // ex: Type => type
   shortAssociatedVarName = shortAssociatedVarName[0].toLowerCase() + shortAssociatedVarName.slice(1)
   // ex: altLabel => aliases
-  shortAssociatedVarName = specialNames[shortAssociatedVarName] || shortAssociatedVarName
+  shortAssociatedVarName = shortAssociatedVarName === 'altLabel' ? 'aliases' : shortAssociatedVarName
   const associatedVarData = result[associatedVarName]
   if (associatedVarData != null) richVarData[shortAssociatedVarName] = associatedVarData.value
 }
-
-const specialNames = {
-  altLabel: 'aliases',
-} as const

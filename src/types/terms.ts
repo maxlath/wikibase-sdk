@@ -1,8 +1,8 @@
 import type { WmLanguageCode } from './options.js'
 
-type WmLanguageRecord<V> = Partial<Readonly<Record<WmLanguageCode, V>>>
+type WmLanguageRecord<V> = Readonly<Partial<Record<WmLanguageCode, V>>>
 
-export type Term = {
+export interface Term {
   readonly language: WmLanguageCode
   readonly value: string
 }

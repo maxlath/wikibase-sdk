@@ -1,5 +1,5 @@
 import type { Claims, DataType } from './claim.js'
-import type { Forms, Senses, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
+import type { Form, Sense, SimplifiedForm, SimplifiedSense } from './lexeme.js'
 import type { SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
 import type { Aliases, Descriptions, Labels, Lemmas, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
@@ -20,19 +20,19 @@ export type RevisionId = `${number}`
 export type PropertyClaimsId = `${EntityId}#${PropertyId}`
 
 export type EntityId = NonNestedEntityId | FormId | SenseId
-export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId
-export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}`
+export type NonNestedEntityId = ItemId | PropertyId | LexemeId | EntitySchemaId | MediaInfoId
+export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}` | `EntitySchema:${EntitySchemaId}`
 
 export type Guid = string
 export type Hash = string
 
-export type Entity = (Property | Item | Lexeme)
+export type Entity = Property | Item | Lexeme
 export type EntityPageTitle = NamespacedEntityId | ItemId
 export type Entities = Record<EntityId, Entity>
 
 export interface Property extends EntityInfo {
-  id: PropertyId,
-  type: 'property',
+  id: PropertyId
+  type: 'property'
   datatype?: DataType
   labels?: Labels
   descriptions?: Descriptions
@@ -41,8 +41,8 @@ export interface Property extends EntityInfo {
 }
 
 export interface Item extends EntityInfo {
-  id: ItemId,
-  type: 'item',
+  id: ItemId
+  type: 'item'
   labels?: Labels
   descriptions?: Descriptions
   aliases?: Aliases
@@ -51,13 +51,14 @@ export interface Item extends EntityInfo {
 }
 
 export interface Lexeme extends EntityInfo {
-  id: LexemeId,
-  type: 'lexeme',
+  id: LexemeId
+  type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
   lemmas?: Lemmas
-  forms?: Forms
-  senses?: Senses
+  claims?: Claims
+  forms?: Form[]
+  senses?: Sense[]
 }
 
 export interface EntityInfo {
@@ -70,37 +71,38 @@ export interface EntityInfo {
 }
 
 export interface SimplifiedEntityInfo {
-  id: EntityId
   modified?: string
 }
 
 export interface SimplifiedItem extends SimplifiedEntityInfo {
-  type: 'item',
+  id: ItemId
+  type: 'item'
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
   claims?: SimplifiedClaims
   sitelinks?: SimplifiedSitelinks
-  lexicalCategory: string
 }
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo {
-  type: 'property',
-  datatype: DataType,
+  id: PropertyId
+  type: 'property'
+  datatype: DataType
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
   claims?: SimplifiedClaims
-  lexicalCategory: string
 }
 
 export interface SimplifiedLexeme extends SimplifiedEntityInfo {
-  type: 'lexeme',
+  id: LexemeId
+  type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
   lemmas?: SimplifiedLemmas
-  forms?: SimplifiedForms
-  senses?: SimplifiedSenses
+  claims?: SimplifiedClaims
+  forms?: SimplifiedForm[]
+  senses?: SimplifiedSense[]
 }
 
 export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme

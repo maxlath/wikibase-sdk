@@ -1,25 +1,26 @@
 import type { DataType, Rank } from './claim.js'
 import type { Guid, PropertyId } from './entity.js'
-import type { timeConverters } from '../helpers/parse_claim.js'
+import type { TimeConverter, TimeConverterFn } from '../helpers/wikibase_time.js'
 
 export interface SimplifySnakOptions {
   entityPrefix?: string
   propertyPrefix?: string
-  keepRichValues?: boolean
-  keepTypes?: boolean
-  keepQualifiers?: boolean
-  keepReferences?: boolean
-  keepIds?: boolean
-  keepHashes?: boolean
-  keepRanks?: boolean
-  keepSnaktypes?: boolean
   keepAll?: boolean
-  timeConverter?: keyof typeof timeConverters
+  keepHashes?: boolean
+  keepIds?: boolean
+  keepQualifiers?: boolean
+  keepRanks?: boolean
+  keepReferences?: boolean
+  keepRichValues?: boolean
+  keepSnaktypes?: boolean
+  keepTypes?: boolean
+  timeConverter?: TimeConverter | TimeConverterFn
   novalueValue?: any
   somevalueValue?: any
 }
 
 export interface SimplifySnaksOptions extends SimplifySnakOptions {
+  areSubSnaks?: boolean
   keepNonTruthy?: boolean
   keepNonDeprecated?: boolean
 }
@@ -40,14 +41,10 @@ export type SimplifiedSnaks = Record<PropertyId, SimplifiedPropertySnaks>
 
 export type SimplifiedQualifier = SimplifiedSnak
 export type SimplifiedPropertyQualifiers = SimplifiedQualifier[]
-export interface SimplifiedQualifiers {
-  [property: string]: SimplifiedPropertyQualifiers
-}
+export type SimplifiedQualifiers = Record<string, SimplifiedPropertyQualifiers>
 
 export type SimplifiedReferenceSnak = SimplifiedSnak
-export interface SimplifiedReference {
-  [property: string]: SimplifiedReferenceSnak
-}
+export type SimplifiedReference = Record<string, SimplifiedReferenceSnak>
 export type SimplifiedReferences = SimplifiedReference[]
 
 export type SimplifiedSnak = string | number | CustomSimplifiedSnak

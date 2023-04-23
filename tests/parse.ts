@@ -15,12 +15,10 @@ describe('parse', () => {
       it('should parse an entities response', () => {
         const entities = parse.entities(wbgetentitiesResponse)
         should(entities).be.an.Object()
+        if (entities.Q3235026.type !== 'item') throw new Error('should be an item')
         should(entities.Q3235026).be.an.Object()
-        // @ts-expect-error
         should(entities.Q3235026.labels).be.an.Object()
-        // @ts-expect-error
         should(entities.Q3235026.descriptions).be.an.Object()
-        // @ts-expect-error
         should(entities.Q3235026.claims).be.an.Object()
       })
     })

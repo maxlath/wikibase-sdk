@@ -56,3 +56,14 @@ export function rejectObsoleteInterface (args: IArguments): void {
 export function isOfType<T extends string> (all: readonly T[], element: unknown): element is T {
   return typeof element === 'string' && (all as readonly string[]).includes(element)
 }
+
+/** key is a key on the object */
+export function isAKey<T extends string> (obj: Readonly<Partial<Record<T, unknown>>>, key: unknown): key is T {
+  return typeof key === 'string' && Object.keys(obj).includes(key)
+}
+
+/** like Object.entries() but with typed key */
+export function typedEntries<K extends string, V> (input: Readonly<Partial<Record<K, V>>>): Array<[K, V]> {
+  // @ts-expect-error string is not assignable to K as K is more specific
+  return Object.entries(input)
+}

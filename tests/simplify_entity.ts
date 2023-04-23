@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { cloneDeep, pick } from 'lodash-es'
 import should from 'should'
 import { simplifyEntity, simplifyEntities } from '../src/helpers/simplify_entity.js'
 import { readJsonFile } from './lib/utils.js'
+import type { Item, Lexeme, Property } from '../src/types/entity.js'
 
-const L525 = readJsonFile('./tests/data/L525.json')
-const P8098 = readJsonFile('./tests/data/P8098.json')
-const Q571 = readJsonFile('./tests/data/Q571.json')
+const L525 = readJsonFile('./tests/data/L525.json') as Lexeme
+const P8098 = readJsonFile('./tests/data/P8098.json') as Property
+const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 
 describe('simplify.entity', () => {
   it('should be a function', () => {
@@ -63,23 +63,29 @@ describe('simplify.entity', () => {
   it('should pass options down to subfunctions', () => {
     const Q571Clone = cloneDeep(Q571)
     const simplifiedEntity = simplifyEntity(Q571Clone, { keepQualifiers: true, keepIds: true, addUrl: true })
+    if (simplifiedEntity.type !== 'item') throw new TypeError('should be item')
     should(simplifiedEntity.labels.fr).equal('livre')
     should(simplifiedEntity.descriptions.fr).equal('document écrit formé de pages reliées entre elles')
     should(simplifiedEntity.aliases.pl).be.an.Array()
     should(simplifiedEntity.aliases.pl[0]).equal('Tom')
     should(simplifiedEntity.claims.P279).be.an.Array()
     should(simplifiedEntity.claims.P279[0]).be.an.Object()
+    // @ts-expect-error
     should(simplifiedEntity.claims.P279[0].value).equal('Q2342494')
     should(simplifiedEntity.sitelinks.afwiki).be.an.Object()
+    // @ts-expect-error
     should(simplifiedEntity.sitelinks.afwiki.title).equal('Boek')
+    // @ts-expect-error
     should(simplifiedEntity.sitelinks.afwiki.url).equal('https://af.wikipedia.org/wiki/Boek')
   })
 
   it('should accept partial entities', () => {
     const Q571Clone = cloneDeep(Q571)
+    // @ts-expect-error very very partial entity
     const emptyEntity = simplifyEntity({})
     should(Object.keys(emptyEntity).length).equal(3)
     const partialEntity = simplifyEntity(pick(Q571Clone, 'id', 'type', 'labels'))
+    if (partialEntity.type !== 'item') throw new TypeError('should be item')
     should(Object.keys(partialEntity).length).equal(4)
     should(partialEntity.labels).be.an.Object()
     should(partialEntity.labels.fr).equal('livre')
@@ -91,6 +97,7 @@ describe('simplify.entities', () => {
     const Q571Clone = cloneDeep(Q571)
     const entities = { Q571: Q571Clone }
     const simplifiedEntities = simplifyEntities(entities)
+    if (simplifiedEntities.Q571.type !== 'item') throw new TypeError('should be item')
     should(simplifiedEntities.Q571.labels.fr).equal('livre')
     should(simplifiedEntities.Q571.descriptions.fr).equal('document écrit formé de pages reliées entre elles')
     should(simplifiedEntities.Q571.aliases.pl).be.an.Array()

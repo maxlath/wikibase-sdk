@@ -29,11 +29,11 @@
     "alwaysStrict": true,
     // "noImplicitAny": true,
     "noImplicitThis": true,
-    // "strictBindCallApply": true,
-    "strictFunctionTypes": true
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
     // "strictNullChecks": true,
     // "strictPropertyInitialization": true,
-    // "useUnknownInCatchVariables": true,
+    "useUnknownInCatchVariables": true,
   },
   "include": ["src", "tests", "scripts"],
   "ts-node": {

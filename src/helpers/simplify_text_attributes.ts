@@ -1,11 +1,12 @@
+import { typedEntries } from '../utils/utils.js'
 import type { WmLanguageCode } from '../types/options.js'
 import type { Aliases, Descriptions, Glosses, Labels, Lemmas, Representations, SimplifiedAliases, SimplifiedDescriptions, SimplifiedGlosses, SimplifiedLabels, SimplifiedLemmas, SimplifiedRepresentations } from '../types/terms.js'
 
-type InValue<T> = { readonly value: T }
+interface InValue<T> { readonly value: T }
 
 function singleValue<V> (data: Partial<Readonly<Record<WmLanguageCode, InValue<V>>>>) {
   const simplified: Partial<Record<WmLanguageCode, V>> = {}
-  for (const [ lang, obj ] of Object.entries(data)) {
+  for (const [ lang, obj ] of typedEntries(data)) {
     simplified[lang] = obj != null ? obj.value : null
   }
   return simplified
@@ -13,7 +14,7 @@ function singleValue<V> (data: Partial<Readonly<Record<WmLanguageCode, InValue<V
 
 function multiValue<V> (data: Partial<Readonly<Record<WmLanguageCode, ReadonlyArray<InValue<V>>>>>) {
   const simplified: Partial<Record<WmLanguageCode, readonly V[]>> = {}
-  for (const [ lang, obj ] of Object.entries(data)) {
+  for (const [ lang, obj ] of typedEntries(data)) {
     simplified[lang] = obj != null ? obj.map(o => o.value) : []
   }
   return simplified

@@ -3,6 +3,7 @@ import * as parse from './helpers/parse_responses.js'
 import * as rankHelpers from './helpers/rank.js'
 import * as simplify from './helpers/simplify.js'
 import * as sitelinksHelpers from './helpers/sitelinks.js'
+import * as timeHelpers from './helpers/wikibase_time.js'
 import { cirrusSearchPagesFactory } from './queries/cirrus_search.js'
 import { getEntitiesFactory } from './queries/get_entities.js'
 import { getEntitiesFromSitelinksFactory } from './queries/get_entities_from_sitelinks.js'
@@ -24,11 +25,12 @@ const common = {
   simplify,
   parse,
   ...helpers,
-  ...sitelinksHelpers,
   ...rankHelpers,
+  ...sitelinksHelpers,
+  ...timeHelpers,
 } as const
 
-type ApiQueries = {
+interface ApiQueries {
   readonly searchEntities: ReturnType<typeof searchEntitiesFactory>
   readonly cirrusSearchPages: ReturnType<typeof cirrusSearchPagesFactory>
   readonly getEntities: ReturnType<typeof getEntitiesFactory>
@@ -37,11 +39,11 @@ type ApiQueries = {
   readonly getEntityRevision: ReturnType<typeof getEntityRevisionFactory>
   readonly getEntitiesFromSitelinks: ReturnType<typeof getEntitiesFromSitelinksFactory>
 }
-type SparqlQueries = {
+interface SparqlQueries {
   readonly sparqlQuery: ReturnType<typeof sparqlQueryFactory>
   readonly getReverseClaims: ReturnType<typeof getReverseClaimsFactory>
 }
-type Instance = {
+interface Instance {
   readonly root: Url
   readonly apiEndpoint: Url
 }

@@ -1,6 +1,6 @@
 // See https://www.wikidata.org/w/api.php?action=help&modules=query%2Bsearch
 
-import { rejectObsoleteInterface } from '../utils/utils.js'
+import { isAKey, rejectObsoleteInterface } from '../utils/utils.js'
 import type { Url, UrlResultFormat } from '../types/options.js'
 import type { BuildUrlFunction } from '../utils/build_url.js'
 
@@ -23,11 +23,12 @@ export function cirrusSearchPagesFactory (buildUrl: BuildUrlFunction) {
     rejectObsoleteInterface(arguments)
 
     // Accept sr parameters with or without prefix
-    for (const key in options) {
+    for (const [ key, value ] of Object.entries(options)) {
       if (key.startsWith('sr')) {
         const shortKey = key.replace(/^sr/, '')
+        if (!isAKey(options, shortKey)) throw new Error(`${key} is not a valid option`)
         if (options[shortKey] != null) throw new Error(`${shortKey} and ${key} are the same`)
-        options[shortKey] = options[key]
+        options[shortKey] = value
       }
     }
 
@@ -63,20 +64,20 @@ export function cirrusSearchPagesFactory (buildUrl: BuildUrlFunction) {
     }
 
     if (profile != null && typeof profile !== 'string') {
-      throw new Error(`invalid profile: ${profile} (${typeof profile}, expected string)`)
+      throw new Error(`invalid profile: ${String(profile)} (${typeof profile}, expected string)`)
     }
 
     if (sort != null && typeof sort !== 'string') {
-      throw new Error(`invalid sort: ${sort} (${typeof sort}, expected string)`)
+      throw new Error(`invalid sort: ${String(sort)} (${typeof sort}, expected string)`)
     }
 
-    let srprop
+    let srprop: string
     if (prop != null) {
       if (prop instanceof Array) prop = prop.join('|')
       if (typeof prop !== 'string') {
-        throw new Error(`invalid prop: ${prop} (${typeof prop}, expected string)`)
+        throw new Error(`invalid prop: ${String(prop)} (${typeof prop}, expected string)`)
       }
-      srprop = prop.toString()
+      srprop = prop
     }
 
     return buildUrl({

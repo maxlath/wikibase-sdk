@@ -28,7 +28,7 @@ export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {
     uselang = uselang || language
 
     if (!(search && search.length > 0)) throw new Error("search can't be empty")
-    if (!isOfType(EntityTypes, type)) throw new Error(`invalid type: ${type}`)
+    if (!isOfType(EntityTypes, type)) throw new Error(`invalid type: ${String(type)}`)
 
     return buildUrl({
       action: 'wbsearchentities',
