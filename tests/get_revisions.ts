@@ -10,7 +10,7 @@ const getRevisions = getRevisionsFactory(buildUrl)
 describe('getRevisions', () => {
   it('should reject invalid ids', () => {
     // @ts-expect-error
-    should(() => getRevisions({ ids: 'foo' })).throw('invalid entity page title: foo')
+    should(() => getRevisions({ ids: 'foo' })).throw('invalid entity page title: foo (type: string)')
   })
 
   it('should accept namespaced ids invalid ids', () => {
@@ -18,7 +18,7 @@ describe('getRevisions', () => {
     should(() => getRevisions({ ids: 'Property:P123' })).not.throw()
     should(() => getRevisions({ ids: 'Lexeme:L123' })).not.throw()
     // @ts-expect-error title is invalid
-    should(() => getRevisions({ ids: 'Property:Q123' })).throw('invalid entity page title: Property:Q123')
+    should(() => getRevisions({ ids: 'Property:Q123' })).throw('invalid entity page title: Property:Q123 (type: string)')
   })
 
   it('should return a revision query url', () => {

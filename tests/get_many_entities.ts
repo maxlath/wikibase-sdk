@@ -12,7 +12,7 @@ describe('wikidata getManyEntities', () => {
   describe('general', () => {
     it('should reject invalid ids', () => {
       // @ts-expect-error id is not an EntityId
-      should(() => getManyEntities({ ids: [ 'foo' ] })).throw('invalid entity id: foo')
+      should(() => getManyEntities({ ids: [ 'foo' ] })).throw('invalid entity id: foo (type: string)')
     })
 
     it('should return an array of urls', () => {

@@ -37,7 +37,7 @@ describe('wikidata getEntities', () => {
   describe('ids', () => {
     it('should reject invalid ids', () => {
       // @ts-expect-error invalid id
-      should(() => getEntities({ ids: 'foo' })).throw('invalid entity id: foo')
+      should(() => getEntities({ ids: 'foo' })).throw('invalid entity id: foo (type: string)')
     })
 
     it('accepts one id as a string', () => {
