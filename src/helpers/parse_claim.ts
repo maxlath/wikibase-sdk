@@ -1,5 +1,5 @@
-import { wikibaseTimeToISOString, wikibaseTimeToEpochTime, wikibaseTimeToSimpleDay } from './helpers.js'
-import type { TimeInputValue } from './helpers.js'
+import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay } from './time.js'
+import type { TimeInputValue } from './time.js'
 
 const simple = datavalue => datavalue.value
 

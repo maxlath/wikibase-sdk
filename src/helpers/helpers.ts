@@ -1,4 +1,3 @@
-import { wikibaseTimeToDateObject as toDateObject } from './wikibase_time_to_date_object.js'
 import type {
   EntityId,
   EntityPageTitle,
@@ -64,77 +63,6 @@ export function getNumericId (id: string): NumericId {
   if (!isNonNestedEntityId(id)) throw new Error(`invalid entity id: ${id}`)
   return id.replace(/^(Q|P|L|M)/, '') as NumericId
 }
-
-export interface WikibaseTimeObject {
-  time: string
-  precision: number
-}
-
-export type TimeInputValue = string | WikibaseTimeObject
-
-type TimeFunction<T> = (wikibaseTime: TimeInputValue) => T
-
-// Try to parse the date or return the input
-function bestEffort<T> (fn: TimeFunction<T>) {
-  return (value: TimeInputValue) => {
-    try {
-      return fn(value)
-    } catch {
-      value = typeof value === 'string' ? value : value.time
-
-      const sign = value[0]
-      let [ yearMonthDay, withinDay ] = value.slice(1).split('T')
-      if (!sign || !yearMonthDay || !withinDay) {
-        throw new Error('TimeInput is invalid: ' + JSON.stringify(value))
-      }
-
-      yearMonthDay = yearMonthDay.replace(/-00/g, '-01')
-
-      return `${sign}${yearMonthDay}T${withinDay}`
-    }
-  }
-}
-
-const toEpochTime = (wikibaseTime: TimeInputValue) => toDateObject(wikibaseTime).getTime()
-const toISOString = (wikibaseTime: TimeInputValue) => toDateObject(wikibaseTime).toISOString()
-
-// A date format that knows just three precisions:
-// 'yyyy', 'yyyy-mm', and 'yyyy-mm-dd' (including negative and non-4 digit years)
-// Should be able to handle the old and the new Wikidata time:
-// - in the old one, units below the precision where set to 00
-// - in the new one, those months and days are set to 01 in those cases,
-//   so when we can access the full claim object, we check the precision
-//   to recover the old format
-const toSimpleDay = (wikibaseTime: TimeInputValue): string => {
-  // Also accept claim datavalue.value objects, and actually prefer those,
-  // as we can check the precision
-  if (typeof wikibaseTime === 'object') {
-    const { time, precision } = wikibaseTime
-    // Year precision
-    if (precision === 9) wikibaseTime = time.replace('-01-01T', '-00-00T')
-    // Month precision
-    else if (precision === 10) wikibaseTime = time.replace('-01T', '-00T')
-    else wikibaseTime = time
-  }
-
-  return wikibaseTime.split('T')[0]
-    // Remove positive years sign
-    .replace(/^\+/, '')
-    // Remove years padding zeros
-    .replace(/^(-?)0+/, '$1')
-    // Remove days if not included in the Wikidata date precision
-    .replace(/-00$/, '')
-    // Remove months if not included in the Wikidata date precision
-    .replace(/-00$/, '')
-}
-
-export const wikibaseTimeToEpochTime = bestEffort(toEpochTime)
-
-export const wikibaseTimeToISOString = bestEffort(toISOString)
-
-export const wikibaseTimeToSimpleDay = bestEffort(toSimpleDay)
-
-export const wikibaseTimeToDateObject = toDateObject
 
 export function getImageUrl (filename: string, width?: number): Url {
   let url = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}`

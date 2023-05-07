@@ -5,6 +5,7 @@ export default WBK
 export * from './wikibase-sdk.js'
 export * from './helpers/helpers.js'
 export * from './helpers/rank.js'
+export * from './helpers/time.js'
 export * from './helpers/sitelinks.js'
 export * as parse from './helpers/parse_responses.js'
 export * as simplify from './helpers/simplify.js'
@@ -24,3 +25,5 @@ export * from './types/simplify_claims.js'
 export * from './types/sitelinks.js'
 export * from './types/sparql.js'
 export * from './types/terms.js'
+
+// In case of missing types on Wbk, check ./wikibase-sdk.ts exports
