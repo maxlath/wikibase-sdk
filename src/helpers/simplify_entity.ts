@@ -1,6 +1,21 @@
-import * as simplify from './simplify.js'
+import { simplifyClaims } from './simplify_claims.js'
+import { simplifyForms } from './simplify_forms.js'
+import { simplifySenses } from './simplify_senses.js'
+import { simplifySitelinks } from './simplify_sitelinks.js'
+import { simplifyAliases, simplifyDescriptions, simplifyLabels, simplifyLemmas } from './simplify_text_attributes.js'
 import type { Entities, Entity, SimplifiedEntity } from '../types/entity.js'
 import type { SimplifyEntityOptions } from '../types/options.js'
+
+const simplify = {
+  labels: simplifyLabels,
+  descriptions: simplifyDescriptions,
+  aliases: simplifyAliases,
+  claims: simplifyClaims,
+  sitelinks: simplifySitelinks,
+  lemmas: simplifyLemmas,
+  forms: simplifyForms,
+  senses: simplifySenses,
+}
 
 export const simplifyEntity = (entity: Entity, options: SimplifyEntityOptions = {}): SimplifiedEntity => {
   const { type } = entity
