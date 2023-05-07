@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readFileSync } from 'fs'
 import type { Url } from '../../src/types/options.js'
 
 export function readJsonFile (jsonFilePath: string) {
@@ -10,12 +10,22 @@ export function objLenght<K extends string | number | symbol> (obj: Partial<Read
 }
 
 export function parseQuery (query: string | string[][] | Record<string, string> | URLSearchParams) {
-  return Object.fromEntries(new URLSearchParams(query))
+  const searchParams = new URLSearchParams(query)
+  const result: Record<string, string> = {}
+  for (const [ key, value ] of searchParams) {
+    result[key] = value
+  }
+
+  return result
 }
 
 export function parseUrlQuery (url: Url) {
   const { searchParams } = new URL(url)
-  return searchParams ? Object.fromEntries(searchParams) : {}
+  const result: Record<string, string> = {}
+  for (const [ key, value ] of searchParams) {
+    result[key] = value
+  }
+  return result
 }
 
 export function assert (condition: boolean): asserts condition {
