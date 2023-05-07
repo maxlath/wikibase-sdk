@@ -2,8 +2,9 @@
 import should from 'should'
 import { simplifySitelinks } from '../src/helpers/simplify_sitelinks.js'
 import { readJsonFile, objLenght } from './lib/utils.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q571 = readJsonFile('./tests/data/Q571.json')
+const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 
 describe('simplify.sitelinks', () => {
   it('should simplify sitelinks', () => {
@@ -39,7 +40,6 @@ describe('simplify.sitelinks', () => {
 
   it('should not throw when a sitelink is null ', () => {
     const sitelinks = { frwiki: null }
-    // @ts-expect-error
     should(simplifySitelinks(sitelinks)).deepEqual(sitelinks)
   })
 })

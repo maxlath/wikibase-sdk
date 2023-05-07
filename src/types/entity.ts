@@ -1,5 +1,5 @@
 import type { Claims, DataType } from './claim.js'
-import type { Forms, Senses, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
+import type { Form, Sense, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
 import type { SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
 import type { Aliases, Descriptions, Labels, Lemmas, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
@@ -32,7 +32,7 @@ export type Entities = Record<EntityId, Entity>
 
 export interface Property extends EntityInfo {
   id: PropertyId,
-  type: 'property',
+  type: 'property'
   datatype?: DataType
   labels?: Labels
   descriptions?: Descriptions
@@ -42,7 +42,7 @@ export interface Property extends EntityInfo {
 
 export interface Item extends EntityInfo {
   id: ItemId,
-  type: 'item',
+  type: 'item'
   labels?: Labels
   descriptions?: Descriptions
   aliases?: Aliases
@@ -52,12 +52,13 @@ export interface Item extends EntityInfo {
 
 export interface Lexeme extends EntityInfo {
   id: LexemeId,
-  type: 'lexeme',
+  type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
+  claims?: Claims
   lemmas?: Lemmas
-  forms?: Forms
-  senses?: Senses
+  forms?: Form[]
+  senses?: Sense[]
 }
 
 export interface EntityInfo {
@@ -75,7 +76,7 @@ export interface SimplifiedEntityInfo {
 }
 
 export interface SimplifiedItem extends SimplifiedEntityInfo {
-  type: 'item',
+  type: 'item'
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
@@ -85,7 +86,7 @@ export interface SimplifiedItem extends SimplifiedEntityInfo {
 }
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo {
-  type: 'property',
+  type: 'property'
   datatype: DataType,
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
@@ -95,9 +96,10 @@ export interface SimplifiedProperty extends SimplifiedEntityInfo {
 }
 
 export interface SimplifiedLexeme extends SimplifiedEntityInfo {
-  type: 'lexeme',
+  type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
+  claims?: SimplifiedClaims
   lemmas?: SimplifiedLemmas
   forms?: SimplifiedForms
   senses?: SimplifiedSenses

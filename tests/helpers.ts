@@ -20,9 +20,10 @@ import {
   wikibaseTimeToISOString,
   wikibaseTimeToSimpleDay,
 } from '../src/helpers/helpers.js'
-import { readJsonFile } from './lib/utils.js'
+import { assert, readJsonFile } from './lib/utils.js'
+import type { Item } from '../src/types/entity.js'
 
-const Q970917 = readJsonFile('./tests/data/Q970917.json')
+const Q970917 = readJsonFile('./tests/data/Q970917.json') as Item
 
 describe('helpers', () => {
   const ISOtime = '2014-05-14T00:00:00.000Z'
@@ -55,9 +56,18 @@ describe('helpers', () => {
     })
 
     it('should accept a value object', () => {
-      should(wikibaseTimeToEpochTime(Q970917.claims.P569[0].mainsnak.datavalue.value)).equal(-3160944000000)
-      should(wikibaseTimeToEpochTime(Q970917.claims.P569[1].mainsnak.datavalue.value)).equal(657417600000)
-      should(wikibaseTimeToEpochTime(Q970917.claims.P569[2].mainsnak.datavalue.value)).equal(631152000000)
+      const expected = [
+        -3160944000000,
+        657417600000,
+        631152000000,
+      ]
+      should(Q970917.claims.P569.length).equal(expected.length)
+
+      Q970917.claims.P569.forEach((claim, i) => {
+        assert(claim.mainsnak.datavalue.type === 'time')
+        // @ts-expect-error TODO: improve SnakValue to be a union
+        should(wikibaseTimeToEpochTime(claim.mainsnak.datavalue.value)).equal(expected[i])
+      })
     })
   })
 
@@ -93,9 +103,18 @@ describe('helpers', () => {
     })
 
     it('should accept a value object', () => {
-      should(wikibaseTimeToISOString(Q970917.claims.P569[0].mainsnak.datavalue.value)).equal('1869-11-01T00:00:00.000Z')
-      should(wikibaseTimeToISOString(Q970917.claims.P569[1].mainsnak.datavalue.value)).equal('1990-11-01T00:00:00.000Z')
-      should(wikibaseTimeToISOString(Q970917.claims.P569[2].mainsnak.datavalue.value)).equal('1990-01-01T00:00:00.000Z')
+      const expected = [
+        '1869-11-01T00:00:00.000Z',
+        '1990-11-01T00:00:00.000Z',
+        '1990-01-01T00:00:00.000Z',
+      ]
+      should(Q970917.claims.P569.length).equal(expected.length)
+
+      Q970917.claims.P569.forEach((claim, i) => {
+        assert(claim.mainsnak.datavalue.type === 'time')
+        // @ts-expect-error TODO: improve SnakValue to be a union
+        should(wikibaseTimeToISOString(claim.mainsnak.datavalue.value)).equal(expected[i])
+      })
     })
   })
 
@@ -125,6 +144,8 @@ describe('helpers', () => {
     })
 
     it('should accept a value object', () => {
+      assert(Q970917.claims.P569[0].mainsnak.datavalue.type === 'time')
+      // @ts-expect-error TODO: improve SnakValue to be a union
       should(wikibaseTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)).equal('1869-11')
     })
   })

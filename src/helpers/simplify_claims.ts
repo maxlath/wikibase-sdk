@@ -1,7 +1,7 @@
 import { uniq } from '../utils/utils.js'
 import { parseClaim } from './parse_claim.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
-import type { Claim, Claims, PropertyClaims, PropertyQualifiers, Qualifier, Qualifiers } from '../types/claim.js'
+import type { Claim, Claims, PropertyClaims, PropertyQualifiers, Qualifier, Qualifiers, Reference } from '../types/claim.js'
 import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
 
 function simplifySnaks (snaks, options) {
@@ -148,10 +148,10 @@ export function simplifyQualifier (qualifier: Qualifier, options: SimplifySnakOp
   return simplifySnak(qualifier, options)
 }
 
-export function simplifyReferences (references, options) {
+export function simplifyReferences (references: readonly Reference[], options: any = {}) {
   return references.map(refRecord => simplifyReferenceRecord(refRecord, options))
 }
-export function simplifyReferenceRecord (refRecord, options) {
+export function simplifyReferenceRecord (refRecord: Reference, options: any = {}) {
   const subSnaksOptions = getSubSnakOptions(options)
   const snaks = simplifySnaks(refRecord.snaks, subSnaksOptions)
   if (subSnaksOptions.keepHashes) return { snaks, hash: refRecord.hash }

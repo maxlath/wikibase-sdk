@@ -1,6 +1,6 @@
 import should from 'should'
 import * as parse from '../src/helpers/parse_responses.js'
-import { readJsonFile } from './lib/utils.js'
+import { assert, readJsonFile } from './lib/utils.js'
 
 const cirrusSearchPagesResponse = readJsonFile('./tests/data/cirrus_search_response.json')
 const wbgetentitiesResponse = readJsonFile('./tests/data/wbgetentities_response.json')
@@ -16,11 +16,9 @@ describe('parse', () => {
         const entities = parse.entities(wbgetentitiesResponse)
         should(entities).be.an.Object()
         should(entities.Q3235026).be.an.Object()
-        // @ts-expect-error
+        assert(entities.Q3235026.type === 'item')
         should(entities.Q3235026.labels).be.an.Object()
-        // @ts-expect-error
         should(entities.Q3235026.descriptions).be.an.Object()
-        // @ts-expect-error
         should(entities.Q3235026.claims).be.an.Object()
       })
     })
