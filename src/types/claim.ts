@@ -1,4 +1,5 @@
 import type { PropertyId } from './entity.js'
+import type { SnakValue } from './snakvalue.js'
 import type { parsers } from '../helpers/parse_claim.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
@@ -9,9 +10,9 @@ export interface Claim {
   id: string
   mainsnak: Snak
   rank: Rank
-  type: DataType
+  type: 'statement'
   qualifiers?: Qualifiers
-  'qualifiers-order'?: string[]
+  'qualifiers-order'?: PropertyId[]
   references?: Reference[]
 }
 
@@ -24,55 +25,12 @@ export type Snaks = Record<PropertyId, PropertySnaks>
 export interface Snak {
   // A mainsnak object won't have an id, as its already on the claim
   id?: string
-  datatype: string
+  datatype: DataType
   datavalue?: SnakValue
   hash: string
-  property: string
+  property: PropertyId
   snaktype: SnakType
 }
-
-export interface SnakValue {
-  type: DataType
-  value: unknown
-}
-
-export interface ClaimSnakTimeValue extends SnakValue {
-  type: 'time'
-  value: {
-    after: number
-    before: number
-    calendermodel: string
-    precision: number
-    time: string
-    timezone: number
-  }
-}
-
-export interface ClaimSnakQuantity extends SnakValue {
-  type: 'quantity'
-  value: {
-    amount: string
-    unit: string
-    upperBound?: string
-    lowerBound?: string
-  }
-}
-
-export interface ClaimSnakString extends SnakValue {
-  type: 'string'
-  value: string
-}
-
-export interface SnakEntityValue extends SnakValue {
-  type: 'wikibase-entityid'
-  value: {
-    id: string
-    'numeric-id': number
-    'entity-type': string
-  }
-}
-
-export type ClaimSnakWikibaseItem = SnakEntityValue
 
 export interface Qualifier extends Snak {
   id: string
@@ -89,7 +47,7 @@ export interface ReferenceSnak extends Snak {
 export interface Reference {
   hash: string
   snaks: Record<PropertyId, ReferenceSnak[]>
-  'snaks-order': string[]
+  'snaks-order': PropertyId[]
 }
 
 export type References = Reference[]

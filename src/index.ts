@@ -23,6 +23,7 @@ export * from './types/options.js'
 export * from './types/search.js'
 export * from './types/simplify_claims.js'
 export * from './types/sitelinks.js'
+export * from './types/snakvalue.js'
 export * from './types/sparql.js'
 export * from './types/terms.js'
 
