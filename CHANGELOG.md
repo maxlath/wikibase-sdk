@@ -20,7 +20,7 @@
   * [`getManyEntities`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities.md#get-many-entities-by-ids)
   * [`getSitelinkUrl`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/general_helpers.md#getsitelinkurl)
   * [`getReverseClaims`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/get_entities_reverse_claims.md)
-* `simplify.claims`, `simplify.simplifyPropertyClaims`, and `simplify.claim` legacy interfaces were dropped: options are now expected in a single option object (rather than as several arguments)
+* `simplify.claims`, `simplify.propertyClaims`, and `simplify.claim` legacy interfaces were dropped: options are now expected in a single option object (rather than as several arguments)
 * Functions previously avaialble on `wbk.parsers.wb` and `wbk.parsers.wd` — namely `entities` and `pagesTitles` — are now directly on `wbk.parsers`
 
 Other changes:
