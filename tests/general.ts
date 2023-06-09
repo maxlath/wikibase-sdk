@@ -1,5 +1,5 @@
 import should from 'should'
-import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData, simplifySparqlResults } from '../src/index.js'
+import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData, simplifyEntity, simplifyEntities, simplifyLabels, simplifyDescriptions, simplifyAliases, simplifySitelinks, simplifyClaim, simplifyPropertyClaims, simplifyClaims, simplifySnak, simplifyPropertySnaks, simplifySnaks, simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers, simplifyForms, simplifyForm, simplifySenses, simplifySense, simplifySparqlResults, truthyClaims, truthyPropertyClaims, isItemId, isPropertyId, isNumericId, isGuid, isHash, isPropertyClaimsId, getNumericId, wikibaseTimeToDateObject, wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, getSitelinkUrl, isSitelinkKey, getImageUrl, getEntityIdFromGuid } from '../src/index.js'
 import { instance, sparqlEndpoint } from './lib/tests_env.js'
 
 describe('builder', () => {
@@ -11,12 +11,55 @@ describe('builder', () => {
 
   it('should reference instance-independant helpers', () => {
     should(parse).be.an.Object()
-    should(simplify).be.an.Object()
     should(parse.entities).be.a.Function()
+    should(simplify).be.an.Object()
     should(simplify.labels).be.a.Function()
+
     should(simplifySparqlResults).be.a.Function()
+    should(simplifyEntity).be.a.Function()
+    should(simplifyEntities).be.a.Function()
+    should(simplifyLabels).be.a.Function()
+    should(simplifyDescriptions).be.a.Function()
+    should(simplifyAliases).be.a.Function()
+    should(simplifySitelinks).be.a.Function()
+    should(simplifyClaim).be.a.Function()
+    should(simplifyPropertyClaims).be.a.Function()
+    should(simplifyClaims).be.a.Function()
+    should(simplifySnak).be.a.Function()
+    should(simplifyPropertySnaks).be.a.Function()
+    should(simplifySnaks).be.a.Function()
+    should(simplifyQualifier).be.a.Function()
+    should(simplifyPropertyQualifiers).be.a.Function()
+    should(simplifyQualifiers).be.a.Function()
+    should(simplifyForms).be.a.Function()
+    should(simplifyForm).be.a.Function()
+    should(simplifySenses).be.a.Function()
+    should(simplifySense).be.a.Function()
+    should(simplifySparqlResults).be.a.Function()
+
     should(isEntityId).be.a.Function()
+    should(isItemId).be.a.Function()
+    should(isPropertyId).be.a.Function()
+    should(isNumericId).be.a.Function()
+    should(isGuid).be.a.Function()
+    should(isHash).be.a.Function()
+    should(isPropertyClaimsId).be.a.Function()
+    should(getNumericId).be.a.Function()
+    should(isEntityId).be.a.Function()
+    should(isItemId).be.a.Function()
+    should(isPropertyId).be.a.Function()
+    should(wikibaseTimeToDateObject).be.a.Function()
+    should(wikibaseTimeToEpochTime).be.a.Function()
+    should(wikibaseTimeToISOString).be.a.Function()
+    should(wikibaseTimeToSimpleDay).be.a.Function()
+    should(getSitelinkUrl).be.a.Function()
     should(getSitelinkData).be.a.Function()
+    should(isSitelinkKey).be.a.Function()
+    should(getImageUrl).be.a.Function()
+    should(getEntityIdFromGuid).be.a.Function()
+
+    should(truthyClaims).be.a.Function()
+    should(truthyPropertyClaims).be.a.Function()
   })
 
   it('should throw when initialized without a config', () => {

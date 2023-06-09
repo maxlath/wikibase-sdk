@@ -4,7 +4,7 @@ import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, Qualifier, Qualifiers, Reference } from '../types/claim.js'
 import type { SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
 
-function simplifySnaks (snaks, options) {
+export function simplifySnaks (snaks, options) {
   const { propertyPrefix } = options
   const simplifiedSnaks: any = {}
   for (let id in snaks) {
@@ -17,7 +17,7 @@ function simplifySnaks (snaks, options) {
   return simplifiedSnaks
 }
 
-function simplifyPropertySnaks (propertySnaks, options) {
+export function simplifyPropertySnaks (propertySnaks, options) {
   // Avoid to throw on empty inputs to allow to simplify claims array
   // without having to know if the entity as claims for this property
   // Ex: simplifyPropertyClaims(entity.claims.P124211616)
@@ -48,7 +48,7 @@ function simplifyPropertySnaks (propertySnaks, options) {
 
 // Expects a single snak object
 // Ex: entity.claims.P369[0]
-function simplifySnak (claim, options) {
+export function simplifySnak (claim, options) {
   const { keepQualifiers, keepReferences, keepIds, keepHashes, keepTypes, keepSnaktypes, keepRanks } = parseKeepOptions(options)
 
   // tries to replace wikidata deep claim object by a simple value
