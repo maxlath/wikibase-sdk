@@ -193,7 +193,7 @@ getSitelinkData('https://de.wikipedia.org/wiki/Kernfusion')
 // => {
 //      lang: 'de',
 //      project: 'wikipedia',
-//      key: 'dewiki',wwwwwwwwwwwwwwwww
+//      key: 'dewiki',
 //      title: 'Kernfusion',
 //      url: 'https://de.wikipedia.org/wiki/Kernfusion'
 //   }
