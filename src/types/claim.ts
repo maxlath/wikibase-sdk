@@ -23,8 +23,6 @@ export type Claims = Record<PropertyId, PropertyClaims>
 export type Snaks = Record<PropertyId, PropertySnaks>
 
 export interface Snak {
-  // A mainsnak object won't have an id, as its already on the claim
-  id?: string
   datatype: DataType
   datavalue?: SnakValue
   hash: string
@@ -32,17 +30,13 @@ export interface Snak {
   snaktype: SnakType
 }
 
-export interface Qualifier extends Snak {
-  id: string
-}
+export type Qualifier = Snak
 
 export type PropertyQualifiers = Qualifier[]
 
 export type Qualifiers = Record<PropertyId, PropertyQualifiers>
 
-export interface ReferenceSnak extends Snak {
-  id: string
-}
+export type ReferenceSnak = Snak
 
 export interface Reference {
   hash: string
