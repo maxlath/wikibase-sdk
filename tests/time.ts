@@ -49,7 +49,6 @@ describe('time helpers', () => {
 
       Q970917.claims.P569.forEach((claim, i) => {
         assert(claim.mainsnak.datavalue.type === 'time')
-        // @ts-expect-error TODO: improve SnakValue to be a union
         should(wikibaseTimeToEpochTime(claim.mainsnak.datavalue.value)).equal(expected[i])
       })
     })
@@ -96,7 +95,6 @@ describe('time helpers', () => {
 
       Q970917.claims.P569.forEach((claim, i) => {
         assert(claim.mainsnak.datavalue.type === 'time')
-        // @ts-expect-error TODO: improve SnakValue to be a union
         should(wikibaseTimeToISOString(claim.mainsnak.datavalue.value)).equal(expected[i])
       })
     })
@@ -129,7 +127,6 @@ describe('time helpers', () => {
 
     it('should accept a value object', () => {
       assert(Q970917.claims.P569[0].mainsnak.datavalue.type === 'time')
-      // @ts-expect-error TODO: improve SnakValue to be a union
       should(wikibaseTimeToSimpleDay(Q970917.claims.P569[0].mainsnak.datavalue.value)).equal('1869-11')
     })
   })
