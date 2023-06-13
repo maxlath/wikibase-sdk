@@ -1,8 +1,6 @@
-import type { WmLanguageCode } from '../types/options.js'
-
 /** Example: keep only 'fr' in 'fr_FR' */
-export function shortLang (language: string): WmLanguageCode {
-  const lang = language.toLowerCase().split('_')[0] as WmLanguageCode
+export function shortLang (language: string): string {
+  const lang = language.toLowerCase().split('_')[0]
   return lang
 }
 
@@ -51,7 +49,7 @@ export function rejectObsoleteInterface (args: IArguments): void {
 
 /**
  * Checks if the `element` is of one of the entries of `all`
- * @example const isWmLanguageCode: lang is WmLanguageCode = isOfType(languages, lang)
+ * @example const isSite: site is Site = isOfType(sites, site)
  */
 export function isOfType<T extends string> (all: readonly T[], element: unknown): element is T {
   return typeof element === 'string' && (all as readonly string[]).includes(element)

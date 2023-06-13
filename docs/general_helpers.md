@@ -25,7 +25,7 @@
 - [Sitelink helpers](#sitelink-helpers)
   - [getSitelinkUrl](#getsitelinkurl)
   - [getSitelinkData](#getsitelinkdata)
-  - [isSitelinkKey](#issitelinkkey)
+  - [isSite](#issite)
 - [Wikibase Time converters](#wikibase-time-converters)
   - [wikibaseTimeToDateObject](#wikibasetimetodateobject)
   - [wikibaseTimeToEpochTime](#wikibasetimetoepochtime)
@@ -220,23 +220,23 @@ getSitelinkData('wikidatawiki')
 // => { lang: 'en', project: 'wikidata', key: 'wikidatawiki' }
 ```
 
-### isSitelinkKey
+### isSite
 ```js
-import { isSitelinkKey } from 'wikibase-sdk'
+import { isSite } from 'wikibase-sdk'
 
-isSitelinkKey('frwiki')
+isSite('frwiki')
 // => true
-isSitelinkKey('dewikiquote')
+isSite('dewikiquote')
 // => true
-isSitelinkKey('commons')
+isSite('commons')
 // => true
 // Accepting wikidata as a valid sitelink for convenience
-isSitelinkKey('wikidata')
+isSite('wikidata')
 // => true
-isSitelinkKey('frwikilinpinpin')
+isSite('frwikilinpinpin')
 // => false
 // /!\ langs are loosly validated
-isSitelinkKey('imaginarylangwiki')
+isSite('imaginarylangwiki')
 // => true
 ```
 

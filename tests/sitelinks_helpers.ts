@@ -1,5 +1,5 @@
 import should from 'should'
-import { getSitelinkUrl, getSitelinkData, isSitelinkKey } from '../src/helpers/sitelinks.js'
+import { getSitelinkUrl, getSitelinkData, isSite } from '../src/helpers/sitelinks.js'
 
 describe('getSitelinkUrl', () => {
   it('should be a function', () => {
@@ -105,27 +105,27 @@ describe('getSitelinkData', () => {
   it('should support multi-part language codes', () => {
     const data = getSitelinkData('https://be-x-old.wikipedia.org/wiki/Беларускі_клясычны_правапіс')
     should(data.title).equal('Беларускі_клясычны_правапіс')
-    should(data.lang).equal('be_x_old')
+    should(data.lang).equal('be-x-old')
     should(data.project).equal('wikipedia')
     should(data.key).equal('be_x_oldwiki')
   })
 })
 
-describe('isSitelinkKey', () => {
+describe('isSite', () => {
   it('should return true for valid sitelink keys', () => {
-    should(isSitelinkKey('frwiki')).be.true()
-    should(isSitelinkKey('be_x_oldwiki')).be.true()
-    should(isSitelinkKey('commonswiki')).be.true()
-    should(isSitelinkKey('wikidatawiki')).be.true()
-    should(isSitelinkKey('commons')).be.false()
-    should(isSitelinkKey('wikidata')).be.false()
+    should(isSite('frwiki')).be.true()
+    should(isSite('be_x_oldwiki')).be.true()
+    should(isSite('commonswiki')).be.true()
+    should(isSite('wikidatawiki')).be.true()
+    should(isSite('commons')).be.false()
+    should(isSite('wikidata')).be.false()
   })
 
   it('should return false for invalid sitelink keys', () => {
-    should(isSitelinkKey('frperlinpinpin')).be.false()
-    should(isSitelinkKey('frwikilinpinpin')).be.false()
-    should(isSitelinkKey('imaginarylangwiki')).be.false()
-    should(isSitelinkKey('frwikiwiki')).be.false()
-    should(isSitelinkKey('be-x-oldwiki')).be.false()
+    should(isSite('frperlinpinpin')).be.false()
+    should(isSite('frwikilinpinpin')).be.false()
+    should(isSite('imaginarylangwiki')).be.false()
+    should(isSite('frwikiwiki')).be.false()
+    should(isSite('be-x-oldwiki')).be.false()
   })
 })

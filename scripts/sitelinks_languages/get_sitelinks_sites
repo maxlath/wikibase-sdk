@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-curl -s 'https://www.wikidata.org/w/api.php?action=paraminfo&modules=wbgetentities&format=json' |
-  jq '.paraminfo.modules[0].parameters[1].type' |
-  sed "s/\"/'/g" |
-  sed "s/'$/',/g"
