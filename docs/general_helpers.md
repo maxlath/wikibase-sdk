@@ -39,7 +39,7 @@
 ## Work with ids
 Those helpers help you figure-out if an id format looks right, not that the associated entity really exists. Typically to be used in conditions:
 ```js
-import { if } from 'wikibase-sdk'
+import { isItemId, isPropertyId } from 'wikibase-sdk'
 
 if (isItemId(someId)) doThis()
 else if (isPropertyId(someId)) doThat()
