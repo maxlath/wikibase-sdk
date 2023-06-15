@@ -4,6 +4,7 @@ import type {
   EntitySchemaId,
   FormId,
   Guid,
+  GuidAltSyntax,
   Hash,
   ItemId,
   LexemeId,
@@ -70,7 +71,7 @@ export function getImageUrl (filename: string, width?: number): Url {
   return url
 }
 
-export function getEntityIdFromGuid (guid: Guid): EntityId {
+export function getEntityIdFromGuid (guid: Guid | GuidAltSyntax): EntityId {
   const parts = guid.split(/[$-]/)
   if (parts.length === 6) {
     // Examples:

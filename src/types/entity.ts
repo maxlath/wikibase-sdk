@@ -23,7 +23,12 @@ export type EntityId = NonNestedEntityId | FormId | SenseId
 export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId
 export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}`
 
-export type Guid = string
+export type Guid = `${EntityId|Lowercase<EntityId>}$${string}`
+/**
+ * A more shell-friendly GUID syntax, with a "-" instead of a "$"
+ */
+export type GuidAltSyntax = `${EntityId|Lowercase<EntityId>}-${string}`
+
 export type Hash = string
 
 export type Entity = (Property | Item | Lexeme)
