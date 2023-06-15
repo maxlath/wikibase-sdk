@@ -1,4 +1,4 @@
-import type { SimplifySnaksOptions } from './simplify_claims.js'
+import type { SimplifyClaimsOptions } from './simplify_claims.js'
 
 export interface InstanceConfig {
   instance?: string
@@ -11,7 +11,7 @@ export type UrlResultFormat = 'xml' | 'json'
 
 export type LanguageCode = string
 
-export interface SimplifyEntityOptions extends SimplifySnaksOptions, SimplifySitelinkOptions {}
+export interface SimplifyEntityOptions extends SimplifyClaimsOptions, SimplifySitelinkOptions {}
 
 export interface SimplifySitelinkOptions {
   addUrl?: boolean

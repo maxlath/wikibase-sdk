@@ -138,8 +138,6 @@ describe('index', () => {
     should(wbk.simplify.propertyClaims).be.a.Function()
     should(wbk.simplify.claims).be.a.Function()
     should(wbk.simplify.snak).be.a.Function()
-    should(wbk.simplify.propertySnaks).be.a.Function()
-    should(wbk.simplify.snaks).be.a.Function()
     should(wbk.simplify.qualifier).be.a.Function()
     should(wbk.simplify.propertyQualifiers).be.a.Function()
     should(wbk.simplify.qualifiers).be.a.Function()

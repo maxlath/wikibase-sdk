@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 import { kebabCase } from 'lodash-es'
 import { red, green } from 'tiny-chalk'
-import { parsers } from '../src/helpers/parse_claim.js'
+import { parsers } from '../src/helpers/parse_snak.js'
 import { readJsonFile } from '../tests/lib/utils.js'
 
 const supportedTypes = Object.keys(parsers)

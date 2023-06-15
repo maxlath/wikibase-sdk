@@ -1,6 +1,6 @@
 import type { PropertyId } from './entity.js'
 import type { SnakValue } from './snakvalue.js'
-import type { parsers } from '../helpers/parse_claim.js'
+import type { parsers } from '../helpers/parse_snak.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
 export type SnakType = 'value' | 'somevalue' | 'novalue'
