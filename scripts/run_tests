@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ "$1" != "" ]; then
-  mocha --recursive --extension ts --require ts-node/register "$@"
+  mocha $MOCHA_OPTIONS --recursive --extension ts --require ts-node/register "$@"
 else
-  mocha --recursive --extension ts --require ts-node/register tests
+  mocha $MOCHA_OPTIONS --recursive --extension ts --require ts-node/register tests
 fi
