@@ -1,7 +1,7 @@
 # Simplify claims
 *associated Wikibase doc: [DataModel](https://www.mediawiki.org/wiki/Wikibase/DataModel)*
 
-`simplify.claims` functions are part of the larger [`simplify.entity` functions family](simplify_entities_data.md)
+`simplifyClaims` functions are part of the larger [`simplifyEntity` functions family](simplify_entities_data.md)
 
 ## Summary
 
@@ -9,16 +9,16 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Intro](#intro)
-- [simplify.claims](#simplifyclaims)
-- [simplify.propertyClaims](#simplifypropertyclaims)
-- [simplify.claim](#simplifyclaim)
-- [simplify.qualifiers](#simplifyqualifiers)
-- [simplify.propertyQualifiers](#simplifypropertyqualifiers)
-- [simplify.qualifier](#simplifyqualifier)
-- [simplify.references](#simplifyreferences)
-- [simplify.snaks](#simplifysnaks)
-- [simplify.propertySnaks](#simplifypropertysnaks)
-- [simplify.snak](#simplifysnak)
+- [simplifyClaims](#simplifyclaims)
+- [simplifyPropertyClaims](#simplifypropertyclaims)
+- [simplifyClaim](#simplifyclaim)
+- [simplifyQualifiers](#simplifyqualifiers)
+- [simplifyPropertyQualifiers](#simplifypropertyqualifiers)
+- [simplifyQualifier](#simplifyqualifier)
+- [simplifyReferences](#simplifyreferences)
+- [simplifySnaks](#simplifysnaks)
+- [simplifyPropertySnaks](#simplifypropertysnaks)
+- [simplifySnak](#simplifysnak)
 - [Options](#options)
   - [Add prefixes to entities and properties ids](#add-prefixes-to-entities-and-properties-ids)
   - [Keep rich values](#keep-rich-values)
@@ -105,12 +105,13 @@ we could have
 "P279": [ "Q340169", "Q2342494", "Q386724" ]
 ```
 
-That's what `simplify.claims`, `simplify.propertyClaims`, `simplify.claim` do, each at their own level.
+That's what `simplifyClaims`, `simplifyPropertyClaims`, `simplifyClaim` do, each at their own level.
 
-## simplify.claims
-you just need to pass your entity' claims object to simplify.claims as such:
+## simplifyClaims
+you just need to pass your entity' claims object to `simplifyClaims` as such:
 ```js
-const simplifiedClaims = wbk.simplify.claims(entity.claims)
+import { simplifyClaims } from 'wikibase-sdk'
+const simplifiedClaims = simplifyClaims(entity.claims)
 ```
 
 in your workflow, that could give something like:
@@ -119,45 +120,74 @@ in your workflow, that could give something like:
 const url = wbk.getEntities('Q535')
 const { entities } = await fetch(url)
 const entity = entities.Q535
-const simplifiedClaims = wbk.simplify.claims(entity.claims)
+const simplifiedClaims = simplifyClaims(entity.claims)
 ```
 
 To keep things simple, "weird" values are removed (for instance, statements of datatype `wikibase-item` but set to `somevalues` instead of the expected Q id)
 
-Note that you don't need to instantiate a `wbk` object to access those `simplify` functions, as they can directly imported: `import { simplify } from 'wikibase-sdk'`
+Note that those functions are also available on the `wbk.simplify` object: `wbk.simplify.claims`, etc.
 
-## simplify.propertyClaims
-Same as simplify.claims but expects an array of claims, typically the array of claims of a specific property:
+## simplifyPropertyClaims
+Simplify an array of claims, typically the array of claims of a specific property:
 ```js
-const simplifiedP31Claims = wbk.simplify.propertyClaims(entity.claims.P31)
+import { simplifyPropertyClaims } from 'wikibase-sdk'
+const simplifiedP31Claims = simplifyPropertyClaims(entity.claims.P31, options)
 ```
 
-## simplify.claim
-Same as simplify.claims but expects a unique claim
+## simplifyClaim
+Simplify a unique claim
 ```js
-const simplifiedP31Claim = wbk.simplify.claim(entity.claims.P31[0])
+import { simplifyClaim } from 'wikibase-sdk'
+const simplifiedP31Claim = simplifyClaim(entity.claims.P31[0], options)
 ```
 
-## simplify.qualifiers
-Same interface as [simplify.claims](#simplifyclaims) but taking a qualifiers object
+## simplifyQualifiers
+Simplify a qualifiers object
+```js
+import { simplifyQualifiers } from 'wikibase-sdk'
+const claim = entity.claims.P31[0]
+const simplifiedQualifiers = simplifyQualifiers(claim.qualifiers, options)
+```
 
-## simplify.propertyQualifiers
-Same interface as [simplify.propertyClaims](#simplifypropertyclaims) but taking an array of qualifiers
+## simplifyPropertyQualifiers
+Simplify an array of qualifiers
+```js
+import { simplifyPropertyQualifiers } from 'wikibase-sdk'
+const claim = entity.claims.P31[0]
+const simplifiedP580Qualifiers = simplifyPropertyQualifiers(claim.qualifiers.P580, options)
+```
 
-## simplify.qualifier
-Same interface as [simplify.claim](#simplifyclaim) but taking a qualifier object
+## simplifyQualifier
+Simplify a qualifier
+```js
+import { simplifyQualifier } from 'wikibase-sdk'
+const claim = entity.claims.P31[0]
+const simplifiedQualifier = simplifyPropertyQualifiers(claim.qualifiers.P580[0], options)
+```
 
-## simplify.references
-Same interface as [simplify.claims](#simplifyclaims) but taking an array of reference records
+## simplifyReferences
+Simplify an array of references
+```js
+import { simplifyReferences } from 'wikibase-sdk'
+const claim = entity.claims.P31[0]
+const simplifiedReferences = simplifyReferences(claim.references, options)
+```
 
-## simplify.snaks
-Same interface as [simplify.claims](#simplifyclaims), but with a name that hints that it could also accept qualifiers or reference records.
+## simplifyReference
+Simplify a reference
+```js
+import { simplifyReference } from 'wikibase-sdk'
+const claim = entity.claims.P31[0]
+const simplifiedReference = simplifyReference(claim.references[0], options)
+```
 
-## simplify.propertySnaks
-Same interface as [simplify.propertyClaims](#simplifypropertyclaims), but with a name that hints that it could also accept an array of qualifiers snaks or an array of reference snaks.
-
-## simplify.snak
-Same interface as [simplify.claim](#simplifyclaim), but with a name that hints that it could also accept a qualifier or reference record [snak](https://www.wikidata.org/wiki/Wikidata:Glossary/en#Snak).
+## simplifySnak
+Simplify a [snak](https://www.wikidata.org/wiki/Wikidata:Glossary/en#Snak), be it a claim `mainsnak`, a qualifier snak, or a reference snak
+```js
+import { simplifySnak } from 'wikibase-sdk'
+const claim = entity.claims.P31[0]
+const simplifiedSnak = simplifySnak(claim.mainsnak, options)
+```
 
 ## Options
 
@@ -167,9 +197,9 @@ Same interface as [simplify.claim](#simplifyclaim), but with a name that hints t
 It may be useful to prefix entities and properties ids in case you work with data from several domains/sources. This can done by setting an entity prefix and/or a property prefix in the options:
 ```js
 const options = { entityPrefix: 'wd', propertyPrefix: 'wdt' }
-wbk.simplify.claims(entity.claims, options)
-wbk.simplify.propertyClaims(entity.claims.P31, options)
-wbk.simplify.claim(entity.claims.P31[0], options)
+simplifyClaims(entity.claims, options)
+simplifyPropertyClaims(entity.claims.P31, options)
+simplifyClaim(entity.claims.P31[0], options)
 ```
 Results would then look something like
 ```json
@@ -181,7 +211,7 @@ Results would then look something like
 ### Keep rich values
 > `keepRichValues`
 
-By default, `simplify.claims` returns only the simpliest values, so just a string for `monolingualtext` values and just a number for `quantity` values.
+By default, `simplifyClaims` returns only the simpliest values, so just a string for `monolingualtext` values and just a number for `quantity` values.
 By setting `keepRichValues=true`,
 - `monolingualtext` values will be objects on the pattern `{ text, language }`
 - `quantity` values will be objects on the pattern `{ amount, unit, upperBound, lowerBound }`
@@ -191,9 +221,9 @@ By setting `keepRichValues=true`,
 
 You can keep the value's types by passing `keepTypes: true` in the options:
 ```js
-wbk.simplify.claims(entity.claims, { keepTypes: true })
-wbk.simplify.propertyClaims(entity.claims.P50, { keepTypes: true })
-wbk.simplify.claim(entity.claims.P50[0], { keepTypes: true })
+simplifyClaims(entity.claims, { keepTypes: true })
+simplifyPropertyClaims(entity.claims.P50, { keepTypes: true })
+simplifyClaim(entity.claims.P50[0], { keepTypes: true })
 ```
 Results would then look something like
 ```json
@@ -233,9 +263,9 @@ If one if missing from this list (probably because it's new) you are welcome to 
 
 You can keep qualifiers by passing `keepQualifiers: true` in the options:
 ```js
-wbk.simplify.claims(entity.claims, { keepQualifiers: true })
-wbk.simplify.propertyClaims(entity.claims.P50, { keepQualifiers: true })
-wbk.simplify.claim(entity.claims.P50[0], { keepQualifiers: true })
+simplifyClaims(entity.claims, { keepQualifiers: true })
+simplifyPropertyClaims(entity.claims.P50, { keepQualifiers: true })
+simplifyClaim(entity.claims.P50[0], { keepQualifiers: true })
 ```
 Results would then look something like
 ```json
@@ -266,9 +296,9 @@ Results would then look something like
 
 You can keep reference by passing `keepReferences: true` in the options:
 ```js
-wbk.simplify.claims(entity.claims, { keepReferences: true })
-wbk.simplify.propertyClaims(entity.claims.P50, { keepReferences: true })
-wbk.simplify.claim(entity.claims.P50[0], { keepReferences: true })
+simplifyClaims(entity.claims, { keepReferences: true })
+simplifyPropertyClaims(entity.claims.P50, { keepReferences: true })
+simplifyClaim(entity.claims.P50[0], { keepReferences: true })
 ```
 Results would then look something like
 ```json
@@ -297,9 +327,9 @@ Results would then look something like
 You can keep claim ids (a.k.a. `guid`), references and qualifiers hashes by passing `keepIds: true` in the options:
 
 ```js
-wbk.simplify.claims(entity.claims, { keepIds: true })
-wbk.simplify.propertyClaims(entity.claims.P50, { keepIds: true })
-wbk.simplify.claim(entity.claims.P50[0], { keepIds: true })
+simplifyClaims(entity.claims, { keepIds: true })
+simplifyPropertyClaims(entity.claims.P50, { keepIds: true })
+simplifyClaim(entity.claims.P50[0], { keepIds: true })
 ```
 Results would then look something like
 ```json
@@ -318,9 +348,9 @@ Results would then look something like
 You can keep references and qualifiers hashes by passing `keepHashes: true` in the options:
 
 ```js
-wbk.simplify.claims(entity.claims, { keepHashes: true })
-wbk.simplify.propertyClaims(entity.claims.P50, { keepHashes: true })
-wbk.simplify.claim(entity.claims.P50[0], { keepHashes: true })
+simplifyClaims(entity.claims, { keepHashes: true })
+simplifyPropertyClaims(entity.claims.P50, { keepHashes: true })
+simplifyClaim(entity.claims.P50[0], { keepHashes: true })
 ```
 
 This option has no effect if neither `keepQualifiers` nor `keepReferences` is `true`.
@@ -351,26 +381,26 @@ Results would then look something like
 
 By default, [non-truthy statements](https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format#Truthy_statements) are filtered-out (keeping only claims of rank `preferred` if any, otherwise only claims of rank `normal`). This can be disable with this option.
 ```js
-wbk.simplify.claims(entity.claims, { keepNonTruthy: true })
-wbk.simplify.propertyClaims(entity.claims.P1082, { keepNonTruthy: true })
+simplifyClaims(entity.claims, { keepNonTruthy: true })
+simplifyPropertyClaims(entity.claims.P1082, { keepNonTruthy: true })
 ```
 
 #### Keep ranks
 > `keepRanks`
 ```js
-wbk.simplify.claims(entity.claims, { keepRanks: true })
-wbk.simplify.propertyClaims(entity.claims.P1082, { keepRanks: true })
-wbk.simplify.claim(entity.claims.P1082[0], { keepRanks: true })
+simplifyClaims(entity.claims, { keepRanks: true })
+simplifyPropertyClaims(entity.claims.P1082, { keepRanks: true })
+simplifyClaim(entity.claims.P1082[0], { keepRanks: true })
 ```
 This is mostly useful in combination with `keepNonTruthy`. Example: a city might have several population claims, with only the most recent having a `preferred` rank.
 
 ```js
 // By default, the simplification only keep the claim of rank 'preferred'
-wbk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true })
+simplifyPropertyClaims(city.claims.P1082, { keepRanks: true })
 // => [ { value: 100000, rank: 'preferred' } ]
 
 // But the other claims can also be returned thank to 'keepNonTruthy'
-wbk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy: true })
+simplifyPropertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy: true })
 // => [
 //       { value: 100000, rank: 'preferred' },
 //       { value: 90000, rank: 'normal' },
@@ -383,23 +413,23 @@ wbk.simplify.propertyClaims(city.claims.P1082, { keepRanks: true, keepNonTruthy:
 #### Customize novalue value
 > `novalueValue`
 ```js
-wbk.simplify.claims(claimWithNoValue, { novalueValue: '-' })
+simplifyClaims(claimWithNoValue, { novalueValue: '-' })
 // => '-'
 ```
 
 #### Customize somevalue value
 > `somevalueValue`
 ```js
-wbk.simplify.claims(claimWithSomeValue, { somevalueValue: '?' })
+simplifyClaims(claimWithSomeValue, { somevalueValue: '?' })
 // => '?'
 ```
 
 #### Keep snaktypes
 > `keepSnaktypes`
 ```js
-wbk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true })
+simplifyClaims(claimWithSomeValue, { keepSnaktypes: true })
 // => { value: undefined, snaktype: 'somevalue' }
-wbk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '?' })
+simplifyClaims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '?' })
 // => { value: '?', snaktype: 'somevalue' }
 ```
 
@@ -407,23 +437,23 @@ wbk.simplify.claims(claimWithSomeValue, { keepSnaktypes: true, somevalueValue: '
 > `keepAll`
 Activates all the `keep` options detailed above:
 ```js
-wbk.simplify.claims(claims, { keepAll: true })
+simplifyClaims(claims, { keepAll: true })
 // Is equivalent to
-wbk.simplify.claims(claims, { keepQualifiers: true, keepReferences: true, keepIds: true, keepHashes: true, keepTypes: true, keepSnaktypes: true, keepRanks: true })
+simplifyClaims(claims, { keepQualifiers: true, keepReferences: true, keepIds: true, keepHashes: true, keepTypes: true, keepSnaktypes: true, keepRanks: true })
 ```
 Those options can then be disabled one by one
 ```js
-wbk.simplify.claims(claims, { keepAll: true, keepTypes: false })
+simplifyClaims(claims, { keepAll: true, keepTypes: false })
 ```
 
 ### Change time parser
 
-By default, `simplify.claims` functions use [`wikidataTimeToISOString`](general_helpers.md#wikidataTimeToISOString) to parse [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times).
+By default, `simplifyClaims` functions use [`wikidataTimeToISOString`](general_helpers.md#wikidataTimeToISOString) to parse [Wikidata time values](https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times).
 
 You can nevertheless request to use a different converter by setting the option `timeConverter`:
 
 ```js
-wbk.simplify.claims(claims, { timeConverter: 'iso' })
+simplifyClaims(claims, { timeConverter: 'iso' })
 ```
 
 Possible modes:
@@ -446,5 +476,5 @@ If none of those format fits your needs, you can pass a custom time converter fu
 ```
 ```js
 const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
-wbk.simplify.claims(claims, { timeConverter })
+simplifyClaims(claims, { timeConverter })
 ```
