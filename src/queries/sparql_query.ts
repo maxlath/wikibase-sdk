@@ -1,5 +1,5 @@
 import { fixedEncodeURIComponent } from '../utils/utils.js'
-import type { Url } from '../types/options.js'
+import type { Url } from '../utils/build_url.js'
 
 export function sparqlQueryFactory (sparqlEndpoint: Url) {
   return function sparqlQuery (sparql: string): Url {

@@ -1,7 +1,7 @@
 import type { ItemId } from './entity.js'
-import type { Url } from './options.js'
 import type { sites } from '../helpers/sitelinks_sites.js'
 import type { specialSites } from '../helpers/special_sites.js'
+import type { Url } from '../utils/build_url.js'
 
 type ValueOf<T> = T[keyof T]
 type SpecialSiteName = ValueOf<typeof specialSites>

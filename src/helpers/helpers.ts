@@ -16,7 +16,7 @@ import type {
   RevisionId,
   SenseId,
 } from '../types/entity.js'
-import type { Url } from '../types/options.js'
+import type { Url } from '../utils/build_url.js'
 
 function isIdBuilder<T extends string> (regex: { readonly source: string, readonly flags: string }) {
   return (id: string): id is T => typeof id === 'string' && new RegExp(regex.source, regex.flags).test(id)

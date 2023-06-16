@@ -1,8 +1,9 @@
 import { fixedEncodeURIComponent, isAKey, isOfType, rejectObsoleteInterface, replaceSpaceByUnderscores } from '../utils/utils.js'
 import { languages } from './sitelinks_languages.js'
 import { specialSites } from './special_sites.js'
-import type { Url, WmLanguageCode } from '../types/options.js'
+import type { WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
+import type { Url } from '../utils/build_url.js'
 
 const wikidataBase = 'https://www.wikidata.org/wiki/'
 

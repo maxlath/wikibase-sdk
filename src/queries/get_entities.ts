@@ -1,9 +1,9 @@
 import * as validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface, shortLang } from '../utils/utils.js'
 import type { EntityId } from '../types/entity.js'
-import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
+import type { Props, UrlResultFormat, WmLanguageCode } from '../types/options.js'
 import type { WbGetEntities } from '../types/wbgetentities.js'
-import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { BuildUrlFunction, Url } from '../utils/build_url.js'
 
 export interface GetEntitiesOptions {
   ids: EntityId | EntityId[]

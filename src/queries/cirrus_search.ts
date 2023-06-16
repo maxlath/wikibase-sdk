@@ -1,8 +1,8 @@
 // See https://www.wikidata.org/w/api.php?action=help&modules=query%2Bsearch
 
 import { isAKey, rejectObsoleteInterface } from '../utils/utils.js'
-import type { Url, UrlResultFormat } from '../types/options.js'
-import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { UrlResultFormat } from '../types/options.js'
+import type { BuildUrlFunction, Url } from '../utils/build_url.js'
 
 const namespacePattern = /^\d+[|\d]*$/
 
