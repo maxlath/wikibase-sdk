@@ -23,7 +23,7 @@ export function simplifyPropertySnaks (propertySnaks, options) {
   // Ex: simplifyPropertyClaims(entity.claims.P124211616)
   if (propertySnaks == null || propertySnaks.length === 0) return []
 
-  const { keepNonTruthy, keepNonDeprecated, areSubSnaks } = options
+  const { keepNonTruthy, keepNonDeprecated, areSubSnaks } = parseKeepOptions(options)
 
   if (keepNonDeprecated) {
     propertySnaks = nonDeprecatedPropertyClaims(propertySnaks)
@@ -166,7 +166,7 @@ const getSubSnakOptions = (options: any = {}) => {
 
 const keepOptions = [ 'keepQualifiers', 'keepReferences', 'keepIds', 'keepHashes', 'keepTypes', 'keepSnaktypes', 'keepRanks', 'keepRichValues' ]
 
-const parseKeepOptions = options => {
+const parseKeepOptions = (options: any = {}) => {
   if (options.keepAll) {
     keepOptions.forEach(optionName => {
       if (options[optionName] == null) options[optionName] = true
