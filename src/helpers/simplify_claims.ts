@@ -154,7 +154,7 @@ export function simplifyReference (reference: Reference, options: SimplifySnaksO
   else return snaks
 }
 
-const keepOptions = [ 'keepQualifiers', 'keepReferences', 'keepIds', 'keepHashes', 'keepTypes', 'keepSnaktypes', 'keepRanks', 'keepRichValues' ]
+const keepOptions = [ 'keepQualifiers', 'keepReferences', 'keepIds', 'keepHashes', 'keepTypes', 'keepSnaktypes', 'keepRanks', 'keepRichValues' ] as const
 
 const parseKeepOptions = (options: any = {}) => {
   if (options.keepAll) {
