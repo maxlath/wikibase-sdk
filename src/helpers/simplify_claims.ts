@@ -153,6 +153,8 @@ export function simplifyReference (reference: Reference, options: SimplifySnaksO
   if (options.keepHashes) return { snaks, hash: reference.hash }
   else return snaks
 }
+/** @deprecated use the new function name simplifyReference instead */
+export const simplifyReferenceRecord = simplifyReference
 
 const keepOptions = [ 'keepQualifiers', 'keepReferences', 'keepIds', 'keepHashes', 'keepTypes', 'keepSnaktypes', 'keepRanks', 'keepRichValues' ] as const
 
