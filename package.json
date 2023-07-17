@@ -16,7 +16,8 @@
   },
   "types": "./dist/src/index.d.ts",
   "files": [
-    "dist/src"
+    "dist/src",
+    "CHANGELOG.md"
   ],
   "directories": {
     "lib": "dist",
