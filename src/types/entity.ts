@@ -31,7 +31,7 @@ export type GuidAltSyntax = `${EntityId|Lowercase<EntityId>}-${string}`
 
 export type Hash = string
 
-export type Entity = (Property | Item | Lexeme)
+export type Entity = (Property | Item | Lexeme | MediaInfo)
 export type EntityPageTitle = NamespacedEntityId | ItemId
 export type Entities = Record<EntityId, Entity>
 
@@ -64,6 +64,14 @@ export interface Lexeme extends EntityInfo {
   lemmas?: Lemmas
   forms?: Form[]
   senses?: Sense[]
+}
+
+export interface MediaInfo extends EntityInfo {
+  id: MediaInfo,
+  type: 'mediainfo'
+  labels?: Labels
+  descriptions?: Descriptions
+  statements?: Claims
 }
 
 export interface EntityInfo {

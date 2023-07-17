@@ -11,6 +11,7 @@ const simplify = {
   descriptions: simplifyDescriptions,
   aliases: simplifyAliases,
   claims: simplifyClaims,
+  statements: simplifyClaims,
   sitelinks: simplifySitelinks,
   lemmas: simplifyLemmas,
   forms: simplifyForms,
@@ -44,6 +45,10 @@ export const simplifyEntity = (entity: Entity, options: SimplifyEntityOptions = 
     simplifyIfDefined(entity, simplified, 'claims', options)
     simplifyIfDefined(entity, simplified, 'forms', options)
     simplifyIfDefined(entity, simplified, 'senses', options)
+  } else if (type === 'mediainfo') {
+    simplifyIfDefined(entity, simplified, 'labels')
+    simplifyIfDefined(entity, simplified, 'descriptions')
+    simplifyIfDefined(entity, simplified, 'statements', options)
   }
 
   return simplified
