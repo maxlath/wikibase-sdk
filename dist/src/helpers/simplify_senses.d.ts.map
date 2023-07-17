@@ -1,0 +1,1 @@
+{"version":3,"file":"simplify_senses.d.ts","sourceRoot":"","sources":["../../../src/helpers/simplify_senses.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,KAAK,EAAE,eAAe,EAAE,MAAM,oBAAoB,CAAA;AAChE,OAAO,KAAK,EAAE,qBAAqB,EAAE,MAAM,6BAA6B,CAAA;AAExE,eAAO,MAAM,aAAa,UAAW,KAAK,YAAW,qBAAqB,KAAQ,eAQjF,CAAA;AAED,wBAAgB,cAAc,CAAE,MAAM,EAAE,SAAS,KAAK,EAAE,EAAE,OAAO,GAAE,qBAA0B,qBAE5F"}
