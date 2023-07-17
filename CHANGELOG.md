@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 9.2.0 - 2023-07-17
+* [`simplifyEntity`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_entities_data.md#simplify-entity): add support for MediaInfo entity type
+
 ## 9.1.0 - 2023-04-18
 * export the `wikimediaLanguageCodes` array
 
