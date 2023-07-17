@@ -15,9 +15,9 @@ export type ClaimSnakTimeValue = TimeSnakValue
 export type ClaimSnakQuantity = QuantitySnakValue
 /** @deprecated use StringSnakValue */
 export type ClaimSnakString = StringSnakValue
-/** @deprecated use WikibaseItemSnakValue */
+/** @deprecated use WikibaseEntityIdSnakValue */
 export type SnakEntityValue = WikibaseEntityIdSnakValue
-/** @deprecated use WikibaseItemSnakValue */
+/** @deprecated use WikibaseEntityIdSnakValue */
 export type ClaimSnakWikibaseItem = WikibaseEntityIdSnakValue
 
 export interface GlobecoordinateSnakValue {
