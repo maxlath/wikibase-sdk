@@ -67,7 +67,7 @@ export interface Lexeme extends EntityInfo {
 }
 
 export interface MediaInfo extends EntityInfo {
-  id: MediaInfo,
+  id: MediaInfoId,
   type: 'mediainfo'
   labels?: Labels
   descriptions?: Descriptions
