@@ -98,14 +98,23 @@ export const parsers = {
   'wikibase-sense': entity,
 } as const
 
+const normalizeDatatype = datatype => datatype.toLowerCase().replace(/[\s-]/g, '')
+
+const normalizedParsers = {}
+for (const [ datatype, parser ] of Object.entries(parsers)) {
+  normalizedParsers[normalizeDatatype(datatype)] = parser
+}
+
 export function parseClaim (datatype, datavalue, options, claimId) {
-  // Known case of missing datatype: form.claims, sense.claims
+  // Known case of missing datatype: form.claims, sense.claims, mediainfo.statements
   datatype = datatype || datavalue.type
-  // Known case requiring this: legacy "muscial notation" datatype
-  datatype = datatype.replace(' ', '-')
 
   try {
-    return parsers[datatype](datavalue, options)
+    // Known case requiring normalization
+    // - legacy "muscial notation" datatype
+    // - mediainfo won't have datatype="globe-coordinate", but datavalue.type="globecoordinate"
+    const parser = normalizedParsers[normalizeDatatype(datatype)]
+    return parser(datavalue, options)
   } catch (err) {
     if (err.message === 'parsers[datatype] is not a function') {
       err.message = `${datatype} claim parser isn't implemented
