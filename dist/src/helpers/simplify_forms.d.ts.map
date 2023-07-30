@@ -1,0 +1,1 @@
+{"version":3,"file":"simplify_forms.d.ts","sourceRoot":"","sources":["../../../src/helpers/simplify_forms.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,IAAI,EAAE,cAAc,EAAE,MAAM,oBAAoB,CAAA;AAC9D,OAAO,KAAK,EAAE,qBAAqB,EAAE,MAAM,6BAA6B,CAAA;AAExE,eAAO,MAAM,YAAY,SAAU,IAAI,YAAW,qBAAqB,KAAQ,cAS9E,CAAA;AAED,eAAO,MAAM,aAAa,UAAW,SAAS,IAAI,EAAE,YAAW,qBAAqB,qBAAwD,CAAA"}
