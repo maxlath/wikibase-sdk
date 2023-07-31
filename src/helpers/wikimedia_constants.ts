@@ -5,6 +5,7 @@ export type WikimediaLanguageCode = typeof wikimediaLanguageCodes[number]
 
 export const specialSites = {
   commonswiki: 'commons',
+  foundationwiki: 'foundation',
   mediawikiwiki: 'mediawiki',
   metawiki: 'meta',
   outreachwiki: 'outreach',
@@ -266,6 +267,7 @@ export const sites = [
   'fiwiktionary',
   'fjwiki',
   'fjwiktionary',
+  'foundationwiki',
   'fowiki',
   'fowikisource',
   'fowiktionary',

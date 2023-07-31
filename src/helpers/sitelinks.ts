@@ -37,6 +37,7 @@ const wikimediaSite = (subdomain: string) => (title: string) => `https://${subdo
 
 const siteUrlBuilders: Readonly<Record<SpecialSiteProjectName, (s: string) => string>> = {
   commons: wikimediaSite('commons'),
+  foundation: wikimediaSite('foundation'),
   mediawiki: title => `https://www.mediawiki.org/wiki/${title}`,
   meta: wikimediaSite('meta'),
   outreach: wikimediaSite('outreach'),
