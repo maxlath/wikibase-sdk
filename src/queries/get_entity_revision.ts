@@ -1,7 +1,7 @@
 import * as validate from '../helpers/validate.js'
 import { rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityId, RevisionId } from '../types/entity.js'
-import type { Url } from '../types/options.js'
+import type { Url } from '../utils/build_url.js'
 
 export interface GetEntityRevisionOptions {
   id: EntityId

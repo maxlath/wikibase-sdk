@@ -13,9 +13,9 @@ import { getReverseClaimsFactory } from './queries/get_reverse_claims.js'
 import { getRevisionsFactory } from './queries/get_revisions.js'
 import { searchEntitiesFactory } from './queries/search_entities.js'
 import { sparqlQueryFactory } from './queries/sparql_query.js'
-import { buildUrlFactory } from './utils/build_url.js'
+import { buildUrlFactory, type Url } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
-import type { InstanceConfig, Url } from './types/options.js'
+import type { InstanceConfig } from './types/options.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
 those are also exposed directly on the module object. Exemple:

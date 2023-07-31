@@ -1,8 +1,8 @@
 import { EntityTypes } from '../types/entity.js'
 import { isOfType, rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityType } from '../types/entity.js'
-import type { Url, UrlResultFormat } from '../types/options.js'
-import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { UrlResultFormat } from '../types/options.js'
+import type { BuildUrlFunction, Url } from '../utils/build_url.js'
 
 export interface SearchEntitiesOptions {
   search: string

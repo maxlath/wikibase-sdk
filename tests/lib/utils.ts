@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs'
-import type { Url } from '../../src/types/options.js'
+import type { Url } from '../../src/utils/build_url.js'
 
 export function readJsonFile (jsonFilePath: string) {
   return JSON.parse(readFileSync(jsonFilePath, 'utf-8'))

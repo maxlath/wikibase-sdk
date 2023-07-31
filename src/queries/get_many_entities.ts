@@ -2,8 +2,7 @@ import { rejectObsoleteInterface } from '../utils/utils.js'
 import { getEntitiesFactory } from './get_entities.js'
 import type { GetEntitiesOptions } from './get_entities.js'
 import type { EntityId } from '../types/entity.js'
-import type { Url } from '../types/options.js'
-import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { BuildUrlFunction, Url } from '../utils/build_url.js'
 
 export interface GetManyEntitiesOptions extends GetEntitiesOptions {
   ids: EntityId[]

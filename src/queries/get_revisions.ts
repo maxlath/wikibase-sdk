@@ -1,8 +1,8 @@
 import * as validate from '../helpers/validate.js'
 import { forceArray, rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityPageTitle } from '../types/entity.js'
-import type { ApiQueryParameters, UrlResultFormat } from '../types/options.js'
-import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { UrlResultFormat } from '../types/options.js'
+import type { ApiQueryParameters, BuildUrlFunction } from '../utils/build_url.js'
 
 // See https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
 

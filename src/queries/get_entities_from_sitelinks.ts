@@ -1,9 +1,9 @@
 import { languages } from '../helpers/sitelinks_languages.js'
 import { forceArray, shortLang, rejectObsoleteInterface, isOfType } from '../utils/utils.js'
-import type { Props, Url, UrlResultFormat, WmLanguageCode } from '../types/options.js'
+import type { Props, UrlResultFormat, WmLanguageCode } from '../types/options.js'
 import type { Site } from '../types/sitelinks.js'
 import type { WbGetEntities } from '../types/wbgetentities.js'
-import type { BuildUrlFunction } from '../utils/build_url.js'
+import type { BuildUrlFunction, Url } from '../utils/build_url.js'
 
 export interface GetEntitiesFromSitelinksOptions {
   titles: string | string[]

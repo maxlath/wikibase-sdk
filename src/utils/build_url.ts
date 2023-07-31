@@ -1,12 +1,18 @@
-import type { ApiQueryParameters, Url } from '../types/options.js'
-
 const isBrowser = typeof location !== 'undefined' && typeof document !== 'undefined'
 
+type ApiQueryValue = string | number | true
+export type ApiQueryParameters = Record<string, ApiQueryValue>
+
+// export type Url = `http${string}`
+export type Url = string
+
+export type BuildUrlFunction = <T extends string>(options: Readonly<Partial<Record<T, ApiQueryValue>>>) => Url
+
 export function buildUrlFactory (instanceApiEndpoint: Url): BuildUrlFunction {
-  return function (queryObj: ApiQueryParameters): Url {
+  return queryObj => {
     // Request CORS headers if the request is made from a browser
     // See https://www.wikidata.org/w/api.php ('origin' parameter)
-    if (isBrowser) queryObj.origin = '*'
+    if (isBrowser) queryObj = { ...queryObj, origin: '*' }
 
     const queryEntries = Object.entries(queryObj)
       // Remove null or undefined parameters
@@ -16,5 +22,3 @@ export function buildUrlFactory (instanceApiEndpoint: Url): BuildUrlFunction {
     return instanceApiEndpoint + '?' + query
   }
 }
-
-export type BuildUrlFunction = (options: ApiQueryParameters) => Url

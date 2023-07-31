@@ -3,7 +3,7 @@ import * as validate from '../helpers/validate.js'
 import { forceArray } from '../utils/utils.js'
 import { sparqlQueryFactory } from './sparql_query.js'
 import type { PropertyId } from '../types/entity.js'
-import type { Url } from '../types/options.js'
+import type { Url } from '../utils/build_url.js'
 
 // Fiter-out properties. Can't be filtered by
 // `?subject a wikibase:Item`, as those triples are omitted
