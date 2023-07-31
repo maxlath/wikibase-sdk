@@ -8,7 +8,7 @@ const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
   sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql'
 })
-const sparql = 'SELECT * WHERE { ?s ?p ? o } LIMIT 10'
+const sparql = 'SELECT * WHERE { ?s ?p ?o } LIMIT 10'
 const url = wbk.sparqlQuery(sparql)
 const headers = { 'User-Agent': '<FILL IN YOUR USER-AGENT INFORMATION>' }; // see https://meta.wikimedia.org/wiki/User-Agent_policy
 // request the generated URL with your favorite HTTP request library
