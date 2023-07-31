@@ -18,3 +18,6 @@ export interface SimplifySitelinkOptions {
   keepBadges?: boolean
   keepAll?: boolean
 }
+
+/** @deprecated use LanguageCode or WikimediaLanguageCode */
+export type WmLanguageCode = LanguageCode
