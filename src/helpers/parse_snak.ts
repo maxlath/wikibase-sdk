@@ -114,7 +114,7 @@ export function parseSnak (datatype: DataType | void, datavalue: SnakValue, opti
 
   try {
     // Known case requiring normalization
-    // - legacy "muscial notation" datatype
+    // - legacy "musical notation" datatype
     // - mediainfo won't have datatype="globe-coordinate", but datavalue.type="globecoordinate"
     const parser = normalizedParsers[normalizeDatatype(datatype)]
     return parser(datavalue, options)

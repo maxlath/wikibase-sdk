@@ -4,7 +4,9 @@ import type { parsers } from '../helpers/parse_snak.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
 export type SnakType = 'value' | 'somevalue' | 'novalue'
-export type DataType = keyof typeof parsers
+
+export type InconsistentDataType = 'globecoordinate' | 'musical notation'
+export type DataType = keyof typeof parsers | InconsistentDataType
 
 export interface Claim {
   id: Guid
