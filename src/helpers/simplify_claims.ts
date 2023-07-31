@@ -1,9 +1,8 @@
 import { isPlainObject, uniq } from '../utils/utils.js'
 import { parseSnak } from './parse_snak.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
-import type { CustomSimplifiedClaim } from '../index.js'
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, Reference, Snak, Snaks } from '../types/claim.js'
-import type { CustomSimplifiedSnak, SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertySnaks, SimplifiedSnaks, SimplifyClaimsOptions, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
+import type { CustomSimplifiedClaim, CustomSimplifiedSnak, SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertySnaks, SimplifiedSnaks, SimplifyClaimsOptions, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
 
 /**
  * Tries to replace wikidata deep snak object by a simple value
@@ -113,7 +112,7 @@ function applyObjectSimplification (
   options: SimplifyClaimsOptions | SimplifySnaksOptions,
 ) {
   const { propertyPrefix } = options
-  const simplified = {}
+  const simplified: SimplifiedClaims | SimplifiedSnaks = {}
   for (let [ propertyId, propertyArray ] of Object.entries(obj)) {
     if (propertyPrefix) {
       propertyId = propertyPrefix + ':' + propertyId
