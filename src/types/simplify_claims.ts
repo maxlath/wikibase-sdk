@@ -45,9 +45,18 @@ export interface SimplifiedQualifiers {
 }
 
 export type SimplifiedReferenceSnak = SimplifiedSnak
-export interface SimplifiedReference {
-  [property: string]: SimplifiedReferenceSnak
+
+export interface SimplifiedReferenceSnaks {
+  [property: string]: SimplifiedReferenceSnak[]
 }
+
+export interface RichSimplifiedReferenceSnaks {
+  snaks: SimplifiedReferenceSnaks
+  hash: Hash
+}
+
+export type SimplifiedReference = SimplifiedReferenceSnaks | RichSimplifiedReferenceSnaks
+
 export type SimplifiedReferences = SimplifiedReference[]
 
 export type SimplifiedSnak = string | number | CustomSimplifiedSnak
