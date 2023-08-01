@@ -109,8 +109,8 @@ for (const [ datatype, parser ] of Object.entries(parsers)) {
 }
 
 export function parseSnak (datatype: DataType | void, datavalue: SnakValue, options: SimplifySnakOptions) {
-  // Known case of missing datatype: form.claims, sense.claims, mediainfo.statements
-  datatype = (datatype || datavalue.type) as DataType
+  // @ts-expect-error Known case of missing datatype: form.claims, sense.claims, mediainfo.statements
+  datatype = datatype || datavalue.type
 
   try {
     // Known case requiring normalization
