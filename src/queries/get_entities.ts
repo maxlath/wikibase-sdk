@@ -1,13 +1,13 @@
 import * as validate from '../helpers/validate.js'
-import { forceArray, rejectObsoleteInterface, shortLang } from '../utils/utils.js'
+import { forceArray, rejectObsoleteInterface } from '../utils/utils.js'
 import type { EntityId } from '../types/entity.js'
-import type { Props, UrlResultFormat, WmLanguageCode } from '../types/options.js'
+import type { Props, UrlResultFormat, LanguageCode } from '../types/options.js'
 import type { WbGetEntities } from '../types/wbgetentities.js'
 import type { BuildUrlFunction, Url } from '../utils/build_url.js'
 
 export interface GetEntitiesOptions {
   ids: EntityId | EntityId[]
-  languages?: WmLanguageCode | WmLanguageCode[]
+  languages?: LanguageCode | LanguageCode[]
   props?: Props | Props[]
   format?: UrlResultFormat
   redirects?: boolean
@@ -51,7 +51,7 @@ export function getEntitiesFactory (buildUrl: BuildUrlFunction) {
     if (redirects === false) query.redirects = 'no'
 
     if (languages) {
-      languages = forceArray(languages).map(shortLang)
+      languages = forceArray(languages)
       query.languages = languages.join('|')
     }
 

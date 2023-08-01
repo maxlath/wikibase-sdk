@@ -1,14 +1,15 @@
 import { fixedEncodeURIComponent, isAKey, isOfType, rejectObsoleteInterface, replaceSpaceByUnderscores } from '../utils/utils.js'
-import { languages } from './sitelinks_languages.js'
-import { specialSites } from './special_sites.js'
-import type { WmLanguageCode } from '../types/options.js'
-import type { Site } from '../types/sitelinks.js'
+import { specialSites, type Site, sites } from './wikimedia_constants.js'
+import type { LanguageCode } from '../types/options.js'
 import type { Url } from '../utils/build_url.js'
 
 const wikidataBase = 'https://www.wikidata.org/wiki/'
 
+type ValueOf<T> = T[keyof T]
+type SpecialSiteProjectName = ValueOf<typeof specialSites>
+
 export interface GetSitelinkUrlOptions {
-  site: Site
+  site: Site | SpecialSiteProjectName
   title: string
 }
 
@@ -34,12 +35,15 @@ export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
 
 const wikimediaSite = (subdomain: string) => (title: string) => `https://${subdomain}.wikimedia.org/wiki/${title}`
 
-const siteUrlBuilders = {
+const siteUrlBuilders: Readonly<Record<SpecialSiteProjectName, (s: string) => string>> = {
   commons: wikimediaSite('commons'),
-  mediawiki: (title: string) => `https://www.mediawiki.org/wiki/${title}`,
+  foundation: wikimediaSite('foundation'),
+  mediawiki: title => `https://www.mediawiki.org/wiki/${title}`,
   meta: wikimediaSite('meta'),
+  outreach: wikimediaSite('outreach'),
+  sources: title => `https://wikisource.org/wiki/${title}`,
   species: wikimediaSite('species'),
-  wikidata: (entityId: string) => {
+  wikidata: entityId => {
     const prefix = prefixByEntityLetter[entityId[0]]
     let title = prefix ? `${prefix}:${entityId}` : entityId
     // Required for forms and senses
@@ -47,7 +51,7 @@ const siteUrlBuilders = {
     return `${wikidataBase}${title}`
   },
   wikimania: wikimediaSite('wikimania'),
-} as const
+}
 
 const prefixByEntityLetter = {
   E: 'EntitySchema',
@@ -58,7 +62,7 @@ const prefixByEntityLetter = {
 const sitelinkUrlPattern = /^https?:\/\/([\w-]{2,10})\.(\w+)\.org\/\w+\/(.*)/
 
 export interface SitelinkData {
-  lang: WmLanguageCode
+  lang: LanguageCode
   project: Project
   key: string
   title?: string
@@ -72,36 +76,37 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     if (!matchData) throw new Error(`invalid sitelink url: ${url}`)
     let [ lang, project, title ] = matchData.slice(1)
     title = decodeURIComponent(title)
-    let key: string
+    if (lang === 'commons') {
+      return { lang: 'en', project: 'commons', key: 'commons', title, url }
+    }
+
+    if (!isOfType(projectNames, project)) {
+      throw new Error(`project is unknown: ${project}`)
+    }
+
     // Known case: wikidata, mediawiki
     if (lang === 'www') {
-      lang = 'en'
-      key = project
-    } else if (lang === 'commons') {
-      lang = 'en'
-      project = key = 'commons'
-    } else {
-      // Support multi-parts language codes, such as be_x_old
-      lang = lang.replace(/-/g, '_')
-      key = `${lang}${project}`.replace('wikipedia', 'wiki')
+      return { lang: 'en', project, key: project, title, url }
     }
-    // @ts-expect-error
+
+    // Support multi-parts language codes, such as be_x_old
+    const sitelang = lang.replace(/-/g, '_')
+    const key = `${sitelang}${project}`.replace('wikipedia', 'wiki')
     return { lang, project, key, title, url }
   } else {
-    const key = site
     if (isAKey(specialSites, site)) {
       const project = specialSites[site]
-      return { lang: 'en', project, key }
+      return { lang: 'en', project, key: site }
     }
 
-    let [ lang, projectSuffix, rest ] = key.split('wik')
+    if (!isOfType(sites, site)) {
+      throw new Error(`site not found: ${site}. Updating wikibase-sdk to a more recent version might fix the issue.`)
+    }
+
+    let [ lang, projectSuffix, rest ] = site.split('wik')
 
     // Detecting cases like 'frwikiwiki' that would return [ 'fr', 'i', 'i' ]
-    if (rest != null) throw new Error(`invalid sitelink key: ${key}`)
-
-    if (!isOfType(languages, lang)) {
-      throw new Error(`sitelink lang not found: ${lang}. Updating wikibase-sdk to a more recent version might fix the issue.`)
-    }
+    if (rest != null) throw new Error(`invalid sitelink key: ${site}`)
 
     // Support keys such as be_x_oldwiki, which refers to be-x-old.wikipedia.org
     lang = lang.replace(/_/g, '-')
@@ -109,22 +114,14 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
     const project = projectsBySuffix[projectSuffix]
     if (!project) throw new Error(`sitelink project not found: ${project}`)
 
-    // @ts-expect-error
-    return { lang, project, key }
+    return { lang, project, key: site }
   }
 }
 
-export const isSitelinkKey = (site: string): boolean => {
-  try {
-    // relies on getSitelinkData validation
-    getSitelinkData(site)
-    return true
-  } catch (err) {
-    return false
-  }
-}
+export const isSite = (site: string): site is Site => isOfType(sites, site)
 
-export const wikimediaLanguageCodes = languages
+/** @deprecated use isSite */
+export const isSitelinkKey = isSite
 
 const projectsBySuffix = {
   i: 'wikipedia',

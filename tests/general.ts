@@ -1,5 +1,5 @@
 import should from 'should'
-import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData, simplifyEntity, simplifyEntities, simplifyLabels, simplifyDescriptions, simplifyAliases, simplifySitelinks, simplifyClaim, simplifyPropertyClaims, simplifyClaims, simplifySnak, simplifyPropertySnaks, simplifySnaks, simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers, simplifyForms, simplifyForm, simplifySenses, simplifySense, simplifySparqlResults, truthyClaims, truthyPropertyClaims, isItemId, isPropertyId, isNumericId, isGuid, isHash, isPropertyClaimsId, getNumericId, wikibaseTimeToDateObject, wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, getSitelinkUrl, isSitelinkKey, getImageUrl, getEntityIdFromGuid } from '../src/index.js'
+import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData, simplifyEntity, simplifyEntities, simplifyLabels, simplifyDescriptions, simplifyAliases, simplifySitelinks, simplifyClaim, simplifyPropertyClaims, simplifyClaims, simplifySnak, simplifyPropertySnaks, simplifySnaks, simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers, simplifyForms, simplifyForm, simplifySenses, simplifySense, simplifySparqlResults, truthyClaims, truthyPropertyClaims, isItemId, isPropertyId, isNumericId, isGuid, isHash, isPropertyClaimsId, getNumericId, wikibaseTimeToDateObject, wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, getSitelinkUrl, isSite, getImageUrl, getEntityIdFromGuid } from '../src/index.js'
 import { instance, sparqlEndpoint } from './lib/tests_env.js'
 
 describe('builder', () => {
@@ -54,7 +54,7 @@ describe('builder', () => {
     should(wikibaseTimeToSimpleDay).be.a.Function()
     should(getSitelinkUrl).be.a.Function()
     should(getSitelinkData).be.a.Function()
-    should(isSitelinkKey).be.a.Function()
+    should(isSite).be.a.Function()
     should(getImageUrl).be.a.Function()
     should(getEntityIdFromGuid).be.a.Function()
 
@@ -173,7 +173,7 @@ describe('index', () => {
     should(wbk.wikibaseTimeToSimpleDay).be.a.Function()
     should(wbk.getSitelinkUrl).be.a.Function()
     should(wbk.getSitelinkData).be.a.Function()
-    should(wbk.isSitelinkKey).be.a.Function()
+    should(wbk.isSite).be.a.Function()
     should(wbk.getImageUrl).be.a.Function()
     should(wbk.getEntityIdFromGuid).be.a.Function()
   })

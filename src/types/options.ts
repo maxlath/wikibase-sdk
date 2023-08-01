@@ -1,5 +1,4 @@
 import type { SimplifySnaksOptions } from './simplify_claims.js'
-import type { languages } from '../helpers/sitelinks_languages.js'
 
 export interface InstanceConfig {
   instance?: string
@@ -9,7 +8,8 @@ export interface InstanceConfig {
 
 export type Props = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'labels' | 'descriptions' | 'claims' | 'datatype'
 export type UrlResultFormat = 'xml' | 'json'
-export type WmLanguageCode = typeof languages[number]
+
+export type LanguageCode = string
 
 export interface SimplifyEntityOptions extends SimplifySnaksOptions, SimplifySitelinkOptions {}
 
@@ -18,3 +18,6 @@ export interface SimplifySitelinkOptions {
   keepBadges?: boolean
   keepAll?: boolean
 }
+
+/** @deprecated use LanguageCode or WikimediaLanguageCode */
+export type WmLanguageCode = LanguageCode

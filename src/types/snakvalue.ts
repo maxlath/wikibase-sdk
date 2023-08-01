@@ -1,5 +1,5 @@
 import type { EntityId, EntityType } from './entity.js'
-import type { WmLanguageCode } from './options.js'
+import type { LanguageCode } from './options.js'
 
 export type SnakValue =
   | GlobecoordinateSnakValue
@@ -34,7 +34,7 @@ export interface GlobecoordinateSnakValue {
 export interface MonolingualTextSnakValue {
   type: 'monolingualtext';
   value: {
-    language: WmLanguageCode;
+    language: LanguageCode;
     text: string;
   };
 }

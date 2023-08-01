@@ -35,7 +35,7 @@
     "prepublishOnly": "git checkout main",
     "prepack": "npm run build && npm run lint && npm test",
     "postpublish": "./scripts/postpublish",
-    "update-sitelinks-languages": "./scripts/sitelinks_languages/update_sitelinks_languages",
+    "update-wikimedia-constants": "./scripts/update_wikimedia_constants.ts",
     "update-toc": "./scripts/update_toc",
     "watch": "tsc --watch"
   },
