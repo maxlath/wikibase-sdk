@@ -46,9 +46,7 @@ export interface SimplifiedQualifiers {
 
 export type SimplifiedReferenceSnak = SimplifiedSnak
 
-export interface SimplifiedReferenceSnaks {
-  [property: string]: SimplifiedReferenceSnak[]
-}
+export type SimplifiedReferenceSnaks = Record<PropertyId, SimplifiedReferenceSnak[]>
 
 export interface RichSimplifiedReferenceSnaks {
   snaks: SimplifiedReferenceSnaks
