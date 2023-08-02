@@ -92,7 +92,7 @@ describe('searchEntities', () => {
     })
 
     it('should reject an invalid type parameter', () => {
-      // @ts-expect-error
+      // @ts-expect-error invalid type parameter
       should(() => searchEntities({ search: 'alphabet', type: 'foo' })).throw()
     })
   })

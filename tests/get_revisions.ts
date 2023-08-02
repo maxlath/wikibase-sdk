@@ -9,7 +9,7 @@ const getRevisions = getRevisionsFactory(buildUrl)
 
 describe('getRevisions', () => {
   it('should reject invalid ids', () => {
-    // @ts-expect-error
+    // @ts-expect-error invalid revision id
     should(() => getRevisions({ ids: 'foo' })).throw('invalid entity page title: foo (type: string)')
   })
 

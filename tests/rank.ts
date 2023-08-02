@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash-es'
 import should from 'should'
 import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'
-import { readJsonFile } from './lib/utils.js'
+import { assert, readJsonFile } from './lib/utils.js'
 import type { Item } from '../src/types/entity.js'
 
 const Q4115189 = readJsonFile('./tests/data/Q4115189.json') as Item
@@ -12,7 +12,7 @@ describe('truthyClaims', () => {
     should(Q4115189Claims.P135.length).equal(3)
     const truthyOnly = truthyClaims(Q4115189Claims)
     should(truthyOnly.P135.length).equal(1)
-    // @ts-expect-error
+    assert(truthyOnly.P135[0].mainsnak.datavalue.type === 'wikibase-entityid')
     should(truthyOnly.P135[0].mainsnak.datavalue.value.id).equal('Q2044250')
   })
 })
@@ -23,7 +23,7 @@ describe('truthyPropertyClaims', () => {
     should(Q4115189Claims.P135.length).equal(3)
     const truthyOnly = truthyPropertyClaims(Q4115189Claims.P135)
     should(truthyOnly.length).equal(1)
-    // @ts-expect-error
+    assert(truthyOnly[0].mainsnak.datavalue.type === 'wikibase-entityid')
     should(truthyOnly[0].mainsnak.datavalue.value.id).equal('Q2044250')
   })
 })

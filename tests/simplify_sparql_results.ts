@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { cloneDeep } from 'lodash-es'
 import should from 'should'
 import { isEntityId, isGuid } from '../src/helpers/helpers.js'
@@ -103,6 +102,7 @@ describe('wikidata simplify SPARQL results', () => {
 
     it('should work without labels', () => {
       const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
+      // @ts-expect-error write to readonly but its cloned testdata
       rawResults.head.vars = rawResults.head.vars
         .filter(varName => varName !== 'itemLabel')
       const results = simplifySparqlResults(rawResults)
@@ -119,6 +119,7 @@ describe('wikidata simplify SPARQL results', () => {
 
     it("should be ignored when the associated variable isn't selected", () => {
       const rawResults = cloneDeep(resultsWithLabelsDescriptionsAndAliases)
+      // @ts-expect-error write to readonly but its cloned testdata
       rawResults.head.vars = rawResults.head.vars
         .filter(varName => varName !== 'item')
       const results = simplifySparqlResults(rawResults)

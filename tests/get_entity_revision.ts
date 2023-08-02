@@ -7,12 +7,12 @@ const getEntityRevision = getEntityRevisionFactory(instance, wgScriptPath)
 
 describe('getEntityRevision', () => {
   it('should reject an invalid entity id', () => {
-    // @ts-expect-error
+    // @ts-expect-error not an entity id
     should(() => getEntityRevision({ id: '3548931' })).throw('invalid entity id: 3548931 (type: string)')
   })
 
   it('should reject an invalid revision', () => {
-    // @ts-expect-error
+    // @ts-expect-error not a valid revision
     should(() => getEntityRevision({ id: 'Q123', revision: 'foo' })).throw('invalid revision id: foo (type: string)')
   })
 

@@ -29,8 +29,8 @@
     "alwaysStrict": true,
     // "noImplicitAny": true,
     "noImplicitThis": true,
-    // "strictBindCallApply": true,
-    "strictFunctionTypes": true
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
     // "strictNullChecks": true,
     // "strictPropertyInitialization": true,
     // "useUnknownInCatchVariables": true,

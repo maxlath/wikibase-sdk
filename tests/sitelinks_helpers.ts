@@ -49,9 +49,9 @@ describe('getSitelinkUrl', () => {
   })
 
   it('should reject invalid sitelinks', () => {
-    // @ts-expect-error
+    // @ts-expect-error invalid site
     should(() => getSitelinkUrl({ site: 'frperlinpinpin', title: 'Lyon' })).throw()
-    // @ts-expect-error
+    // @ts-expect-error invalid site
     should(() => getSitelinkUrl({ site: 'frwikiwiki', title: 'Lyon' })).throw()
   })
 
