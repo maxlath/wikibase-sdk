@@ -6,21 +6,13 @@ on:
 
 jobs:
   test:
-    name: Node.js ${{ matrix.node-version }}
+    name: Node.js
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version:
-          - 18
-          - 16
-          - 14
-          - 12
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/checkout@v3
+          node-version: 'lts/*'
+      - uses: actions/checkout@v4
       - run: npm install
       - run: npm test
       - run: npm pack
