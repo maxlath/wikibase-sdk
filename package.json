@@ -1,6 +1,6 @@
 {
   "name": "wikibase-sdk",
-  "version": "9.2.2",
+  "version": "9.2.3",
   "type": "module",
   "description": "utils functions to query a Wikibase instance and simplify its results",
   "main": "./dist/src/index.js",
