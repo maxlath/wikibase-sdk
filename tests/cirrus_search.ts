@@ -155,4 +155,22 @@ describe('cirrusSearchPages', () => {
       should(() => cirrusSearchPages({ search: 'hello', sort: 123 })).throw(/invalid sort/)
     })
   })
+
+  describe('prop', () => {
+    it('should default to not being set', () => {
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello' }))
+      should(query.srprop).not.be.ok()
+    })
+
+    it('should accept a prop', () => {
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', prop: 'snippet|titlesnippet|sectiontitle' }))
+      should(query.srprop).equal('snippet|titlesnippet|sectiontitle')
+    })
+
+    it('should accept a srprop', () => {
+      // @ts-expect-error deprecated argument name
+      const query = parseUrlQuery(cirrusSearchPages({ search: 'hello', srprop: 'snippet|titlesnippet|sectiontitle' }))
+      should(query.srprop).equal('snippet|titlesnippet|sectiontitle')
+    })
+  })
 })
