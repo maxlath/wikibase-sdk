@@ -50,6 +50,7 @@ const siteUrlBuilders: Readonly<Record<SpecialSiteProjectName, (s: string) => st
     title = title.replace('-', '#')
     return `${wikidataBase}${title}`
   },
+  wikifunctions: wikimediaSite('wikifunctions'),
   wikimania: wikimediaSite('wikimania'),
 }
 
