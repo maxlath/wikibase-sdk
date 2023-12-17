@@ -112,17 +112,12 @@ export function parseSnak (datatype: DataType | void, datavalue: SnakValue, opti
   // @ts-expect-error Known case of missing datatype: form.claims, sense.claims, mediainfo.statements
   datatype = datatype || datavalue.type
 
-  try {
-    // Known case requiring normalization
-    // - legacy "musical notation" datatype
-    // - mediainfo won't have datatype="globe-coordinate", but datavalue.type="globecoordinate"
-    const parser = normalizedParsers[normalizeDatatype(datatype)]
-    return parser(datavalue, options)
-  } catch (err) {
-    if (err.message === 'parsers[datatype] is not a function') {
-      err.message = `${datatype} claim parser isn't implemented
-      Please report to https://github.com/maxlath/wikibase-sdk/issues`
-    }
-    throw err
+  // Known case requiring normalization
+  // - legacy "musical notation" datatype
+  // - mediainfo won't have datatype="globe-coordinate", but datavalue.type="globecoordinate"
+  const parser = normalizedParsers[normalizeDatatype(datatype)]
+  if (!parser) {
+    throw new Error(`${normalizeDatatype(datatype)} claim parser isn't implemented. Please report to https://github.com/maxlath/wikibase-sdk/issues`)
   }
+  return parser(datavalue, options)
 }
