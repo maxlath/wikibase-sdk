@@ -20,6 +20,8 @@ const simplify = {
 
 export const simplifyEntity = (entity: Entity, options: SimplifyEntityOptions = {}): SimplifiedEntity => {
   const { type } = entity
+  if (!type) throw new Error('missing entity type')
+
   const simplified: any = {
     id: entity.id,
     type,

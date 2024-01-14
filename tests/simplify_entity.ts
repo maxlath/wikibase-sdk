@@ -78,7 +78,7 @@ describe('simplify.entity', () => {
 
   it('should accept empty entity', () => {
     // @ts-expect-error very partial entity
-    const emptyEntity = simplifyEntity({})
+    const emptyEntity = simplifyEntity({ type: 'item' })
     should(Object.keys(emptyEntity).length).equal(3)
   })
 
