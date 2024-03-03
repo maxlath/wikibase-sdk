@@ -8,9 +8,9 @@ const getEntitiesFromSitelinks = getEntitiesFromSitelinksFactory(buildUrl)
 describe('getEntitiesFromSitelinks', () => {
   describe('polymorphism', () => {
     it('rejects parameters as multiple arguments', () => {
-      // @ts-expect-error
+      // @ts-expect-error old usage
       should(() => getEntitiesFromSitelinks('Lyon')).throw()
-      // @ts-expect-error
+      // @ts-expect-error old usage
       should(() => getEntitiesFromSitelinks('Lyon', 'en')).throw()
     })
   })
@@ -51,7 +51,7 @@ describe('getEntitiesFromSitelinks', () => {
     })
 
     it('converts 2-letters language codes to Wikipedia sites', () => {
-      // @ts-expect-error
+      // @ts-expect-error 2-letter language codes are not sites
       const query = parseUrlQuery(getEntitiesFromSitelinks({ titles: 'Lyon', sites: [ 'it', 'fr' ] }))
       should(query.sites).equal('itwiki|frwiki')
     })

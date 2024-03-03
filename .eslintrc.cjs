@@ -51,7 +51,7 @@ module.exports = {
     'prefer-const': [ 'error' ],
     'prefer-rest-params': 'off',
     '@typescript-eslint/ban-ts-comment': [ 'error', {
-      'ts-expect-error': false, // TODO: "allow-with-description",
+      'ts-expect-error': "allow-with-description",
       'ts-nocheck': false,
     } ],
     '@typescript-eslint/consistent-type-imports': [ 'error', { prefer: 'type-imports' } ],

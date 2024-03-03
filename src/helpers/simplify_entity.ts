@@ -63,7 +63,7 @@ const simplifyIfDefined = (entity, simplified, attribute, options?) => {
 }
 
 export const simplifyEntities = (entities: Entities, options: SimplifyEntityOptions = {}) => {
-  // @ts-expect-error
+  // @ts-expect-error support downloaded json directly
   if (entities.entities) entities = entities.entities
   const { entityPrefix } = options
 

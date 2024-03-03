@@ -24,7 +24,7 @@ describe('wikidata getManyEntities', () => {
 
   describe('polymorphism', () => {
     it('should reject parameters as multiple arguments', () => {
-      // @ts-expect-error
+      // @ts-expect-error old syntax
       should(() => getManyEntities(manyIds, 'fr', 'info', 'json')).throw()
     })
 

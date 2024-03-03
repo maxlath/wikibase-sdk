@@ -10,7 +10,7 @@ describe('getReverseClaims', () => {
   })
 
   it('should reject invalid property ids', () => {
-    // @ts-expect-error
+    // @ts-expect-error invalid property id
     should(() => getReverseClaims({ properties: 'foo', values: 'Q535' })).throw('invalid property id: foo (type: string)')
   })
 
