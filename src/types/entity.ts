@@ -31,12 +31,11 @@ export type GuidAltSyntax = `${EntityId|Lowercase<EntityId>}-${string}`
 
 export type Hash = string
 
-export type Entity = (Property | Item | Lexeme | MediaInfo)
+export type Entity = Property | Item | Lexeme | MediaInfo
 export type EntityPageTitle = NamespacedEntityId | ItemId
 export type Entities = Record<EntityId, Entity>
 
-export interface Property extends EntityInfo {
-  id: PropertyId,
+export interface Property extends EntityInfo<PropertyId> {
   type: 'property'
   datatype?: DataType
   labels?: Labels
@@ -45,8 +44,7 @@ export interface Property extends EntityInfo {
   claims?: Claims
 }
 
-export interface Item extends EntityInfo {
-  id: ItemId,
+export interface Item extends EntityInfo<ItemId> {
   type: 'item'
   labels?: Labels
   descriptions?: Descriptions
@@ -55,8 +53,7 @@ export interface Item extends EntityInfo {
   sitelinks?: Sitelinks
 }
 
-export interface Lexeme extends EntityInfo {
-  id: LexemeId,
+export interface Lexeme extends EntityInfo<LexemeId> {
   type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
@@ -66,21 +63,21 @@ export interface Lexeme extends EntityInfo {
   senses?: Sense[]
 }
 
-export interface MediaInfo extends EntityInfo {
-  id: MediaInfoId,
+export interface MediaInfo extends EntityInfo<MediaInfoId> {
   type: 'mediainfo'
   labels?: Labels
   descriptions?: Descriptions
   statements?: Claims
 }
 
-export interface EntityInfo {
+export interface EntityInfo<T> {
   pageid?: number
   ns?: number
   title?: string
   lastrevid?: number
   modified?: string
-  redirects?: { from: string, to: string }
+  redirects?: { from: T; to: T }
+  id: T
 }
 
 export interface SimplifiedEntityInfo {
@@ -100,7 +97,7 @@ export interface SimplifiedItem extends SimplifiedEntityInfo {
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo {
   type: 'property'
-  datatype: DataType,
+  datatype: DataType
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
