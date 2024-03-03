@@ -5,7 +5,9 @@ export {
   simplifyPropertyQualifiers as propertyQualifiers,
   simplifyQualifier as qualifier,
   simplifyQualifiers as qualifiers,
+  simplifyReference as reference,
   simplifyReferences as references,
+  simplifySnak as snak,
 } from './simplify_claims.js'
 export {
   simplifyForm as form,
@@ -29,10 +31,3 @@ export {
   simplifyEntities as entities,
   simplifyEntity as entity,
 } from './simplify_entity.js'
-
-// Aliases
-export {
-  simplifyClaim as snak,
-  simplifyClaims as snaks,
-  simplifyPropertyClaims as propertySnaks,
-} from './simplify_claims.js'

@@ -21,7 +21,7 @@ export function forceArray<T extends string> (array: T | readonly T[] | undefine
   return []
 }
 
-/** simplistic implementation to filter-out arrays */
+/** simplistic implementation to filter-out arrays and null */
 export function isPlainObject (obj: unknown): boolean {
   return Boolean(obj) && typeof obj === 'object' && !Array.isArray(obj)
 }

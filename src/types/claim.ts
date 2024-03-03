@@ -1,13 +1,14 @@
-import type { PropertyId } from './entity.js'
+import type { Guid, PropertyId } from './entity.js'
 import type { SnakValue } from './snakvalue.js'
-import type { parsers } from '../helpers/parse_claim.js'
+import type { parsers } from '../helpers/parse_snak.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
 export type SnakType = 'value' | 'somevalue' | 'novalue'
+
 export type DataType = keyof typeof parsers
 
 export interface Claim {
-  id: string
+  id: Guid
   mainsnak: Snak
   rank: Rank
   type: 'statement'

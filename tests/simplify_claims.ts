@@ -3,7 +3,7 @@ import should from 'should'
 import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../src/helpers/simplify_claims.js'
 import { uniq } from '../src/utils/utils.js'
 import { readJsonFile } from './lib/utils.js'
-import type { Item, Lexeme } from '../src/types/entity.js'
+import type { Item, Lexeme, Property } from '../src/types/entity.js'
 import type { SimplifySnakOptions } from '../src/types/simplify_claims.js'
 
 const L525 = readJsonFile('./tests/data/L525.json') as Lexeme
@@ -18,6 +18,7 @@ const Q4115189 = readJsonFile('./tests/data/Q4115189.json') as Item
 const Q4132785 = readJsonFile('./tests/data/Q4132785.json') as Item
 const Q571 = readJsonFile('./tests/data/Q571.json') as Item
 const Q646148 = readJsonFile('./tests/data/Q646148.json') as Item
+const P3035 = readJsonFile('./tests/data/P3035.json') as Property
 const emptyValues = readJsonFile('./tests/data/empty_values.json') as Item
 const lexemeClaim = readJsonFile('./tests/data/lexeme_claim.json')
 const oldClaimFormat = readJsonFile('./tests/data/old_claim_format.json')
@@ -57,16 +58,16 @@ describe('simplifyClaims', () => {
   it('should pass entity and property prefixes down', () => {
     const simplified = simplifyClaims(Q2112.claims, { entityPrefix: 'wd' })
     should(simplified.P190[0]).equal('wd:Q207614')
-    const simplified2 = simplifyClaims(Q2112.claims, { propertyPrefix: 'wdt' })
-    should(simplified2['wdt:P123456789'][0]).equal('P207614')
+    const simplified2 = simplifyClaims(P3035.claims, { propertyPrefix: 'wdt' })
+    should(simplified2['wdt:P1659'][0]).equal('P212')
   })
 
   it('should return prefixed properties if passed a property prefix', () => {
     const simplified = simplifyClaims(Q2112.claims, { entityPrefix: 'wd', propertyPrefix: 'wdt' })
     should(simplified['wdt:P190']).be.an.Array()
     should(simplified['wdt:P190'][0]).equal('wd:Q207614')
-    const simplified2 = simplifyClaims(Q2112.claims, { propertyPrefix: 'wdt' })
-    should(simplified2['wdt:P123456789'][0]).equal('P207614')
+    const simplified2 = simplifyClaims(P3035.claims, { propertyPrefix: 'wdt' })
+    should(simplified2['wdt:P1659'][0]).equal('P212')
   })
 
   it('should return the correct value when called with keepQualifiers=true', () => {
@@ -121,8 +122,8 @@ describe('simplifyPropertyClaims', () => {
   it('should pass entity and property prefixes down', () => {
     const simplified = simplifyPropertyClaims(Q2112.claims.P190, { entityPrefix: 'wd' })
     should(simplified[0]).equal('wd:Q207614')
-    const simplified2 = simplifyPropertyClaims(Q2112.claims.P123456789, { entityPrefix: 'a', propertyPrefix: 'b' })
-    should(simplified2[0]).equal('a:P207614')
+    const simplified2 = simplifyPropertyClaims(P3035.claims.P1659, { entityPrefix: 'a', propertyPrefix: 'b' })
+    should(simplified2[0]).equal('a:P212')
   })
 
   it('should return the correct value when called with keepQualifiers=true', () => {
@@ -270,7 +271,7 @@ describe('simplifyClaim', () => {
       const simplified = simplifyClaim(Q2112.claims.P625[0])
       should(simplified).be.an.Array()
       should(simplified[0]).equal(52.016666666667)
-      should(simplified[1]).equal(8.5166666666667)
+      should(simplified[1]).equal(8.5333333333333)
     })
 
     it('should support geo-shape', () => {
@@ -308,14 +309,14 @@ describe('simplifyClaim', () => {
     })
 
     it('should not apply property prefixes to property claim values', () => {
-      const claim = Q2112.claims.P123456789[0]
-      should(simplifyClaim(claim)).equal('P207614')
-      should(simplifyClaim(claim, { propertyPrefix: 'wdt' })).equal('P207614')
-      should(simplifyClaim(claim, { propertyPrefix: 'wdt:' })).equal('P207614')
-      should(simplifyClaim(claim, { propertyPrefix: 'wdtbla' })).equal('P207614')
-      should(simplifyClaim(claim, { entityPrefix: 'wd' })).equal('wd:P207614')
-      should(simplifyClaim(claim, { entityPrefix: 'wd:' })).equal('wd::P207614')
-      should(simplifyClaim(claim, { entityPrefix: 'wdbla' })).equal('wdbla:P207614')
+      const claim = P3035.claims.P1659[0]
+      should(simplifyClaim(claim)).equal('P212')
+      should(simplifyClaim(claim, { propertyPrefix: 'wdt' })).equal('P212')
+      should(simplifyClaim(claim, { propertyPrefix: 'wdt:' })).equal('P212')
+      should(simplifyClaim(claim, { propertyPrefix: 'wdtbla' })).equal('P212')
+      should(simplifyClaim(claim, { entityPrefix: 'wd' })).equal('wd:P212')
+      should(simplifyClaim(claim, { entityPrefix: 'wd:' })).equal('wd::P212')
+      should(simplifyClaim(claim, { entityPrefix: 'wdbla' })).equal('wdbla:P212')
     })
   })
 
@@ -432,16 +433,18 @@ describe('simplifyClaim', () => {
     it('should include references hashes when called with keepHashes=true', () => {
       const simplifiedWithReferences = simplifyClaim(Q2112.claims.P214[0], { keepReferences: true, keepHashes: true })
       should(simplifiedWithReferences.references[0].snaks.P248).be.an.Array()
-      should(simplifiedWithReferences.references[0].hash).equal('d6b4bc80e47def2fab91836d81e1db62c640279c')
-      should(simplifiedWithReferences.references[0].snaks.P248[0]).equal('Q54919')
+      should(simplifiedWithReferences.references[0].hash).equal('94cd09bdd3373d7b8eb4e3cc26e524afe7466ff7')
+      should(simplifiedWithReferences.references[0].snaks.P248[0].value).equal('Q54919')
+      should(simplifiedWithReferences.references[0].snaks.P248[0].hash).equal('6b7d4330c4aac4caec4ede9de0311ce273f88ecd')
       should(simplifiedWithReferences.references[0].snaks.P813).be.an.Array()
-      should(simplifiedWithReferences.references[0].snaks.P813[0]).equal('2015-08-02T00:00:00.000Z')
+      should(simplifiedWithReferences.references[0].snaks.P813[0].value).equal('2015-08-02T00:00:00.000Z')
+      should(simplifiedWithReferences.references[0].snaks.P813[0].hash).equal('bf4494cf3e2345d75aa355a5847a72d38ca6c55d')
     })
 
     it('should include qualifiers hashes when called with keepHashes=true', () => {
       const simplifiedWithQualifiers = simplifyPropertyClaims(Q2112.claims.P190, { keepQualifiers: true, keepHashes: true })
       should(simplifiedWithQualifiers[1].qualifiers.P580[0].value).equal('1953-01-01T00:00:00.000Z')
-      should(simplifiedWithQualifiers[1].qualifiers.P580[0].hash).equal('3d22f4dffba1ac6f66f521ea6bea924e46df4129')
+      should(simplifiedWithQualifiers[1].qualifiers.P580[0].hash).equal('a5e0dc0fab1c88e0702eab5557dfec4f8ab8a289')
     })
   })
 
@@ -463,7 +466,7 @@ describe('simplifyClaim', () => {
     it('should keep globecoordinate rich values', () => {
       should(simplifyClaim(Q2112.claims.P625[0], { keepRichValues: true })).deepEqual({
         latitude: 52.016666666667,
-        longitude: 8.5166666666667,
+        longitude: 8.5333333333333,
         altitude: null,
         precision: 0.016666666666667,
         globe: 'http://www.wikidata.org/entity/Q2',
@@ -560,7 +563,7 @@ describe('simplifyClaim', () => {
       should(simplifiedP214.references[0].hash).be.a.String()
       should(simplifiedP625.value).deepEqual({
         latitude: 52.016666666667,
-        longitude: 8.5166666666667,
+        longitude: 8.5333333333333,
         altitude: null,
         precision: 0.016666666666667,
         globe: 'http://www.wikidata.org/entity/Q2',
