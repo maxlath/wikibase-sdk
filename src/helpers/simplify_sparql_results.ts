@@ -1,27 +1,26 @@
-import type { SparqlResults, SparqlValueObj, SparqlValueRaw, SparqlValueType } from '../types/sparql.js'
+import type { SimplifiedSparqlResults, SparqlResults, SimplifiedSparqlValueGroup, SparqlValueObj, SparqlValueRaw } from '../types/sparql.js'
 
-export type SimplifySparqlResultsOptions = {
-  readonly minimize?: boolean
-}
-
-export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}) {
+export function simplifySparqlResults (input: SparqlResults | string) {
   if (typeof input === 'string') {
-    input = JSON.parse(input)
+    input = JSON.parse(input) as SparqlResults
   }
-
   const { vars } = input.head
   const results = input.results.bindings
-
-  if (vars.length === 1 && options.minimize) {
-    const varName = vars[0]
-    return results
-      .map(result => parseValue(result[varName]))
-      // filtering-out bnodes
-      .filter((result): result is SparqlValueRaw => result != null)
-  }
-
   const { richVars, associatedVars, standaloneVars } = identifyVars(vars)
-  return results.map(result => getSimplifiedResult(richVars, associatedVars, standaloneVars, result))
+  type Result = Record<typeof standaloneVars[number], SparqlValueRaw> & Record<typeof richVars[number], SimplifiedSparqlValueGroup>
+  const simplifiedSparqlResults: Result[] = results.map(result => getSimplifiedResult(richVars, associatedVars, standaloneVars, result))
+  return simplifiedSparqlResults
+}
+
+export function minimizeSimplifiedSparqlResults (simplifySparqlResults: SimplifiedSparqlResults) {
+  return simplifySparqlResults
+  .map(simplifySparqlResult => {
+    const values = Object.values(simplifySparqlResult)
+    if (values.length > 1) throw new Error('too many variables: SPARQL result can not be minimzed')
+    return values[0] as (SparqlValueRaw | undefined)
+  })
+  // filtering-out bnodes
+  .filter((result): result is SparqlValueRaw => result != null)
 }
 
 function parseValue (valueObj?: SparqlValueObj) {
@@ -90,9 +89,9 @@ function getSimplifiedResult (
   standaloneVars: readonly string[],
   input: Readonly<Record<string, SparqlValueObj>>,
 ) {
-  const simplifiedResult: Record<string, SparqlValueType> = {}
+  const simplifiedResult = {}
   for (const varName of richVars) {
-    const richVarData: Record<string, SparqlValueRaw> = {}
+    const richVarData: SimplifiedSparqlValueGroup = {}
     const value = parseValue(input[varName])
     if (value != null) richVarData.value = value
     for (const associatedVarName of associatedVars) {
@@ -102,7 +101,7 @@ function getSimplifiedResult (
   }
   for (const varName of standaloneVars) {
     const value = parseValue(input[varName])
-    if (value != null) simplifiedResult[varName] = value
+    if (value != null) simplifiedResult[varName] = value as SparqlValueRaw
   }
   return simplifiedResult
 }
@@ -111,7 +110,7 @@ function addAssociatedValue (
   input: Readonly<Record<string, SparqlValueObj>>,
   varName: string,
   associatedVarName: string,
-  richVarData: Record<string, SparqlValueRaw>,
+  richVarData: SimplifiedSparqlValueGroup,
 ) {
   // ex: propertyType => Type
   let shortAssociatedVarName = associatedVarName.split(varName)[1]

@@ -1,11 +1,11 @@
 import { cloneDeep } from 'lodash-es'
 import should from 'should'
 import { isEntityId, isGuid } from '../src/helpers/helpers.js'
-import { simplifySparqlResults } from '../src/helpers/simplify_sparql_results.js'
-import { assert, readJsonFile } from './lib/utils.js'
+import { minimizeSimplifiedSparqlResults, simplifySparqlResults } from '../src/helpers/simplify_sparql_results.js'
+import { multiVarsData } from './data/multi_vars_sparql_results.js'
+import { assert, assertPlainObject, readJsonFile } from './lib/utils.js'
 import type { SparqlResults } from '../src/types/sparql.js'
 
-const multiVarsData = readJsonFile('./tests/data/multi_vars_sparql_results.json') as SparqlResults
 const noDatatypeData = readJsonFile('./tests/data/no_datatype_sparql_results.json') as SparqlResults
 const propertiesList = readJsonFile('./tests/data/properties_list.json') as SparqlResults
 const resultsWithLabelsDescriptionsAndAliases = readJsonFile('./tests/data/results_with_labels_descriptions_and_aliases.json') as SparqlResults
@@ -23,45 +23,13 @@ describe('wikidata simplify SPARQL results', () => {
 
     it('should parse the input if passed a JSON string', () => {
       const json = JSON.stringify(singleVarData)
-      // @ts-expect-error json is a string and not in the object form
       should(simplifySparqlResults(json)).be.an.Array()
       const json2 = JSON.stringify(multiVarsData)
-      // @ts-expect-error json is a string and not in the object form
       should(simplifySparqlResults(json2)).be.an.Array()
-    })
-  })
-
-  it('should return an array of results objects', () => {
-    const output = simplifySparqlResults(multiVarsData)
-    assert(typeof output[0] == 'object')
-    assert(typeof output[0].entity == 'object')
-    should(output[0].entity.value).equal('Q3731207')
-    should(output[0].entity.label).equal('Ercole Patti')
-    should(output[0].year).equal(1903)
-  })
-
-  it('should not throw when the datatype is missing', () => {
-    const output = simplifySparqlResults(noDatatypeData)
-    assert(typeof output[0] == 'object')
-    should(output[0].year).equal('1937')
-  })
-
-  it('should not throw when an optional variable has no result', () => {
-    const result = simplifySparqlResults(sparqlResultsWithOptionalValues)[0]
-    assert(typeof result == 'object')
-    should(result.composer).be.an.Object()
-    should(result.genre).not.be.ok()
-  })
-
-  describe('minimize', () => {
-    it('should return an array of results values, filtering out blank nodes', () => {
-      const output = simplifySparqlResults(singleVarData, { minimize: true })
-      should(output[0]).equal('Q112983')
-      output.forEach(result => should(typeof result === 'string' && isEntityId(result)).be.true())
     })
 
     it('should return an array of results value object', () => {
-      const output = simplifySparqlResults(singleVarData, { minimize: false })
+      const output = simplifySparqlResults(singleVarData)
       should(output[0]).deepEqual({ genre: 'Q112983' })
       output.forEach(result => {
         should(result).be.an.Object()
@@ -70,13 +38,43 @@ describe('wikidata simplify SPARQL results', () => {
     })
   })
 
+  it('should return an array of results objects', () => {
+    const output = simplifySparqlResults(multiVarsData)
+    assertPlainObject(output[0])
+    assert(output[0].entity != null)
+    should(output[0].entity.value).equal('Q3731207')
+    should(output[0].entity.label).equal('Ercole Patti')
+    should(output[0].year).equal(1903)
+  })
+
+  it('should not throw when the datatype is missing', () => {
+    const output = simplifySparqlResults(noDatatypeData)
+    assertPlainObject(output[0])
+    should(output[0].year).equal('1937')
+  })
+
+  it('should not throw when an optional variable has no result', () => {
+    const result = simplifySparqlResults(sparqlResultsWithOptionalValues)[0]
+    assertPlainObject(result)
+    should(result.composer).be.an.Object()
+    should(result.genre).not.be.ok()
+  })
+
+  describe('minimize', () => {
+    it('should return an array of results values, filtering out blank nodes', () => {
+      const output = minimizeSimplifiedSparqlResults(simplifySparqlResults(singleVarData))
+      should(output[0]).equal('Q112983')
+      output.forEach(result => should(typeof result === 'string' && isEntityId(result)).be.true())
+    })
+  })
+
   describe('with associated variables', () => {
     it('should add labels, descriptions and aliases', () => {
       const results = simplifySparqlResults(resultsWithLabelsDescriptionsAndAliases)
       resultsWithLabelsDescriptionsAndAliases.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
-        assert(typeof simplified === 'object')
-        assert(typeof simplified.item === 'object')
+        assertPlainObject(simplified)
+        assertPlainObject(simplified.item)
         should(simplified.item.value).be.a.String()
         if (rawResult.itemLabel) should(simplified.item.label).be.a.String()
         if (rawResult.itemDescription) should(simplified.item.description).be.a.String()
@@ -92,8 +90,8 @@ describe('wikidata simplify SPARQL results', () => {
       const results = simplifySparqlResults(propertiesList)
       propertiesList.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
-        assert(typeof simplified == 'object')
-        assert(typeof simplified.property == 'object')
+        assertPlainObject(simplified)
+        assertPlainObject(simplified.property)
         should(simplified.property.value).be.a.String()
         if (rawResult.propertyType) should(simplified.property.type).be.a.String()
         should(simplified.propertyType).not.be.ok()
@@ -108,8 +106,8 @@ describe('wikidata simplify SPARQL results', () => {
       const results = simplifySparqlResults(rawResults)
       rawResults.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
-        assert(typeof simplified == 'object')
-        assert(typeof simplified.item == 'object')
+        assertPlainObject(simplified)
+        assertPlainObject(simplified.item)
         should(simplified.item.value).be.a.String()
         if (rawResult.itemDescription) should(simplified.item.description).be.a.String()
         if (rawResult.itemAltLabel) should(simplified.item.aliases).be.a.String()
@@ -125,7 +123,7 @@ describe('wikidata simplify SPARQL results', () => {
       const results = simplifySparqlResults(rawResults)
       rawResults.results.bindings.forEach((rawResult, i) => {
         const simplified = results[i]
-        assert(typeof simplified == 'object')
+        assertPlainObject(simplified)
         should(simplified.pseudonyme).be.a.String()
         should(simplified.item).not.be.ok()
         if (rawResult.itemLabel) should(simplified.itemLabel).be.a.String()
@@ -137,7 +135,7 @@ describe('wikidata simplify SPARQL results', () => {
 
     it('should ignore nested associated variables', () => {
       const rawResults = cloneDeep(sparqlResultsWithNestedAssociatedVariables)
-      const results = simplifySparqlResults(rawResults, { minimize: true })
+      const results = minimizeSimplifiedSparqlResults(simplifySparqlResults(rawResults))
       should(results.length).equal(2)
     })
   })
@@ -145,7 +143,7 @@ describe('wikidata simplify SPARQL results', () => {
   describe('statements', () => {
     it('should convert statement URIs into claims GUIDs', () => {
       const rawResults = cloneDeep(sparqlResultsWithStatements)
-      const results = simplifySparqlResults(rawResults, { minimize: true })
+      const results = minimizeSimplifiedSparqlResults(simplifySparqlResults(rawResults))
       results.forEach(result => should(typeof result === 'string' && isGuid(result)).be.true())
     })
   })

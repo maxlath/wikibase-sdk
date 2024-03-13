@@ -31,3 +31,7 @@ export function parseUrlQuery (url: Url) {
 export function assert (condition: boolean): asserts condition {
   if (!condition) throw new Error('not true')
 }
+
+export function assertPlainObject (obj) {
+  return assert(typeof obj === 'object' && obj !== null && !(obj instanceof Array))
+}

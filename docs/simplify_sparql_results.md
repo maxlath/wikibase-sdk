@@ -1,5 +1,17 @@
 # Simplify SPARQL results
 
+## Summary
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [simplifySparqlResults](#simplifysparqlresults)
+- [minimizeSimplifiedSparqlResults](#minimizesimplifiedsparqlresults)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## simplifySparqlResults
+
 With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/maxlath/wikidata-sdk/blob/main/assets/queries/simplify_sparql_results_doc_example.rq), you get results that look like this:
 ```json
 {
@@ -44,7 +56,7 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
   }
 }
 ```
-`wbk.simplify.sparqlResults` converts it to a way simpler:
+`simplifySparqlResults` converts it to a way simpler:
 ```json
 [
   {
@@ -61,36 +73,32 @@ With [SPARQL queries](sparql_query.md) such as [this one](https://github.com/max
 That's still hairy, because we requested many variables, but that can get even simpler if there is only one variable!
 Say instead of `"vars" : [ "author", "authorLabel", "birth" ]`, we only ask for `"vars" : [ "author" ]`:
 ```js
-wbk.simplify.sparqlResults(results)
+import { simplifySparqlResults, minimizeSimplifiedSparqlResults } from 'wikibase-sdk'
+simplifySparqlResults(results)
 // => [ { "author": "Q3731207" } ]
-wbk.simplify.sparqlResults(results, { minimize: true })
+minimizeSimplifiedSparqlResults(simplifySparqlResults(results))
 // => [ "Q3731207" ]
 ```
 And then to make it even more simpler, we can... hum no, that's all we got.
 
 Use it like so:
 ```js
-const simplifiedResults = wbk.simplify.sparqlResults(results)
+const simplifiedResults = simplifySparqlResults(results)
 ```
-or for a more complete example (using [promises](https://www.promisejs.org))
+or for a more complete example:
 ```js
 // see the "SPARQL Query" section above
 const url = wbk.sparqlQuery(SPARQL)
-const simplifiedResults = await fetch(url)
-  .then(res => res.text())
-  .then(wbk.simplify.sparqlResults)
+const rawResults = await fetch(url).then(res => res.json())
+const simplifiedResults = simplifySparqlResults(rawResults)
 ```
 
-## options
+##  minimizeSimplifiedSparqlResults
 
-### minimize
-> Default: `false`
-
-When only one variable is requested, set minimize to `true`, the simplified results will consist of an array of this variable values, instead of an array of objects.
+When only one variable is requested, you can use `minimizeSimplifiedSparqlResults`: the results will consist of an array of this variable values, instead of an array of objects.
 ```js
-wbk.simplify.sparqlResults(results, { minimize: true })
-// => [ "Q112983", "Q185598", "Q3879286" ]
-
-wbk.simplify.sparqlResults(results, { minimize: false })
+simplifySparqlResults(results)
 // => [ { item: "Q112983" }, { item: "Q185598" }, { item: "Q3879286" } ]
+minimizeSimplifiedSparqlResults(simplifySparqlResults(results))
+// => [ "Q112983", "Q185598", "Q3879286" ]
 ```
