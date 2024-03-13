@@ -1,12 +1,10 @@
 import { cloneDeep, pick } from 'lodash-es'
 import should from 'should'
 import { simplifyEntity, simplifyEntities } from '../src/helpers/simplify_entity.js'
-import { assert, readJsonFile } from './lib/utils.js'
-import type { Item, Lexeme, Property } from '../src/types/entity.js'
-
-const L525 = readJsonFile('./tests/data/L525.json') as Lexeme
-const P8098 = readJsonFile('./tests/data/P8098.json') as Property
-const Q571 = readJsonFile('./tests/data/Q571.json') as Item
+import { L525 } from './data/L525.js'
+import { P8098 } from './data/P8098.js'
+import { Q571 } from './data/Q571.js'
+import { assert } from './lib/utils.js'
 
 describe('simplify.entity', () => {
   it('should be a function', () => {

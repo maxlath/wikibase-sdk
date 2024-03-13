@@ -4,10 +4,8 @@ import {
   wikibaseTimeToISOString,
   wikibaseTimeToSimpleDay,
 } from '../src/helpers/time.js'
-import { assert, readJsonFile } from './lib/utils.js'
-import type { Item } from '../src/types/entity.js'
-
-const Q970917 = readJsonFile('./tests/data/Q970917.json') as Item
+import { Q970917 } from './data/Q970917.js'
+import { assert } from './lib/utils.js'
 
 describe('time helpers', () => {
   const ISOtime = '2014-05-14T00:00:00.000Z'

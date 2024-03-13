@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+ARG NODE_VERSION
+
+RUN apt-get update && apt-get install wget
+
+RUN adduser admin
+
+USER admin
+
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash && source ~/.nvm/nvm.sh && nvm install "$NODE_VERSION" && which node && node --version
+
+CMD bash

@@ -1,9 +1,6 @@
 import should from 'should'
 import { simplifyForms, simplifyForm } from '../src/helpers/simplify_forms.js'
-import { readJsonFile } from './lib/utils.js'
-import type { Lexeme } from '../src/types/entity.js'
-
-const L525 = readJsonFile('./tests/data/L525.json') as Lexeme
+import { L525 } from './data/L525.js'
 
 describe('simplify.form', () => {
   it('should reject an object that isnt a form', () => {

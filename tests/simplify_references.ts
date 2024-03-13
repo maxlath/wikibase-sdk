@@ -1,9 +1,6 @@
 import should from 'should'
 import { simplifyReferences } from '../src/helpers/simplify_claims.js'
-import { readJsonFile } from './lib/utils.js'
-import type { Item } from '../src/types/entity.js'
-
-const Q217447 = readJsonFile('./tests/data/Q217447.json') as Item
+import { Q217447 } from './data/Q217447.js'
 
 describe('simplifyReferences', () => {
   it('should simplify references', () => {

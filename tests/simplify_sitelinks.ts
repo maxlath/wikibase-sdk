@@ -1,10 +1,8 @@
 // @ts-nocheck
 import should from 'should'
 import { simplifySitelinks } from '../src/helpers/simplify_sitelinks.js'
-import { readJsonFile, objLenght } from './lib/utils.js'
-import type { Item } from '../src/types/entity.js'
-
-const Q571 = readJsonFile('./tests/data/Q571.json') as Item
+import { Q571 } from './data/Q571.js'
+import { objLenght } from './lib/utils.js'
 
 describe('simplify.sitelinks', () => {
   it('should simplify sitelinks', () => {

@@ -1,9 +1,7 @@
 import should from 'should'
 import { simplifyAliases, simplifyDescriptions, simplifyLabels } from '../src/helpers/simplify_text_attributes.js'
-import { readJsonFile, objLenght } from './lib/utils.js'
-import type { Item } from '../src/types/entity.js'
-
-const Q571 = readJsonFile('./tests/data/Q571.json') as Item
+import { Q571 } from './data/Q571.js'
+import { objLenght } from './lib/utils.js'
 
 describe('simplifyLabels', () => {
   it('should simplify labels', () => {

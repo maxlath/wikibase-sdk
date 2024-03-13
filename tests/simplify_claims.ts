@@ -2,26 +2,23 @@
 import should from 'should'
 import { simplifyClaim, simplifyPropertyClaims, simplifyClaims } from '../src/helpers/simplify_claims.js'
 import { uniq } from '../src/utils/utils.js'
-import { readJsonFile } from './lib/utils.js'
-import type { Item, Lexeme, Property } from '../src/types/entity.js'
+import { L525 } from './data/L525.js'
+import { P3035 } from './data/P3035.js'
+import { Q1 } from './data/Q1.js'
+import { Q2112 } from './data/Q2112.js'
+import { Q217447 } from './data/Q217447.js'
+import { Q22002395 } from './data/Q22002395.js'
+import { Q271094 } from './data/Q271094.js'
+import { Q275937 } from './data/Q275937.js'
+import { Q328212 } from './data/Q328212.js'
+import { Q4115189 } from './data/Q4115189.js'
+import { Q4132785 } from './data/Q4132785.js'
+import { Q571 } from './data/Q571.js'
+import { Q646148 } from './data/Q646148.js'
+import { emptyValues } from './data/empty_values.js'
+import { lexemeClaim } from './data/lexeme_claim.js'
+import { oldClaimFormat } from './data/old_claim_format.js'
 import type { SimplifySnakOptions } from '../src/types/simplify_claims.js'
-
-const L525 = readJsonFile('./tests/data/L525.json') as Lexeme
-const Q1 = readJsonFile('./tests/data/Q1.json') as Item
-const Q2112 = readJsonFile('./tests/data/Q2112.json') as Item
-const Q217447 = readJsonFile('./tests/data/Q217447.json') as Item
-const Q22002395 = readJsonFile('./tests/data/Q22002395.json') as Item
-const Q271094 = readJsonFile('./tests/data/Q271094.json') as Item
-const Q275937 = readJsonFile('./tests/data/Q275937.json') as Item
-const Q328212 = readJsonFile('./tests/data/Q328212.json') as Item
-const Q4115189 = readJsonFile('./tests/data/Q4115189.json') as Item
-const Q4132785 = readJsonFile('./tests/data/Q4132785.json') as Item
-const Q571 = readJsonFile('./tests/data/Q571.json') as Item
-const Q646148 = readJsonFile('./tests/data/Q646148.json') as Item
-const P3035 = readJsonFile('./tests/data/P3035.json') as Property
-const emptyValues = readJsonFile('./tests/data/empty_values.json') as Item
-const lexemeClaim = readJsonFile('./tests/data/lexeme_claim.json')
-const oldClaimFormat = readJsonFile('./tests/data/old_claim_format.json')
 
 describe('simplifyClaims', () => {
   it('env', () => {

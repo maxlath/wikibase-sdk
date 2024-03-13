@@ -3,16 +3,14 @@ import should from 'should'
 import { isEntityId, isGuid } from '../src/helpers/helpers.js'
 import { minimizeSimplifiedSparqlResults, simplifySparqlResults } from '../src/helpers/simplify_sparql_results.js'
 import { multiVarsData } from './data/multi_vars_sparql_results.js'
-import { assert, assertPlainObject, readJsonFile } from './lib/utils.js'
-import type { SparqlResults } from '../src/types/sparql.js'
-
-const noDatatypeData = readJsonFile('./tests/data/no_datatype_sparql_results.json') as SparqlResults
-const propertiesList = readJsonFile('./tests/data/properties_list.json') as SparqlResults
-const resultsWithLabelsDescriptionsAndAliases = readJsonFile('./tests/data/results_with_labels_descriptions_and_aliases.json') as SparqlResults
-const singleVarData = readJsonFile('./tests/data/single_var_sparql_results.json') as SparqlResults
-const sparqlResultsWithNestedAssociatedVariables = readJsonFile('./tests/data/sparql_results_with_nested_associated_variables.json') as SparqlResults
-const sparqlResultsWithOptionalValues = readJsonFile('./tests/data/sparql_results_with_optional_values.json') as SparqlResults
-const sparqlResultsWithStatements = readJsonFile('./tests/data/sparql_results_with_statements.json') as SparqlResults
+import { noDatatypeData } from './data/no_datatype_sparql_results.js'
+import { propertiesList } from './data/properties_list.js'
+import { resultsWithLabelsDescriptionsAndAliases } from './data/results_with_labels_descriptions_and_aliases.js'
+import { singleVarData } from './data/single_var_sparql_results.js'
+import { sparqlResultsWithNestedAssociatedVariables } from './data/sparql_results_with_nested_associated_variables.js'
+import { sparqlResultsWithOptionalValues } from './data/sparql_results_with_optional_values.js'
+import { sparqlResultsWithStatements } from './data/sparql_results_with_statements.js'
+import { assert, assertPlainObject } from './lib/utils.js'
 
 describe('wikidata simplify SPARQL results', () => {
   describe('common', () => {

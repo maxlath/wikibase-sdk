@@ -1,11 +1,8 @@
 import should from 'should'
 import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../src/helpers/simplify_claims.js'
-import { readJsonFile } from './lib/utils.js'
-import type { Item } from '../src/types/entity.js'
-
-const Q19180293 = readJsonFile('./tests/data/Q19180293.json') as Item
-const Q2112 = readJsonFile('./tests/data/Q2112.json') as Item
-const Q571 = readJsonFile('./tests/data/Q571.json') as Item
+import { Q19180293 } from './data/Q19180293.js'
+import { Q2112 } from './data/Q2112.js'
+import { Q571 } from './data/Q571.js'
 
 describe('simplifyQualifier', () => {
   it('should simplify a qualifier', () => {

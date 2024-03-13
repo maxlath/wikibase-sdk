@@ -3,6 +3,7 @@ import type { Entities, SimplifiedEntities } from '../types/entity.js'
 
 export interface WbGetEntitiesResponse {
   entities: Entities
+  success: number
 }
 
 export type Title = string
