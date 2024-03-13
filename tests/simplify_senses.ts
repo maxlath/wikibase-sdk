@@ -11,7 +11,10 @@ describe('simplify.sense', () => {
   it('should simplify a sense', () => {
     const simplifiedSense = simplifySense(L525.senses[0])
     should(simplifiedSense.glosses.fr).equal("édifice destiné à l'habitation")
-    should(simplifiedSense.claims).deepEqual({ P5137: [ 'Q3947' ] })
+    should(simplifiedSense.claims).deepEqual({
+      P5137: [ 'Q3947' ],
+      P5972: [ 'L41768-S2', 'L267790-S1', 'L220794-S1' ],
+    })
   })
 
   it('should pass down options', () => {
@@ -20,8 +23,22 @@ describe('simplify.sense', () => {
     should(simplifiedSense.claims).deepEqual({
       P5137: [
         {
-          id: 'L525-S1$66D20252-8CEC-4DB1-8B00-D713CFF42E48',
           value: 'Q3947',
+          id: 'L525-S1$66D20252-8CEC-4DB1-8B00-D713CFF42E48',
+        },
+      ],
+      P5972: [
+        {
+          value: 'L41768-S2',
+          id: 'L525-S1$7cc12e5f-4ab8-0143-d661-59e2cfff6a0a',
+        },
+        {
+          value: 'L267790-S1',
+          id: 'L525-S1$a419bf3c-45ea-6793-6223-8fc57a9b97a5',
+        },
+        {
+          value: 'L220794-S1',
+          id: 'L525-S1$03cb990a-46a4-8dfa-070a-17d5bd300cb3',
         },
       ],
     })

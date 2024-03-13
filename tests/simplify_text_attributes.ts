@@ -28,7 +28,7 @@ describe('simplifyLabels', () => {
 describe('simplifyDescriptions', () => {
   it('should simplify descriptions', () => {
     const simplifiedDescriptions = simplifyDescriptions(Q571.descriptions)
-    should(simplifiedDescriptions.en.slice(0, 23)).equal('medium for a collection')
+    should(simplifiedDescriptions.en.slice(0, 23)).equal('medium for recording in')
     should(simplifiedDescriptions.fr.slice(0, 14)).equal('document écrit')
     should(objLenght(simplifiedDescriptions)).equal(objLenght(Q571.descriptions))
   })

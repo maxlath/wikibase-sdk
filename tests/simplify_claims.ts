@@ -261,7 +261,7 @@ describe('simplifyClaim', () => {
   describe('datatypes', () => {
     it('should return a url for datatype url', () => {
       const simplified = simplifyClaim(Q328212.claims.P856[0])
-      should(simplified).equal('http://veronicarothbooks.blogspot.com')
+      should(simplified).equal('https://veronicarothbooks.com/')
     })
 
     it('should return simplified globecoordinate as a latLng array', () => {
@@ -272,7 +272,7 @@ describe('simplifyClaim', () => {
     })
 
     it('should support geo-shape', () => {
-      should(simplifyClaim(Q217447.claims.P3896[0])).equal('Data:Rky/1277_Verlan_teollisuusympäristö.map')
+      should(simplifyClaim(Q217447.claims.P3896[0])).equal('Data:Rky/1277 Verlan teollisuusympäristö.map')
     })
 
     it('should support tabular-data', () => {
@@ -292,7 +292,7 @@ describe('simplifyClaim', () => {
     })
 
     it('should support wikibase-sense', () => {
-      should(simplifyClaim(L525.claims.P5972[0])).equal('L512-S1')
+      should(simplifyClaim(L525.senses[0].claims.P5972[0])).equal('L41768-S2')
     })
   })
 
@@ -449,7 +449,7 @@ describe('simplifyClaim', () => {
     it('should keep monolingual rich values', () => {
       const simplified = simplifyClaim(Q328212.claims.P1477[0], { keepRichValues: true })
       should(simplified.text).equal('Veronica Roth')
-      should(simplified.language).equal('es')
+      should(simplified.language).equal('en')
     })
 
     it('should keep quantity rich values', () => {
@@ -585,7 +585,12 @@ describe('simplifyClaim', () => {
     it('should parse lexem claims', () => {
       should(simplifyClaims(L525.claims)).deepEqual({
         P5185: [ 'Q1775415' ],
-        P5972: [ 'L512-S1' ],
+        P10338: [ 'maison' ],
+        P7724: [ 'maison' ],
+        P5191: [ 'L278335' ],
+        P7722: [ 'maison' ],
+        P11118: [ '48725#48638' ],
+        P11178: [ 'maison' ],
       })
     })
   })
