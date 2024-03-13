@@ -4,7 +4,7 @@ export type SimplifySparqlResultsOptions = {
   readonly minimize?: boolean
 }
 
-export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}): Array<Record<string, SparqlValueType>> | SparqlValueRaw[] {
+export function simplifySparqlResults (input: SparqlResults, options: SimplifySparqlResultsOptions = {}) {
   if (typeof input === 'string') {
     input = JSON.parse(input)
   }
@@ -24,7 +24,7 @@ export function simplifySparqlResults (input: SparqlResults, options: SimplifySp
   return results.map(result => getSimplifiedResult(richVars, associatedVars, standaloneVars, result))
 }
 
-function parseValue (valueObj: SparqlValueObj | undefined): SparqlValueRaw | null {
+function parseValue (valueObj?: SparqlValueObj) {
   // blank nodes will be filtered-out in order to get things simple
   if (!valueObj || valueObj.type === 'bnode') return null
 
