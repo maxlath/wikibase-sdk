@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 10.0.0 - 2024-03-14
+**BREAKING CHANGES**:
+- remove the `minimize` option from [`simplifySparqlResults`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_sparql_results.md): that behavior is now handled by `minimizeSimplifiedSparqlResults`
+
 ## 9.2.0 - 2023-07-17
 * [`simplifyEntity`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_entities_data.md#simplify-entity): add support for MediaInfo entity type
 
