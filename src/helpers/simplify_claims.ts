@@ -53,11 +53,11 @@ export function simplifyClaim (claim: Claim, options: SimplifySnakOptions = {}):
   }
 
   // When keeping other attributes, the value becomes an object instead of a direct value
-  let valueObj: CustomSimplifiedClaim
-  if (isPlainObject(value)) {
-    valueObj = value as CustomSimplifiedClaim
+  let valueObj: CustomSimplifiedClaim = { value }
+  if (isPlainObject(value) && 'value' in value) {
+    valueObj = value
   } else {
-    valueObj = { value } as CustomSimplifiedClaim
+    valueObj = { value }
   }
 
   if (keepRanks) valueObj.rank = rank

@@ -480,6 +480,16 @@ describe('simplifyClaim', () => {
         calendarmodel: 'http://www.wikidata.org/entity/Q1985727',
       })
     })
+
+    it('should be compatible with other "keep" options', () => {
+      const simplified = simplifyClaim(Q328212.claims.P1477[0], {
+        keepRichValues: true,
+        keepRanks: true,
+      })
+      should(simplified.value.text).equal('Veronica Roth')
+      should(simplified.value.language).equal('en')
+      should(simplified.rank).equal('normal')
+    })
   })
 
   describe('time converter', () => {
