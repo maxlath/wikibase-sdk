@@ -13,14 +13,14 @@ export function simplifySparqlResults (input: SparqlResults | string) {
 }
 
 export function minimizeSimplifiedSparqlResults (simplifySparqlResults: SimplifiedSparqlResults) {
-  return simplifySparqlResults
-  .map(simplifySparqlResult => {
-    const values = Object.values(simplifySparqlResult)
-    if (values.length > 1) throw new Error('too many variables: SPARQL result can not be minimzed')
-    return values[0] as (SparqlValueRaw | undefined)
-  })
   // filtering-out bnodes
-  .filter((result): result is SparqlValueRaw => result != null)
+  simplifySparqlResults = simplifySparqlResults.filter(result => Object.keys(result).length > 0)
+  const canBeMinimized = simplifySparqlResults.every(result => Object.keys(result).length === 1)
+  if (canBeMinimized) {
+    return simplifySparqlResults.map(result => Object.values(result)[0]) as SparqlValueRaw[]
+  } else {
+    return simplifySparqlResults
+  }
 }
 
 function parseValue (valueObj?: SparqlValueObj) {
