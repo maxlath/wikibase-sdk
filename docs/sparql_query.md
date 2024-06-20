@@ -10,11 +10,11 @@ const wbk = WBK({
 })
 const sparql = 'SELECT * WHERE { ?s ?p ?o } LIMIT 10'
 const url = wbk.sparqlQuery(sparql)
-const headers = { 'User-Agent': '<FILL IN YOUR USER-AGENT INFORMATION>' }; // see https://meta.wikimedia.org/wiki/User-Agent_policy
+const headers = { 'User-Agent': '<FILL IN YOUR USER-AGENT INFORMATION>' }; // see https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy
 // request the generated URL with your favorite HTTP request library
 request({ method: 'GET', url, headers})
 ```
-For more information on including the correct [User-Agent](https://meta.wikimedia.org/wiki/User-Agent_policy)
+For more information on including the correct [User-Agent](https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy)
 You can then simplify the response using [`wbk.simplify.sparqlResults`](simplify_sparql_results.md).
 
 ### Example
