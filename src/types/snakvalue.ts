@@ -1,26 +1,7 @@
 import type { EntityId, EntityType } from './entity.js'
 import type { LanguageCode } from './options.js'
 
-export type SnakValue =
-  | GlobecoordinateSnakValue
-  | MonolingualTextSnakValue
-  | QuantitySnakValue
-  | StringSnakValue
-  | TimeSnakValue
-  | WikibaseEntityIdSnakValue
-
-/** @deprecated use TimeSnakValue */
-export type ClaimSnakTimeValue = TimeSnakValue
-/** @deprecated use QuantitySnakValue */
-export type ClaimSnakQuantity = QuantitySnakValue
-/** @deprecated use StringSnakValue */
-export type ClaimSnakString = StringSnakValue
-/** @deprecated use WikibaseEntityIdSnakValue */
-export type SnakEntityValue = WikibaseEntityIdSnakValue
-/** @deprecated use WikibaseEntityIdSnakValue */
-export type ClaimSnakWikibaseItem = WikibaseEntityIdSnakValue
-
-export interface GlobecoordinateSnakValue {
+export interface GlobeCoordinateSnakDataValue {
   type: 'globecoordinate'
   value: {
     latitude: number
@@ -31,7 +12,7 @@ export interface GlobecoordinateSnakValue {
   }
 }
 
-export interface MonolingualTextSnakValue {
+export interface MonolingualTextSnakDataValue {
   type: 'monolingualtext'
   value: {
     language: LanguageCode
@@ -39,7 +20,7 @@ export interface MonolingualTextSnakValue {
   }
 }
 
-export interface QuantitySnakValue {
+export interface QuantitySnakDataValue {
   type: 'quantity'
   value: {
     amount: string
@@ -49,12 +30,20 @@ export interface QuantitySnakValue {
   }
 }
 
-export interface StringSnakValue {
+export interface StringSnakDataValue {
   type: 'string'
   value: string
 }
 
-export interface TimeSnakValue {
+export type CommonsMediaSnakDataValue = StringSnakDataValue
+export type ExternalIdSnakDataValue = StringSnakDataValue
+export type GeoShapeSnakDataValue = StringSnakDataValue
+export type MathSnakDataValue = StringSnakDataValue
+export type MusicalNotationSnakDataValue = StringSnakDataValue
+export type TabularDataSnakDataValue = StringSnakDataValue
+export type UrlSnakDataValue = StringSnakDataValue
+
+export interface TimeSnakDataValue {
   type: 'time'
   value: {
     time: string
@@ -66,7 +55,7 @@ export interface TimeSnakValue {
   }
 }
 
-export interface WikibaseEntityIdSnakValue {
+export interface WikibaseEntityIdSnakDataValue {
   type: 'wikibase-entityid'
   value: {
     id: EntityId
@@ -74,3 +63,42 @@ export interface WikibaseEntityIdSnakValue {
     'entity-type': EntityType
   }
 }
+
+export type WikibaseFormSnakDataValue = WikibaseEntityIdSnakDataValue
+export type WikibaseItemSnakDataValue = WikibaseEntityIdSnakDataValue
+export type WikibaseLexemeSnakDataValue = WikibaseEntityIdSnakDataValue
+export type WikibasePropertySnakDataValue = WikibaseEntityIdSnakDataValue
+export type WikibaseSenseSnakDataValue = WikibaseEntityIdSnakDataValue
+
+export type SnakDataValue =
+  | GlobeCoordinateSnakDataValue
+  | MonolingualTextSnakDataValue
+  | QuantitySnakDataValue
+  | StringSnakDataValue
+  | TimeSnakDataValue
+  | WikibaseEntityIdSnakDataValue
+
+/** @deprecated use SnakDataValue */
+export type SnakValue = SnakDataValue
+/** @deprecated use TimeSnakDataValue */
+export type ClaimSnakTimeValue = TimeSnakDataValue
+/** @deprecated use QuantitySnakDataValue */
+export type ClaimSnakQuantity = QuantitySnakDataValue
+/** @deprecated use StringSnakDataValue */
+export type ClaimSnakString = StringSnakDataValue
+/** @deprecated use WikibaseEntityIdSnakDataValue */
+export type SnakEntityValue = WikibaseEntityIdSnakDataValue
+/** @deprecated use WikibaseEntityIdSnakDataValue */
+export type ClaimSnakWikibaseItem = WikibaseEntityIdSnakDataValue
+/** @deprecated use GlobeCoordinateSnakDataValue */
+export type GlobecoordinateSnakValue = GlobeCoordinateSnakDataValue
+/** @deprecated use MonolingualTextSnakDataValue */
+export type MonolingualTextSnakValue = MonolingualTextSnakDataValue
+/** @deprecated use QuantitySnakDataValue */
+export type QuantitySnakValue = QuantitySnakDataValue
+/** @deprecated use StringSnakDataValue */
+export type StringSnakValue = StringSnakDataValue
+/** @deprecated use TimeSnakDataValue */
+export type TimeSnakValue = TimeSnakDataValue
+/** @deprecated use WikibaseEntityIdSnakDataValue */
+export type WikibaseEntityIdSnakValue = WikibaseEntityIdSnakDataValue

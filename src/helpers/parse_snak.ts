@@ -2,7 +2,7 @@ import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleD
 import type { TimeInputValue } from './time.js'
 import type { DataType } from '../types/claim.js'
 import type { SimplifySnakOptions } from '../types/simplify_claims.js'
-import type { SnakValue } from '../types/snakvalue.js'
+import type { SnakDataValue } from '../types/snakvalue.js'
 
 const simple = datavalue => datavalue.value
 
@@ -108,7 +108,7 @@ for (const [ datatype, parser ] of Object.entries(parsers)) {
   normalizedParsers[normalizeDatatype(datatype)] = parser
 }
 
-export function parseSnak (datatype: DataType | undefined, datavalue: SnakValue, options: SimplifySnakOptions) {
+export function parseSnak (datatype: DataType | undefined, datavalue: SnakDataValue, options: SimplifySnakOptions) {
   // @ts-expect-error Known case of missing datatype: form.claims, sense.claims, mediainfo.statements
   datatype = datatype || datavalue.type
 

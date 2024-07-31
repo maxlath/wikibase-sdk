@@ -1,5 +1,5 @@
 import type { Guid, PropertyId } from './entity.js'
-import type { SnakValue } from './snakvalue.js'
+import type { SnakDataValue } from './snakvalue.js'
 import type { parsers } from '../helpers/parse_snak.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
@@ -25,7 +25,7 @@ export type Snaks = Record<PropertyId, PropertySnaks>
 
 export interface Snak {
   datatype: DataType
-  datavalue?: SnakValue
+  datavalue?: SnakDataValue
   hash: string
   property: PropertyId
   snaktype: SnakType
