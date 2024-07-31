@@ -14,8 +14,8 @@ export interface SimplifySnakOptions {
   keepSnaktypes?: boolean
   keepAll?: boolean
   timeConverter?: keyof typeof timeConverters | TimeConverter<unknown>
-  novalueValue?: any
-  somevalueValue?: any
+  novalueValue?: unknown
+  somevalueValue?: unknown
 }
 
 export type SimplifySnaksOptions = SimplifySnakOptions

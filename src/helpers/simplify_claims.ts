@@ -1,4 +1,4 @@
-import { isPlainObject, uniq } from '../utils/utils.js'
+import { isPlainObject, typedEntries, uniq } from '../utils/utils.js'
 import { parseSnak } from './parse_snak.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, Reference, Snak, Snaks } from '../types/claim.js'
@@ -77,7 +77,15 @@ export function simplifyClaim (claim: Claim, options: SimplifySnakOptions = {}):
 }
 
 export function simplifyClaims (claims: Claims, options: SimplifyClaimsOptions = {}): SimplifiedClaims {
-  return applyObjectSimplification(claims, simplifyPropertyClaims, options)
+  const { propertyPrefix } = options
+  const simplified: SimplifiedClaims = {}
+  for (let [ propertyId, propertyArray ] of typedEntries(claims)) {
+    if (propertyPrefix) {
+      propertyId = propertyPrefix + ':' + propertyId
+    }
+    simplified[propertyId] = simplifyPropertyClaims(propertyArray, options)
+  }
+  return simplified
 }
 
 export function simplifyPropertyClaims (propertyClaims: PropertyClaims, options: SimplifyClaimsOptions = {}): SimplifiedPropertyClaims {
@@ -94,41 +102,37 @@ export function simplifyPropertyClaims (propertyClaims: PropertyClaims, options:
     propertyClaims = truthyPropertyClaims(propertyClaims)
   }
 
-  return applyArraySimplification(propertyClaims, simplifyClaim, options)
+  const simplifiedArray = propertyClaims
+    .map(claim => simplifyClaim(claim, options))
+    // Filter-out novalue and somevalue claims,
+    // unless a novalueValue or a somevalueValue is passed in options
+    // Considers null as defined
+    .filter(obj => obj !== undefined)
+
+  // Deduplicate values unless we return a rich value object
+  if (simplifiedArray[0] && typeof simplifiedArray[0] !== 'object') {
+    return uniq(simplifiedArray)
+  } else {
+    return simplifiedArray
+  }
 }
 
 export function simplifySnaks (snaks: Snaks = {}, options: SimplifySnaksOptions = {}): SimplifiedSnaks {
-  return applyObjectSimplification(snaks, simplifyPropertySnaks, options)
-}
-
-export function simplifyPropertySnaks (propertySnaks: PropertySnaks, options: SimplifySnaksOptions = {}): SimplifiedPropertySnaks {
-  if (propertySnaks == null || propertySnaks.length === 0) return []
-  return applyArraySimplification(propertySnaks, simplifySnak, options)
-}
-
-function applyObjectSimplification (
-  obj: Claims | Snaks,
-  simplifyFn: typeof simplifyPropertyClaims | typeof simplifyPropertySnaks,
-  options: SimplifyClaimsOptions | SimplifySnaksOptions,
-) {
   const { propertyPrefix } = options
-  const simplified: SimplifiedClaims | SimplifiedSnaks = {}
-  for (let [ propertyId, propertyArray ] of Object.entries(obj)) {
+  const simplified: SimplifiedSnaks = {}
+  for (let [ propertyId, propertyArray ] of typedEntries(snaks)) {
     if (propertyPrefix) {
       propertyId = propertyPrefix + ':' + propertyId
     }
-    simplified[propertyId] = simplifyFn(propertyArray, options)
+    simplified[propertyId] = simplifyPropertySnaks(propertyArray, options)
   }
   return simplified
 }
 
-function applyArraySimplification (
-  array: PropertyClaims | PropertySnaks,
-  simplifyFn: typeof simplifyClaim | typeof simplifySnak,
-  options: SimplifyClaimsOptions | SimplifySnaksOptions,
-) {
-  const simplifiedArray = array
-    .map(claimOrSnak => simplifyFn(claimOrSnak, options))
+export function simplifyPropertySnaks (propertySnaks: PropertySnaks, options: SimplifySnaksOptions = {}): SimplifiedPropertySnaks {
+  if (propertySnaks == null || propertySnaks.length === 0) return []
+  const simplifiedArray = propertySnaks
+    .map(snak => simplifySnak(snak, options))
     // Filter-out novalue and somevalue claims,
     // unless a novalueValue or a somevalueValue is passed in options
     // Considers null as defined
