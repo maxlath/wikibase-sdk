@@ -2,33 +2,52 @@ import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleD
 import type { TimeInputValue } from './time.js'
 import type { DataType } from '../types/claim.js'
 import type { SimplifySnakOptions } from '../types/simplify_claims.js'
-import type { SnakDataValue } from '../types/snakvalue.js'
+import type { GlobeCoordinateSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, SnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue } from '../types/snakvalue.js'
 
-const simple = datavalue => datavalue.value
+const stringValue = (datavalue: StringSnakDataValue) => datavalue.value
 
-const monolingualtext = (datavalue, options) => {
+function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: false }): string
+function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: true }): MonolingualTextSnakDataValue['value']
+function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: SimplifySnakOptions): string | MonolingualTextSnakDataValue['value'] {
   return options.keepRichValues ? datavalue.value : datavalue.value.text
 }
 
-const entity = (datavalue, options) => prefixedId(datavalue, options.entityPrefix)
+function entity (datavalue: WikibaseEntityIdSnakDataValue, options: SimplifySnakOptions) {
+  const { entityPrefix: prefix } = options
+  const { value } = datavalue
+  let id: string
+  if (value.id) {
+    id = value.id
+  } else {
+    // Legacy
+    const letter = entityLetter[value['entity-type']]
+    id = `${letter}${value['numeric-id']}`
+  }
+  return typeof prefix === 'string' ? `${prefix}:${id}` : id
+}
 
 const entityLetter = {
   item: 'Q',
   lexeme: 'L',
   property: 'P',
+  form: 'F',
+  sense: 'S',
 } as const
 
-const prefixedId = (datavalue, prefix) => {
-  const { value } = datavalue
-  const id = value.id || entityLetter[value['entity-type']] + value['numeric-id']
-  return typeof prefix === 'string' ? `${prefix}:${id}` : id
+interface ParsedQuantitySnakValue {
+  amount: number
+  unit: string
+  upperBound?: number
+  lowerBound?: number
 }
 
-const quantity = (datavalue, options) => {
+function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: false }): number
+function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: true }): ParsedQuantitySnakValue
+function quantity (datavalue: QuantitySnakDataValue, options: SimplifySnakOptions): number | ParsedQuantitySnakValue {
   const { value } = datavalue
   const amount = parseFloat(value.amount)
   if (options.keepRichValues) {
-    const richValue: any = {
+    const richValue: ParsedQuantitySnakValue = {
       amount: parseFloat(value.amount),
       // ex: http://www.wikidata.org/entity/
       unit: value.unit.replace(/^https?:\/\/.*\/entity\//, ''),
@@ -41,7 +60,10 @@ const quantity = (datavalue, options) => {
   }
 }
 
-const coordinate = (datavalue, options) => {
+type LatLng = [ number, number ]
+function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: { keepRichValues: false }): LatLng
+function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: { keepRichValues: true }): GlobeCoordinateSnakDataValue['value']
+function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: SimplifySnakOptions): LatLng | GlobeCoordinateSnakDataValue['value'] {
   if (options.keepRichValues) {
     return datavalue.value
   } else {
@@ -49,7 +71,14 @@ const coordinate = (datavalue, options) => {
   }
 }
 
-const time = (datavalue, options) => {
+type TimeStringSnakValue = TimeSnakDataValue['value']
+type TimeNumberSnakValue = Pick<TimeStringSnakValue, 'timezone' | 'before' | 'after' | 'precision' | 'calendarmodel'> & { time: number }
+
+function time (datavalue: TimeSnakDataValue, options: { keepRichValues:false, timeConverter: 'iso' | 'simple-day' | 'none' }): string
+function time (datavalue: TimeSnakDataValue, options: { keepRichValues:false, timeConverter: 'epoch' }): number
+function time (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'iso' | 'simple-day' | 'none' }): TimeStringSnakValue
+function time (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'epoch' }): TimeNumberSnakValue
+function time (datavalue: TimeSnakDataValue, options: SimplifySnakOptions): string | number | TimeStringSnakValue | TimeNumberSnakValue {
   let timeValue
   if (typeof options.timeConverter === 'function') {
     timeValue = options.timeConverter(datavalue.value)
@@ -64,12 +93,6 @@ const time = (datavalue, options) => {
   }
 }
 
-const getTimeConverter = (key = 'iso') => {
-  const converter = timeConverters[key]
-  if (!converter) throw new Error(`invalid converter key: ${JSON.stringify(key).substring(0, 100)}`)
-  return converter
-}
-
 // Each time converter should be able to accept 2 keys of arguments:
 // - either datavalue.value objects (prefered as it gives access to the precision)
 // - or the time string (datavalue.value.time)
@@ -80,19 +103,25 @@ export const timeConverters = {
   none: (wikibaseTime: TimeInputValue) => typeof wikibaseTime === 'string' ? wikibaseTime : wikibaseTime.time,
 } as const
 
+function getTimeConverter (key: keyof typeof timeConverters = 'iso') {
+  const converter = timeConverters[key]
+  if (!converter) throw new Error(`invalid converter key: ${JSON.stringify(key).substring(0, 100)}`)
+  return converter
+}
+
 export const parsers = {
-  commonsMedia: simple,
-  'external-id': simple,
-  'geo-shape': simple,
+  commonsMedia: stringValue,
+  'external-id': stringValue,
+  'geo-shape': stringValue,
   'globe-coordinate': coordinate,
-  math: simple,
+  math: stringValue,
   monolingualtext,
-  'musical-notation': simple,
+  'musical-notation': stringValue,
   quantity,
-  string: simple,
-  'tabular-data': simple,
+  string: stringValue,
+  'tabular-data': stringValue,
   time,
-  url: simple,
+  url: stringValue,
   'wikibase-entityid': entity,
   'wikibase-form': entity,
   'wikibase-item': entity,
@@ -101,23 +130,18 @@ export const parsers = {
   'wikibase-sense': entity,
 } as const
 
-const normalizeDatatype = datatype => datatype.toLowerCase().replace(/[\s-]/g, '')
-
-const normalizedParsers = {}
-for (const [ datatype, parser ] of Object.entries(parsers)) {
-  normalizedParsers[normalizeDatatype(datatype)] = parser
-}
+const legacyParsers = {
+  'musical notation': parsers['musical-notation'],
+  // Known case: mediainfo won't have datatype="globe-coordinate", but datavalue.type="globecoordinate"
+  globecoordinate: parsers['globe-coordinate'],
+} as const
 
 export function parseSnak (datatype: DataType | undefined, datavalue: SnakDataValue, options: SimplifySnakOptions) {
   // @ts-expect-error Known case of missing datatype: form.claims, sense.claims, mediainfo.statements
   datatype = datatype || datavalue.type
-
-  // Known case requiring normalization
-  // - legacy "musical notation" datatype
-  // - mediainfo won't have datatype="globe-coordinate", but datavalue.type="globecoordinate"
-  const parser = normalizedParsers[normalizeDatatype(datatype)]
+  const parser = parsers[datatype] || legacyParsers[datatype]
   if (!parser) {
-    throw new Error(`${normalizeDatatype(datatype)} claim parser isn't implemented. Please report to https://github.com/maxlath/wikibase-sdk/issues`)
+    throw new Error(`${datatype} claim parser isn't implemented. Please report to https://github.com/maxlath/wikibase-sdk/issues`)
   }
   return parser(datavalue, options)
 }
