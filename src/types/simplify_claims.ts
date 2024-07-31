@@ -1,6 +1,7 @@
 import type { DataType, Rank, SnakType } from './claim.js'
 import type { Guid, Hash, PropertyId } from './entity.js'
 import type { timeConverters } from '../helpers/parse_snak.js'
+import type { TimeConverter } from '../helpers/time.js'
 
 export interface SimplifySnakOptions {
   entityPrefix?: string
@@ -12,7 +13,7 @@ export interface SimplifySnakOptions {
   keepHashes?: boolean
   keepSnaktypes?: boolean
   keepAll?: boolean
-  timeConverter?: keyof typeof timeConverters
+  timeConverter?: keyof typeof timeConverters | TimeConverter<unknown>
   novalueValue?: any
   somevalueValue?: any
 }

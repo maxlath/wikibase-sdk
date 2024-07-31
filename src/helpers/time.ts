@@ -45,29 +45,6 @@ const expandedYearDate = (sign: string, rest: string, year: string) => {
   return new Date(date)
 }
 
-type TimeFunction<T> = (wikibaseTime: TimeInputValue) => T
-
-// Try to parse the date or return the input
-function bestEffort<T> (fn: TimeFunction<T>) {
-  return (value: TimeInputValue) => {
-    try {
-      return fn(value)
-    } catch {
-      value = typeof value === 'string' ? value : value.time
-
-      const sign = value[0]
-      let [ yearMonthDay, withinDay ] = value.slice(1).split('T')
-      if (!sign || !yearMonthDay || !withinDay) {
-        throw new Error('TimeInput is invalid: ' + JSON.stringify(value))
-      }
-
-      yearMonthDay = yearMonthDay.replace(/-00/g, '-01')
-
-      return `${sign}${yearMonthDay}T${withinDay}`
-    }
-  }
-}
-
 const toEpochTime = (wikibaseTime: TimeInputValue) => wikibaseTimeToDateObject(wikibaseTime).getTime()
 const toISOString = (wikibaseTime: TimeInputValue) => wikibaseTimeToDateObject(wikibaseTime).toISOString()
 
@@ -101,8 +78,37 @@ const toSimpleDay = (wikibaseTime: TimeInputValue): string => {
     .replace(/-00$/, '')
 }
 
-export const wikibaseTimeToEpochTime = bestEffort(toEpochTime)
+export const wikibaseTimeToEpochTime = toEpochTime
 
-export const wikibaseTimeToISOString = bestEffort(toISOString)
+export const wikibaseTimeToISOString = (value: TimeInputValue) => {
+  try {
+    return toISOString(value)
+  } catch {
+    const { sign, yearMonthDay, withinDay } = recoverDateAfterError(value)
+    return `${sign}${yearMonthDay}T${withinDay}`
+  }
+}
 
-export const wikibaseTimeToSimpleDay = bestEffort(toSimpleDay)
+export const wikibaseTimeToSimpleDay = (value: TimeInputValue) => {
+  try {
+    return toSimpleDay(value)
+  } catch {
+    const { sign, yearMonthDay } = recoverDateAfterError(value)
+    return `${sign}${yearMonthDay}`
+  }
+}
+
+function recoverDateAfterError (value) {
+  value = typeof value === 'string' ? value : value.time
+
+  const sign = value[0]
+  let [ yearMonthDay, withinDay ] = value.slice(1).split('T')
+  if (!sign || !yearMonthDay || !withinDay) {
+    throw new Error('TimeInput is invalid: ' + JSON.stringify(value))
+  }
+
+  yearMonthDay = yearMonthDay.replace(/-00/g, '-01')
+  return { sign, yearMonthDay, withinDay }
+}
+
+export type TimeConverter <T> = (wikibaseTime: TimeInputValue) => T
