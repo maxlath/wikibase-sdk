@@ -21,56 +21,56 @@ export type SnakEntityValue = WikibaseEntityIdSnakValue
 export type ClaimSnakWikibaseItem = WikibaseEntityIdSnakValue
 
 export interface GlobecoordinateSnakValue {
-  type: 'globecoordinate';
+  type: 'globecoordinate'
   value: {
-    latitude: number;
-    longitude: number;
-    altitude: number | null;
-    precision: number;
-    globe: string;
-  };
+    latitude: number
+    longitude: number
+    altitude: number | null
+    precision: number
+    globe: string
+  }
 }
 
 export interface MonolingualTextSnakValue {
-  type: 'monolingualtext';
+  type: 'monolingualtext'
   value: {
-    language: LanguageCode;
-    text: string;
-  };
+    language: LanguageCode
+    text: string
+  }
 }
 
 export interface QuantitySnakValue {
-  type: 'quantity';
+  type: 'quantity'
   value: {
-    amount: string;
-    unit: string;
-    upperBound?: string;
-    lowerBound?: string;
-  };
+    amount: string
+    unit: string
+    upperBound?: string
+    lowerBound?: string
+  }
 }
 
 export interface StringSnakValue {
-  type: 'string';
-  value: string;
+  type: 'string'
+  value: string
 }
 
 export interface TimeSnakValue {
-  type: 'time';
+  type: 'time'
   value: {
-    time: string;
-    timezone: number;
-    before: number;
-    after: number;
-    precision: number;
-    calendarmodel: string;
-  };
+    time: string
+    timezone: number
+    before: number
+    after: number
+    precision: number
+    calendarmodel: string
+  }
 }
 
 export interface WikibaseEntityIdSnakValue {
-  type: 'wikibase-entityid';
+  type: 'wikibase-entityid'
   value: {
-    id: EntityId;
-    'numeric-id'?: number;
-    'entity-type': EntityType;
-  };
+    id: EntityId
+    'numeric-id'?: number
+    'entity-type': EntityType
+  }
 }
