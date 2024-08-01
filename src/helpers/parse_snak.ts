@@ -1,10 +1,11 @@
 import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay } from './time.js'
 import type { TimeInputValue } from './time.js'
-import type { DataType } from '../types/claim.js'
 import type { SimplifySnakOptions } from '../types/simplify_claims.js'
-import type { GlobeCoordinateSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, SnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue } from '../types/snakvalue.js'
+import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue } from '../types/snakvalue.js'
 
-const stringValue = (datavalue: StringSnakDataValue) => datavalue.value
+function stringValue (datavalue: StringSnakDataValue) {
+  return datavalue.value
+}
 
 function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: false }): string
 function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: true }): MonolingualTextSnakDataValue['value']
@@ -43,7 +44,7 @@ interface ParsedQuantitySnakValue {
 
 function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: false }): number
 function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: true }): ParsedQuantitySnakValue
-function quantity (datavalue: QuantitySnakDataValue, options: SimplifySnakOptions): number | ParsedQuantitySnakValue {
+function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: boolean }): number | ParsedQuantitySnakValue {
   const { value } = datavalue
   const amount = parseFloat(value.amount)
   if (options.keepRichValues) {
@@ -109,6 +110,26 @@ function getTimeConverter (key: keyof typeof timeConverters = 'iso') {
   return converter
 }
 
+type DataValueByDataType = {
+  'commonsMedia': CommonsMediaSnakDataValue
+  'external-id': ExternalIdSnakDataValue
+  'geo-shape': GeoShapeSnakDataValue
+  'globe-coordinate': GlobeCoordinateSnakDataValue
+  'math': MathSnakDataValue
+  monolingualtext: MonolingualTextSnakDataValue
+  'musical-notation': MusicalNotationSnakDataValue
+  quantity: QuantitySnakDataValue
+  'string': StringSnakDataValue
+  'tabular-data': TabularDataSnakDataValue
+  'time': TimeSnakDataValue
+  'url': UrlSnakDataValue
+  'wikibase-form': WikibaseFormSnakDataValue
+  'wikibase-item': WikibaseItemSnakDataValue
+  'wikibase-lexeme': WikibaseLexemeSnakDataValue
+  'wikibase-property': WikibasePropertySnakDataValue
+  'wikibase-sense': WikibaseSenseSnakDataValue
+}
+
 export const parsers = {
   commonsMedia: stringValue,
   'external-id': stringValue,
@@ -122,7 +143,6 @@ export const parsers = {
   'tabular-data': stringValue,
   time,
   url: stringValue,
-  'wikibase-entityid': entity,
   'wikibase-form': entity,
   'wikibase-item': entity,
   'wikibase-lexeme': entity,
@@ -136,10 +156,14 @@ const legacyParsers = {
   globecoordinate: parsers['globe-coordinate'],
 } as const
 
-export function parseSnak (datatype: DataType | undefined, datavalue: SnakDataValue, options: SimplifySnakOptions) {
-  // @ts-expect-error Known case of missing datatype: form.claims, sense.claims, mediainfo.statements
-  datatype = datatype || datavalue.type
-  const parser = parsers[datatype] || legacyParsers[datatype]
+export function parseSnak <T extends keyof DataValueByDataType> (datatype: T, datavalue: DataValueByDataType[T], options: SimplifySnakOptions): ReturnType<typeof parsers[T]> {
+  let parser
+  if (datatype) {
+    // @ts-expect-error legacyParsers datatypes aren't in DataValueByDataType
+    parser = parsers[datatype] || legacyParsers[datatype]
+  } else {
+    parser = parsers[datavalue.type]
+  }
   if (!parser) {
     throw new Error(`${datatype} claim parser isn't implemented. Please report to https://github.com/maxlath/wikibase-sdk/issues`)
   }
