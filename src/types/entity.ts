@@ -23,11 +23,11 @@ export type EntityId = NonNestedEntityId | FormId | SenseId
 export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId
 export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}`
 
-export type Guid = `${EntityId|Lowercase<EntityId>}$${string}`
+export type Guid = `${EntityId | Lowercase<EntityId>}$${string}`
 /**
  * A more shell-friendly GUID syntax, with a "-" instead of a "$"
  */
-export type GuidAltSyntax = `${EntityId|Lowercase<EntityId>}-${string}`
+export type GuidAltSyntax = `${EntityId | Lowercase<EntityId>}-${string}`
 
 export type Hash = string
 
@@ -76,7 +76,7 @@ export interface EntityInfo<T> {
   title?: string
   lastrevid?: number
   modified?: string
-  redirects?: { from: T; to: T }
+  redirects?: { from: T, to: T }
   id: T
 }
 

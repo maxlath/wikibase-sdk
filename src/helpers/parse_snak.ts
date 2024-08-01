@@ -74,8 +74,8 @@ function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: SimplifyS
 type TimeStringSnakValue = TimeSnakDataValue['value']
 type TimeNumberSnakValue = Pick<TimeStringSnakValue, 'timezone' | 'before' | 'after' | 'precision' | 'calendarmodel'> & { time: number }
 
-function time (datavalue: TimeSnakDataValue, options: { keepRichValues:false, timeConverter: 'iso' | 'simple-day' | 'none' }): string
-function time (datavalue: TimeSnakDataValue, options: { keepRichValues:false, timeConverter: 'epoch' }): number
+function time (datavalue: TimeSnakDataValue, options: { keepRichValues: false, timeConverter: 'iso' | 'simple-day' | 'none' }): string
+function time (datavalue: TimeSnakDataValue, options: { keepRichValues: false, timeConverter: 'epoch' }): number
 function time (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'iso' | 'simple-day' | 'none' }): TimeStringSnakValue
 function time (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'epoch' }): TimeNumberSnakValue
 function time (datavalue: TimeSnakDataValue, options: SimplifySnakOptions): string | number | TimeStringSnakValue | TimeNumberSnakValue {
