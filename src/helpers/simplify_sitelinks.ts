@@ -3,23 +3,21 @@ import { getSitelinkUrl } from './sitelinks.js'
 import type { SimplifySitelinkOptions } from '../types/options.js'
 import type { SimplifiedSitelinks, SimplifiedSitelinksWithBadges, SimplifiedSitelinksWithBadgesAndUrls, SimplifiedSitelinksWithUrls, Sitelinks } from '../types/sitelinks.js'
 
-export function simplifySitelinks (sitelinks: Sitelinks, options: SimplifySitelinkOptions = {}) {
+type SimplifySitelinksOptionsOn = { addUrl: true } & ({ keepBadges: true } | { keepAll: true })
+type SimplifySitelinksOptionsOff = undefined | { addUrl: false | undefined } & ({ keepBadges: false | undefined } | { keepAll: false | undefined })
+
+export function simplifySitelinks (sitelinks: Sitelinks, options: { addUrl: true }): SimplifiedSitelinksWithUrls
+export function simplifySitelinks (sitelinks: Sitelinks, options: { keepBadges: true } | { keepAll: true }): SimplifiedSitelinksWithBadges
+export function simplifySitelinks (sitelinks: Sitelinks, options: SimplifySitelinksOptionsOn): SimplifiedSitelinksWithBadgesAndUrls
+export function simplifySitelinks (sitelinks: Sitelinks, options?: SimplifySitelinksOptionsOff): SimplifiedSitelinks
+export function simplifySitelinks (sitelinks: Sitelinks, options: SimplifySitelinkOptions = {}): SimplifiedSitelinksWithBadgesAndUrls | SimplifiedSitelinksWithBadges | SimplifiedSitelinksWithUrls | SimplifiedSitelinks {
   let { addUrl, keepBadges, keepAll } = options
   keepBadges = keepBadges || keepAll
-  const simplified = typedKeys(sitelinks).reduce(aggregateValues({
+  return typedKeys(sitelinks).reduce(aggregateValues({
     sitelinks,
     addUrl,
     keepBadges,
   }), {})
-  if (keepBadges && addUrl) {
-    return simplified as SimplifiedSitelinksWithBadgesAndUrls
-  } else if (keepBadges) {
-    return simplified as SimplifiedSitelinksWithBadges
-  } else if (addUrl) {
-    return simplified as SimplifiedSitelinksWithUrls
-  } else {
-    return simplified as SimplifiedSitelinks
-  }
 }
 
 const aggregateValues = ({ sitelinks, addUrl, keepBadges }) => (index, key) => {

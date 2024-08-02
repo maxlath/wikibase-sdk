@@ -1,4 +1,3 @@
-// @ts-nocheck
 import should from 'should'
 import { simplifySitelinks } from '../src/helpers/simplify_sitelinks.js'
 import { Q571 } from './data/Q571.js'
@@ -29,6 +28,7 @@ describe('simplify.sitelinks', () => {
   })
 
   it('should create a different object', () => {
+    // @ts-expect-error TS2367
     should(simplifySitelinks(Q571.sitelinks) === Q571.sitelinks).be.false()
   })
 
