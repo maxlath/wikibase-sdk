@@ -1,15 +1,25 @@
+import { typedKeys } from '../utils/utils.js'
 import { getSitelinkUrl } from './sitelinks.js'
 import type { SimplifySitelinkOptions } from '../types/options.js'
-import type { SimplifiedSitelinks, Sitelinks } from '../types/sitelinks.js'
+import type { SimplifiedSitelinks, SimplifiedSitelinksWithBadges, SimplifiedSitelinksWithBadgesAndUrls, SimplifiedSitelinksWithUrls, Sitelinks } from '../types/sitelinks.js'
 
-export function simplifySitelinks (sitelinks: Sitelinks, options: SimplifySitelinkOptions = {}): SimplifiedSitelinks {
+export function simplifySitelinks (sitelinks: Sitelinks, options: SimplifySitelinkOptions = {}) {
   let { addUrl, keepBadges, keepAll } = options
   keepBadges = keepBadges || keepAll
-  return Object.keys(sitelinks).reduce(aggregateValues({
+  const simplified = typedKeys(sitelinks).reduce(aggregateValues({
     sitelinks,
     addUrl,
     keepBadges,
   }), {})
+  if (keepBadges && addUrl) {
+    return simplified as SimplifiedSitelinksWithBadgesAndUrls
+  } else if (keepBadges) {
+    return simplified as SimplifiedSitelinksWithBadges
+  } else if (addUrl) {
+    return simplified as SimplifiedSitelinksWithUrls
+  } else {
+    return simplified as SimplifiedSitelinks
+  }
 }
 
 const aggregateValues = ({ sitelinks, addUrl, keepBadges }) => (index, key) => {

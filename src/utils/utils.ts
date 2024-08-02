@@ -60,8 +60,13 @@ export function isAKey<T extends PropertyKey> (obj: Readonly<Partial<Record<T, u
   return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
-/** like Object.entries() but with typed key */
+/** like Object.entries() but with typed keys */
 export function typedEntries<K extends string, V> (input: Readonly<Partial<Record<K, V>>>): Array<[K, V]> {
   // @ts-expect-error string is not assignable to K as K is more specific
   return Object.entries(input)
+}
+
+/** like Object.keys() but with typed keys */
+export function typedKeys <Obj> (obj: Obj) {
+  return Object.keys(obj) as (keyof Obj)[]
 }
