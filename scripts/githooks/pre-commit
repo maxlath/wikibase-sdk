@@ -1,2 +1,13 @@
 #!/usr/bin/env bash
-npm run build && npm run lint && npm run test
+set -eu
+
+# keep A (added) and M (modified) files
+# only if staged (0 space before/2 space after the letter)
+staged=$(git status --porcelain | grep --extended-regexp "^(A|M)" | grep --extended-regexp '.ts$' | sed --regexp-extended 's/^\w+\s+//')
+
+if [ -z "$staged" ]
+  then
+    echo 'no file requiring build or lint'
+  else
+    npm run build && npm run lint && npm run test
+fi
