@@ -4,7 +4,15 @@ import type { SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
 import type { Aliases, Descriptions, Labels, Lemmas, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
 
-export const EntityTypes = [ 'item', 'property', 'lexeme', 'form', 'sense' ] as const
+export const EntityTypes = [
+  'item',
+  'property',
+  'lexeme',
+  'form',
+  'sense',
+  'entity-schema',
+] as const
+
 export type EntityType = typeof EntityTypes[number]
 
 export type NumericId = `${number}`
@@ -20,8 +28,17 @@ export type RevisionId = `${number}`
 export type PropertyClaimsId = `${EntityId}#${PropertyId}`
 
 export type EntityId = NonNestedEntityId | FormId | SenseId
-export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId
-export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}`
+export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId | EntitySchemaId
+export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}` | `EntitySchema:${EntitySchemaId}`
+
+export interface IdByEntityType {
+  'form': FormId
+  'item': ItemId
+  'lexeme': LexemeId
+  'property': PropertyId
+  'sense': SenseId
+  'entity-schema': EntitySchemaId
+}
 
 export type Guid = `${EntityId | Lowercase<EntityId>}$${string}`
 /**

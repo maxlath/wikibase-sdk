@@ -1,4 +1,4 @@
-import type { EntityId, EntityType } from './entity.js'
+import type { EntityType, IdByEntityType } from './entity.js'
 import type { LanguageCode } from './options.js'
 
 export interface GlobeCoordinateSnakDataValue {
@@ -55,20 +55,29 @@ export interface TimeSnakDataValue {
   }
 }
 
-export interface WikibaseEntityIdSnakDataValue {
+export interface GenericWikibaseEntityIdSnakDataValue <T extends EntityType> {
   type: 'wikibase-entityid'
   value: {
-    id: EntityId
+    id: IdByEntityType[T]
     'numeric-id'?: number
-    'entity-type': EntityType
+    'entity-type': T
   }
 }
 
-export type WikibaseFormSnakDataValue = WikibaseEntityIdSnakDataValue
-export type WikibaseItemSnakDataValue = WikibaseEntityIdSnakDataValue
-export type WikibaseLexemeSnakDataValue = WikibaseEntityIdSnakDataValue
-export type WikibasePropertySnakDataValue = WikibaseEntityIdSnakDataValue
-export type WikibaseSenseSnakDataValue = WikibaseEntityIdSnakDataValue
+export type WikibaseFormSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'form'>
+export type WikibaseItemSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'item'>
+export type WikibaseLexemeSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'lexeme'>
+export type WikibasePropertySnakDataValue = GenericWikibaseEntityIdSnakDataValue<'property'>
+export type WikibaseSenseSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'sense'>
+export type EntitySchemaSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'entity-schema'>
+
+export type WikibaseEntityIdSnakDataValue =
+  | WikibaseFormSnakDataValue
+  | WikibaseItemSnakDataValue
+  | WikibaseLexemeSnakDataValue
+  | WikibasePropertySnakDataValue
+  | WikibaseSenseSnakDataValue
+  | EntitySchemaSnakDataValue
 
 export type SnakDataValue =
   | GlobeCoordinateSnakDataValue

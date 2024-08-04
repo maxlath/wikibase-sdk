@@ -8,6 +8,7 @@ import { Q1 } from './data/Q1.js'
 import { Q2112 } from './data/Q2112.js'
 import { Q217447 } from './data/Q217447.js'
 import { Q22002395 } from './data/Q22002395.js'
+import { Q235557 } from './data/Q235557.js'
 import { Q271094 } from './data/Q271094.js'
 import { Q275937 } from './data/Q275937.js'
 import { Q328212 } from './data/Q328212.js'
@@ -293,6 +294,10 @@ describe('simplifyClaim', () => {
 
     it('should support wikibase-sense', () => {
       should(simplifyClaim(L525.senses[0].claims.P5972[0])).equal('L41768-S2')
+    })
+
+    it('should support entity-schema', () => {
+      should(simplifyClaim(Q235557.claims.P12861[0])).equal('E79')
     })
   })
 

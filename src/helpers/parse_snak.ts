@@ -1,7 +1,7 @@
 import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay } from './time.js'
 import type { TimeInputValue } from './time.js'
 import type { SimplifySnakOptions } from '../types/simplify_claims.js'
-import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue } from '../types/snakvalue.js'
+import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue, EntitySchemaSnakDataValue } from '../types/snakvalue.js'
 
 function stringValue (datavalue: StringSnakDataValue) {
   return datavalue.value
@@ -29,6 +29,7 @@ function entity (datavalue: WikibaseEntityIdSnakDataValue, options: SimplifySnak
 
 const entityLetter = {
   item: 'Q',
+  'entity-schema': 'E',
   lexeme: 'L',
   property: 'P',
   form: 'F',
@@ -113,6 +114,7 @@ function getTimeConverter (key: keyof typeof timeConverters = 'iso') {
 type DataValueByDataType = {
   'commonsMedia': CommonsMediaSnakDataValue
   'external-id': ExternalIdSnakDataValue
+  'entity-schema': EntitySchemaSnakDataValue
   'geo-shape': GeoShapeSnakDataValue
   'globe-coordinate': GlobeCoordinateSnakDataValue
   'math': MathSnakDataValue
@@ -133,6 +135,7 @@ type DataValueByDataType = {
 export const parsers = {
   commonsMedia: stringValue,
   'external-id': stringValue,
+  'entity-schema': entity,
   'geo-shape': stringValue,
   'globe-coordinate': coordinate,
   math: stringValue,
