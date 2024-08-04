@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 10.1.0 - 2024-08-04
+- * [`simplify.claims`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_claims.md): add support for `entity-schema` snak values
+
 ## 10.0.0 - 2024-03-14
 **BREAKING CHANGES**:
 - remove the `minimize` option from [`simplifySparqlResults`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_sparql_results.md): that behavior is now handled by `minimizeSimplifiedSparqlResults`
