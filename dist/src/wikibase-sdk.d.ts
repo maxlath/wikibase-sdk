@@ -1,0 +1,73 @@
+import * as helpers from './helpers/helpers.js';
+import * as parse from './helpers/parse_responses.js';
+import * as rankHelpers from './helpers/rank.js';
+import * as simplify from './helpers/simplify.js';
+import * as sitelinksHelpers from './helpers/sitelinks.js';
+import * as timeHelpers from './helpers/time.js';
+import { cirrusSearchPagesFactory } from './queries/cirrus_search.js';
+import { getEntitiesFactory } from './queries/get_entities.js';
+import { getEntitiesFromSitelinksFactory } from './queries/get_entities_from_sitelinks.js';
+import { getEntityRevisionFactory } from './queries/get_entity_revision.js';
+import { getManyEntitiesFactory } from './queries/get_many_entities.js';
+import { getReverseClaimsFactory } from './queries/get_reverse_claims.js';
+import { getRevisionsFactory } from './queries/get_revisions.js';
+import { searchEntitiesFactory } from './queries/search_entities.js';
+import { sparqlQueryFactory } from './queries/sparql_query.js';
+import { type Url } from './utils/build_url.js';
+import type { InstanceConfig } from './types/options.js';
+declare const common: {
+    readonly wikibaseTimeToDateObject: typeof timeHelpers.wikibaseTimeToDateObject;
+    readonly wikibaseTimeToEpochTime: (wikibaseTime: timeHelpers.TimeInputValue) => number;
+    readonly wikibaseTimeToISOString: (value: timeHelpers.TimeInputValue) => string;
+    readonly wikibaseTimeToSimpleDay: (value: timeHelpers.TimeInputValue) => string;
+    readonly truthyPropertyClaims: typeof rankHelpers.truthyPropertyClaims;
+    readonly nonDeprecatedPropertyClaims: typeof rankHelpers.nonDeprecatedPropertyClaims;
+    readonly truthyClaims: typeof rankHelpers.truthyClaims;
+    readonly getSitelinkUrl: typeof sitelinksHelpers.getSitelinkUrl;
+    readonly getSitelinkData: typeof sitelinksHelpers.getSitelinkData;
+    readonly isSite: (site: string) => site is import("./index.js").Site;
+    readonly isSitelinkKey: (site: string) => site is import("./index.js").Site;
+    readonly isPropertyClaimsId: typeof helpers.isPropertyClaimsId;
+    readonly isEntityPageTitle: typeof helpers.isEntityPageTitle;
+    readonly getNumericId: typeof helpers.getNumericId;
+    readonly getImageUrl: typeof helpers.getImageUrl;
+    readonly getEntityIdFromGuid: typeof helpers.getEntityIdFromGuid;
+    readonly isNumericId: (id: string) => id is `${number}`;
+    readonly isEntityId: (id: string) => id is import("./index.js").EntityId;
+    readonly isEntitySchemaId: (id: string) => id is `E${number}`;
+    readonly isItemId: (id: string) => id is `Q${number}`;
+    readonly isPropertyId: (id: string) => id is `P${number}`;
+    readonly isLexemeId: (id: string) => id is `L${number}`;
+    readonly isFormId: (id: string) => id is `L${number}-F${number}`;
+    readonly isSenseId: (id: string) => id is `L${number}-S${number}`;
+    readonly isMediaInfoId: (id: string) => id is `M${number}`;
+    readonly isGuid: (id: string) => id is `L${number}-F${number}$${string}` | `L${number}-S${number}$${string}` | `Q${number}$${string}` | `L${number}$${string}` | `P${number}$${string}` | `E${number}$${string}` | `M${number}$${string}` | `l${Lowercase<`${number}`>}-f${Lowercase<`${number}`>}$${string}` | `l${Lowercase<`${number}`>}-s${Lowercase<`${number}`>}$${string}` | `q${Lowercase<`${number}`>}$${string}` | `l${Lowercase<`${number}`>}$${string}` | `p${Lowercase<`${number}`>}$${string}` | `e${Lowercase<`${number}`>}$${string}` | `m${Lowercase<`${number}`>}$${string}`;
+    readonly isHash: (id: string) => id is string;
+    readonly isRevisionId: (id: string) => id is `${number}`;
+    readonly isNonNestedEntityId: (id: string) => id is import("./index.js").NonNestedEntityId;
+    readonly simplify: typeof simplify;
+    readonly parse: typeof parse;
+};
+type ApiQueries = {
+    readonly searchEntities: ReturnType<typeof searchEntitiesFactory>;
+    readonly cirrusSearchPages: ReturnType<typeof cirrusSearchPagesFactory>;
+    readonly getEntities: ReturnType<typeof getEntitiesFactory>;
+    readonly getManyEntities: ReturnType<typeof getManyEntitiesFactory>;
+    readonly getRevisions: ReturnType<typeof getRevisionsFactory>;
+    readonly getEntityRevision: ReturnType<typeof getEntityRevisionFactory>;
+    readonly getEntitiesFromSitelinks: ReturnType<typeof getEntitiesFromSitelinksFactory>;
+};
+type SparqlQueries = {
+    readonly sparqlQuery: ReturnType<typeof sparqlQueryFactory>;
+    readonly getReverseClaims: ReturnType<typeof getReverseClaimsFactory>;
+};
+type Instance = {
+    readonly root: Url;
+    readonly apiEndpoint: Url;
+};
+export type Wbk = {
+    readonly instance: Instance;
+} & ApiQueries & SparqlQueries & typeof common;
+export declare function WBK(config: InstanceConfig): Wbk;
+export {};
+//# sourceMappingURL=wikibase-sdk.d.ts.map
