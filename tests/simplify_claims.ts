@@ -525,6 +525,27 @@ describe('simplifyClaim', () => {
     })
   })
 
+  describe('minTimePrecision', () => {
+    it('should drop date claims with precision below the one requested', () => {
+      should(simplifyPropertyClaims(Q1.claims.P580, { minTimePrecision: 5 })).deepEqual([])
+      should(simplifyPropertyClaims(Q4132785.claims.P577, { minTimePrecision: 11 }).length).equal(1)
+      should(simplifyPropertyClaims(Q4132785.claims.P577, { minTimePrecision: 12 })).deepEqual([])
+      should(simplifyPropertyClaims(Q4132785.claims.P577, { minTimePrecision: 12 })).deepEqual([])
+    })
+
+    it('should drop date qualifiers with precision below the one requested', () => {
+      const claim = Q571.claims.P6404[0]
+      should(simplifyClaim(claim, { minTimePrecision: 9, keepQualifiers: true }).qualifiers.P577.length).equal(1)
+      should(simplifyClaim(claim, { minTimePrecision: 10, keepQualifiers: true }).qualifiers.P577).deepEqual([])
+    })
+
+    it('should drop date qualifiers with precision below the one requested', () => {
+      const claim = Q571.claims.P6404[0]
+      should(simplifyClaim(claim, { minTimePrecision: 9, keepQualifiers: true }).qualifiers.P577.length).equal(1)
+      should(simplifyClaim(claim, { minTimePrecision: 10, keepQualifiers: true }).qualifiers.P577).deepEqual([])
+    })
+  })
+
   describe('empty values', () => {
     it('should return the desired novalueValue', () => {
       const noValueClaim = emptyValues.claims.P3984[0]

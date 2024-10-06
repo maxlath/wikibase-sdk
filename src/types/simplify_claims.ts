@@ -16,6 +16,7 @@ export interface SimplifySnakOptions {
   timeConverter?: keyof typeof timeConverters | TimeConverter<unknown>
   novalueValue?: unknown
   somevalueValue?: unknown
+  minTimePrecision?: number
 }
 
 export type SimplifySnaksOptions = SimplifySnakOptions

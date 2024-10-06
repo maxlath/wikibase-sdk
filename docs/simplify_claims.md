@@ -35,6 +35,7 @@
     - [Keep snaktypes](#keep-snaktypes)
   - [Keep all](#keep-all)
   - [Change time parser](#change-time-parser)
+  - [Drop unprecise dates](#drop-unprecise-dates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -477,3 +478,14 @@ If none of those format fits your needs, you can pass a custom time converter fu
 const timeConverterFn = ({ time, precision }) => `foo/${time}/${precision}/bar`
 simplifyClaims(claims, { timeConverter })
 ```
+
+### Drop unprecise dates
+
+You can set the `minTimePrecision` option to filter-out certain time snaks, if too unprecise for your use-case. That is typically the case when using a time converter, which will loose the time precision anyway.
+
+For instance, when using the `simple-day` formatter, you might want to drop any date that isn't at least at the year-precision level:
+```js
+simplifyClaims(claims, { timeConverter: 'simple-day', minTimePrecision: 9 })
+```
+
+See https://www.mediawiki.org/wiki/Wikibase/DataModel#Dates_and_times

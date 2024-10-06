@@ -3,6 +3,7 @@ import { parseSnak } from './parse_snak.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
 import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, Reference, Snak, Snaks } from '../types/claim.js'
 import type { CustomSimplifiedClaim, CustomSimplifiedSnak, SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertySnaks, SimplifiedSnaks, SimplifyClaimsOptions, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
+import type { TimeSnakDataValue } from '../types/snakvalue.js'
 
 /**
  * Tries to replace wikidata deep snak object by a simple value
@@ -95,6 +96,7 @@ export function simplifyPropertyClaims (propertyClaims: PropertyClaims, options:
   if (propertyClaims == null || propertyClaims.length === 0) return []
 
   const { keepNonTruthy, keepNonDeprecated } = parseKeepOptions(options)
+  const { minTimePrecision } = options
 
   if (keepNonDeprecated) {
     propertyClaims = nonDeprecatedPropertyClaims(propertyClaims)
@@ -102,12 +104,17 @@ export function simplifyPropertyClaims (propertyClaims: PropertyClaims, options:
     propertyClaims = truthyPropertyClaims(propertyClaims)
   }
 
-  const simplifiedArray = propertyClaims
-    .map(claim => simplifyClaim(claim, options))
-    // Filter-out novalue and somevalue claims,
-    // unless a novalueValue or a somevalueValue is passed in options
-    // Considers null as defined
-    .filter(obj => obj !== undefined)
+  const simplifiedArray: SimplifiedClaim[] = []
+  for (const claim of propertyClaims) {
+    const isDroppedClaim = timeSnakPrecisionIsTooLow(claim.mainsnak, minTimePrecision)
+    if (!isDroppedClaim) {
+      const simplifiedClaim = simplifyClaim(claim, options)
+      // Filter-out novalue and somevalue claims,
+      // unless a novalueValue or a somevalueValue is passed in options
+      // Considers null as defined
+      if (simplifiedClaim !== undefined) simplifiedArray.push(simplifiedClaim)
+    }
+  }
 
   // Deduplicate values unless we return a rich value object
   if (simplifiedArray[0] && typeof simplifiedArray[0] !== 'object') {
@@ -131,12 +138,20 @@ export function simplifySnaks (snaks: Snaks = {}, options: SimplifySnaksOptions 
 
 export function simplifyPropertySnaks (propertySnaks: PropertySnaks, options: SimplifySnaksOptions = {}): SimplifiedPropertySnaks {
   if (propertySnaks == null || propertySnaks.length === 0) return []
-  const simplifiedArray = propertySnaks
-    .map(snak => simplifySnak(snak, options))
-    // Filter-out novalue and somevalue claims,
-    // unless a novalueValue or a somevalueValue is passed in options
-    // Considers null as defined
-    .filter(obj => obj !== undefined)
+
+  const { minTimePrecision } = options
+
+  const simplifiedArray: SimplifiedClaim[] = []
+  for (const snak of propertySnaks) {
+    const isDroppedSnak = timeSnakPrecisionIsTooLow(snak, minTimePrecision)
+    if (!isDroppedSnak) {
+      const simplifiedSnak = simplifySnak(snak, options)
+      // Filter-out novalue and somevalue snaks,
+      // unless a novalueValue or a somevalueValue is passed in options
+      // Considers null as defined
+      if (simplifiedSnak !== undefined) simplifiedArray.push(simplifiedSnak)
+    }
+  }
 
   // Deduplicate values unless we return a rich value object
   if (simplifiedArray[0] && typeof simplifiedArray[0] !== 'object') {
@@ -176,4 +191,11 @@ const parseKeepOptions = (options: any = {}) => {
     }
   }
   return options
+}
+
+function timeSnakPrecisionIsTooLow (snak: Snak, minTimePrecision?: number) {
+  if (minTimePrecision == null) return false
+  if (snak.datatype !== 'time' || snak.snaktype !== 'value') return false
+  const { value } = snak.datavalue as TimeSnakDataValue
+  return value.precision < minTimePrecision
 }
