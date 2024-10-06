@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env tsx
 import { kebabCase } from 'lodash-es'
 import { red, green } from 'tiny-chalk'
 import { parsers } from '../src/helpers/parse_snak.js'

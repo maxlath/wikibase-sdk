@@ -76,7 +76,7 @@
     "mocha": "^10.7.0",
     "should": "^13.2.3",
     "tiny-chalk": "^3.0.1",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.19.1",
     "typescript": "^5.5.4"
   },
   "engines": {

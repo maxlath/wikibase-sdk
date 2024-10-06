@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env tsx
 import { writeFileSync } from 'fs'
 import { uniq } from '../src/utils/utils.js'
 

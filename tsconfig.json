@@ -36,8 +36,4 @@
     // "useUnknownInCatchVariables": true,
   },
   "include": ["src", "tests", "scripts"],
-  "ts-node": {
-    "swc": true,
-    "esm": true,
-  }
 }
