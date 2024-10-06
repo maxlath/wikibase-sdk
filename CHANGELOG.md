@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 10.2.0 - 2024-10-06
+- * [`simplify.claims`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_claims.md): add `minTimePrecision` option
+
 ## 10.1.0 - 2024-08-04
 - * [`simplify.claims`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_claims.md): add support for `entity-schema` snak values
 
