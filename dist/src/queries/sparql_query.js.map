@@ -1,0 +1,1 @@
+{"version":3,"file":"sparql_query.js","sourceRoot":"","sources":["../../../src/queries/sparql_query.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,uBAAuB,EAAE,MAAM,mBAAmB,CAAA;AAG3D,MAAM,UAAU,kBAAkB,CAAE,cAAmB;IACrD,OAAO,SAAS,WAAW,CAAE,MAAc;QACzC,MAAM,KAAK,GAAG,uBAAuB,CAAC,MAAM,CAAC,CAAA;QAC7C,OAAO,GAAG,cAAc,sBAAsB,KAAK,EAAE,CAAA;IACvD,CAAC,CAAA;AACH,CAAC"}
