@@ -1,0 +1,1 @@
+{"version":3,"file":"simplify_entity.d.ts","sourceRoot":"","sources":["../../../src/helpers/simplify_entity.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,EAAE,gBAAgB,EAAE,MAAM,oBAAoB,CAAA;AAC5E,OAAO,KAAK,EAAE,qBAAqB,EAAE,MAAM,qBAAqB,CAAA;AAchE,eAAO,MAAM,cAAc,WAAY,MAAM,YAAW,qBAAqB,KAAQ,gBAoCpF,CAAA;AAQD,eAAO,MAAM,gBAAgB,aAAc,QAAQ,YAAW,qBAAqB,qCAelF,CAAA"}
