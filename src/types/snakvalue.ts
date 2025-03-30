@@ -38,6 +38,7 @@ export interface StringSnakDataValue {
 export type CommonsMediaSnakDataValue = StringSnakDataValue
 export type ExternalIdSnakDataValue = StringSnakDataValue
 export type GeoShapeSnakDataValue = StringSnakDataValue
+export type LocalMediaSnakDataValue = StringSnakDataValue
 export type MathSnakDataValue = StringSnakDataValue
 export type MusicalNotationSnakDataValue = StringSnakDataValue
 export type TabularDataSnakDataValue = StringSnakDataValue

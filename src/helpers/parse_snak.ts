@@ -1,7 +1,7 @@
 import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay } from './time.js'
 import type { TimeInputValue } from './time.js'
 import type { SimplifySnakOptions } from '../types/simplify_claims.js'
-import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue, EntitySchemaSnakDataValue } from '../types/snakvalue.js'
+import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue, EntitySchemaSnakDataValue, LocalMediaSnakDataValue } from '../types/snakvalue.js'
 
 function stringValue (datavalue: StringSnakDataValue) {
   return datavalue.value
@@ -117,6 +117,7 @@ type DataValueByDataType = {
   'entity-schema': EntitySchemaSnakDataValue
   'geo-shape': GeoShapeSnakDataValue
   'globe-coordinate': GlobeCoordinateSnakDataValue
+  'localMedia': LocalMediaSnakDataValue
   'math': MathSnakDataValue
   monolingualtext: MonolingualTextSnakDataValue
   'musical-notation': MusicalNotationSnakDataValue
@@ -138,6 +139,7 @@ export const parsers = {
   'entity-schema': entity,
   'geo-shape': stringValue,
   'globe-coordinate': coordinate,
+  localMedia: stringValue,
   math: stringValue,
   monolingualtext,
   'musical-notation': stringValue,

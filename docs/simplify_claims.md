@@ -243,6 +243,7 @@ commonsMedia
 external-id
 geo-shape
 globe-coordinate
+localMedia
 math
 monolingualtext
 musical-notation
