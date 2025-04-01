@@ -77,7 +77,7 @@
     "should": "^13.2.3",
     "tiny-chalk": "^3.0.1",
     "tsx": "^4.19.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">= 12.0.0"
