@@ -15,6 +15,7 @@
     "sourceMap": true,
     "stripInternal": true,
     "useDefineForClassFields": true,
+    "verbatimModuleSyntax": true,
 
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
