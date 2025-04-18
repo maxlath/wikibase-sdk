@@ -963,6 +963,10 @@ export const sites = [
   'zuwiktionary',
 ] as const
 
+/**
+ * Wikimedia Languages Codes as defined in https://gerrit.wikimedia.org/g/mediawiki/core/+/master/includes/languages/data/Names.php
+ * See also https://www.wikidata.org/wiki/Q21468732 and https://www.wikidata.org/wiki/Property:P424
+ */
 export const wikimediaLanguageCodes = [
   'aa',
   'aae',
@@ -1049,6 +1053,7 @@ export const wikimediaLanguageCodes = [
   'btm',
   'bto',
   'bug',
+  'bug-bugi',
   'bxr',
   'byv',
   'ca',
