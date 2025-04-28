@@ -6,8 +6,9 @@
     "moduleResolution": "bundler",
     "declaration": true,
     "declarationMap": true,
-    "incremental": true,
+    "erasableSyntaxOnly": true,
     "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "newLine": "lf",
     "noEmitOnError": true,
     "resolveJsonModule": false,
@@ -15,6 +16,7 @@
     "sourceMap": true,
     "stripInternal": true,
     "useDefineForClassFields": true,
+    "verbatimModuleSyntax": true,
 
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
