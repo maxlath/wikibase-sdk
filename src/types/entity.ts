@@ -11,6 +11,7 @@ export const EntityTypes = [
   'form',
   'sense',
   'entity-schema',
+  'mediainfo',
 ] as const
 
 export type EntityType = typeof EntityTypes[number]
@@ -27,17 +28,18 @@ export type RevisionId = `${number}`
 
 export type PropertyClaimsId = `${EntityId}#${PropertyId}`
 
-export type EntityId = NonNestedEntityId | FormId | SenseId
 export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId | EntitySchemaId
+export type EntityId = NonNestedEntityId | FormId | SenseId
 export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}` | `EntitySchema:${EntitySchemaId}`
 
 export interface IdByEntityType {
+  'entity-schema': EntitySchemaId
   'form': FormId
   'item': ItemId
   'lexeme': LexemeId
+  'mediainfo': MediaInfoId
   'property': PropertyId
   'sense': SenseId
-  'entity-schema': EntitySchemaId
 }
 
 export type Guid = `${EntityId | Lowercase<EntityId>}$${string}`

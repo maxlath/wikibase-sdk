@@ -71,6 +71,7 @@ export type WikibaseLexemeSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'
 export type WikibasePropertySnakDataValue = GenericWikibaseEntityIdSnakDataValue<'property'>
 export type WikibaseSenseSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'sense'>
 export type EntitySchemaSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'entity-schema'>
+export type MediaInfoSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'mediainfo'>
 
 export type WikibaseEntityIdSnakDataValue =
   | WikibaseFormSnakDataValue
@@ -79,6 +80,7 @@ export type WikibaseEntityIdSnakDataValue =
   | WikibasePropertySnakDataValue
   | WikibaseSenseSnakDataValue
   | EntitySchemaSnakDataValue
+  | MediaInfoSnakDataValue
 
 export type SnakDataValue =
   | GlobeCoordinateSnakDataValue
