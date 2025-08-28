@@ -82,13 +82,18 @@ export type WikibaseEntityIdSnakDataValue =
   | EntitySchemaSnakDataValue
   | MediaInfoSnakDataValue
 
-export type SnakDataValue =
-  | GlobeCoordinateSnakDataValue
-  | MonolingualTextSnakDataValue
-  | QuantitySnakDataValue
-  | StringSnakDataValue
-  | TimeSnakDataValue
-  | WikibaseEntityIdSnakDataValue
+
+export type SnakDataValueByType = {
+  'globecoordinate': GlobeCoordinateSnakDataValue
+  'monolingualtext': MonolingualTextSnakDataValue
+  quantity: QuantitySnakDataValue
+  string: StringSnakDataValue
+  time: TimeSnakDataValue
+  'wikibase-entityid': WikibaseEntityIdSnakDataValue
+}
+
+export type SnakDataValueType = keyof SnakDataValueByType
+export type SnakDataValue = SnakDataValueByType[SnakDataValueType]
 
 /** @deprecated use SnakDataValue */
 export type SnakValue = SnakDataValue
