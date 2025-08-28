@@ -1,5 +1,6 @@
 import should from 'should'
 import {
+  findEntityTypeFromId,
   getEntityIdFromGuid,
   getImageUrl,
   getNumericId,
@@ -206,6 +207,23 @@ describe('helpers', () => {
       should(getEntityIdFromGuid('L525-S1-66D20252-8CEC-4DB1-8B00-D713CFF42E48')).equal('L525-S1')
       should(getEntityIdFromGuid('P6216-a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')).equal('P6216')
       should(getEntityIdFromGuid('Q520-4a0b85a0-4a47-3254-0379-52680370fec')).equal('Q520')
+    })
+  })
+
+  describe('findEntityTypeFromId', () => {
+    it('should support all entity types', () => {
+      findEntityTypeFromId('E123').should.equal('entity-schema')
+      findEntityTypeFromId('L123-F1').should.equal('form')
+      findEntityTypeFromId('Q123').should.equal('item')
+      findEntityTypeFromId('L123').should.equal('lexeme')
+      findEntityTypeFromId('M123').should.equal('mediainfo')
+      findEntityTypeFromId('P123').should.equal('property')
+      findEntityTypeFromId('L123-S1').should.equal('sense')
+    })
+
+    it('should throw an error when the entity id is invalid', () => {
+      // @ts-expect-error
+      ;(() => findEntityTypeFromId('S123')).should.throw('invalid entity id: S123')
     })
   })
 })

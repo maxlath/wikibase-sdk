@@ -2,6 +2,7 @@ import type {
   EntityId,
   EntityPageTitle,
   EntitySchemaId,
+  EntityType,
   FormId,
   Guid,
   GuidAltSyntax,
@@ -86,4 +87,17 @@ export function getEntityIdFromGuid (guid: Guid | GuidAltSyntax): EntityId {
   } else {
     throw new Error(`invalid guid: ${guid}`)
   }
+}
+
+export function findEntityTypeFromId (id: EntityId): EntityType {
+  if (isItemId(id)) return 'item'
+  if (isPropertyId(id)) return 'property'
+  if (id[0] === 'L') {
+    if (isLexemeId(id)) return 'lexeme'
+    if (isFormId(id)) return 'form'
+    if (isSenseId(id)) return 'sense'
+  }
+  if (isMediaInfoId(id)) return 'mediainfo'
+  if (isEntitySchemaId(id)) return 'entity-schema'
+  throw new Error(`invalid entity id: ${id}`)
 }
