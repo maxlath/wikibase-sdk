@@ -1,4 +1,4 @@
-import type { Claims, DataType } from './claim.js'
+import type { Claims, DataType, Statements } from './claim.js'
 import type { Form, Sense, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
 import type { SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
@@ -86,7 +86,7 @@ export interface MediaInfo extends EntityInfo<MediaInfoId> {
   type: 'mediainfo'
   labels?: Labels
   descriptions?: Descriptions
-  statements?: Claims
+  statements?: Statements
 }
 
 export interface EntityInfo<T> {
@@ -99,12 +99,12 @@ export interface EntityInfo<T> {
   id: T
 }
 
-export interface SimplifiedEntityInfo {
-  id: EntityId
+export interface SimplifiedEntityInfo <ID extends EntityId> {
+  id: ID
   modified?: string
 }
 
-export interface SimplifiedItem extends SimplifiedEntityInfo {
+export interface SimplifiedItem extends SimplifiedEntityInfo<ItemId> {
   type: 'item'
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
@@ -114,7 +114,7 @@ export interface SimplifiedItem extends SimplifiedEntityInfo {
   lexicalCategory: string
 }
 
-export interface SimplifiedProperty extends SimplifiedEntityInfo {
+export interface SimplifiedProperty extends SimplifiedEntityInfo<PropertyId> {
   type: 'property'
   datatype: DataType
   labels?: SimplifiedLabels
@@ -124,7 +124,7 @@ export interface SimplifiedProperty extends SimplifiedEntityInfo {
   lexicalCategory: string
 }
 
-export interface SimplifiedLexeme extends SimplifiedEntityInfo {
+export interface SimplifiedLexeme extends SimplifiedEntityInfo<LexemeId> {
   type: 'lexeme'
   lexicalCategory: ItemId
   language: ItemId
@@ -134,5 +134,12 @@ export interface SimplifiedLexeme extends SimplifiedEntityInfo {
   senses?: SimplifiedSenses
 }
 
-export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme
+export interface SimplifiedMediaInfo extends SimplifiedEntityInfo<MediaInfoId> {
+  type: 'mediainfo'
+  labels?: SimplifiedLabels
+  descriptions?: SimplifiedDescriptions
+  statements?: SimplifiedClaims
+}
+
+export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme | SimplifiedMediaInfo
 export type SimplifiedEntities = Record<EntityId, SimplifiedEntity>

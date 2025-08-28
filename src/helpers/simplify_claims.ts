@@ -15,10 +15,24 @@ export function simplifySnak (snak: Snak, options: SimplifySnakOptions = {}) {
   const { keepTypes, keepSnaktypes, keepHashes } = parseKeepOptions(options)
 
   let value
-  const { datatype, datavalue, snaktype, hash } = snak
+  let { datatype, snaktype, hash } = snak
 
-  if (datavalue) {
-    value = parseSnak(datatype, datavalue, options)
+  // Known case of snak without datatype: Wikimedia Commons MediaInfo snaks
+  if (!datatype && 'datavalue' in snak) {
+    const { type, value } = snak.datavalue
+    if (type === 'wikibase-entityid') {
+      const entityType = value['entity-type']
+      // @ts-expect-error
+      datatype = `wikibase-${entityType}`
+    } else if (type === 'globecoordinate') {
+      datatype = 'globe-coordinate'
+    } else {
+      datatype = type
+    }
+  }
+
+  if ('datavalue' in snak) {
+    value = parseSnak(datatype, snak.datavalue, options)
   } else {
     if (snaktype === 'somevalue') value = options.somevalueValue
     else if (snaktype === 'novalue') value = options.novalueValue

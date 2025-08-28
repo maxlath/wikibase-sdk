@@ -7,42 +7,78 @@ export type SnakType = 'value' | 'somevalue' | 'novalue'
 
 export type DataType = keyof typeof parsers
 
-export interface Claim {
+export interface ClaimBase {
   id: Guid
-  mainsnak: Snak
   rank: Rank
   type: 'statement'
-  qualifiers?: Qualifiers
   'qualifiers-order'?: PropertyId[]
+}
+
+export interface Claim extends ClaimBase {
+  mainsnak: Snak
+  qualifiers?: Qualifiers
   references?: Reference[]
 }
 
+export interface Statement extends ClaimBase {
+  mainsnak: SnakBase
+  qualifiers?: StatementQualifiers
+  references?: StatementReference[]
+}
+
 export type PropertyClaims = Claim[]
+export type PropertyStatements = Statement[]
 export type PropertySnaks = Snak[]
 
 export type Claims = Record<PropertyId, PropertyClaims>
+export type Statements = Record<PropertyId, PropertyStatements>
 export type Snaks = Record<PropertyId, PropertySnaks>
 
-export interface Snak {
-  datatype: DataType
-  datavalue?: SnakDataValue
+interface SnakRootBase {
   hash: string
   property: PropertyId
-  snaktype: SnakType
+}
+
+interface SnakBaseWithValue extends SnakRootBase {
+  snaktype: 'value'
+  datavalue: SnakDataValue
+}
+
+interface SnakBaseWithSomeValue extends SnakRootBase {
+  snaktype: 'somevalue'
+}
+
+interface SnakBaseWithNoValue extends SnakRootBase {
+  snaktype: 'novalue'
+}
+
+export type SnakBase = SnakBaseWithValue | SnakBaseWithSomeValue | SnakBaseWithNoValue
+
+export type Snak = SnakBase & {
+  datatype: DataType
 }
 
 export type Qualifier = Snak
+export type StatementQualifier = SnakBase
 
 export type PropertyQualifiers = Qualifier[]
+export type PropertyStatementQualifiers = StatementQualifier[]
 
 export type Qualifiers = Record<PropertyId, PropertyQualifiers>
+export type StatementQualifiers = Record<PropertyId, PropertyStatementQualifiers>
 
 export type ReferenceSnak = Snak
+export type ReferenceStatementSnak = Snak
 
-export interface Reference {
+export interface ReferenceBase {
   hash: string
-  snaks: Record<PropertyId, ReferenceSnak[]>
   'snaks-order': PropertyId[]
+}
+export interface Reference extends ReferenceBase {
+  snaks: Record<PropertyId, ReferenceSnak[]>
+}
+export interface StatementReference {
+  snaks: Record<PropertyId, ReferenceStatementSnak[]>
 }
 
 export type References = Reference[]
