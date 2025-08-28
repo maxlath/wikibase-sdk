@@ -1,8 +1,9 @@
+import type { OverrideProperties } from 'type-fest'
 import type { Claims, DataType, Statements } from './claim.js'
 import type { Form, Sense, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
-import type { SimplifiedClaims } from './simplify_claims.js'
+import type { LooseSimplifiedClaims, SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
-import type { Aliases, Descriptions, Labels, Lemmas, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
+import type { Aliases, Descriptions, Labels, Lemmas, LooseSimplifiedAliases, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
 
 export const EntityTypes = [
   'item',
@@ -114,6 +115,11 @@ export interface SimplifiedItem extends SimplifiedEntityInfo<ItemId> {
   lexicalCategory: string
 }
 
+export type LooseSimplifiedItem = OverrideProperties<SimplifiedItem, {
+  aliases?: LooseSimplifiedAliases
+  claims?: LooseSimplifiedClaims
+}>
+
 export interface SimplifiedProperty extends SimplifiedEntityInfo<PropertyId> {
   type: 'property'
   datatype: DataType
@@ -123,6 +129,10 @@ export interface SimplifiedProperty extends SimplifiedEntityInfo<PropertyId> {
   claims?: SimplifiedClaims
   lexicalCategory: string
 }
+export type LooseSimplifiedProperty = OverrideProperties<SimplifiedProperty, {
+  aliases?: LooseSimplifiedAliases
+  claims?: LooseSimplifiedClaims
+}>
 
 export interface SimplifiedLexeme extends SimplifiedEntityInfo<LexemeId> {
   type: 'lexeme'
@@ -133,6 +143,9 @@ export interface SimplifiedLexeme extends SimplifiedEntityInfo<LexemeId> {
   forms?: SimplifiedForms
   senses?: SimplifiedSenses
 }
+export type LooseSimplifiedLexeme = OverrideProperties<SimplifiedLexeme, {
+  claims?: LooseSimplifiedClaims
+}>
 
 export interface SimplifiedMediaInfo extends SimplifiedEntityInfo<MediaInfoId> {
   type: 'mediainfo'
@@ -140,6 +153,10 @@ export interface SimplifiedMediaInfo extends SimplifiedEntityInfo<MediaInfoId> {
   descriptions?: SimplifiedDescriptions
   statements?: SimplifiedClaims
 }
+export type LooseSimplifiedMediaInfo = OverrideProperties<SimplifiedMediaInfo, {
+  statements?: LooseSimplifiedClaims
+}>
 
 export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme | SimplifiedMediaInfo
+export type LooseSimplifiedEntity = LooseSimplifiedProperty | LooseSimplifiedItem | LooseSimplifiedLexeme | LooseSimplifiedMediaInfo
 export type SimplifiedEntities = Record<EntityId, SimplifiedEntity>

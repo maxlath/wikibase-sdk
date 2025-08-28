@@ -19,6 +19,7 @@ export type SimplifiedTerm = string
 export type SimplifiedLabels = LanguageRecord<SimplifiedTerm>
 export type SimplifiedDescriptions = LanguageRecord<SimplifiedTerm>
 export type SimplifiedAliases = LanguageRecord<readonly SimplifiedTerm[]>
+export type LooseSimplifiedAliases = LanguageRecord<readonly SimplifiedTerm[] | SimplifiedTerm>
 export type SimplifiedLemmas = LanguageRecord<SimplifiedTerm>
 export type SimplifiedRepresentations = LanguageRecord<SimplifiedTerm>
 export type SimplifiedGlosses = LanguageRecord<SimplifiedTerm>
