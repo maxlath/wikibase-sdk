@@ -29,3 +29,5 @@ export * from './types/sparql.js'
 export * from './types/terms.js'
 
 // In case of missing types on Wbk, check ./wikibase-sdk.ts exports
+
+export type { WbGetEntitiesResponse, CirrusSearchResult } from './helpers/parse_responses.js'
