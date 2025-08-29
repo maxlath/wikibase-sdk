@@ -33,7 +33,7 @@ export type NonNestedEntityId = ItemId | PropertyId | LexemeId | MediaInfoId | E
 export type EntityId = NonNestedEntityId | FormId | SenseId
 export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Property:${PropertyId}` | `EntitySchema:${EntitySchemaId}`
 
-export interface IdByEntityType {
+export interface EntityIdByEntityType {
   'entity-schema': EntitySchemaId
   form: FormId
   item: ItemId

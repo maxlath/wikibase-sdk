@@ -1,4 +1,4 @@
-import type { EntityType, IdByEntityType } from './entity.js'
+import type { EntityType, EntityIdByEntityType } from './entity.js'
 import type { LanguageCode } from './options.js'
 
 export interface GlobeCoordinateSnakDataValue {
@@ -59,7 +59,7 @@ export interface TimeSnakDataValue {
 export interface GenericWikibaseEntityIdSnakDataValue <T extends EntityType> {
   type: 'wikibase-entityid'
   value: {
-    id: IdByEntityType[T]
+    id: EntityIdByEntityType[T]
     'numeric-id'?: number
     'entity-type': T
   }

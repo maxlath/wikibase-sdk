@@ -7,7 +7,7 @@ staged=$(git status --porcelain | grep --extended-regexp "^(A|M)" | grep --exten
 
 if [ -z "$staged" ]
   then
-    echo 'no file requiring build or lint'
+    echo 'No staged file requires to be built or linted'
   else
-    npm run build && npm run lint && npm run test
+    npm run build && npm run lint $staged && npm run test
 fi
