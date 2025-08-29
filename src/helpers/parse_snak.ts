@@ -111,22 +111,22 @@ function getTimeConverter (key: keyof typeof timeConverters = 'iso') {
   return converter
 }
 
-type DataValueByDataType = {
-  'commonsMedia': CommonsMediaSnakDataValue
+interface DataValueByDataType {
+  commonsMedia: CommonsMediaSnakDataValue
   'external-id': ExternalIdSnakDataValue
   'entity-schema': EntitySchemaSnakDataValue
   'geo-shape': GeoShapeSnakDataValue
   'globe-coordinate': GlobeCoordinateSnakDataValue
-  'localMedia': LocalMediaSnakDataValue
-  'mediainfo': MediaInfoSnakDataValue
-  'math': MathSnakDataValue
+  localMedia: LocalMediaSnakDataValue
+  mediainfo: MediaInfoSnakDataValue
+  math: MathSnakDataValue
   monolingualtext: MonolingualTextSnakDataValue
   'musical-notation': MusicalNotationSnakDataValue
   quantity: QuantitySnakDataValue
-  'string': StringSnakDataValue
+  string: StringSnakDataValue
   'tabular-data': TabularDataSnakDataValue
-  'time': TimeSnakDataValue
-  'url': UrlSnakDataValue
+  time: TimeSnakDataValue
+  url: UrlSnakDataValue
   'wikibase-form': WikibaseFormSnakDataValue
   'wikibase-item': WikibaseItemSnakDataValue
   'wikibase-lexeme': WikibaseLexemeSnakDataValue
@@ -142,7 +142,7 @@ export const parsers = {
   'globe-coordinate': coordinate,
   localMedia: stringValue,
   math: stringValue,
-  'mediainfo': entity,
+  mediainfo: entity,
   monolingualtext,
   'musical-notation': stringValue,
   quantity,

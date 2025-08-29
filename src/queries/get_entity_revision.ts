@@ -10,6 +10,7 @@ export interface GetEntityRevisionOptions {
 
 export function getEntityRevisionFactory (instance: Url, wgScriptPath: string) {
   return function getEntityRevision ({ id, revision }: GetEntityRevisionOptions): Url {
+    // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
     validate.entityId(id)
     validate.revisionId(revision)

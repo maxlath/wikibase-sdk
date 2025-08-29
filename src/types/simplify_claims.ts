@@ -50,15 +50,10 @@ export type SimplifiedSnaks = Record<PropertyId, SimplifiedPropertySnaks>
 export type LooseSimplifiedClaims = Record<PropertyId, SimplifiedPropertyClaims | SimplifiedClaim>
 export type LooseSimplifiedSnaks = Record<PropertyId, SimplifiedPropertySnaks | SimplifiedSnak>
 
-
 export type SimplifiedQualifier = SimplifiedSnak
 export type SimplifiedPropertyQualifiers = SimplifiedQualifier[]
-export interface SimplifiedQualifiers {
-  [property: string]: SimplifiedPropertyQualifiers
-}
-export interface LooseSimplifiedQualifiers {
-  [property: string]: SimplifiedPropertyQualifiers | SimplifiedQualifier
-}
+export type SimplifiedQualifiers = Record<string, SimplifiedPropertyQualifiers>
+export type LooseSimplifiedQualifiers = Record<string, SimplifiedPropertyQualifiers | SimplifiedQualifier>
 
 export type SimplifiedReferenceSnak = SimplifiedSnak
 

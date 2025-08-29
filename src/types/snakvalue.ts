@@ -74,18 +74,17 @@ export type EntitySchemaSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'en
 export type MediaInfoSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'mediainfo'>
 
 export type WikibaseEntityIdSnakDataValue =
-  | WikibaseFormSnakDataValue
-  | WikibaseItemSnakDataValue
-  | WikibaseLexemeSnakDataValue
-  | WikibasePropertySnakDataValue
-  | WikibaseSenseSnakDataValue
-  | EntitySchemaSnakDataValue
-  | MediaInfoSnakDataValue
+  WikibaseFormSnakDataValue |
+  WikibaseItemSnakDataValue |
+  WikibaseLexemeSnakDataValue |
+  WikibasePropertySnakDataValue |
+  WikibaseSenseSnakDataValue |
+  EntitySchemaSnakDataValue |
+  MediaInfoSnakDataValue
 
-
-export type SnakDataValueByType = {
-  'globecoordinate': GlobeCoordinateSnakDataValue
-  'monolingualtext': MonolingualTextSnakDataValue
+export interface SnakDataValueByType {
+  globecoordinate: GlobeCoordinateSnakDataValue
+  monolingualtext: MonolingualTextSnakDataValue
   quantity: QuantitySnakDataValue
   string: StringSnakDataValue
   time: TimeSnakDataValue

@@ -11,6 +11,7 @@ export interface GetManyEntitiesOptions extends GetEntitiesOptions {
 export function getManyEntitiesFactory (buildUrl: BuildUrlFunction) {
   const getEntities = getEntitiesFactory(buildUrl)
   return function getManyEntities ({ ids, languages, props, format, redirects }: GetManyEntitiesOptions): Url[] {
+    // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
     if (!(ids instanceof Array)) throw new Error('getManyEntities expects an array of ids')
     return getChunks(ids)

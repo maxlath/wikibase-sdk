@@ -1,9 +1,9 @@
-import type { OverrideProperties } from 'type-fest'
 import type { Claims, DataType, Statements } from './claim.js'
 import type { Form, Sense, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
 import type { LooseSimplifiedClaims, SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
 import type { Aliases, Descriptions, Labels, Lemmas, LooseSimplifiedAliases, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
+import type { OverrideProperties } from 'type-fest'
 
 export const EntityTypes = [
   'item',
@@ -35,12 +35,12 @@ export type NamespacedEntityId = `Item:${ItemId}` | `Lexeme:${LexemeId}` | `Prop
 
 export interface IdByEntityType {
   'entity-schema': EntitySchemaId
-  'form': FormId
-  'item': ItemId
-  'lexeme': LexemeId
-  'mediainfo': MediaInfoId
-  'property': PropertyId
-  'sense': SenseId
+  form: FormId
+  item: ItemId
+  lexeme: LexemeId
+  mediainfo: MediaInfoId
+  property: PropertyId
+  sense: SenseId
 }
 
 export type Guid = `${EntityId | Lowercase<EntityId>}$${string}`

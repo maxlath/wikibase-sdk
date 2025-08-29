@@ -24,6 +24,7 @@ export const searchEntitiesFactory = (buildUrl: BuildUrlFunction) => {
     format = 'json',
     type = 'item',
   }: SearchEntitiesOptions): Url {
+    // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
     uselang = uselang || language
 

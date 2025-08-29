@@ -1,7 +1,7 @@
 import { typedEntries } from '../utils/utils.js'
 import type { Aliases, Descriptions, Glosses, Labels, Lemmas, Representations, SimplifiedAliases, SimplifiedDescriptions, SimplifiedGlosses, SimplifiedLabels, SimplifiedLemmas, SimplifiedRepresentations } from '../types/terms.js'
 
-type InValue<T> = { readonly value: T }
+interface InValue<T> { readonly value: T }
 
 function singleValue<K extends string, V> (data: Partial<Readonly<Record<K, InValue<V>>>>) {
   const simplified: Partial<Record<K, V>> = {}
@@ -11,7 +11,7 @@ function singleValue<K extends string, V> (data: Partial<Readonly<Record<K, InVa
   return simplified
 }
 
-function multiValue<K extends string, V> (data: Partial<Readonly<Record<K, ReadonlyArray<InValue<V>>>>>) {
+function multiValue<K extends string, V> (data: Partial<Readonly<Record<K, readonly InValue<V>[]>>>) {
   const simplified: Partial<Record<K, readonly V[]>> = {}
   for (const [ lang, obj ] of typedEntries(data)) {
     simplified[lang] = obj != null ? obj.map(o => o.value) : []

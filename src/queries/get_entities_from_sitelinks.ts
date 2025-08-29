@@ -22,6 +22,7 @@ export function getEntitiesFromSitelinksFactory (buildUrl: BuildUrlFunction) {
     format = 'json',
     redirects,
   }: GetEntitiesFromSitelinksOptions): Url {
+    // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
 
     // titles cant be let empty

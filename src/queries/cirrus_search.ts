@@ -20,6 +20,7 @@ export interface CirrusSearchPagesOptions {
 
 export function cirrusSearchPagesFactory (buildUrl: BuildUrlFunction) {
   return function cirrusSearchPages (options: CirrusSearchPagesOptions): Url {
+    // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
 
     // Accept sr parameters with or without prefix
