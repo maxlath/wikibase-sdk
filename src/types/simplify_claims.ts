@@ -1,5 +1,6 @@
 import type { DataType, Rank, SnakType } from './claim.js'
 import type { Guid, Hash, PropertyId } from './entity.js'
+import type { SnakDataValue } from './snakvalue.js'
 import type { timeConverters } from '../helpers/parse_snak.js'
 import type { TimeConverter } from '../helpers/time.js'
 
@@ -81,7 +82,7 @@ export type LooseSimplifiedClaim = string | number | LooseCustomSimplifiedClaim
 
 export interface CustomSimplifiedSnak {
   type?: DataType
-  value: unknown
+  value: SnakDataValue['value'] | string | number
   snaktype?: SnakType
   hash?: Hash
 }
