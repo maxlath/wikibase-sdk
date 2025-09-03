@@ -76,8 +76,8 @@ export type LooseSimplifiedReference = SimplifiedReference | LooseSimplifiedRefe
 export type SimplifiedReferences = SimplifiedReference[]
 export type LooseSimplifiedReferences = SimplifiedReference[] | LooseSimplifiedReference[] | LooseSimplifiedReference
 
-export type SimplifiedSnak = string | number | CustomSimplifiedSnak
-export type SimplifiedClaim = string | number | CustomSimplifiedClaim
+export type SimplifiedSnak = string | number | CustomSimplifiedSnak | SnakDataValue['value']
+export type SimplifiedClaim = string | number | CustomSimplifiedClaim | SnakDataValue['value']
 export type LooseSimplifiedClaim = string | number | LooseCustomSimplifiedClaim
 
 export interface CustomSimplifiedSnak {
