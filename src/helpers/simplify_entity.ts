@@ -1,9 +1,11 @@
+import { isFormId, isSenseId } from './helpers.js'
 import { simplifyClaims } from './simplify_claims.js'
 import { simplifyForms } from './simplify_forms.js'
 import { simplifySenses } from './simplify_senses.js'
 import { simplifySitelinks } from './simplify_sitelinks.js'
-import { simplifyAliases, simplifyDescriptions, simplifyLabels, simplifyLemmas } from './simplify_text_attributes.js'
-import type { Entities, Entity, Item, Lexeme, MediaInfo, Property, SimplifiedEntity, SimplifiedItem, SimplifiedLexeme, SimplifiedMediaInfo, SimplifiedProperty } from '../types/entity.js'
+import { simplifyAliases, simplifyDescriptions, simplifyGlosses, simplifyLabels, simplifyLemmas, simplifyRepresentations } from './simplify_text_attributes.js'
+import type { Entities, Entity, EntityType, Item, Lexeme, MediaInfo, Property, SimplifiedEntity, SimplifiedItem, SimplifiedLexeme, SimplifiedMediaInfo, SimplifiedProperty } from '../types/entity.js'
+import type { Form, Sense, SimplifiedForm, SimplifiedSense } from '../types/lexeme.js'
 import type { SimplifyEntityOptions } from '../types/options.js'
 
 const simplify = {
@@ -16,15 +18,29 @@ const simplify = {
   lemmas: simplifyLemmas,
   forms: simplifyForms,
   senses: simplifySenses,
+  representations: simplifyRepresentations,
+  glosses: simplifyGlosses,
 }
 
 export function simplifyEntity (entity: Item, options?: SimplifyEntityOptions): SimplifiedItem
 export function simplifyEntity (entity: Property, options?: SimplifyEntityOptions): SimplifiedProperty
 export function simplifyEntity (entity: Lexeme, options?: SimplifyEntityOptions): SimplifiedLexeme
+export function simplifyEntity (entity: Form, options?: SimplifyEntityOptions): SimplifiedForm
+export function simplifyEntity (entity: Sense, options?: SimplifyEntityOptions): SimplifiedSense
 export function simplifyEntity (entity: MediaInfo, options?: SimplifyEntityOptions): SimplifiedMediaInfo
 export function simplifyEntity (entity: Entity, options: SimplifyEntityOptions = {}): SimplifiedEntity {
-  const { type } = entity
-  if (!type) throw new Error('missing entity type')
+  let { id } = entity
+
+  let type: EntityType
+  if ('type' in entity) {
+    type = entity.type
+  } else if (isFormId(id)) {
+    type = 'form'
+  } else if (isSenseId(id)) {
+    type = 'sense'
+  } else {
+    throw new Error('missing entity type')
+  }
 
   const simplified = {
     id: entity.id,
@@ -57,6 +73,16 @@ export function simplifyEntity (entity: Entity, options: SimplifyEntityOptions =
     simplifyIfDefined(entity, simplified, 'forms', options)
     simplifyIfDefined(entity, simplified, 'senses', options)
     return simplified as SimplifiedLexeme
+  } else if (type === 'form') {
+    // @ts-expect-error
+    simplified.grammaticalFeatures = entity.grammaticalFeatures
+    simplifyIfDefined(entity, simplified, 'representations', options)
+    simplifyIfDefined(entity, simplified, 'claims', options)
+    return simplified as SimplifiedForm
+  } else if (type === 'sense') {
+    simplifyIfDefined(entity, simplified, 'glosses', options)
+    simplifyIfDefined(entity, simplified, 'claims', options)
+    return simplified as SimplifiedSense
   } else if (type === 'mediainfo') {
     simplifyIfDefined(entity, simplified, 'labels')
     simplifyIfDefined(entity, simplified, 'descriptions')

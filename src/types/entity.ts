@@ -1,5 +1,5 @@
 import type { Claims, DataType, Statements } from './claim.js'
-import type { Form, Sense, SimplifiedForms, SimplifiedSenses } from './lexeme.js'
+import type { Form, Sense, SimplifiedForm, SimplifiedForms, SimplifiedSense, SimplifiedSenses } from './lexeme.js'
 import type { LooseSimplifiedClaims, SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
 import type { Aliases, Descriptions, Labels, Lemmas, LooseSimplifiedAliases, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
@@ -51,7 +51,7 @@ export type GuidAltSyntax <T extends EntityWithClaims['id'] = EntityWithClaims['
 
 export type Hash = string
 
-export type Entity = Property | Item | Lexeme | MediaInfo
+export type Entity = Property | Item | Lexeme | Form | Sense | MediaInfo
 export type EntityPageTitle = NamespacedEntityId | ItemId
 export type Entities = Record<EntityId, Entity>
 
@@ -157,7 +157,7 @@ export type LooseSimplifiedMediaInfo = OverrideProperties<SimplifiedMediaInfo, {
   statements?: LooseSimplifiedClaims
 }>
 
-export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme | SimplifiedMediaInfo
+export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme | SimplifiedForm | SimplifiedSense | SimplifiedMediaInfo
 export type LooseSimplifiedEntity = LooseSimplifiedProperty | LooseSimplifiedItem | LooseSimplifiedLexeme | LooseSimplifiedMediaInfo
 export type SimplifiedEntities = Record<EntityId, SimplifiedEntity>
 

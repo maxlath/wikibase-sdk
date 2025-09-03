@@ -1,6 +1,8 @@
 import { cloneDeep, pick } from 'lodash-es'
 import should from 'should'
 import { simplifyEntity, simplifyEntities } from '../src/helpers/simplify_entity.js'
+import { L525F2 } from './data/L525-F2.js'
+import { L525S1 } from './data/L525-S1.js'
 import { L525 } from './data/L525.js'
 import { M56656949 } from './data/M56656949.js'
 import { P8098 } from './data/P8098.js'
@@ -55,6 +57,23 @@ describe('simplify.entity', () => {
     should(simplifiedEntity.senses).be.an.Object()
     should(simplifiedEntity.senses[0].glosses.fr).equal("édifice destiné à l'habitation")
     should(simplifiedEntity.senses[0].claims.P5137[0]).equal('Q3947')
+  })
+
+  it('should support forms', () => {
+    const L525F2Clone = cloneDeep(L525F2)
+    const simplifiedEntity = simplifyEntity(L525F2Clone)
+    assert(simplifiedEntity.type === 'form')
+    should(simplifiedEntity.grammaticalFeatures).deepEqual([ 'Q110786' ])
+    should(simplifiedEntity.representations.fr).equal('maison')
+    should(simplifiedEntity.claims.P443).deepEqual([ 'LL-Q150 (fra)-0x010C-maison.wav' ])
+  })
+
+  it('should support senses', () => {
+    const L525S1Clone = cloneDeep(L525S1)
+    const simplifiedEntity = simplifyEntity(L525S1Clone)
+    assert(simplifiedEntity.type === 'sense')
+    should(simplifiedEntity.glosses.it).equal('edificio abitativo')
+    should(simplifiedEntity.claims.P5137).deepEqual([ 'Q3947' ])
   })
 
   it('should support media-infos', () => {

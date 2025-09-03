@@ -4,11 +4,12 @@ import { simplifyGlosses } from './simplify_text_attributes.js'
 import type { Sense, SimplifiedSense } from '../types/lexeme.js'
 import type { SimplifyClaimsOptions } from '../types/simplify_claims.js'
 
-export const simplifySense = (sense: Sense, options: SimplifyClaimsOptions = {}): SimplifiedSense => {
+export function simplifySense (sense: Sense, options: SimplifyClaimsOptions = {}): SimplifiedSense {
   const { id, glosses, claims } = sense
   if (!isSenseId(id)) throw new Error('invalid sense object')
   return {
     id,
+    type: 'sense',
     glosses: simplifyGlosses(glosses),
     claims: simplifyClaims(claims, options),
   }
