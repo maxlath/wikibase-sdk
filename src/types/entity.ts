@@ -43,11 +43,11 @@ export interface EntityIdByEntityType {
   sense: SenseId
 }
 
-export type Guid = `${EntityId | Lowercase<EntityId>}$${string}`
+export type Guid <T extends EntityWithClaims['id'] = EntityWithClaims['id']> = `${T | Lowercase<T>}$${string}`
 /**
  * A more shell-friendly GUID syntax, with a "-" instead of a "$"
  */
-export type GuidAltSyntax = `${EntityId | Lowercase<EntityId>}-${string}`
+export type GuidAltSyntax <T extends EntityWithClaims['id'] = EntityWithClaims['id']> = `${T | Lowercase<T>}-${string}`
 
 export type Hash = string
 
@@ -160,3 +160,6 @@ export type LooseSimplifiedMediaInfo = OverrideProperties<SimplifiedMediaInfo, {
 export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme | SimplifiedMediaInfo
 export type LooseSimplifiedEntity = LooseSimplifiedProperty | LooseSimplifiedItem | LooseSimplifiedLexeme | LooseSimplifiedMediaInfo
 export type SimplifiedEntities = Record<EntityId, SimplifiedEntity>
+
+export type EntityWithClaims = Item | Property | Lexeme | Form | Sense | MediaInfo
+export type EntityWithSitelinks = Item

@@ -3,6 +3,7 @@ import type {
   EntityPageTitle,
   EntitySchemaId,
   EntityType,
+  EntityWithClaims,
   FormId,
   Guid,
   GuidAltSyntax,
@@ -72,18 +73,18 @@ export function getImageUrl (filename: string, width?: number): Url {
   return url
 }
 
-export function getEntityIdFromGuid (guid: Guid | GuidAltSyntax): EntityId {
+export function getEntityIdFromGuid (guid: Guid | GuidAltSyntax): EntityWithClaims['id'] {
   const parts = guid.split(/[$-]/)
   if (parts.length === 6) {
     // Examples:
     // - q520$BCA8D9DE-B467-473B-943C-6FD0C5B3D02C
     // - P6216-a7fd6230-496e-6b47-ca4a-dcec5dbd7f95
-    return parts[0].toUpperCase() as EntityId
+    return parts[0].toUpperCase() as EntityWithClaims['id']
   } else if (parts.length === 7) {
     // Examples:
     // - L525-S1$66D20252-8CEC-4DB1-8B00-D713CFF42E48
     // - L525-F2-52c9b382-02f5-4413-9923-26ade74f5a0d
-    return parts.slice(0, 2).join('-').toUpperCase() as EntityId
+    return parts.slice(0, 2).join('-').toUpperCase() as EntityWithClaims['id']
   } else {
     throw new Error(`invalid guid: ${guid}`)
   }
