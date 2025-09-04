@@ -1,7 +1,7 @@
 import { isPlainObject, typedEntries, uniq } from '../utils/utils.js'
-import { parseSnak } from './parse_snak.js'
+import { parseSnakDatavalue } from './parse_snak.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
-import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, Reference, Snak, Snaks } from '../types/claim.js'
+import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, Reference, Snak, SnakBase, Snaks } from '../types/claim.js'
 import type { CustomSimplifiedClaim, CustomSimplifiedSnak, SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertySnaks, SimplifiedSnaks, SimplifyClaimsOptions, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
 import type { TimeSnakDataValue } from '../types/snakvalue.js'
 
@@ -11,28 +11,14 @@ import type { TimeSnakDataValue } from '../types/snakvalue.js'
  * Expects a single snak object
  * Ex: entity.claims.P369[0]
  */
-export function simplifySnak (snak: Snak, options: SimplifySnakOptions = {}) {
+export function simplifySnak (snak: Snak | SnakBase, options: SimplifySnakOptions = {}) {
   const { keepTypes, keepSnaktypes, keepHashes } = parseKeepOptions(options)
 
   let value
-  let { datatype, snaktype, hash } = snak
-
-  // Known case of snak without datatype: Wikimedia Commons MediaInfo snaks
-  if (!datatype && 'datavalue' in snak) {
-    const { type, value } = snak.datavalue
-    if (type === 'wikibase-entityid') {
-      const entityType = value['entity-type']
-      // @ts-expect-error
-      datatype = `wikibase-${entityType}`
-    } else if (type === 'globecoordinate') {
-      datatype = 'globe-coordinate'
-    } else {
-      datatype = type
-    }
-  }
+  let { snaktype, hash } = snak
 
   if ('datavalue' in snak) {
-    value = parseSnak(datatype, snak.datavalue, options)
+    value = parseSnakDatavalue(snak.datavalue, options)
   } else {
     if (snaktype === 'somevalue') value = options.somevalueValue
     else if (snaktype === 'novalue') value = options.novalueValue
@@ -45,7 +31,8 @@ export function simplifySnak (snak: Snak, options: SimplifySnakOptions = {}) {
     // When keeping qualifiers or references, the value becomes an object
     // instead of a direct value
     const valueObj: CustomSimplifiedSnak = { value }
-    if (keepTypes) valueObj.type = datatype
+    // Known case of snak without datatype: Wikimedia Commons MediaInfo snaks
+    if (keepTypes && 'datatype' in snak) valueObj.type = snak.datatype
     if (keepSnaktypes) valueObj.snaktype = snaktype
     if (keepHashes) valueObj.hash = hash
     return valueObj

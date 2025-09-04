@@ -82,7 +82,7 @@ export type WikibaseEntityIdSnakDataValue =
   EntitySchemaSnakDataValue |
   MediaInfoSnakDataValue
 
-export interface SnakDataValueByType {
+export interface SnakDataValueByDatavalueType {
   globecoordinate: GlobeCoordinateSnakDataValue
   monolingualtext: MonolingualTextSnakDataValue
   quantity: QuantitySnakDataValue
@@ -91,8 +91,8 @@ export interface SnakDataValueByType {
   'wikibase-entityid': WikibaseEntityIdSnakDataValue
 }
 
-export type SnakDataValueType = keyof SnakDataValueByType
-export type SnakDataValue = SnakDataValueByType[SnakDataValueType]
+export type SnakDatavalueType = keyof SnakDataValueByDatavalueType
+export type SnakDataValue = SnakDataValueByDatavalueType[SnakDatavalueType]
 
 /** @deprecated use SnakDataValue */
 export type SnakValue = SnakDataValue

@@ -1,19 +1,19 @@
 import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay } from './time.js'
 import type { TimeInputValue } from './time.js'
-import type { SimplifySnakOptions } from '../types/simplify_claims.js'
-import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue, EntitySchemaSnakDataValue, LocalMediaSnakDataValue, MediaInfoSnakDataValue } from '../types/snakvalue.js'
+import type { CustomSimplifiedSnakValueByDatavalueType, SimplifySnakOptions } from '../types/simplify_claims.js'
+import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue, EntitySchemaSnakDataValue, LocalMediaSnakDataValue, MediaInfoSnakDataValue, SnakDataValueByDatavalueType } from '../types/snakvalue.js'
 
-function stringValue (datavalue: StringSnakDataValue) {
+function parseStringValue (datavalue: StringSnakDataValue) {
   return datavalue.value
 }
 
-function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: false }): string
-function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: true }): MonolingualTextSnakDataValue['value']
-function monolingualtext (datavalue: MonolingualTextSnakDataValue, options: SimplifySnakOptions): string | MonolingualTextSnakDataValue['value'] {
+function parseMonolingualTextValue (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: false }): string
+function parseMonolingualTextValue (datavalue: MonolingualTextSnakDataValue, options: { keepRichValues: true }): MonolingualTextSnakDataValue['value']
+function parseMonolingualTextValue (datavalue: MonolingualTextSnakDataValue, options: SimplifySnakOptions): string | MonolingualTextSnakDataValue['value'] {
   return options.keepRichValues ? datavalue.value : datavalue.value.text
 }
 
-function entity (datavalue: WikibaseEntityIdSnakDataValue, options: SimplifySnakOptions) {
+function parseEntityValue (datavalue: WikibaseEntityIdSnakDataValue, options: SimplifySnakOptions) {
   const { entityPrefix: prefix } = options
   const { value } = datavalue
   let id: string
@@ -43,9 +43,9 @@ interface ParsedQuantitySnakValue {
   lowerBound?: number
 }
 
-function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: false }): number
-function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: true }): ParsedQuantitySnakValue
-function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: boolean }): number | ParsedQuantitySnakValue {
+function parseQuantityValue (datavalue: QuantitySnakDataValue, options: { keepRichValues: false }): number
+function parseQuantityValue (datavalue: QuantitySnakDataValue, options: { keepRichValues: true }): ParsedQuantitySnakValue
+function parseQuantityValue (datavalue: QuantitySnakDataValue, options: { keepRichValues: boolean }): number | ParsedQuantitySnakValue {
   const { value } = datavalue
   const amount = parseFloat(value.amount)
   if (options.keepRichValues) {
@@ -63,9 +63,9 @@ function quantity (datavalue: QuantitySnakDataValue, options: { keepRichValues: 
 }
 
 type LatLng = [ number, number ]
-function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: { keepRichValues: false }): LatLng
-function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: { keepRichValues: true }): GlobeCoordinateSnakDataValue['value']
-function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: SimplifySnakOptions): LatLng | GlobeCoordinateSnakDataValue['value'] {
+function parseGlobeCoordinateValue (datavalue: GlobeCoordinateSnakDataValue, options: { keepRichValues: false }): LatLng
+function parseGlobeCoordinateValue (datavalue: GlobeCoordinateSnakDataValue, options: { keepRichValues: true }): GlobeCoordinateSnakDataValue['value']
+function parseGlobeCoordinateValue (datavalue: GlobeCoordinateSnakDataValue, options: SimplifySnakOptions): LatLng | GlobeCoordinateSnakDataValue['value'] {
   if (options.keepRichValues) {
     return datavalue.value
   } else {
@@ -76,11 +76,11 @@ function coordinate (datavalue: GlobeCoordinateSnakDataValue, options: SimplifyS
 type TimeStringSnakValue = TimeSnakDataValue['value']
 type TimeNumberSnakValue = Pick<TimeStringSnakValue, 'timezone' | 'before' | 'after' | 'precision' | 'calendarmodel'> & { time: number }
 
-function time (datavalue: TimeSnakDataValue, options: { keepRichValues: false, timeConverter: 'iso' | 'simple-day' | 'none' }): string
-function time (datavalue: TimeSnakDataValue, options: { keepRichValues: false, timeConverter: 'epoch' }): number
-function time (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'iso' | 'simple-day' | 'none' }): TimeStringSnakValue
-function time (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'epoch' }): TimeNumberSnakValue
-function time (datavalue: TimeSnakDataValue, options: SimplifySnakOptions): string | number | TimeStringSnakValue | TimeNumberSnakValue {
+function parseTimeValue (datavalue: TimeSnakDataValue, options: { keepRichValues: false, timeConverter: 'iso' | 'simple-day' | 'none' }): string
+function parseTimeValue (datavalue: TimeSnakDataValue, options: { keepRichValues: false, timeConverter: 'epoch' }): number
+function parseTimeValue (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'iso' | 'simple-day' | 'none' }): TimeStringSnakValue
+function parseTimeValue (datavalue: TimeSnakDataValue, options: { keepRichValues: true, timeConverter: 'epoch' }): TimeNumberSnakValue
+function parseTimeValue (datavalue: TimeSnakDataValue, options: SimplifySnakOptions): string | number | TimeStringSnakValue | TimeNumberSnakValue {
   let timeValue
   if (typeof options.timeConverter === 'function') {
     timeValue = options.timeConverter(datavalue.value)
@@ -111,15 +111,15 @@ function getTimeConverter (key: keyof typeof timeConverters = 'iso') {
   return converter
 }
 
-interface DataValueByDataType {
+interface DataValueBySnakDatatype {
   commonsMedia: CommonsMediaSnakDataValue
-  'external-id': ExternalIdSnakDataValue
   'entity-schema': EntitySchemaSnakDataValue
+  'external-id': ExternalIdSnakDataValue
   'geo-shape': GeoShapeSnakDataValue
   'globe-coordinate': GlobeCoordinateSnakDataValue
   localMedia: LocalMediaSnakDataValue
-  mediainfo: MediaInfoSnakDataValue
   math: MathSnakDataValue
+  mediainfo: MediaInfoSnakDataValue
   monolingualtext: MonolingualTextSnakDataValue
   'musical-notation': MusicalNotationSnakDataValue
   quantity: QuantitySnakDataValue
@@ -134,45 +134,47 @@ interface DataValueByDataType {
   'wikibase-sense': WikibaseSenseSnakDataValue
 }
 
-export const parsers = {
-  commonsMedia: stringValue,
-  'external-id': stringValue,
-  'entity-schema': entity,
-  'geo-shape': stringValue,
-  'globe-coordinate': coordinate,
-  localMedia: stringValue,
-  math: stringValue,
-  mediainfo: entity,
-  monolingualtext,
-  'musical-notation': stringValue,
-  quantity,
-  string: stringValue,
-  'tabular-data': stringValue,
-  time,
-  url: stringValue,
-  'wikibase-form': entity,
-  'wikibase-item': entity,
-  'wikibase-lexeme': entity,
-  'wikibase-property': entity,
-  'wikibase-sense': entity,
+export type SnakDatatype = keyof DataValueBySnakDatatype
+
+export const parsersByDatavalueTypes = {
+  globecoordinate: parseGlobeCoordinateValue,
+  monolingualtext: parseMonolingualTextValue,
+  quantity: parseQuantityValue,
+  string: parseStringValue,
+  time: parseTimeValue,
+  'wikibase-entityid': parseEntityValue,
 } as const
 
-const legacyParsers = {
-  'musical notation': parsers['musical-notation'],
-  // Known case: mediainfo won't have datatype="globe-coordinate", but datavalue.type="globecoordinate"
-  globecoordinate: parsers['globe-coordinate'],
-} as const
+export type DatavalueType = keyof typeof parsersByDatavalueTypes
 
-export function parseSnak <T extends keyof DataValueByDataType> (datatype: T, datavalue: DataValueByDataType[T], options: SimplifySnakOptions): ReturnType<typeof parsers[T]> {
-  let parser
-  if (datatype) {
-    // @ts-expect-error legacyParsers datatypes aren't in DataValueByDataType
-    parser = parsers[datatype] || legacyParsers[datatype]
-  } else {
-    parser = parsers[datavalue.type]
-  }
+export const datavalueTypeBySnakDatatype = {
+  commonsMedia: 'string',
+  'external-id': 'string',
+  'entity-schema': 'wikibase-entityid',
+  'geo-shape': 'string',
+  'globe-coordinate': 'globecoordinate',
+  localMedia: 'string',
+  math: 'string',
+  mediainfo: 'wikibase-entityid',
+  monolingualtext: 'monolingualtext',
+  'musical-notation': 'string',
+  quantity: 'quantity',
+  string: 'string',
+  'tabular-data': 'string',
+  time: 'time',
+  url: 'string',
+  'wikibase-form': 'wikibase-entityid',
+  'wikibase-item': 'wikibase-entityid',
+  'wikibase-lexeme': 'wikibase-entityid',
+  'wikibase-property': 'wikibase-entityid',
+  'wikibase-sense': 'wikibase-entityid',
+} as const satisfies Record<keyof DataValueBySnakDatatype, string>
+
+export function parseSnakDatavalue <T extends DatavalueType> (datavalue: SnakDataValueByDatavalueType[T], options: SimplifySnakOptions) {
+  const parser = parsersByDatavalueTypes[datavalue.type]
   if (!parser) {
-    throw new Error(`${datatype} claim parser isn't implemented. Please report to https://github.com/maxlath/wikibase-sdk/issues`)
+    throw new Error(`${datavalue.type} datavalue parser isn't implemented. Please report to https://github.com/maxlath/wikibase-sdk/issues`)
   }
-  return parser(datavalue, options)
+  // @ts-expect-error
+  return parser(datavalue, options) as CustomSimplifiedSnakValueByDatavalueType[T]
 }

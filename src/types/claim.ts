@@ -1,11 +1,8 @@
 import type { Guid, PropertyId } from './entity.js'
 import type { SnakDataValue } from './snakvalue.js'
-import type { parsers } from '../helpers/parse_snak.js'
+import type { SnakDatatype } from '../helpers/parse_snak.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
-export type SnakType = 'value' | 'somevalue' | 'novalue'
-
-export type DataType = keyof typeof parsers
 
 export interface ClaimBase {
   id: Guid
@@ -54,8 +51,10 @@ interface SnakBaseWithNoValue extends SnakRootBase {
 
 export type SnakBase = SnakBaseWithValue | SnakBaseWithSomeValue | SnakBaseWithNoValue
 
+export type SnakType = SnakBase['snaktype']
+
 export type Snak = SnakBase & {
-  datatype: DataType
+  datatype: SnakDatatype
 }
 
 export type Qualifier = Snak

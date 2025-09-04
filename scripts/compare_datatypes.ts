@@ -1,10 +1,10 @@
 #!/usr/bin/env tsx
 import { kebabCase } from 'lodash-es'
 import { red, green } from 'tiny-chalk'
-import { parsers } from '../src/helpers/parse_snak.js'
+import { datavalueTypeBySnakDatatype } from '../src/helpers/parse_snak.js'
 import { readJsonFile } from '../tests/lib/utils.js'
 
-const supportedTypes = Object.keys(parsers)
+const supportedTypes = Object.keys(datavalueTypeBySnakDatatype)
 
 const allDatatypes = readJsonFile('/tmp/all_wikidata_datatypes.json') as string[]
 allDatatypes
