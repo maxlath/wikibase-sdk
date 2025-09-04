@@ -36,6 +36,7 @@ export interface StringSnakDataValue {
 }
 
 export type CommonsMediaSnakDataValue = StringSnakDataValue
+export type EdtfSnakDataValue = StringSnakDataValue
 export type ExternalIdSnakDataValue = StringSnakDataValue
 export type GeoShapeSnakDataValue = StringSnakDataValue
 export type LocalMediaSnakDataValue = StringSnakDataValue

@@ -90,6 +90,10 @@ interface CustomSimplifiedCommonsMediaSnak extends CustomSimplifiedSnakBase {
   datatype?: 'commonsMedia'
   value: string
 }
+interface CustomSimplifiedEdtfSnak extends CustomSimplifiedSnakBase {
+  datatype?: 'edtf'
+  value: string
+}
 interface CustomSimplifiedEntitySchemaSnak extends CustomSimplifiedSnakBase {
   datatype?: 'entity-schema'
   value: EntitySchemaId
@@ -169,6 +173,7 @@ interface CustomSimplifiedWikibaseSenseSnak extends CustomSimplifiedSnakBase {
 
 interface CustomSimplifiedSnakByDatatype {
   commonsMedia: CustomSimplifiedCommonsMediaSnak
+  edtf: CustomSimplifiedEdtfSnak
   'entity-schema': CustomSimplifiedEntitySchemaSnak
   'external-id': CustomSimplifiedExternalIdSnak
   'geo-shape': CustomSimplifiedGeoShapSnak

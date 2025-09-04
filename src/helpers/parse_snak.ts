@@ -2,7 +2,7 @@ import { typedKeys } from '../utils/utils.js'
 import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay } from './time.js'
 import type { TimeInputValue } from './time.js'
 import type { CustomSimplifiedSnakValueByDatavalueType, SimplifySnakOptions } from '../types/simplify_claims.js'
-import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue, EntitySchemaSnakDataValue, LocalMediaSnakDataValue, MediaInfoSnakDataValue, SnakDataValueByDatavalueType } from '../types/snakvalue.js'
+import type { CommonsMediaSnakDataValue, ExternalIdSnakDataValue, GeoShapeSnakDataValue, GlobeCoordinateSnakDataValue, MathSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, StringSnakDataValue, TimeSnakDataValue, WikibaseEntityIdSnakDataValue, MusicalNotationSnakDataValue, TabularDataSnakDataValue, UrlSnakDataValue, WikibaseFormSnakDataValue, WikibaseItemSnakDataValue, WikibaseLexemeSnakDataValue, WikibasePropertySnakDataValue, WikibaseSenseSnakDataValue, EntitySchemaSnakDataValue, MediaInfoSnakDataValue, SnakDataValueByDatavalueType, EdtfSnakDataValue, LocalMediaSnakDataValue } from '../types/snakvalue.js'
 
 function parseStringValue (datavalue: StringSnakDataValue) {
   return datavalue.value
@@ -114,6 +114,7 @@ function getTimeConverter (key: keyof typeof timeConverters = 'iso') {
 
 interface DataValueBySnakDatatype {
   commonsMedia: CommonsMediaSnakDataValue
+  edtf: EdtfSnakDataValue
   'entity-schema': EntitySchemaSnakDataValue
   'external-id': ExternalIdSnakDataValue
   'geo-shape': GeoShapeSnakDataValue
@@ -150,12 +151,12 @@ export type DatavalueType = keyof typeof parsersByDatavalueTypes
 
 export const datavalueTypeBySnakDatatype = {
   commonsMedia: 'string',
+  edtf: 'string', // See https://github.com/ProfessionalWiki/WikibaseEdtf
   'external-id': 'string',
   'entity-schema': 'wikibase-entityid',
   'geo-shape': 'string',
   'globe-coordinate': 'globecoordinate',
-  // datatype from https://github.com/ProfessionalWiki/WikibaseLocalMedia
-  localMedia: 'string',
+  localMedia: 'string', // See https://github.com/ProfessionalWiki/WikibaseLocalMedia
   math: 'string',
   mediainfo: 'wikibase-entityid',
   monolingualtext: 'monolingualtext',

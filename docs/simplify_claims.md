@@ -241,6 +241,7 @@ Here is a list with all the supported types:
 ```
 commonsMedia
 external-id
+edtf
 geo-shape
 globe-coordinate
 localMedia
