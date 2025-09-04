@@ -83,87 +83,87 @@ export type LooseSimplifiedClaim = string | number | LooseCustomSimplifiedClaim
 export interface CustomSimplifiedSnakBase {
   snaktype?: SnakType
   hash?: Hash
-  type?: SnakDatatype
+  datatype?: SnakDatatype
 }
 
 interface CustomSimplifiedCommonsMediaSnak extends CustomSimplifiedSnakBase {
-  type?: 'commonsMedia'
+  datatype?: 'commonsMedia'
   value: string
 }
 interface CustomSimplifiedEntitySchemaSnak extends CustomSimplifiedSnakBase {
-  type?: 'entity-schema'
+  datatype?: 'entity-schema'
   value: EntitySchemaId
 }
 interface CustomSimplifiedExternalIdSnak extends CustomSimplifiedSnakBase {
-  type?: 'external-id'
+  datatype?: 'external-id'
   value: string
 }
 interface CustomSimplifiedGeoShapSnak extends CustomSimplifiedSnakBase {
-  type?: 'geo-shape'
+  datatype?: 'geo-shape'
   value: string
 }
 interface CustomSimplifiedGlobeCoordinateSnak extends CustomSimplifiedSnakBase {
-  type?: 'globe-coordinate'
+  datatype?: 'globe-coordinate'
   value: GlobeCoordinateSnakDataValue['value'] | [ number, number ]
 }
 interface CustomSimplifiedLocalMediaSnak extends CustomSimplifiedSnakBase {
-  type?: 'localMedia'
+  datatype?: 'localMedia'
   value: string
 }
 interface CustomSimplifiedMathSnak extends CustomSimplifiedSnakBase {
-  type?: 'math'
+  datatype?: 'math'
   value: string
 }
 interface CustomSimplifiedMonolingualTextSnak extends CustomSimplifiedSnakBase {
-  type?: 'monolingualtext'
+  datatype?: 'monolingualtext'
   value: MonolingualTextSnakDataValue['value'] | string
 }
 interface CustomSimplifiedMusicalNotationSnak extends CustomSimplifiedSnakBase {
-  type?: 'musical-notation'
+  datatype?: 'musical-notation'
   value: string
 }
 interface CustomSimplifiedQuantitySnak extends CustomSimplifiedSnakBase {
-  type?: 'quantity'
+  datatype?: 'quantity'
   value: QuantitySnakDataValue['value'] | number
 }
 interface CustomSimplifiedStringSnak extends CustomSimplifiedSnakBase {
-  type?: 'string'
+  datatype?: 'string'
   value: string
 }
 interface CustomSimplifiedTabularDataSnak extends CustomSimplifiedSnakBase {
-  type?: 'tabular-data'
+  datatype?: 'tabular-data'
   value: string
 }
 interface CustomSimplifiedTimeSnak extends CustomSimplifiedSnakBase {
-  type?: 'time'
+  datatype?: 'time'
   value: TimeSnakDataValue['value'] | string | number
 }
 interface CustomSimplifiedUrlSnak extends CustomSimplifiedSnakBase {
-  type?: 'url'
+  datatype?: 'url'
   value: string
 }
 interface CustomSimplifiedWikibaseFormSnak extends CustomSimplifiedSnakBase {
-  type?: 'wikibase-form'
+  datatype?: 'wikibase-form'
   value: FormId
 }
 interface CustomSimplifiedWikibaseItemSnak extends CustomSimplifiedSnakBase {
-  type?: 'wikibase-item'
+  datatype?: 'wikibase-item'
   value: ItemId
 }
 interface CustomSimplifiedWikibaseLexemeSnak extends CustomSimplifiedSnakBase {
-  type?: 'wikibase-lexeme'
+  datatype?: 'wikibase-lexeme'
   value: LexemeId
 }
 interface CustomSimplifiedMediaInfoSnak extends CustomSimplifiedSnakBase {
-  type?: 'mediainfo'
+  datatype?: 'mediainfo'
   value: MediaInfoId
 }
 interface CustomSimplifiedWikibasePropertySnak extends CustomSimplifiedSnakBase {
-  type?: 'wikibase-property'
+  datatype?: 'wikibase-property'
   value: PropertyId
 }
 interface CustomSimplifiedWikibaseSenseSnak extends CustomSimplifiedSnakBase {
-  type?: 'wikibase-sense'
+  datatype?: 'wikibase-sense'
   value: SenseId
 }
 

@@ -231,7 +231,7 @@ Results would then look something like
   "P1365": [
     {
       "value": "Q312881",
-      "type": "wikibase-item"
+      "datatype": "wikibase-item"
     }
   ]
 }

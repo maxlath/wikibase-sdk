@@ -32,7 +32,7 @@ export function simplifySnak (snak: Snak | SnakBase, options: SimplifySnakOption
     // instead of a direct value
     const valueObj: CustomSimplifiedSnak = { value }
     // Known case of snak without datatype: Wikimedia Commons MediaInfo snaks
-    if (keepTypes && 'datatype' in snak) valueObj.type = snak.datatype
+    if (keepTypes && 'datatype' in snak) valueObj.datatype = snak.datatype
     if (keepSnaktypes) valueObj.snaktype = snaktype
     if (keepHashes) valueObj.hash = hash
     return valueObj
