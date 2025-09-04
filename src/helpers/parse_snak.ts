@@ -1,3 +1,4 @@
+import { typedKeys } from '../utils/utils.js'
 import { wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay } from './time.js'
 import type { TimeInputValue } from './time.js'
 import type { CustomSimplifiedSnakValueByDatavalueType, SimplifySnakOptions } from '../types/simplify_claims.js'
@@ -153,6 +154,7 @@ export const datavalueTypeBySnakDatatype = {
   'entity-schema': 'wikibase-entityid',
   'geo-shape': 'string',
   'globe-coordinate': 'globecoordinate',
+  // datatype from https://github.com/ProfessionalWiki/WikibaseLocalMedia
   localMedia: 'string',
   math: 'string',
   mediainfo: 'wikibase-entityid',
@@ -178,3 +180,5 @@ export function parseSnakDatavalue <T extends DatavalueType> (datavalue: SnakDat
   // @ts-expect-error
   return parser(datavalue, options) as CustomSimplifiedSnakValueByDatavalueType[T]
 }
+
+export const datatypes = typedKeys(datavalueTypeBySnakDatatype)
