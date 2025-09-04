@@ -196,9 +196,20 @@ export function simplifyReference (reference: Reference, options: SimplifySnaksO
 /** @deprecated use the new function name simplifyReference instead */
 export const simplifyReferenceRecord = simplifyReference
 
-const keepOptions = [ 'keepQualifiers', 'keepReferences', 'keepIds', 'keepHashes', 'keepTypes', 'keepSnaktypes', 'keepRanks', 'keepRichValues' ] as const
+const keepOptions = [
+  'keepHashes',
+  'keepIds',
+  'keepNonDeprecated',
+  'keepNonTruthy',
+  'keepQualifiers',
+  'keepRanks',
+  'keepReferences',
+  'keepRichValues',
+  'keepSnaktypes',
+  'keepTypes',
+] as const
 
-const parseKeepOptions = (options: any = {}) => {
+function parseKeepOptions (options: SimplifyClaimsOptions = {}) {
   if (options.keepAll) {
     for (const optionName of keepOptions) {
       if (options[optionName] == null) options[optionName] = true
