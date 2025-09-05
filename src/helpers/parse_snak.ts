@@ -138,6 +138,15 @@ interface DataValueBySnakDatatype {
 
 export type SnakDatatype = keyof DataValueBySnakDatatype
 
+export interface DataValueByDatavalueType {
+  globecoordinate: GlobeCoordinateSnakDataValue
+  monolingualtext: MonolingualTextSnakDataValue
+  quantity: QuantitySnakDataValue
+  string: StringSnakDataValue
+  time: TimeSnakDataValue
+  'wikibase-entityid': WikibaseEntityIdSnakDataValue
+}
+
 export const parsersByDatavalueTypes = {
   globecoordinate: parseGlobeCoordinateValue,
   monolingualtext: parseMonolingualTextValue,
