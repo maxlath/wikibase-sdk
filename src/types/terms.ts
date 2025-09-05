@@ -1,6 +1,6 @@
 import type { LanguageCode } from './options.js'
 
-type LanguageRecord<V> = Partial<Readonly<Record<LanguageCode, V>>>
+export type LanguageRecord<V> = Partial<Readonly<Record<LanguageCode, V>>>
 
 export interface Term {
   readonly language: LanguageCode
@@ -19,7 +19,6 @@ export type SimplifiedTerm = string
 export type SimplifiedLabels = LanguageRecord<SimplifiedTerm>
 export type SimplifiedDescriptions = LanguageRecord<SimplifiedTerm>
 export type SimplifiedAliases = LanguageRecord<readonly SimplifiedTerm[]>
-export type LooseSimplifiedAliases = LanguageRecord<readonly SimplifiedTerm[] | SimplifiedTerm>
 export type SimplifiedLemmas = LanguageRecord<SimplifiedTerm>
 export type SimplifiedRepresentations = LanguageRecord<SimplifiedTerm>
 export type SimplifiedGlosses = LanguageRecord<SimplifiedTerm>
