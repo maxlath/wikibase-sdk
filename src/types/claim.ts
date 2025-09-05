@@ -36,16 +36,16 @@ interface SnakRootBase {
   property: PropertyId
 }
 
-interface SnakBaseWithValue extends SnakRootBase {
+export interface SnakBaseWithValue extends SnakRootBase {
   snaktype: 'value'
   datavalue: SnakDataValue
 }
 
-interface SnakBaseWithSomeValue extends SnakRootBase {
+export interface SnakBaseWithSomeValue extends SnakRootBase {
   snaktype: 'somevalue'
 }
 
-interface SnakBaseWithNoValue extends SnakRootBase {
+export interface SnakBaseWithNoValue extends SnakRootBase {
   snaktype: 'novalue'
 }
 
