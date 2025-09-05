@@ -3,7 +3,7 @@ import type { Form, Sense, SimplifiedForm, SimplifiedForms, SimplifiedSense, Sim
 import type { LooseSimplifiedClaims, SimplifiedClaims } from './simplify_claims.js'
 import type { SimplifiedSitelinks, Sitelinks } from './sitelinks.js'
 import type { Aliases, Descriptions, Labels, Lemmas, LooseSimplifiedAliases, SimplifiedAliases, SimplifiedDescriptions, SimplifiedLabels, SimplifiedLemmas } from './terms.js'
-import type { SnakDatatype } from '../helpers/parse_snak.js'
+import type { Datatype } from '../helpers/parse_snak.js'
 import type { OverrideProperties } from 'type-fest'
 
 export const EntityTypes = [
@@ -58,7 +58,7 @@ export type Entities = Record<EntityId, Entity>
 
 export interface Property extends EntityInfo<PropertyId> {
   type: 'property'
-  datatype?: SnakDatatype
+  datatype?: Datatype
   labels?: Labels
   descriptions?: Descriptions
   aliases?: Aliases
@@ -123,7 +123,7 @@ export type LooseSimplifiedItem = OverrideProperties<SimplifiedItem, {
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo<PropertyId> {
   type: 'property'
-  datatype: SnakDatatype
+  datatype: Datatype
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases

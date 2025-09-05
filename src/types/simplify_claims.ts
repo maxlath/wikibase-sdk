@@ -1,7 +1,7 @@
 import type { Rank, SnakType } from './claim.js'
 import type { EntityId, EntitySchemaId, FormId, Guid, Hash, ItemId, LexemeId, MediaInfoId, PropertyId, SenseId } from './entity.js'
 import type { GlobeCoordinateSnakDataValue, MonolingualTextSnakDataValue, QuantitySnakDataValue, SnakDataValue, TimeSnakDataValue } from './snakvalue.js'
-import type { SnakDatatype, timeConverters } from '../helpers/parse_snak.js'
+import type { Datatype, timeConverters } from '../helpers/parse_snak.js'
 import type { TimeConverter } from '../helpers/time.js'
 
 export interface SimplifySnakOptions {
@@ -83,7 +83,7 @@ export type LooseSimplifiedClaim = string | number | LooseCustomSimplifiedClaim
 export interface CustomSimplifiedSnakBase {
   snaktype?: SnakType
   hash?: Hash
-  datatype?: SnakDatatype
+  datatype?: Datatype
 }
 
 interface CustomSimplifiedCommonsMediaSnak extends CustomSimplifiedSnakBase {

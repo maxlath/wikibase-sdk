@@ -1,6 +1,6 @@
 import type { Guid, PropertyId } from './entity.js'
 import type { SnakDataValue } from './snakvalue.js'
-import type { SnakDatatype } from '../helpers/parse_snak.js'
+import type { Datatype } from '../helpers/parse_snak.js'
 
 export type Rank = 'normal' | 'preferred' | 'deprecated'
 
@@ -54,7 +54,7 @@ export type SnakBase = SnakBaseWithValue | SnakBaseWithSomeValue | SnakBaseWithN
 export type SnakType = SnakBase['snaktype']
 
 export type Snak = SnakBase & {
-  datatype: SnakDatatype
+  datatype: Datatype
 }
 
 export type Qualifier = Snak

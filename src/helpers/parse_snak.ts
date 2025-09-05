@@ -136,7 +136,9 @@ interface DataValueBySnakDatatype {
   'wikibase-sense': WikibaseSenseSnakDataValue
 }
 
-export type SnakDatatype = keyof DataValueBySnakDatatype
+export type Datatype = keyof DataValueBySnakDatatype
+/** @deprecated use Datatype */
+export type DataType = Datatype
 
 export interface DataValueByDatavalueType {
   globecoordinate: GlobeCoordinateSnakDataValue
