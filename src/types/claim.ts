@@ -54,9 +54,23 @@ export type SnakBase = SnakBaseWithValue | SnakBaseWithSomeValue | SnakBaseWithN
 
 export type SnakType = SnakBase['snaktype']
 
-export type Snak = SnakBase & {
+export interface SnakWithValue extends SnakRootBase {
+  snaktype: 'value'
+  datavalue: SnakDataValue
   datatype: Datatype
 }
+
+export interface SnakWithSomeValue extends SnakRootBase {
+  snaktype: 'somevalue'
+  datatype: Datatype
+}
+
+export interface SnakWithNoValue extends SnakRootBase {
+  snaktype: 'novalue'
+  datatype: Datatype
+}
+
+export type Snak = SnakWithValue | SnakWithSomeValue | SnakWithNoValue
 
 export type Qualifier = Snak
 export type StatementQualifier = SnakBase

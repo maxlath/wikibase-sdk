@@ -68,92 +68,92 @@ export interface CustomSimplifiedSnakBase {
   datatype?: Datatype
 }
 
-interface CustomSimplifiedCommonsMediaSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedCommonsMediaSnak extends CustomSimplifiedSnakBase {
   datatype?: 'commonsMedia'
   value: string
 }
-interface CustomSimplifiedEdtfSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedEdtfSnak extends CustomSimplifiedSnakBase {
   datatype?: 'edtf'
   value: string
 }
-interface CustomSimplifiedEntitySchemaSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedEntitySchemaSnak extends CustomSimplifiedSnakBase {
   datatype?: 'entity-schema'
   value: EntitySchemaId
 }
-interface CustomSimplifiedExternalIdSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedExternalIdSnak extends CustomSimplifiedSnakBase {
   datatype?: 'external-id'
   value: string
 }
-interface CustomSimplifiedGeoShapSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedGeoShapSnak extends CustomSimplifiedSnakBase {
   datatype?: 'geo-shape'
   value: string
 }
-interface CustomSimplifiedGlobeCoordinateSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedGlobeCoordinateSnak extends CustomSimplifiedSnakBase {
   datatype?: 'globe-coordinate'
   value: GlobeCoordinateSnakDataValue['value'] | [ number, number ]
 }
-interface CustomSimplifiedLocalMediaSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedLocalMediaSnak extends CustomSimplifiedSnakBase {
   datatype?: 'localMedia'
   value: string
 }
-interface CustomSimplifiedMathSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedMathSnak extends CustomSimplifiedSnakBase {
   datatype?: 'math'
   value: string
 }
-interface CustomSimplifiedMonolingualTextSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedMonolingualTextSnak extends CustomSimplifiedSnakBase {
   datatype?: 'monolingualtext'
   value: MonolingualTextSnakDataValue['value'] | string
 }
-interface CustomSimplifiedMusicalNotationSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedMusicalNotationSnak extends CustomSimplifiedSnakBase {
   datatype?: 'musical-notation'
   value: string
 }
-interface CustomSimplifiedQuantitySnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedQuantitySnak extends CustomSimplifiedSnakBase {
   datatype?: 'quantity'
   value: QuantitySnakDataValue['value'] | number
 }
-interface CustomSimplifiedStringSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedStringSnak extends CustomSimplifiedSnakBase {
   datatype?: 'string'
   value: string
 }
-interface CustomSimplifiedTabularDataSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedTabularDataSnak extends CustomSimplifiedSnakBase {
   datatype?: 'tabular-data'
   value: string
 }
-interface CustomSimplifiedTimeSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedTimeSnak extends CustomSimplifiedSnakBase {
   datatype?: 'time'
   value: TimeSnakDataValue['value'] | string | number
 }
-interface CustomSimplifiedUrlSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedUrlSnak extends CustomSimplifiedSnakBase {
   datatype?: 'url'
   value: string
 }
-interface CustomSimplifiedWikibaseFormSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedWikibaseFormSnak extends CustomSimplifiedSnakBase {
   datatype?: 'wikibase-form'
   value: FormId
 }
-interface CustomSimplifiedWikibaseItemSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedWikibaseItemSnak extends CustomSimplifiedSnakBase {
   datatype?: 'wikibase-item'
   value: ItemId
 }
-interface CustomSimplifiedWikibaseLexemeSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedWikibaseLexemeSnak extends CustomSimplifiedSnakBase {
   datatype?: 'wikibase-lexeme'
   value: LexemeId
 }
-interface CustomSimplifiedMediaInfoSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedMediaInfoSnak extends CustomSimplifiedSnakBase {
   datatype?: 'mediainfo'
   value: MediaInfoId
 }
-interface CustomSimplifiedWikibasePropertySnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedWikibasePropertySnak extends CustomSimplifiedSnakBase {
   datatype?: 'wikibase-property'
   value: PropertyId
 }
-interface CustomSimplifiedWikibaseSenseSnak extends CustomSimplifiedSnakBase {
+export interface CustomSimplifiedWikibaseSenseSnak extends CustomSimplifiedSnakBase {
   datatype?: 'wikibase-sense'
   value: SenseId
 }
 
-interface CustomSimplifiedSnakByDatatype {
+export interface CustomSimplifiedSnakByDatatype {
   commonsMedia: CustomSimplifiedCommonsMediaSnak
   edtf: CustomSimplifiedEdtfSnak
   'entity-schema': CustomSimplifiedEntitySchemaSnak
