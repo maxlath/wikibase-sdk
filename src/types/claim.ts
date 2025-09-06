@@ -82,7 +82,7 @@ export type Qualifiers = Record<PropertyId, PropertyQualifiers>
 export type StatementQualifiers = Record<PropertyId, PropertyStatementQualifiers>
 
 export type ReferenceSnak = Snak
-export type ReferenceStatementSnak = Snak
+export type ReferenceStatementSnak = SnakBase
 
 export interface ReferenceBase {
   hash: string
@@ -91,7 +91,7 @@ export interface ReferenceBase {
 export interface Reference extends ReferenceBase {
   snaks: Record<PropertyId, ReferenceSnak[]>
 }
-export interface StatementReference {
+export interface StatementReference extends ReferenceBase {
   snaks: Record<PropertyId, ReferenceStatementSnak[]>
 }
 
