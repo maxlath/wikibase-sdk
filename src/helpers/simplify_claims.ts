@@ -172,7 +172,7 @@ export function simplifyQualifier (qualifier: Qualifier, options: SimplifySnakOp
   return simplifySnak(qualifier, options)
 }
 
-export function simplifyReferences (references: readonly Reference[], options: SimplifySnaksOptions = {}) {
+export function simplifyReferences (references: Reference[], options: SimplifySnaksOptions = {}) {
   return references.map(reference => simplifyReference(reference, options))
 }
 export function simplifyReference (reference: Reference, options: SimplifySnaksOptions = {}) {
