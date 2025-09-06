@@ -21,7 +21,7 @@ import type {
 import type { Url } from '../utils/build_url.js'
 
 function isIdBuilder<T extends string> (regex: { readonly source: string, readonly flags: string }) {
-  return (id: string): id is T => typeof id === 'string' && new RegExp(regex.source, regex.flags).test(id)
+  return (id: unknown): id is T => typeof id === 'string' && new RegExp(regex.source, regex.flags).test(id)
 }
 
 export const isNumericId = isIdBuilder<NumericId>(/^[1-9][0-9]*$/)

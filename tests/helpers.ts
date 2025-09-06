@@ -30,7 +30,6 @@ describe('helpers', () => {
       should(isEntityId('L525-Z1')).be.false()
       should(isEntityId('M42')).be.true()
       should(isEntityId('31')).be.false()
-      // @ts-expect-error non string input
       should(isEntityId(31)).be.false()
       should(isEntityId('Z31')).be.false()
       should(isEntityId('q31')).be.false()
@@ -43,7 +42,6 @@ describe('helpers', () => {
       should(isItemId('Q571')).be.true()
       should(isItemId('P31')).be.false()
       should(isItemId('31')).be.false()
-      // @ts-expect-error non string input
       should(isItemId(31)).be.false()
       should(isItemId('Z31')).be.false()
       should(isItemId('q31')).be.false()
@@ -56,7 +54,6 @@ describe('helpers', () => {
       should(isPropertyId('P31')).be.true()
       should(isPropertyId('Q571')).be.false()
       should(isPropertyId('31')).be.false()
-      // @ts-expect-error non string input
       should(isPropertyId(31)).be.false()
       should(isPropertyId('Z31')).be.false()
       should(isPropertyId('q31')).be.false()
@@ -70,7 +67,6 @@ describe('helpers', () => {
       should(isLexemeId('P31')).be.false()
       should(isLexemeId('Q571')).be.false()
       should(isLexemeId('31')).be.false()
-      // @ts-expect-error non string input
       should(isLexemeId(31)).be.false()
       should(isLexemeId('Z31')).be.false()
       should(isLexemeId('q31')).be.false()
