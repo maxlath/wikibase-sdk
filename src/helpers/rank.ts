@@ -1,6 +1,8 @@
 import { typedEntries } from '../utils/utils.js'
 import type { Claim, Claims, PropertyClaims, Rank } from '../types/claim.js'
 
+export const ranks = [ 'normal', 'preferred', 'deprecated' ] as const
+
 export function truthyPropertyClaims (propertyClaims: PropertyClaims): PropertyClaims {
   const aggregate: Partial<Record<Rank, Claim[]>> = {}
   for (const claim of propertyClaims) {

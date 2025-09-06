@@ -1,8 +1,9 @@
 import type { Guid, PropertyId } from './entity.js'
 import type { SnakDataValue } from './snakvalue.js'
 import type { Datatype } from '../helpers/parse_snak.js'
+import type { ranks } from '../helpers/rank.js'
 
-export type Rank = 'normal' | 'preferred' | 'deprecated'
+export type Rank = typeof ranks[number]
 
 export interface ClaimBase {
   id: Guid
