@@ -32,6 +32,9 @@ export type Claims = Record<PropertyId, PropertyClaims>
 export type Statements = Record<PropertyId, PropertyStatements>
 export type Snaks = Record<PropertyId, PropertySnaks>
 
+export type PropertyStatementSnaks = StatementSnak[]
+export type StatementSnaks = Record<PropertyId, PropertyStatementSnaks>
+
 interface SnakRootBase {
   hash: string
   property: PropertyId
@@ -51,6 +54,8 @@ export interface SnakBaseWithNoValue extends SnakRootBase {
 }
 
 export type SnakBase = SnakBaseWithValue | SnakBaseWithSomeValue | SnakBaseWithNoValue
+
+export type StatementSnak = SnakBase
 
 export type SnakType = SnakBase['snaktype']
 

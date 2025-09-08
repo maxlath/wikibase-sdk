@@ -1,7 +1,8 @@
 import { isPlainObject, typedEntries, uniq } from '../utils/utils.js'
 import { parseSnakDatavalue } from './parse_snak.js'
 import { truthyPropertyClaims, nonDeprecatedPropertyClaims } from './rank.js'
-import type { Claim, Claims, PropertyClaims, PropertyQualifiers, PropertySnaks, Qualifier, Qualifiers, Reference, Snak, SnakBase, Snaks } from '../types/claim.js'
+import type { Claim, PropertyQualifiers, PropertySnaks, PropertyStatementQualifiers, PropertyStatementSnaks, Qualifier, Qualifiers, Reference, Snak, Snaks, Statement, StatementQualifier, StatementQualifiers, StatementReference, StatementSnak, StatementSnaks } from '../types/claim.js'
+import type { PropertyId } from '../types/entity.js'
 import type { CustomSimplifiedClaim, CustomSimplifiedSnak, SimplifiedClaim, SimplifiedClaims, SimplifiedPropertyClaims, SimplifiedPropertySnaks, SimplifiedSnaks, SimplifyClaimsOptions, SimplifySnakOptions, SimplifySnaksOptions } from '../types/simplify_claims.js'
 import type { TimeSnakDataValue } from '../types/snakvalue.js'
 
@@ -11,7 +12,7 @@ import type { TimeSnakDataValue } from '../types/snakvalue.js'
  * Expects a single snak object
  * Ex: entity.claims.P369[0]
  */
-export function simplifySnak (snak: Snak | SnakBase, options: SimplifySnakOptions = {}) {
+export function simplifySnak (snak: Snak | StatementSnak, options: SimplifySnakOptions = {}) {
   const { keepTypes, keepSnaktypes, keepHashes } = parseKeepOptions(options)
 
   let value
@@ -41,7 +42,7 @@ export function simplifySnak (snak: Snak | SnakBase, options: SimplifySnakOption
   }
 }
 
-export function simplifyClaim (claim: Claim, options: SimplifySnakOptions = {}): SimplifiedClaim {
+export function simplifyClaim (claim: Claim | Statement, options: SimplifySnakOptions = {}): SimplifiedClaim {
   const { keepQualifiers, keepReferences, keepIds, keepTypes, keepSnaktypes, keepRanks } = parseKeepOptions(options)
 
   const { mainsnak, rank } = claim
@@ -78,7 +79,7 @@ export function simplifyClaim (claim: Claim, options: SimplifySnakOptions = {}):
   return valueObj
 }
 
-export function simplifyClaims (claims: Claims, options: SimplifyClaimsOptions = {}): SimplifiedClaims {
+export function simplifyClaims <T extends (Claim | Statement)> (claims: Record<PropertyId, T[]>, options: SimplifyClaimsOptions = {}): SimplifiedClaims {
   const { propertyPrefix } = options
   const simplified: SimplifiedClaims = {}
   for (let [ propertyId, propertyArray ] of typedEntries(claims)) {
@@ -90,7 +91,7 @@ export function simplifyClaims (claims: Claims, options: SimplifyClaimsOptions =
   return simplified
 }
 
-export function simplifyPropertyClaims (propertyClaims: PropertyClaims, options: SimplifyClaimsOptions = {}): SimplifiedPropertyClaims {
+export function simplifyPropertyClaims <T extends (Claim | Statement)> (propertyClaims: T[], options: SimplifyClaimsOptions = {}): SimplifiedPropertyClaims {
   // Avoid to throw on empty inputs to allow to simplify claims array
   // without having to know if the entity as claims for this property
   // Ex: simplifyPropertyClaims(entity.claims.P124211616)
@@ -125,7 +126,7 @@ export function simplifyPropertyClaims (propertyClaims: PropertyClaims, options:
   }
 }
 
-export function simplifySnaks (snaks: Snaks = {}, options: SimplifySnaksOptions = {}): SimplifiedSnaks {
+export function simplifySnaks (snaks: Snaks | StatementSnaks = {}, options: SimplifySnaksOptions = {}): SimplifiedSnaks {
   const { propertyPrefix } = options
   const simplified: SimplifiedSnaks = {}
   for (let [ propertyId, propertyArray ] of typedEntries(snaks)) {
@@ -137,7 +138,7 @@ export function simplifySnaks (snaks: Snaks = {}, options: SimplifySnaksOptions 
   return simplified
 }
 
-export function simplifyPropertySnaks (propertySnaks: PropertySnaks, options: SimplifySnaksOptions = {}): SimplifiedPropertySnaks {
+export function simplifyPropertySnaks (propertySnaks: PropertySnaks | PropertyStatementSnaks, options: SimplifySnaksOptions = {}): SimplifiedPropertySnaks {
   if (propertySnaks == null || propertySnaks.length === 0) return []
 
   const { minTimePrecision } = options
@@ -162,20 +163,20 @@ export function simplifyPropertySnaks (propertySnaks: PropertySnaks, options: Si
   }
 }
 
-export function simplifyQualifiers (qualifiers: Qualifiers, options: SimplifySnaksOptions = {}) {
+export function simplifyQualifiers (qualifiers: Qualifiers | StatementQualifiers, options: SimplifySnaksOptions = {}) {
   return simplifySnaks(qualifiers, options)
 }
-export function simplifyPropertyQualifiers (propertyQualifiers: PropertyQualifiers, options: SimplifySnaksOptions = {}) {
+export function simplifyPropertyQualifiers (propertyQualifiers: PropertyQualifiers | PropertyStatementQualifiers, options: SimplifySnaksOptions = {}) {
   return simplifyPropertySnaks(propertyQualifiers, options)
 }
-export function simplifyQualifier (qualifier: Qualifier, options: SimplifySnakOptions = {}) {
+export function simplifyQualifier (qualifier: Qualifier | StatementQualifier, options: SimplifySnakOptions = {}) {
   return simplifySnak(qualifier, options)
 }
 
-export function simplifyReferences (references: Reference[], options: SimplifySnaksOptions = {}) {
+export function simplifyReferences (references: Reference[] | StatementReference[], options: SimplifySnaksOptions = {}) {
   return references.map(reference => simplifyReference(reference, options))
 }
-export function simplifyReference (reference: Reference, options: SimplifySnaksOptions = {}) {
+export function simplifyReference (reference: Reference | StatementReference, options: SimplifySnaksOptions = {}) {
   const snaks = simplifySnaks(reference.snaks, options)
   if (options.keepHashes) return { snaks, hash: reference.hash }
   else return snaks
@@ -205,9 +206,9 @@ function parseKeepOptions (options: SimplifyClaimsOptions = {}) {
   return options
 }
 
-function timeSnakPrecisionIsTooLow (snak: Snak, minTimePrecision?: number) {
+function timeSnakPrecisionIsTooLow (snak: Snak | StatementSnak, minTimePrecision?: number) {
   if (minTimePrecision == null) return false
-  if (snak.datatype !== 'time' || snak.snaktype !== 'value') return false
+  if (!('datatype' in snak) || snak.datatype !== 'time' || snak.snaktype !== 'value') return false
   const { value } = snak.datavalue as TimeSnakDataValue
   return value.precision < minTimePrecision
 }
