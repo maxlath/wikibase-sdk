@@ -42,7 +42,7 @@ export function simplifySnak (snak: Snak | StatementSnak, options: SimplifySnakO
   }
 }
 
-export function simplifyClaim (claim: Claim | Statement, options: SimplifySnakOptions = {}): SimplifiedClaim {
+export function simplifyClaim (claim: Claim | Statement, options: SimplifyClaimsOptions = {}): SimplifiedClaim {
   const { keepQualifiers, keepReferences, keepIds, keepTypes, keepSnaktypes, keepRanks } = parseKeepOptions(options)
 
   const { mainsnak, rank } = claim
