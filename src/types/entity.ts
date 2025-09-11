@@ -51,7 +51,14 @@ export type GuidAltSyntax <T extends EntityWithClaims['id'] = EntityWithClaims['
 
 export type Hash = string
 
-export type Entity = Property | Item | Lexeme | Form | Sense | MediaInfo
+export type Entity = Item | Property | Lexeme | Form | Sense | MediaInfo
+
+export type EntityWithClaims = Item | Property | Lexeme | Form | Sense | MediaInfo
+export type EntityWithLabels = Item | Property | MediaInfo
+export type EntityWithDescriptions = Item | Property | MediaInfo
+export type EntityWithAliases = Item | Property
+export type EntityWithSitelinks = Item
+
 export type EntityPageTitle = NamespacedEntityId | ItemId
 export type Entities = Record<EntityId, Entity>
 
@@ -144,7 +151,3 @@ export interface SimplifiedMediaInfo extends SimplifiedEntityInfo<MediaInfoId> {
 
 export type SimplifiedEntity = SimplifiedProperty | SimplifiedItem | SimplifiedLexeme | SimplifiedForm | SimplifiedSense | SimplifiedMediaInfo
 export type SimplifiedEntities = Record<EntityId, SimplifiedEntity>
-
-export type EntityWithClaims = Item | Property | Lexeme | Form | Sense | MediaInfo
-
-export type EntityWithSitelinks = Item
