@@ -1,6 +1,6 @@
 {
   "name": "wikibase-sdk",
-  "version": "10.2.3",
+  "version": "11.0.0",
   "type": "module",
   "description": "utils functions to query a Wikibase instance and simplify its results",
   "main": "./dist/src/index.js",
@@ -58,7 +58,7 @@
     "url": "https://github.com/maxlath/wikibase-sdk/issues"
   },
   "homepage": "https://github.com/maxlath/wikibase-sdk",
-    "dependencies": {
+  "dependencies": {
     "type-fest": "^4.41.0"
   },
   "devDependencies": {
