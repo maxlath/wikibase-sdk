@@ -21,6 +21,7 @@ export function getEntitiesFactory (buildUrl: BuildUrlFunction) {
     format = 'json',
     redirects,
   }: GetEntitiesOptions): Url {
+    // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
 
     // ids can't be let empty

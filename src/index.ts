@@ -10,6 +10,7 @@ export * from './helpers/time.js'
 export * from './helpers/wikimedia_constants.js'
 export * as parse from './helpers/parse_responses.js'
 export * as simplify from './helpers/simplify.js'
+export * from './helpers/parse_snak.js'
 export * from './helpers/simplify_claims.js'
 export * from './helpers/simplify_entity.js'
 export * from './helpers/simplify_forms.js'
@@ -29,3 +30,5 @@ export * from './types/sparql.js'
 export * from './types/terms.js'
 
 // In case of missing types on Wbk, check ./wikibase-sdk.ts exports
+
+export type { WbGetEntitiesResponse, CirrusSearchResult } from './helpers/parse_responses.js'

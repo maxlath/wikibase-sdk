@@ -231,7 +231,7 @@ Results would then look something like
   "P1365": [
     {
       "value": "Q312881",
-      "type": "wikibase-item"
+      "datatype": "wikibase-item"
     }
   ]
 }
@@ -241,6 +241,7 @@ Here is a list with all the supported types:
 ```
 commonsMedia
 external-id
+edtf
 geo-shape
 globe-coordinate
 localMedia

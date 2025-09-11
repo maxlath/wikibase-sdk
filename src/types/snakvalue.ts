@@ -1,4 +1,4 @@
-import type { EntityType, IdByEntityType } from './entity.js'
+import type { EntityType, EntityIdByEntityType } from './entity.js'
 import type { LanguageCode } from './options.js'
 
 export interface GlobeCoordinateSnakDataValue {
@@ -36,6 +36,7 @@ export interface StringSnakDataValue {
 }
 
 export type CommonsMediaSnakDataValue = StringSnakDataValue
+export type EdtfSnakDataValue = StringSnakDataValue
 export type ExternalIdSnakDataValue = StringSnakDataValue
 export type GeoShapeSnakDataValue = StringSnakDataValue
 export type LocalMediaSnakDataValue = StringSnakDataValue
@@ -59,7 +60,7 @@ export interface TimeSnakDataValue {
 export interface GenericWikibaseEntityIdSnakDataValue <T extends EntityType> {
   type: 'wikibase-entityid'
   value: {
-    id: IdByEntityType[T]
+    id: EntityIdByEntityType[T]
     'numeric-id'?: number
     'entity-type': T
   }
@@ -71,22 +72,28 @@ export type WikibaseLexemeSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'
 export type WikibasePropertySnakDataValue = GenericWikibaseEntityIdSnakDataValue<'property'>
 export type WikibaseSenseSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'sense'>
 export type EntitySchemaSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'entity-schema'>
+export type MediaInfoSnakDataValue = GenericWikibaseEntityIdSnakDataValue<'mediainfo'>
 
 export type WikibaseEntityIdSnakDataValue =
-  | WikibaseFormSnakDataValue
-  | WikibaseItemSnakDataValue
-  | WikibaseLexemeSnakDataValue
-  | WikibasePropertySnakDataValue
-  | WikibaseSenseSnakDataValue
-  | EntitySchemaSnakDataValue
+  WikibaseFormSnakDataValue |
+  WikibaseItemSnakDataValue |
+  WikibaseLexemeSnakDataValue |
+  WikibasePropertySnakDataValue |
+  WikibaseSenseSnakDataValue |
+  EntitySchemaSnakDataValue |
+  MediaInfoSnakDataValue
 
-export type SnakDataValue =
-  | GlobeCoordinateSnakDataValue
-  | MonolingualTextSnakDataValue
-  | QuantitySnakDataValue
-  | StringSnakDataValue
-  | TimeSnakDataValue
-  | WikibaseEntityIdSnakDataValue
+export interface SnakDataValueByDatavalueType {
+  globecoordinate: GlobeCoordinateSnakDataValue
+  monolingualtext: MonolingualTextSnakDataValue
+  quantity: QuantitySnakDataValue
+  string: StringSnakDataValue
+  time: TimeSnakDataValue
+  'wikibase-entityid': WikibaseEntityIdSnakDataValue
+}
+
+export type SnakDatavalueType = keyof SnakDataValueByDatavalueType
+export type SnakDataValue = SnakDataValueByDatavalueType[SnakDatavalueType]
 
 /** @deprecated use SnakDataValue */
 export type SnakValue = SnakDataValue

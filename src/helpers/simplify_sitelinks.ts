@@ -13,28 +13,26 @@ export function simplifySitelinks (sitelinks: Sitelinks, options?: SimplifySitel
 export function simplifySitelinks (sitelinks: Sitelinks, options: SimplifySitelinkOptions = {}): SimplifiedSitelinksWithBadgesAndUrls | SimplifiedSitelinksWithBadges | SimplifiedSitelinksWithUrls | SimplifiedSitelinks {
   let { addUrl, keepBadges, keepAll } = options
   keepBadges = keepBadges || keepAll
-  return typedKeys(sitelinks).reduce(aggregateValues({
-    sitelinks,
-    addUrl,
-    keepBadges,
-  }), {})
+  return typedKeys(sitelinks).reduce(aggregateValuesFactory(sitelinks, addUrl, keepBadges), {})
 }
 
-const aggregateValues = ({ sitelinks, addUrl, keepBadges }) => (index, key) => {
-  // Accomodating for wikibase-cli, which might set the sitelink to null
-  // to signify that a requested sitelink was not found
-  if (sitelinks[key] == null) {
-    index[key] = sitelinks[key]
+function aggregateValuesFactory (sitelinks: Sitelinks, addUrl?: boolean, keepBadges?: boolean) {
+  return function aggregateValues (index, key) {
+    // Accomodating for wikibase-cli, which might set the sitelink to null
+    // to signify that a requested sitelink was not found
+    if (sitelinks[key] == null) {
+      index[key] = null
+      return index
+    }
+
+    const { title, badges } = sitelinks[key]
+    if (addUrl || keepBadges) {
+      index[key] = { title }
+      if (addUrl) index[key].url = getSitelinkUrl({ site: key, title })
+      if (keepBadges) index[key].badges = badges
+    } else {
+      index[key] = title
+    }
     return index
   }
-
-  const { title, badges } = sitelinks[key]
-  if (addUrl || keepBadges) {
-    index[key] = { title }
-    if (addUrl) index[key].url = getSitelinkUrl({ site: key, title })
-    if (keepBadges) index[key].badges = badges
-  } else {
-    index[key] = title
-  }
-  return index
 }

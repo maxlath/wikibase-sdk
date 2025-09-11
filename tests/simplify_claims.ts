@@ -238,9 +238,9 @@ describe('simplifyPropertyClaims', () => {
         { value: 'bacasable', id: 'Q4115189$5c85ec5e-48f5-716d-8944-c4364693e406' },
       ])
       should(simplifyPropertyClaims(emptyValues.claims.P3984, { keepTypes: true })).deepEqual([
-        { value: undefined, type: 'external-id' },
-        { value: undefined, type: 'external-id' },
-        { value: 'bacasable', type: 'external-id' },
+        { value: undefined, datatype: 'external-id' },
+        { value: undefined, datatype: 'external-id' },
+        { value: 'bacasable', datatype: 'external-id' },
       ])
     })
   })
@@ -325,7 +325,7 @@ describe('simplifyClaim', () => {
   describe('keepTypes', () => {
     it('should return the correct value when called with keepQualifiers=true', () => {
       const simplified = simplifyClaim(Q2112.claims.P190[0], { keepTypes: true })
-      should(simplified).deepEqual({ value: 'Q207614', type: 'wikibase-item' })
+      should(simplified).deepEqual({ value: 'Q207614', datatype: 'wikibase-item' })
     })
   })
 
@@ -357,7 +357,7 @@ describe('simplifyClaim', () => {
       const simplifiedWithQualifiers = simplifyClaim(Q646148.claims.P39[1], { keepTypes: true, keepQualifiers: true })
       const { P1365 } = simplifiedWithQualifiers.qualifiers
       should(P1365).be.an.Array()
-      should(P1365[0]).deepEqual({ value: 'Q312881', type: 'wikibase-item' })
+      should(P1365[0]).deepEqual({ value: 'Q312881', datatype: 'wikibase-item' })
     })
 
     it('should respect timeConverter for qualifiers claims', () => {
@@ -570,7 +570,7 @@ describe('simplifyClaim', () => {
       should(simplifyClaim(emptyValues.claims.P3984[0], { keepQualifiers: true })).have.property('qualifiers')
       should(simplifyClaim(emptyValues.claims.P3984[0], { keepReferences: true })).have.property('references')
       should(simplifyClaim(emptyValues.claims.P3984[0], { keepIds: true })).have.property('id')
-      should(simplifyClaim(emptyValues.claims.P3984[0], { keepTypes: true })).have.property('type')
+      should(simplifyClaim(emptyValues.claims.P3984[0], { keepTypes: true })).have.property('datatype')
     })
   })
 
@@ -580,7 +580,7 @@ describe('simplifyClaim', () => {
       const simplifiedP625 = simplifyClaim(Q2112.claims.P625[0], { keepAll: true })
       should(simplifiedP214.value).be.a.String()
       should(simplifiedP214.id).be.a.String()
-      should(simplifiedP214.type).be.a.String()
+      should(simplifiedP214.datatype).be.a.String()
       should(simplifiedP214.rank).be.a.String()
       should(simplifiedP214.snaktype).be.a.String()
       should(simplifiedP214.qualifiers).be.an.Object()

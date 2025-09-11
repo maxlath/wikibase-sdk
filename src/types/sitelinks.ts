@@ -15,17 +15,17 @@ export interface Sitelink {
 
 export type Sitelinks = Partial<Record<Site, Sitelink>>
 
-export type SimplifiedSitelinkWithBadges = {
+export interface SimplifiedSitelinkWithBadges {
   title: SitelinkTitle
   badges: SitelinkBadges
 }
 
-export type SimplifiedSitelinkWithUrl = {
+export interface SimplifiedSitelinkWithUrl {
   title: SitelinkTitle
   url: Url
 }
 
-export type SimplifiedSitelinkWithBadgesAndUrl = {
+export interface SimplifiedSitelinkWithBadgesAndUrl {
   title: SitelinkTitle
   url: Url
   badges: SitelinkBadges

@@ -20,6 +20,7 @@ export interface GetRevisionsOptions {
 
 export function getRevisionsFactory (buildUrl: BuildUrlFunction) {
   return function getRevisions ({ ids, format, limit, start, end, prop, user, excludeuser, tag }: GetRevisionsOptions) {
+    // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
     ids = forceArray(ids)
     ids.forEach(o => validate.entityPageTitle(o))

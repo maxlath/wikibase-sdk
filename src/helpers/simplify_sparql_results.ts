@@ -87,7 +87,7 @@ function getSimplifiedResult (
   richVars: readonly string[],
   associatedVars: readonly string[],
   standaloneVars: readonly string[],
-  input: Readonly<Record<string, SparqlValueObj>>,
+  input: Readonly<Record<string, SparqlValueObj>>
 ) {
   const simplifiedResult = {}
   for (const varName of richVars) {
@@ -110,7 +110,7 @@ function addAssociatedValue (
   input: Readonly<Record<string, SparqlValueObj>>,
   varName: string,
   associatedVarName: string,
-  richVarData: SimplifiedSparqlValueGroup,
+  richVarData: SimplifiedSparqlValueGroup
 ) {
   // ex: propertyType => Type
   let shortAssociatedVarName = associatedVarName.split(varName)[1]

@@ -1,5 +1,6 @@
 import should from 'should'
 import {
+  findEntityTypeFromId,
   getEntityIdFromGuid,
   getImageUrl,
   getNumericId,
@@ -29,7 +30,6 @@ describe('helpers', () => {
       should(isEntityId('L525-Z1')).be.false()
       should(isEntityId('M42')).be.true()
       should(isEntityId('31')).be.false()
-      // @ts-expect-error non string input
       should(isEntityId(31)).be.false()
       should(isEntityId('Z31')).be.false()
       should(isEntityId('q31')).be.false()
@@ -42,7 +42,6 @@ describe('helpers', () => {
       should(isItemId('Q571')).be.true()
       should(isItemId('P31')).be.false()
       should(isItemId('31')).be.false()
-      // @ts-expect-error non string input
       should(isItemId(31)).be.false()
       should(isItemId('Z31')).be.false()
       should(isItemId('q31')).be.false()
@@ -55,7 +54,6 @@ describe('helpers', () => {
       should(isPropertyId('P31')).be.true()
       should(isPropertyId('Q571')).be.false()
       should(isPropertyId('31')).be.false()
-      // @ts-expect-error non string input
       should(isPropertyId(31)).be.false()
       should(isPropertyId('Z31')).be.false()
       should(isPropertyId('q31')).be.false()
@@ -69,7 +67,6 @@ describe('helpers', () => {
       should(isLexemeId('P31')).be.false()
       should(isLexemeId('Q571')).be.false()
       should(isLexemeId('31')).be.false()
-      // @ts-expect-error non string input
       should(isLexemeId(31)).be.false()
       should(isLexemeId('Z31')).be.false()
       should(isLexemeId('q31')).be.false()
@@ -206,6 +203,23 @@ describe('helpers', () => {
       should(getEntityIdFromGuid('L525-S1-66D20252-8CEC-4DB1-8B00-D713CFF42E48')).equal('L525-S1')
       should(getEntityIdFromGuid('P6216-a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')).equal('P6216')
       should(getEntityIdFromGuid('Q520-4a0b85a0-4a47-3254-0379-52680370fec')).equal('Q520')
+    })
+  })
+
+  describe('findEntityTypeFromId', () => {
+    it('should support all entity types', () => {
+      findEntityTypeFromId('E123').should.equal('entity-schema')
+      findEntityTypeFromId('L123-F1').should.equal('form')
+      findEntityTypeFromId('Q123').should.equal('item')
+      findEntityTypeFromId('L123').should.equal('lexeme')
+      findEntityTypeFromId('M123').should.equal('mediainfo')
+      findEntityTypeFromId('P123').should.equal('property')
+      findEntityTypeFromId('L123-S1').should.equal('sense')
+    })
+
+    it('should throw an error when the entity id is invalid', () => {
+      // @ts-expect-error
+      ;(() => findEntityTypeFromId('S123')).should.throw('invalid entity id: S123')
     })
   })
 })

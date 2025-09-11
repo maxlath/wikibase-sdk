@@ -12,7 +12,7 @@ export interface SparqlResults {
     readonly vars: readonly string[]
   }
   readonly results: {
-    readonly bindings: ReadonlyArray<Record<string, SparqlValueObj>>
+    readonly bindings: readonly Record<string, SparqlValueObj>[]
   }
 
 }

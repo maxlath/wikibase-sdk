@@ -14,6 +14,7 @@ export interface GetSitelinkUrlOptions {
 }
 
 export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
+  // eslint-disable-next-line prefer-rest-params
   rejectObsoleteInterface(arguments)
 
   if (!site) throw new Error('missing a site')

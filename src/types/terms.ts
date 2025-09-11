@@ -1,8 +1,8 @@
 import type { LanguageCode } from './options.js'
 
-type LanguageRecord<V> = Partial<Readonly<Record<LanguageCode, V>>>
+export type LanguageRecord<V> = Partial<Readonly<Record<LanguageCode, V>>>
 
-export type Term = {
+export interface Term {
   readonly language: LanguageCode
   readonly value: string
 }
