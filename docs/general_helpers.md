@@ -33,6 +33,7 @@
   - [wikibaseTimeToSimpleDay](#wikibasetimetosimpleday)
   - [getImageUrl](#getimageurl)
   - [getEntityIdFromGuid](#getentityidfromguid)
+  - [findEntityTypeFromId](#findentitytypefromid)
   - [getStatementsKey](#getstatementskey)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -372,6 +373,26 @@ getEntityIdFromGuid('P6216-a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')
 // => P6216
 getEntityIdFromGuid('Q520-4a0b85a0-4a47-3254-0379-52680370fec')
 // => Q520
+```
+
+### findEntityTypeFromId
+```js
+import { findEntityTypeFromId } from 'wikibase-sdk'
+
+findEntityTypeFromId('E123')
+// => "entity-schema"
+findEntityTypeFromId('L123-F1')
+// => "form"
+findEntityTypeFromId('Q123')
+// => "item"
+findEntityTypeFromId('L123')
+// => "lexeme"
+findEntityTypeFromId('M123')
+// => "mediainfo"
+findEntityTypeFromId('P123')
+// => "property"
+findEntityTypeFromId('L123-S1')
+// => "sense"
 ```
 
 ### getStatementsKey
