@@ -1,6 +1,9 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 11.1.0 - 2025-10-01
+* Add helper function [`getStatementsKey`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/general_helpers.md#getstatementskey)
+
 ## 11.0.0 - 2025-09-12
 * **BREAKING CHANGES**: Drop support for legacy snak datatype `musical notation`: now only supports it as `musical-notation`
 * **BREAKING CHANGES**: In [simplified claims](https://github.com/maxlath/wikibase-sdk/blob/main/docs/simplify_claims.md), rename `simplifiedClaim.type` to `simplifiedClaim.datatype`, for consistency with the raw entities' naming
