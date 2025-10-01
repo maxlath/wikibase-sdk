@@ -4,6 +4,7 @@ import {
   getEntityIdFromGuid,
   getImageUrl,
   getNumericId,
+  getStatementsKey,
   isEntityId,
   isEntityPageTitle,
   isEntitySchemaId,
@@ -220,6 +221,15 @@ describe('helpers', () => {
     it('should throw an error when the entity id is invalid', () => {
       // @ts-expect-error
       ;(() => findEntityTypeFromId('S123')).should.throw('invalid entity id: S123')
+    })
+  })
+
+  describe('getStatementsKey', () => {
+    it('should return the statement key for the requested instance', () => {
+      getStatementsKey('https://wikidata.org/').should.equal('claims')
+      getStatementsKey('https://commons.wikimedia.org/').should.equal('statements')
+      getStatementsKey('wikidata.org').should.equal('claims')
+      getStatementsKey('commons.wikimedia.org').should.equal('statements')
     })
   })
 })

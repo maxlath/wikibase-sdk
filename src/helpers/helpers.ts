@@ -102,3 +102,7 @@ export function findEntityTypeFromId (id: EntityId): EntityType {
   if (isEntitySchemaId(id)) return 'entity-schema'
   throw new Error(`invalid entity id: ${id}`)
 }
+
+export function getStatementsKey (instance: string) {
+  return instance.includes('commons.wikimedia.org') ? 'statements' : 'claims'
+}

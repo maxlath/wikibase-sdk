@@ -33,6 +33,7 @@
   - [wikibaseTimeToSimpleDay](#wikibasetimetosimpleday)
   - [getImageUrl](#getimageurl)
   - [getEntityIdFromGuid](#getentityidfromguid)
+  - [getStatementsKey](#getstatementskey)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -371,4 +372,15 @@ getEntityIdFromGuid('P6216-a7fd6230-496e-6b47-ca4a-dcec5dbd7f95')
 // => P6216
 getEntityIdFromGuid('Q520-4a0b85a0-4a47-3254-0379-52680370fec')
 // => Q520
+```
+
+### getStatementsKey
+Some Wikibase instances entities have `statements` rather than the usual `claims` (See [T149410](https://phabricator.wikimedia.org/T149410)). When working with different Wikibase instances, it can be useful to know which key should be expected. This can be done by calling `getStatementsKey`:
+```js
+import { getStatementsKey } from 'wikibase-sdk'
+
+getStatementsKey('https://wikidata.org')
+// => "claims"
+getStatementsKey('https://commons.wikimedia.org')
+// => "statements"
 ```
