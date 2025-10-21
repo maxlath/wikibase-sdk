@@ -161,12 +161,6 @@ export default ts.config([
       parserOptions: tsParserOptions,
     },
   },
-  {
-    files: [ './*.js', './*.cjs', './scripts/**/*.ts' ],
-    languageOptions: {
-      globals: globals.node,
-    },
-  },
   globalIgnores([
     '**/node_modules',
     '**/dist',
