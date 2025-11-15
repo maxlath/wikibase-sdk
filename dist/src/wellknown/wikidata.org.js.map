@@ -1,0 +1,1 @@
+{"version":3,"file":"wikidata.org.js","sourceRoot":"","sources":["../../../src/wellknown/wikidata.org.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,GAAG,EAAE,MAAM,oBAAoB,CAAA;AAExC,MAAM,CAAC,MAAM,GAAG,GAAG,GAAG,CAAC;IACrB,QAAQ,EAAE,0BAA0B;IACpC,cAAc,EAAE,mCAAmC;CACpD,CAAC,CAAA;AAEF,eAAe,GAAG,CAAA"}
