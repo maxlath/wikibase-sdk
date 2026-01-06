@@ -10,4 +10,5 @@ export interface WbGetEntities {
   languages?: string
   props?: string
   redirects?: 'yes' | 'no' // Default: yes
+  formatversion?: '1' | '2';
 }
