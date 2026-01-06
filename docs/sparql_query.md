@@ -2,7 +2,7 @@
 
 To get JSON results from a SPARQL query you can [make a HTTP request to https://query.wikidata.org/sparql?query={SPARQL}&format=json](https://www.mediawiki.org/wiki/Wikidata_query_service/User_Manual#SPARQL_endpoint), which with `wikidata-sdk` can be done like this:
 ```js
-import { WBK } from 'wikibase-sdk'
+import { WBK, simplifySparqlResults } from 'wikibase-sdk'
 // Make sure you initialize wbk with a sparqlEndpoint
 const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
@@ -10,12 +10,15 @@ const wbk = WBK({
 })
 const sparql = 'SELECT * WHERE { ?s ?p ?o } LIMIT 10'
 const url = wbk.sparqlQuery(sparql)
-const headers = { 'User-Agent': '<FILL IN YOUR USER-AGENT INFORMATION>' }; // see https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy
-// request the generated URL with your favorite HTTP request library
-request({ method: 'GET', url, headers})
+const rawResults = await fetch(url, {
+  headers: {
+    // A custom user-agent is required for Wikimedia services, see https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy
+    'user-agent': 'my-custom-user-agent'
+  }
+}).then(res => res.json())
+const simplifiedResults = simplifySparqlResults(rawResults)
 ```
-For more information on including the correct [User-Agent](https://foundation.wikimedia.org/wiki/Policy:User-Agent_policy)
-You can then simplify the response using [`wbk.simplify.sparqlResults`](simplify_sparql_results.md).
+For more information on results simplification, see [`simplifySparqlResults`](simplify_sparql_results.md).
 
 ### Example
 
@@ -44,4 +47,22 @@ If the generated request URL gets too long, you can make a POST request instead
 ```js
 const [ url, body ]  = wbk.sparqlQuery(sparql).split('?')
 request({ method: 'POST', url, body })
+```
+
+## Alternative SPARQL engines
+### QLever
+```js
+import { WBK } from 'wikibase-sdk'
+const wbk = WBK({
+  instance: 'https://www.wikidata.org',
+  sparqlEndpoint: 'https://qlever.dev/wikidata'
+})
+const sparql = 'SELECT * WHERE { ?s ?p ?o } LIMIT 10'
+
+// The generated URL will be enriched with the prefixes that could be identified, if not prefixes are already set
+const url = wbk.sparqlQuery(sparql)
+
+// Then it's the same as with the default (BlazeGraph) engine:
+const rawResults = await fetch(url).then(res => res.json())
+const simplifiedResults = simplifySparqlResults(rawResults)
 ```

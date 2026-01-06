@@ -70,3 +70,10 @@ export function typedEntries<K extends string, V> (input: Readonly<Partial<Recor
 export function typedKeys <Obj> (obj: Obj) {
   return Object.keys(obj) as (keyof Obj)[]
 }
+
+export function pick <Obj extends Record<string, unknown>> (obj: Obj, keys: string[]) {
+  return Object.fromEntries(keys.map(key => {
+    return [ key, obj[key] ]
+    // @ts-expect-error
+  })) as Pick<Obj, Obj[keyof Obj] | undefined>
+}
