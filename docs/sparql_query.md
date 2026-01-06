@@ -51,6 +51,9 @@ request({ method: 'POST', url, body })
 
 ## Alternative SPARQL engines
 ### QLever
+* Engine: https://github.com/ad-freiburg/qlever/
+* Wikidata SPARQL endpoint: https://qlever.dev/wikidata
+
 ```js
 import { WBK } from 'wikibase-sdk'
 const wbk = WBK({

@@ -2,7 +2,7 @@
 *versions follow [SemVer](http://semver.org)*
 
 ## 11.2.0 - 2026-01-06
-* [`sparqlQuery`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/sparql_query.md): Added support for the [QLever engine](https://github.com/ad-freiburg/qlever/)
+* [`sparqlQuery`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/sparql_query.md): Added support for the [QLever engine](https://github.com/maxlath/wikibase-sdk/blob/main/docs/sparql_query.md#qlever)
 
 ## 11.1.0 - 2025-10-01
 * Add helper function [`getStatementsKey`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/general_helpers.md#getstatementskey)
