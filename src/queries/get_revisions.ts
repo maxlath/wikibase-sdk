@@ -19,6 +19,10 @@ export interface GetRevisionsOptions {
 }
 
 export function getRevisionsFactory (buildUrl: BuildUrlFunction) {
+  /**
+   * Uses [MediaWiki Revision API](https://www.mediawiki.org/wiki/API:Revisions) to get entities revisions, generating URLs of the kind: https://www.wikidata.org/w/api.php?action=query&prop=revisions&titles=Q3548931&format=json&rvstart=1497020505&rvlimit=max
+   * API Help page: https://www.wikidata.org/w/api.php?action=help&modules=query+revisions
+   */
   return function getRevisions ({ ids, format, limit, start, end, prop, user, excludeuser, tag }: GetRevisionsOptions) {
     // eslint-disable-next-line prefer-rest-params
     rejectObsoleteInterface(arguments)
