@@ -42,11 +42,14 @@ const wellknownPrefixes = {
 
 export function addWellknownPrefixes (sparql: string) {
   if (sparql.trim().startsWith('PREFIX')) return sparql
+  let prefixesHeader = ''
   const foundPrefixesKeys = sparql.match(/\w+:/g)?.map(prefix => prefix.replace(':', ''))
-  const foundPrefixes = pick(wellknownPrefixes, foundPrefixesKeys)
-  const prefixesHeader = Object.entries(foundPrefixes).map(([ key, value ]) => {
-    return `PREFIX ${key}: <${value}>`
-  })
-  .join('\n')
-  return `${prefixesHeader}\n${sparql}`
+  if (foundPrefixesKeys) {
+    const foundPrefixes = pick(wellknownPrefixes, foundPrefixesKeys)
+    prefixesHeader = Object.entries(foundPrefixes).map(([ key, value ]) => {
+      return `PREFIX ${key}: <${value}>`
+    })
+    .join('\n')
+  }
+  return `${prefixesHeader}\n${sparql}`.trim()
 }
