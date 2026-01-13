@@ -29,6 +29,7 @@ export * from './types/sitelinks.js'
 export * from './types/snakvalue.js'
 export * from './types/sparql.js'
 export * from './types/terms.js'
+export * from './types/wbgetentities.js'
 
 // In case of missing types on Wbk, check ./wikibase-sdk.ts exports
 
