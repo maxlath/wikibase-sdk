@@ -35,3 +35,8 @@ export function assert (condition: boolean): asserts condition {
 export function assertPlainObject (obj) {
   return assert(typeof obj === 'object' && obj !== null && !(obj instanceof Array))
 }
+
+export function shouldNotBeCalled (res?: unknown) {
+  console.warn(res, 'undesired positive res')
+  throw new Error('function was expected not to be called')
+}

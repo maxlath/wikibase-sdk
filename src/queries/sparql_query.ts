@@ -22,6 +22,9 @@ export function buildBlazeGraphSparqlQueryUrl (sparqlEndpoint: Url, sparql: stri
 export function buildQLeverSparqlQueryUrl (sparqlEndpoint: Url, sparql: string, format: SparqlOutputFormat = 'json') {
   const { origin, pathname } = new URL(sparqlEndpoint)
   const apiBase = pathname.startsWith('/api') ? sparqlEndpoint : `${origin}/api${pathname}`
+  if (!/\w+\/api\/\w+/.test(apiBase)) {
+    throw new Error('QLever SPARQL endpoint should be of the form {origin}/api/{index name}. Examples: https://qlever.dev/api/wikidata or https://sparql.dnb.de/api/gnd')
+  }
   const action = qleverActionByFormat[format]
   sparql = addWellknownPrefixes(sparql.trim())
   return `${apiBase}?query=${fixedEncodeURIComponent(sparql)}&action=${action}`

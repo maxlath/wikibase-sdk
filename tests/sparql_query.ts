@@ -1,6 +1,7 @@
 import should from 'should'
 import { sparqlQueryFactory } from '../src/queries/sparql_query.js'
 import { sparqlEndpoint } from './lib/tests_env.js'
+import { shouldNotBeCalled } from './lib/utils.js'
 
 const sparqlQuery = sparqlQueryFactory(sparqlEndpoint)
 
@@ -37,5 +38,15 @@ describe('sparqlQuery', () => {
     // - Corrects endpoint URL
     // - Adds wellknown prefixes
     should(url).startWith('https://qlever.dev/api/wikidata?query=PREFIX')
+  })
+
+  it('should reject an underspecified qlevel endpoint', () => {
+    try {
+      const sparqlQueryAlt = sparqlQueryFactory('https://qlever.dev/')
+      const url = sparqlQueryAlt(sparqlExample)
+      shouldNotBeCalled(url)
+    } catch (err) {
+      err.message.should.startWith('QLever SPARQL endpoint should be of the form')
+    }
   })
 })
