@@ -16,7 +16,11 @@ type SparqlOutputFormat = 'json' | 'csv'
 
 export function buildBlazeGraphSparqlQueryUrl (sparqlEndpoint: Url, sparql: string, format: SparqlOutputFormat = 'json') {
   const query = fixedEncodeURIComponent(sparql.trim())
-  return `${sparqlEndpoint}?format=${format}&query=${query}`
+  let url = `${sparqlEndpoint}?`
+  // Other formats should be requested by setting the request "accept" header
+  // See https://www.mediawiki.org/wiki/Wikidata_Query_Service/User_Manual#Supported_formats
+  if (format === 'json') url += 'format=json&'
+  return url + `query=${query}`
 }
 
 export function buildQLeverSparqlQueryUrl (sparqlEndpoint: Url, sparql: string, format: SparqlOutputFormat = 'json') {

@@ -1,5 +1,5 @@
 import should from 'should'
-import { sparqlQueryFactory } from '../src/queries/sparql_query.js'
+import { buildBlazeGraphSparqlQueryUrl, sparqlQueryFactory } from '../src/queries/sparql_query.js'
 import { sparqlEndpoint } from './lib/tests_env.js'
 import { shouldNotBeCalled } from './lib/utils.js'
 
@@ -48,5 +48,17 @@ describe('sparqlQuery', () => {
     } catch (err) {
       err.message.should.startWith('QLever SPARQL endpoint should be of the form')
     }
+  })
+})
+
+describe('buildBlazeGraphSparqlQueryUrl', () => {
+  it('should accept json format', () => {
+    const url = buildBlazeGraphSparqlQueryUrl(sparqlEndpoint, sparqlExample, 'json')
+    url.should.containEql('format=json')
+  })
+
+  it('should accept non-json format', () => {
+    const url = buildBlazeGraphSparqlQueryUrl(sparqlEndpoint, sparqlExample, 'csv')
+    url.should.not.containEql('csv')
   })
 })
