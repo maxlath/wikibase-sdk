@@ -45,6 +45,11 @@ export function addWellknownPrefixes (sparql: string) {
   let prefixesHeader = ''
   const foundPrefixesKeys = sparql.match(/\w+:/g)?.map(prefix => prefix.replace(':', ''))
   if (foundPrefixesKeys) {
+    for (const prefix of foundPrefixesKeys) {
+      if (!(prefix in wellknownPrefixes)) {
+        throw new Error(`unknown prefix: ${prefix}`)
+      }
+    }
     const foundPrefixes = pick(wellknownPrefixes, foundPrefixesKeys)
     prefixesHeader = Object.entries(foundPrefixes).map(([ key, value ]) => {
       return `PREFIX ${key}: <${value}>`

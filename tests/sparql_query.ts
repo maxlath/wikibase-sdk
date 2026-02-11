@@ -40,6 +40,16 @@ describe('sparqlQuery', () => {
     should(url).startWith('https://qlever.dev/api/wikidata?query=PREFIX')
   })
 
+  it('should reject an unknown prefix', () => {
+    try {
+      const sparqlQueryAlt = sparqlQueryFactory('https://qlever.dev/api/wikidata')
+      const url = sparqlQueryAlt('SELECT * { ?a foo:bar ?b }')
+      shouldNotBeCalled(url)
+    } catch (err) {
+      err.message.should.startWith('unknown prefix: foo')
+    }
+  })
+
   it('should reject an underspecified qlevel endpoint', () => {
     try {
       const sparqlQueryAlt = sparqlQueryFactory('https://qlever.dev/')
