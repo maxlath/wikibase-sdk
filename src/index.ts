@@ -33,3 +33,4 @@ export * from './types/terms.js'
 // In case of missing types on Wbk, check ./wikibase-sdk.ts exports
 
 export type { WbGetEntitiesResponse, CirrusSearchResult } from './helpers/parse_responses.js'
+export type { WbkClient, RevisionsResponse } from './client.js'
