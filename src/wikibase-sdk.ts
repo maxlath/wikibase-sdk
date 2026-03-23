@@ -16,7 +16,7 @@ import { searchEntitiesFactory } from './queries/search_entities.js'
 import { sparqlQueryFactory } from './queries/sparql_query.js'
 import { buildUrlFactory, type Url } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
-import type { WbkClient } from './client.js'
+import type { ClientOptions, WbkClient } from './client.js'
 import type { InstanceConfig } from './types/options.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
@@ -51,7 +51,7 @@ interface Instance {
 }
 export type Wbk = { readonly instance: Instance, readonly client: WbkClient } & ApiQueries & SparqlQueries & typeof common
 
-export function WBK (config: InstanceConfig, fetchOptions?: RequestInit): Wbk {
+export function WBK (config: InstanceConfig, clientOptions?: ClientOptions): Wbk {
   if (!isPlainObject(config)) throw new Error('invalid config')
   const { instance, sparqlEndpoint } = config
   let { wgScriptPath = 'w' } = config
@@ -119,7 +119,7 @@ export function WBK (config: InstanceConfig, fetchOptions?: RequestInit): Wbk {
     client: buildClient({
       ...wikibaseApiFunctions,
       ...wikibaseQueryServiceFunctions,
-    }, fetchOptions),
+    }, clientOptions),
     ...common,
     ...wikibaseApiFunctions,
     ...wikibaseQueryServiceFunctions,

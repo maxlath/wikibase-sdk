@@ -5,7 +5,7 @@ const wdk = WBK({
   instance: 'https://www.wikidata.org',
   sparqlEndpoint: 'https://query.wikidata.org/sparql',
 }, {
-  headers: { 'User-Agent': 'wikibase-sdk-tests/integration' },
+  userAgent: 'wikibase-sdk-tests/integration',
 })
 
 describe('client (integration)', function () {
@@ -14,23 +14,21 @@ describe('client (integration)', function () {
 
   describe('getEntities', () => {
     it('fetches a single entity and returns well-formed data', async () => {
-      const res = await wdk.client.getEntities({ ids: 'Q1' })
+      const res = await wdk.client.getEntities({ ids: 'Q135519449' })
       should(res).be.an.Object()
       should(res.entities).be.an.Object()
-      should(res.entities['Q1']).be.an.Object()
-      should(res.entities['Q1']?.id).equal('Q1')
+      should(res.entities['Q135519449']).be.an.Object()
+      should(res.entities['Q135519449']?.id).equal('Q135519449')
     })
   })
 
   describe('getManyEntities', () => {
-    it('fetches entities in batches and returns an array of responses', async () => {
-      const ids = Array.from({ length: 3 }, (_, i) => `Q${i + 1}`) as [`Q${number}`, ...`Q${number}`[]]
-      const responses = await wdk.client.getManyEntities({ ids })
-      should(responses).be.an.Array()
-      should(responses.length).equal(1)
-      const res = responses[0]
+    it('fetches entities in batches and returns a merged response', async () => {
+      const ids = [ 'Q135519449', 'Q135519450', 'Q135519451' ] as [`Q${number}`, ...`Q${number}`[]]
+      const res = await wdk.client.getManyEntities({ ids })
       should(res).be.an.Object()
-      should(res?.entities).be.an.Object()
+      should(res.entities).be.an.Object()
+      should(res.errors).be.an.Array()
     })
   })
 
@@ -57,7 +55,7 @@ describe('client (integration)', function () {
 
   describe('getRevisions', () => {
     it('returns revision data for an entity', async () => {
-      const res = await wdk.client.getRevisions({ ids: 'Q1', limit: 2 })
+      const res = await wdk.client.getRevisions({ ids: 'Q135519449', limit: 2 })
       should(res).be.an.Object()
       should(res.query.pages).be.an.Object()
       const pages = Object.values(res.query.pages)
@@ -68,16 +66,16 @@ describe('client (integration)', function () {
 
   describe('getEntityRevision', () => {
     it('fetches a specific revision of an entity', async () => {
-      const revisionsRes = await wdk.client.getRevisions({ ids: 'Q1', limit: 1 })
+      const revisionsRes = await wdk.client.getRevisions({ ids: 'Q135519449', limit: 1 })
       const page = Object.values(revisionsRes.query.pages)[0]
       const revid = page?.revisions[0]?.revid
       should(revid).be.a.Number()
 
-      const res = await wdk.client.getEntityRevision({ id: 'Q1', revision: `${revid}` })
+      const res = await wdk.client.getEntityRevision({ id: 'Q135519449', revision: `${revid}` })
       should(res).be.an.Object()
       should(res.entities).be.an.Object()
-      should(res.entities['Q1']).be.an.Object()
-      should(res.entities['Q1']?.id).equal('Q1')
+      should(res.entities['Q135519449']).be.an.Object()
+      should(res.entities['Q135519449']?.id).equal('Q135519449')
     })
   })
 
@@ -97,7 +95,7 @@ describe('client (integration)', function () {
 
   describe('sparqlQuery', () => {
     it('executes a SPARQL query and returns bindings', async () => {
-      const sparql = 'SELECT ?item WHERE { wd:Q1 wdt:P31 ?item } LIMIT 3'
+      const sparql = 'SELECT ?item WHERE { wd:Q135519449 wdt:P31 ?item } LIMIT 3'
       const res = await wdk.client.sparqlQuery(sparql)
       should(res).be.an.Object()
       should(res.results).be.an.Object()
