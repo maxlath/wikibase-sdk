@@ -123,7 +123,7 @@ export interface SimplifiedItem extends SimplifiedEntityInfo<ItemId> {
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo<PropertyId> {
   type: 'property'
-  datatype: Datatype
+  datatype?: Datatype
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
