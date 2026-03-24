@@ -12,6 +12,10 @@
     "./wikidata.org": {
       "types": "./dist/src/wellknown/wikidata.org.d.ts",
       "import": "./dist/src/wellknown/wikidata.org.js"
+    },
+    "./factgrid.de": {
+      "types": "./dist/src/wellknown/factgrid.de.d.ts",
+      "import": "./dist/src/wellknown/factgrid.de.js"
     }
   },
   "types": "./dist/src/index.d.ts",
