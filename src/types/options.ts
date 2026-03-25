@@ -1,10 +1,18 @@
 import type { SimplifyClaimsOptions } from './simplify_claims.js'
 
+// Keep options names consistent with wikibase-edit options as far as reasonable
+// https://github.com/maxlath/wikibase-edit/blob/main/docs/how_to.md#config
 export interface InstanceConfig {
   instance?: string
   sparqlEndpoint?: string
   wgScriptPath?: string
 }
+
+export interface ClientOptions {
+  userAgent?: string
+}
+
+export type Config = InstanceConfig & ClientOptions
 
 export type Props = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'labels' | 'descriptions' | 'claims' | 'datatype'
 export type UrlResultFormat = 'xml' | 'json'
