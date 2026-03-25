@@ -46,7 +46,7 @@ export interface ClientUrlBuilders {
   getReverseClaims: GetReverseClaims
 }
 
-async function fetchJson<T> (url: string, clientOptions?: ClientOptions): Promise<T> {
+export async function fetchJson<T> (url: string, clientOptions?: ClientOptions): Promise<T> {
   // Format sdk options to `fetch` RequestInit
   const requestInit: RequestInit = {
     headers: {

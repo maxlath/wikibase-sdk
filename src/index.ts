@@ -34,3 +34,4 @@ export * from './types/terms.js'
 
 export type { WbGetEntitiesResponse, WbGetManyEntitiesResponse, CirrusSearchResult, RevisionsResponse } from './helpers/parse_responses.js'
 export type { WbkClient } from './client.js'
+export type { WbkSimpleClient } from './simple_client.js'
