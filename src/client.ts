@@ -49,9 +49,10 @@ export interface ClientUrlBuilders {
 async function fetchJson<T> (url: string, clientOptions?: ClientOptions): Promise<T> {
   // Format sdk options to `fetch` RequestInit
   const requestInit: RequestInit = {
-    headers: {},
+    headers: {
+      'User-Agent': clientOptions.userAgent || 'wikibase-sdk',
+    },
   }
-  if (clientOptions?.userAgent) requestInit.headers['User-Agent'] = clientOptions.userAgent
   const res = await fetch(url, requestInit)
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText} — ${url}`)
   return res.json() as Promise<T>
