@@ -61,7 +61,10 @@ Then in your javascript:
 import { WBK } from 'wikibase-sdk'
 const wbk = WBK({
   instance: 'https://my-wikibase-instan.se',
-  sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql' // Required to use `sparqlQuery` and `getReverseClaims` functions, optional otherwise
+  // Required to use `sparqlQuery` and `getReverseClaims` functions, optional otherwise
+  sparqlEndpoint: 'https://query.my-wikibase-instan.se/sparql',
+  // A custom user agent is recommended to use `wbk.client` functions, see https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy
+  userAgent: 'ExampleTool/1.0 (https://example.org/exampletool/; exampletool@example.org)',
 })
 ```
 The `wdk` object of previous versions of this documentation - from the time this module was bound to wikidata.org only - thus corresponds to the following:
