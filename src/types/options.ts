@@ -12,7 +12,11 @@ export interface ClientOptions {
   userAgent?: string
 }
 
-export type Config = InstanceConfig & ClientOptions
+export interface SimpleClientOptions {
+  simplifyEntityOptions?: SimplifyEntityOptions
+}
+
+export type Config = InstanceConfig & ClientOptions & SimpleClientOptions
 
 export type Props = 'info' | 'sitelinks' | 'sitelinks/urls' | 'aliases' | 'labels' | 'descriptions' | 'claims' | 'datatype'
 export type UrlResultFormat = 'xml' | 'json'
