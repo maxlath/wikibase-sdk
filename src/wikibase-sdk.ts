@@ -16,8 +16,8 @@ import { searchEntitiesFactory } from './queries/search_entities.js'
 import { sparqlQueryFactory } from './queries/sparql_query.js'
 import { buildUrlFactory, type Url } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
-import type { ClientOptions, WbkClient } from './client.js'
-import type { InstanceConfig } from './types/options.js'
+import type { WbkClient } from './client.js'
+import type { ClientOptions, Config } from './types/options.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
 those are also exposed directly on the module object. Exemple:
@@ -51,9 +51,9 @@ interface Instance {
 }
 export type Wbk = { readonly instance: Instance, readonly client: WbkClient } & ApiQueries & SparqlQueries & typeof common
 
-export function WBK (config: InstanceConfig, clientOptions?: ClientOptions): Wbk {
+export function WBK (config: Config): Wbk {
   if (!isPlainObject(config)) throw new Error('invalid config')
-  const { instance, sparqlEndpoint } = config
+  const { instance, sparqlEndpoint, userAgent } = config
   let { wgScriptPath = 'w' } = config
 
   wgScriptPath = wgScriptPath.replace(/^\//, '')
@@ -61,6 +61,8 @@ export function WBK (config: InstanceConfig, clientOptions?: ClientOptions): Wbk
   if (!(instance || sparqlEndpoint)) {
     throw new Error(`one of instance or sparqlEndpoint should be set at initialization.\n${tip}`)
   }
+
+  const clientOptions: ClientOptions = { userAgent }
 
   let wikibaseApiFunctions: ApiQueries
   let instanceRoot: string | undefined

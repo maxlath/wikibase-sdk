@@ -8,6 +8,7 @@ import type { GetReverseClaimsOptions } from './queries/get_reverse_claims.js'
 import type { GetRevisionsOptions } from './queries/get_revisions.js'
 import type { SearchEntitiesOptions } from './queries/search_entities.js'
 import type { Entities } from './types/entity.js'
+import type { ClientOptions } from './types/options.js'
 import type { SearchResponse } from './types/search.js'
 import type { SparqlResults } from './types/sparql.js'
 
@@ -43,12 +44,6 @@ export interface ClientUrlBuilders {
   getEntitiesFromSitelinks: GetEntitiesFromSitelinks
   sparqlQuery: SparqlQuery
   getReverseClaims: GetReverseClaims
-}
-
-// Make sure this is compatible with wikibase-edit options
-// https://github.com/maxlath/wikibase-edit/blob/main/docs/how_to.md#config
-export interface ClientOptions {
-  userAgent?: string
 }
 
 async function fetchJson<T> (url: string, clientOptions?: ClientOptions): Promise<T> {

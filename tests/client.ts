@@ -4,7 +4,6 @@ import { WBK } from '../src/wikibase-sdk.js'
 const wdk = WBK({
   instance: 'https://www.wikidata.org',
   sparqlEndpoint: 'https://query.wikidata.org/sparql',
-}, {
   userAgent: 'wikibase-sdk-tests/integration',
 })
 
