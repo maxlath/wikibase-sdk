@@ -12,18 +12,6 @@ import type { ClientOptions } from './types/options.js'
 import type { SearchResponse } from './types/search.js'
 import type { SparqlResults } from './types/sparql.js'
 
-export interface WbkClient {
-  readonly searchEntities: (options: SearchEntitiesOptions) => Promise<SearchResponse>
-  readonly cirrusSearchPages: (options: CirrusSearchPagesOptions) => Promise<CirrusSearchPagesResponse>
-  readonly getEntities: (options: GetEntitiesOptions) => Promise<WbGetEntitiesResponse>
-  readonly getManyEntities: (options: GetManyEntitiesOptions) => Promise<WbGetManyEntitiesResponse>
-  readonly getRevisions: (options: GetRevisionsOptions) => Promise<RevisionsResponse>
-  readonly getEntityRevision: (options: GetEntityRevisionOptions) => Promise<WbGetEntitiesResponse>
-  readonly getEntitiesFromSitelinks: (options: GetEntitiesFromSitelinksOptions) => Promise<WbGetEntitiesResponse>
-  readonly sparqlQuery: (sparql: string) => Promise<SparqlResults>
-  readonly getReverseClaims: (options: GetReverseClaimsOptions) => Promise<SparqlResults>
-}
-
 type GetEntities = (options: GetEntitiesOptions) => string
 type GetManyEntities = (options: GetManyEntitiesOptions) => string[]
 type GetRevisions = (options: GetRevisionsOptions) => string
@@ -58,7 +46,7 @@ async function fetchJson<T> (url: string, clientOptions?: ClientOptions): Promis
   return res.json() as Promise<T>
 }
 
-export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: ClientOptions): WbkClient {
+export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: ClientOptions) {
   const {
     searchEntities,
     cirrusSearchPages,
@@ -74,10 +62,10 @@ export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: Cli
   const fetch = <T>(url: string) => fetchJson<T>(url, clientOptions)
 
   return {
-    searchEntities: options => fetch<SearchResponse>(searchEntities(options)),
-    cirrusSearchPages: options => fetch<CirrusSearchPagesResponse>(cirrusSearchPages(options)),
-    getEntities: options => fetch<WbGetEntitiesResponse>(getEntities(options)),
-    getManyEntities: async options => {
+    searchEntities: (options: SearchEntitiesOptions) => fetch<SearchResponse>(searchEntities(options)),
+    cirrusSearchPages: (options: CirrusSearchPagesOptions) => fetch<CirrusSearchPagesResponse>(cirrusSearchPages(options)),
+    getEntities: (options: GetEntitiesOptions) => fetch<WbGetEntitiesResponse>(getEntities(options)),
+    getManyEntities: async (options: GetManyEntitiesOptions) => {
       const urls = getManyEntities(options)
       const responses = await Promise.all(urls.map(url => fetch<WbGetEntitiesResponse>(url)))
       return responses.reduce<WbGetManyEntitiesResponse>(
@@ -88,10 +76,12 @@ export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: Cli
         { entities: {} as Entities, errors: [] }
       )
     },
-    getRevisions: options => fetch<RevisionsResponse>(getRevisions(options)),
-    getEntityRevision: options => fetch<WbGetEntitiesResponse>(getEntityRevision(options)),
-    getEntitiesFromSitelinks: options => fetch<WbGetEntitiesResponse>(getEntitiesFromSitelinks(options)),
-    sparqlQuery: sparql => fetch<SparqlResults>(sparqlQuery(sparql)),
-    getReverseClaims: options => fetch<SparqlResults>(getReverseClaims(options)),
+    getRevisions: (options: GetRevisionsOptions) => fetch<RevisionsResponse>(getRevisions(options)),
+    getEntityRevision: (options: GetEntityRevisionOptions) => fetch<WbGetEntitiesResponse>(getEntityRevision(options)),
+    getEntitiesFromSitelinks: (options: GetEntitiesFromSitelinksOptions) => fetch<WbGetEntitiesResponse>(getEntitiesFromSitelinks(options)),
+    sparqlQuery: (sparql: string) => fetch<SparqlResults>(sparqlQuery(sparql)),
+    getReverseClaims: (options: GetReverseClaimsOptions) => fetch<SparqlResults>(getReverseClaims(options)),
   }
 }
+
+export type WbkClient = ReturnType<typeof buildClient>
