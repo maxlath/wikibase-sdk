@@ -11,6 +11,35 @@ export interface WbGetEntitiesResponse {
   }
 }
 
+export interface WbGetManyEntitiesResponse {
+  entities: Entities
+  errors: WbGetEntitiesResponse['error'][]
+}
+
+export interface RevisionsResponse {
+  query: {
+    pages: Record<string, {
+      pageid: number
+      ns: number
+      title: string
+      revisions: {
+        revid: number
+        parentid: number
+        minor?: boolean
+        user: string
+        userid: number
+        timestamp: string
+        size: number
+        comment: string
+        parsedcomment: string
+        content?: string
+        tags: string[]
+        roles: string[]
+      }[]
+    }>
+  }
+}
+
 export type Title = string
 export type Titles = string[]
 

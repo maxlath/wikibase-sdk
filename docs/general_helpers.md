@@ -57,8 +57,8 @@ import { isEntityId } from 'wikibase-sdk'
 isEntityId('Q1') // true
 isEntityId('P1') // true
 isEntityId('L1') // true
-isEntityId('L1-F1') // false
-isEntityId('L1-S1') // false
+isEntityId('L1-F1') // true
+isEntityId('L1-S1') // true
 ```
 
 ### isItemId

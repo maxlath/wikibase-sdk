@@ -29,7 +29,9 @@ export * from './types/sitelinks.js'
 export * from './types/snakvalue.js'
 export * from './types/sparql.js'
 export * from './types/terms.js'
+export * from './types/wbgetentities.js'
 
 // In case of missing types on Wbk, check ./wikibase-sdk.ts exports
 
-export type { WbGetEntitiesResponse, CirrusSearchResult } from './helpers/parse_responses.js'
+export type { WbGetEntitiesResponse, WbGetManyEntitiesResponse, CirrusSearchResult, RevisionsResponse } from './helpers/parse_responses.js'
+export type { WbkClient } from './client.js'
