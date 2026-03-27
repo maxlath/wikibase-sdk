@@ -1,5 +1,5 @@
 import type { Claims } from './claim.js'
-import type { EntityInfo, FormId, ItemId, PropertyId, SenseId } from './entity.js'
+import type { EntityInfo, FormId, ItemId, SenseId } from './entity.js'
 import type { SimplifiedClaims } from './simplify_claims.js'
 import type { Glosses, Representations, SimplifiedGlosses, SimplifiedRepresentations } from './terms.js'
 
@@ -14,8 +14,8 @@ export interface Sense extends EntityInfo<SenseId> {
   claims?: Claims
 }
 
-export type SimplifiedForms = Record<PropertyId, SimplifiedForm[]>
-export type SimplifiedSenses = Record<PropertyId, SimplifiedSense[]>
+export type SimplifiedForms = SimplifiedForm[]
+export type SimplifiedSenses = SimplifiedSense[]
 
 export interface SimplifiedForm {
   id: FormId

@@ -119,17 +119,15 @@ export interface SimplifiedItem extends SimplifiedEntityInfo<ItemId> {
   aliases?: SimplifiedAliases
   claims?: SimplifiedClaims
   sitelinks?: SimplifiedSitelinks
-  lexicalCategory: string
 }
 
 export interface SimplifiedProperty extends SimplifiedEntityInfo<PropertyId> {
   type: 'property'
-  datatype: Datatype
+  datatype?: Datatype
   labels?: SimplifiedLabels
   descriptions?: SimplifiedDescriptions
   aliases?: SimplifiedAliases
   claims?: SimplifiedClaims
-  lexicalCategory: string
 }
 
 export interface SimplifiedLexeme extends SimplifiedEntityInfo<LexemeId> {
