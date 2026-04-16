@@ -62,9 +62,7 @@
     "url": "https://github.com/maxlath/wikibase-sdk/issues"
   },
   "homepage": "https://github.com/maxlath/wikibase-sdk",
-  "dependencies": {
-    "type-fest": "^4.41.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@eslint/config-helpers": "^0.3.0",
     "@eslint/js": "^9.32.0",
@@ -87,6 +85,7 @@
     "should": "^13.2.3",
     "tiny-chalk": "^3.0.1",
     "tsx": "^4.19.1",
+    "type-fest": "^4.41.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.38.0"
   },
