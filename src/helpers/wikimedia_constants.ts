@@ -4,6 +4,7 @@ export type Site = typeof sites[number]
 export type WikimediaLanguageCode = typeof wikimediaLanguageCodes[number]
 
 export const specialSites = {
+  abstractwiki: 'abstract',
   commonswiki: 'commons',
   foundationwiki: 'foundation',
   mediawikiwiki: 'mediawiki',
@@ -20,6 +21,7 @@ export const sites = [
   'aawiki',
   'aawikibooks',
   'aawiktionary',
+  'abstractwiki',
   'abwiki',
   'abwiktionary',
   'acewiki',
@@ -438,6 +440,7 @@ export const sites = [
   'kaawiki',
   'kaawiktionary',
   'kabwiki',
+  'kaiwiki',
   'kajwiki',
   'kawiki',
   'kawikibooks',
@@ -904,6 +907,7 @@ export const sites = [
   'urwiki',
   'urwikibooks',
   'urwikiquote',
+  'urwikisource',
   'urwiktionary',
   'uzwiki',
   'uzwikibooks',
@@ -1231,6 +1235,7 @@ export const wikimediaLanguageCodes = [
   'io',
   'is',
   'isu',
+  'isv',
   'isv-cyrl',
   'isv-latn',
   'it',
@@ -1307,6 +1312,7 @@ export const wikimediaLanguageCodes = [
   'liv',
   'ljp',
   'lki',
+  'lkt',
   'lld',
   'lmo',
   'ln',
