@@ -37,6 +37,7 @@ export function getSitelinkUrl ({ site, title }: GetSitelinkUrlOptions): Url {
 const wikimediaSite = (subdomain: string) => (title: string) => `https://${subdomain}.wikimedia.org/wiki/${title}`
 
 const siteUrlBuilders: Readonly<Record<SpecialSiteProjectName, (s: string) => string>> = {
+  abstract: title => `https://abstract.wikipedia.org/wiki/${title}`,
   commons: wikimediaSite('commons'),
   foundation: wikimediaSite('foundation'),
   mediawiki: title => `https://www.mediawiki.org/wiki/${title}`,
