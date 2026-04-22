@@ -1,6 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
+## 11.3.0 - 2026-04-22
+* Add `wbk.client`, exposing the same functions that return URLs on `wbk`, but returns the corresponding HTTP request response body instead. Thanks [@ogroppo](https://github.com/ogroppo)
+* Add FactGrid as well-known instance: `import factgridsdk from 'wikibase-sdk/factgrid.de`. Thanks [@ogroppo](https://github.com/ogroppo)
+
 ## 11.2.0 - 2026-01-06
 * [`sparqlQuery`](https://github.com/maxlath/wikibase-sdk/blob/main/docs/sparql_query.md): Added support for the [QLever engine](https://github.com/maxlath/wikibase-sdk/blob/main/docs/sparql_query.md#qlever)
 
