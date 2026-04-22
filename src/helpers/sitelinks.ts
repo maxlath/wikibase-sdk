@@ -102,22 +102,28 @@ export function getSitelinkData (site: Site | Url): SitelinkData {
       return { lang: 'en', project, key: site }
     }
 
-    if (!isOfType(sites, site)) {
-      throw new Error(`site not found: ${site}. Updating wikibase-sdk to a more recent version might fix the issue.`)
+    try {
+      let [ lang, projectSuffix, rest ] = site.split('wik')
+
+      // Detecting cases like 'frwikiwiki' that would return [ 'fr', 'i', 'i' ]
+      if (rest != null) throw new Error(`invalid sitelink key: ${site}`)
+
+      // Support keys such as be_x_oldwiki, which refers to be-x-old.wikipedia.org
+      lang = lang.replace(/_/g, '-')
+
+      const project = projectsBySuffix[projectSuffix]
+      if (!project) throw new Error(`sitelink project not found: ${project}`)
+
+      return { lang, project, key: site }
+    } catch (err) {
+      if (!isOfType(sites, site)) {
+        const err2 = new Error(`site not found: ${site}. Updating wikibase-sdk to a more recent version might fix the issue.`)
+        err2.cause = err
+        throw err2
+      } else {
+        throw err
+      }
     }
-
-    let [ lang, projectSuffix, rest ] = site.split('wik')
-
-    // Detecting cases like 'frwikiwiki' that would return [ 'fr', 'i', 'i' ]
-    if (rest != null) throw new Error(`invalid sitelink key: ${site}`)
-
-    // Support keys such as be_x_oldwiki, which refers to be-x-old.wikipedia.org
-    lang = lang.replace(/_/g, '-')
-
-    const project = projectsBySuffix[projectSuffix]
-    if (!project) throw new Error(`sitelink project not found: ${project}`)
-
-    return { lang, project, key: site }
   }
 }
 

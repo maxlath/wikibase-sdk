@@ -36,8 +36,19 @@ describe('simplify.sitelinks', () => {
     should(simplifySitelinks(Q571.sitelinks, { addUrl: true }).enwiki.url).equal('https://en.wikipedia.org/wiki/Book')
   })
 
-  it('should not throw when a sitelink is null ', () => {
+  it('should not throw when a sitelink is null', () => {
     const sitelinks = { frwiki: null }
     should(simplifySitelinks(sitelinks)).deepEqual(sitelinks)
+  })
+
+  it('should not throw when a site is not found', () => {
+    const fakePrefix = 'fooooo'
+    const site = `${fakePrefix}wiki`
+    const title = 'yolo'
+    const sitelinks = { [site]: { site, title } }
+    // @ts-expect-error
+    should(simplifySitelinks(sitelinks, { addUrl: true })).deepEqual({
+      fooooowiki: { title, url: `https://${fakePrefix}.wikipedia.org/wiki/${title}` },
+    })
   })
 })

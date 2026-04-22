@@ -91,8 +91,8 @@ describe('getSitelinkData', () => {
     should(getSitelinkData('https://commons.wikimedia.org/wiki/Category:ITER').title).equal('Category:ITER')
   })
 
-  it('should reject invalid sitelink key', () => {
-    should(() => getSitelinkData('foowiki')).throw()
+  it('should recover from a recoverable invalid sitelink key', () => {
+    should(getSitelinkData('foowiki')).deepEqual({ lang: 'foo', project: 'wikipedia', key: 'foowiki' })
   })
 
   it('should parse encoded URL components', () => {
