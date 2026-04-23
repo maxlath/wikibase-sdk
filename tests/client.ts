@@ -1,5 +1,6 @@
 import should from 'should'
 import { WBK } from '../src/wikibase-sdk.js'
+import type { ItemId } from '../src/index.js'
 
 const wdk = WBK({
   instance: 'https://www.wikidata.org',
@@ -23,7 +24,7 @@ describe('client (integration)', function () {
 
   describe('getManyEntities', () => {
     it('fetches entities in batches and returns a merged response', async () => {
-      const ids = [ 'Q135519449', 'Q135519450', 'Q135519451' ] as [`Q${number}`, ...`Q${number}`[]]
+      const ids = [ 'Q135519449', 'Q135519450', 'Q135519451' ] as ItemId[]
       const res = await wdk.client.getManyEntities({ ids })
       should(res).be.an.Object()
       should(res.entities).be.an.Object()

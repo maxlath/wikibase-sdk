@@ -14,9 +14,11 @@ import { getReverseClaimsFactory } from './queries/get_reverse_claims.js'
 import { getRevisionsFactory } from './queries/get_revisions.js'
 import { searchEntitiesFactory } from './queries/search_entities.js'
 import { sparqlQueryFactory } from './queries/sparql_query.js'
+import { buildSimpleClient } from './simple_client.js'
 import { buildUrlFactory, type Url } from './utils/build_url.js'
 import { isPlainObject } from './utils/utils.js'
 import type { WbkClient } from './client.js'
+import type { WbkSimpleClient } from './simple_client.js'
 import type { ClientOptions, Config } from './types/options.js'
 
 const tip = `Tip: if you just want to access functions that don't need an instance or a sparqlEndpoint,
@@ -49,11 +51,11 @@ interface Instance {
   readonly root: Url
   readonly apiEndpoint: Url
 }
-export type Wbk = { readonly instance: Instance, readonly client: WbkClient } & ApiQueries & SparqlQueries & typeof common
+export type Wbk = { readonly instance: Instance, readonly client: WbkClient, readonly simpleClient: WbkSimpleClient } & ApiQueries & SparqlQueries & typeof common
 
 export function WBK (config: Config): Wbk {
   if (!isPlainObject(config)) throw new Error('invalid config')
-  const { instance, sparqlEndpoint, userAgent } = config
+  const { instance, sparqlEndpoint, userAgent, simplifyEntityOptions } = config
   let { wgScriptPath = 'w' } = config
 
   wgScriptPath = wgScriptPath.replace(/^\//, '')
@@ -122,6 +124,10 @@ export function WBK (config: Config): Wbk {
       ...wikibaseApiFunctions,
       ...wikibaseQueryServiceFunctions,
     }, clientOptions),
+    simpleClient: buildSimpleClient({
+      ...wikibaseApiFunctions,
+      ...wikibaseQueryServiceFunctions,
+    }, clientOptions, simplifyEntityOptions),
     ...common,
     ...wikibaseApiFunctions,
     ...wikibaseQueryServiceFunctions,
