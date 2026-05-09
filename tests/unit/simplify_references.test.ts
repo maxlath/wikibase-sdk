@@ -1,6 +1,6 @@
 import should from 'should'
-import { simplifyReferences } from '../src/helpers/simplify_claims.js'
-import { Q217447 } from './data/Q217447.js'
+import { simplifyReferences } from '../../src/helpers/simplify_claims.js'
+import { Q217447 } from '../data/Q217447.js'
 
 describe('simplifyReferences', () => {
   it('should simplify references', () => {

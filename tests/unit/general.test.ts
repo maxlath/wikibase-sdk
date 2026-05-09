@@ -1,6 +1,6 @@
 import should from 'should'
-import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData, simplifyEntity, simplifyEntities, simplifyLabels, simplifyDescriptions, simplifyAliases, simplifySitelinks, simplifyClaim, simplifyPropertyClaims, simplifyClaims, simplifySnak, simplifyPropertySnaks, simplifySnaks, simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers, simplifyForms, simplifyForm, simplifySenses, simplifySense, simplifySparqlResults, truthyClaims, truthyPropertyClaims, isItemId, isPropertyId, isNumericId, isGuid, isHash, isPropertyClaimsId, getNumericId, wikibaseTimeToDateObject, wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, getSitelinkUrl, isSite, getImageUrl, getEntityIdFromGuid } from '../src/index.js'
-import { instance, sparqlEndpoint } from './lib/tests_env.js'
+import defaultWBK, { WBK, simplify, parse, isEntityId, getSitelinkData, simplifyEntity, simplifyEntities, simplifyLabels, simplifyDescriptions, simplifyAliases, simplifySitelinks, simplifyClaim, simplifyPropertyClaims, simplifyClaims, simplifySnak, simplifyPropertySnaks, simplifySnaks, simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers, simplifyForms, simplifyForm, simplifySenses, simplifySense, simplifySparqlResults, truthyClaims, truthyPropertyClaims, isItemId, isPropertyId, isNumericId, isGuid, isHash, isPropertyClaimsId, getNumericId, wikibaseTimeToDateObject, wikibaseTimeToEpochTime, wikibaseTimeToISOString, wikibaseTimeToSimpleDay, getSitelinkUrl, isSite, getImageUrl, getEntityIdFromGuid } from '../../src/index.js'
+import { instance, sparqlEndpoint } from '../lib/tests_env.js'
 
 describe('builder', () => {
   it('should be a function', () => {

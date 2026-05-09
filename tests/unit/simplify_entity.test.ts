@@ -1,14 +1,14 @@
 import { cloneDeep, pick } from 'lodash-es'
 import should from 'should'
-import { simplifyEntity, simplifyEntities } from '../src/helpers/simplify_entity.js'
-import { L525F2 } from './data/L525-F2.js'
-import { L525S1 } from './data/L525-S1.js'
-import { L525 } from './data/L525.js'
-import { M56656949 } from './data/M56656949.js'
-import { P8098 } from './data/P8098.js'
-import { Q571 } from './data/Q571.js'
-import { assert } from './lib/utils.js'
-import type { MediaInfo } from '../src/index.js'
+import { simplifyEntity, simplifyEntities } from '../../src/helpers/simplify_entity.js'
+import { L525F2 } from '../data/L525-F2.js'
+import { L525S1 } from '../data/L525-S1.js'
+import { L525 } from '../data/L525.js'
+import { M56656949 } from '../data/M56656949.js'
+import { P8098 } from '../data/P8098.js'
+import { Q571 } from '../data/Q571.js'
+import { assert } from '../lib/utils.js'
+import type { MediaInfo } from '../../src/index.js'
 
 describe('simplify.entity', () => {
   it('should be a function', () => {

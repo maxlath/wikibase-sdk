@@ -18,7 +18,7 @@ import {
   isPropertyClaimsId,
   isPropertyId,
   isSenseId,
-} from '../src/helpers/helpers.js'
+} from '../../src/helpers/helpers.js'
 
 describe('helpers', () => {
   describe('isEntityId', () => {

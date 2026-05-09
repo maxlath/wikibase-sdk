@@ -1,6 +1,6 @@
 import should from 'should'
-import { simplifyForms, simplifyForm } from '../src/helpers/simplify_forms.js'
-import { L525 } from './data/L525.js'
+import { simplifyForms, simplifyForm } from '../../src/helpers/simplify_forms.js'
+import { L525 } from '../data/L525.js'
 
 describe('simplify.form', () => {
   it('should reject an object that isnt a form', () => {

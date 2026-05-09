@@ -1,7 +1,7 @@
 import should from 'should'
-import { cirrusSearchPagesFactory } from '../src/queries/cirrus_search.js'
-import { buildUrl } from './lib/tests_env.js'
-import { parseUrlQuery } from './lib/utils.js'
+import { cirrusSearchPagesFactory } from '../../src/queries/cirrus_search.js'
+import { buildUrl } from '../lib/tests_env.js'
+import { parseUrlQuery } from '../lib/utils.js'
 
 const cirrusSearchPages = cirrusSearchPagesFactory(buildUrl)
 

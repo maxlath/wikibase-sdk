@@ -1,6 +1,6 @@
 import should from 'should'
-import { WBK } from '../src/wikibase-sdk.js'
-import type { ItemId } from '../src/index.js'
+import { WBK } from '../../src/wikibase-sdk.js'
+import type { ItemId } from '../../src/index.js'
 
 const wdk = WBK({
   instance: 'https://www.wikidata.org',
@@ -8,7 +8,7 @@ const wdk = WBK({
   userAgent: 'wikibase-sdk-tests/integration',
 })
 
-describe('client (integration)', function () {
+describe('client', function () {
   // Network requests — give each test up to 10 seconds
   this.timeout(10_000)
 

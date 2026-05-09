@@ -1,8 +1,8 @@
 import should from 'should'
-import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../src/helpers/simplify_claims.js'
-import { Q19180293 } from './data/Q19180293.js'
-import { Q2112 } from './data/Q2112.js'
-import { Q571 } from './data/Q571.js'
+import { simplifyQualifier, simplifyPropertyQualifiers, simplifyQualifiers } from '../../src/helpers/simplify_claims.js'
+import { Q19180293 } from '../data/Q19180293.js'
+import { Q2112 } from '../data/Q2112.js'
+import { Q571 } from '../data/Q571.js'
 
 describe('simplifyQualifier', () => {
   it('should simplify a qualifier', () => {

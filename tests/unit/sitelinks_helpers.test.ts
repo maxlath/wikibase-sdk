@@ -1,5 +1,5 @@
 import should from 'should'
-import { getSitelinkUrl, getSitelinkData, isSite } from '../src/helpers/sitelinks.js'
+import { getSitelinkUrl, getSitelinkData, isSite } from '../../src/helpers/sitelinks.js'
 
 describe('getSitelinkUrl', () => {
   it('should be a function', () => {

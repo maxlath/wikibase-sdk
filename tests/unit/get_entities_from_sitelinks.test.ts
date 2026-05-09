@@ -1,7 +1,7 @@
 import should from 'should'
-import { getEntitiesFromSitelinksFactory } from '../src/queries/get_entities_from_sitelinks.js'
-import { buildUrl } from './lib/tests_env.js'
-import { parseUrlQuery } from './lib/utils.js'
+import { getEntitiesFromSitelinksFactory } from '../../src/queries/get_entities_from_sitelinks.js'
+import { buildUrl } from '../lib/tests_env.js'
+import { parseUrlQuery } from '../lib/utils.js'
 
 const getEntitiesFromSitelinks = getEntitiesFromSitelinksFactory(buildUrl)
 

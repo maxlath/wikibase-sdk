@@ -1,6 +1,6 @@
 import should from 'should'
-import { WBK } from '../src/wikibase-sdk.js'
-import type { ItemId } from '../src/index.js'
+import { WBK } from '../../src/wikibase-sdk.js'
+import type { ItemId } from '../../src/index.js'
 
 const wdk = WBK({
   instance: 'https://www.wikidata.org',
@@ -15,7 +15,7 @@ const wdkWithOptions = WBK({
   simplifyEntityOptions: { keepQualifiers: true },
 })
 
-describe('simpleClient (integration)', function () {
+describe('simpleClient', function () {
   // Network requests — give each test up to 10 seconds
   this.timeout(10_000)
 
@@ -115,7 +115,7 @@ describe('simpleClient (integration)', function () {
   })
 })
 
-describe('simpleClient with simplifyEntityOptions (integration)', function () {
+describe('simpleClient with simplifyEntityOptions', function () {
   this.timeout(10_000)
 
   describe('simplifyEntityOptions', () => {

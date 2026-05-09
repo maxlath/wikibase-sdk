@@ -1,9 +1,9 @@
 import { range } from 'lodash-es'
 import should from 'should'
-import { getManyEntitiesFactory } from '../src/queries/get_many_entities.js'
-import { buildUrl } from './lib/tests_env.js'
-import { parseUrlQuery } from './lib/utils.js'
-import type { ItemId } from '../src/types/entity.js'
+import { getManyEntitiesFactory } from '../../src/queries/get_many_entities.js'
+import { buildUrl } from '../lib/tests_env.js'
+import { parseUrlQuery } from '../lib/utils.js'
+import type { ItemId } from '../../src/types/entity.js'
 
 const getManyEntities = getManyEntitiesFactory(buildUrl)
 const manyIds = range(1, 80).map(id => `Q${id}` as ItemId)

@@ -3,9 +3,9 @@ import {
   wikibaseTimeToEpochTime,
   wikibaseTimeToISOString,
   wikibaseTimeToSimpleDay,
-} from '../src/helpers/time.js'
-import { Q970917 } from './data/Q970917.js'
-import { assert } from './lib/utils.js'
+} from '../../src/helpers/time.js'
+import { Q970917 } from '../data/Q970917.js'
+import { assert } from '../lib/utils.js'
 
 describe('time helpers', () => {
   const ISOtime = '2014-05-14T00:00:00.000Z'

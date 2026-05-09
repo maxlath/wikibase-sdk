@@ -1,7 +1,7 @@
 import should from 'should'
-import { getRevisionsFactory } from '../src/queries/get_revisions.js'
-import { buildUrl } from './lib/tests_env.js'
-import { parseQuery } from './lib/utils.js'
+import { getRevisionsFactory } from '../../src/queries/get_revisions.js'
+import { buildUrl } from '../lib/tests_env.js'
+import { parseQuery } from '../lib/utils.js'
 
 const sinceYesterdayInMilliSeconds = new Date().getTime() - 24 * 60 * 60 * 1000
 const sinceYesterdayInSeconds = Math.trunc(sinceYesterdayInMilliSeconds / 1000)

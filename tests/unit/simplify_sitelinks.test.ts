@@ -1,7 +1,7 @@
 import should from 'should'
-import { simplifySitelinks } from '../src/helpers/simplify_sitelinks.js'
-import { Q571 } from './data/Q571.js'
-import { objLenght } from './lib/utils.js'
+import { simplifySitelinks } from '../../src/helpers/simplify_sitelinks.js'
+import { Q571 } from '../data/Q571.js'
+import { objLenght } from '../lib/utils.js'
 
 describe('simplify.sitelinks', () => {
   it('should simplify sitelinks', () => {

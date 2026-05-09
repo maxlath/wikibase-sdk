@@ -1,7 +1,7 @@
 import should from 'should'
-import { buildBlazeGraphSparqlQueryUrl, sparqlQueryFactory } from '../src/queries/sparql_query.js'
-import { sparqlEndpoint } from './lib/tests_env.js'
-import { shouldNotBeCalled } from './lib/utils.js'
+import { buildBlazeGraphSparqlQueryUrl, sparqlQueryFactory } from '../../src/queries/sparql_query.js'
+import { sparqlEndpoint } from '../lib/tests_env.js'
+import { shouldNotBeCalled } from '../lib/utils.js'
 
 const sparqlQuery = sparqlQueryFactory(sparqlEndpoint)
 

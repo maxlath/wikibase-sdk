@@ -1,7 +1,7 @@
 import should from 'should'
-import { getEntityRevisionFactory } from '../src/queries/get_entity_revision.js'
-import { instance, wgScriptPath } from './lib/tests_env.js'
-import { parseQuery } from './lib/utils.js'
+import { getEntityRevisionFactory } from '../../src/queries/get_entity_revision.js'
+import { instance, wgScriptPath } from '../lib/tests_env.js'
+import { parseQuery } from '../lib/utils.js'
 
 const getEntityRevision = getEntityRevisionFactory(instance, wgScriptPath)
 

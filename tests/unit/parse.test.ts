@@ -1,8 +1,8 @@
 import should from 'should'
-import * as parse from '../src/helpers/parse_responses.js'
-import { cirrusSearchPagesResponse } from './data/cirrus_search_response.js'
-import { wbgetentitiesResponse } from './data/wbgetentities_response.js'
-import { assert } from './lib/utils.js'
+import * as parse from '../../src/helpers/parse_responses.js'
+import { cirrusSearchPagesResponse } from '../data/cirrus_search_response.js'
+import { wbgetentitiesResponse } from '../data/wbgetentities_response.js'
+import { assert } from '../lib/utils.js'
 
 describe('parse', () => {
   describe('wb', () => {

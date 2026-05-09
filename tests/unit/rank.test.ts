@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash-es'
 import should from 'should'
-import { truthyClaims, truthyPropertyClaims } from '../src/helpers/rank.js'
-import { Q4115189 } from './data/Q4115189.js'
-import { assert } from './lib/utils.js'
+import { truthyClaims, truthyPropertyClaims } from '../../src/helpers/rank.js'
+import { Q4115189 } from '../data/Q4115189.js'
+import { assert } from '../lib/utils.js'
 
 describe('truthyClaims', () => {
   it('should filter-out non-truthy claims', () => {

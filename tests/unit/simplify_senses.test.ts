@@ -1,6 +1,6 @@
 import should from 'should'
-import { simplifySenses, simplifySense } from '../src/helpers/simplify_senses.js'
-import { L525 } from './data/L525.js'
+import { simplifySenses, simplifySense } from '../../src/helpers/simplify_senses.js'
+import { L525 } from '../data/L525.js'
 
 describe('simplify.sense', () => {
   it('should reject an object that isnt a sense', () => {
