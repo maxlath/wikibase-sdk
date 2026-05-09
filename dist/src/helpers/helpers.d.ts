@@ -1,0 +1,23 @@
+import type { EntityId, EntityPageTitle, EntityType, EntityWithClaims, Guid, GuidAltSyntax, NonNestedEntityId, NumericId, PropertyClaimsId } from '../types/entity.js';
+import type { Url } from '../utils/build_url.js';
+export declare const isNumericId: (id: unknown) => id is `${number}`;
+export declare const isEntityId: (id: unknown) => id is EntityId;
+export declare const isEntitySchemaId: (id: unknown) => id is `E${number}`;
+export declare const isItemId: (id: unknown) => id is `Q${number}`;
+export declare const isPropertyId: (id: unknown) => id is `P${number}`;
+export declare const isLexemeId: (id: unknown) => id is `L${number}`;
+export declare const isFormId: (id: unknown) => id is `L${number}-F${number}`;
+export declare const isSenseId: (id: unknown) => id is `L${number}-S${number}`;
+export declare const isMediaInfoId: (id: unknown) => id is `M${number}`;
+export declare const isGuid: (id: unknown) => id is Guid;
+export declare const isHash: (id: unknown) => id is string;
+export declare const isRevisionId: (id: unknown) => id is `${number}`;
+export declare const isNonNestedEntityId: (id: unknown) => id is NonNestedEntityId;
+export declare function isPropertyClaimsId(id: string): id is PropertyClaimsId;
+export declare function isEntityPageTitle(title: string): title is EntityPageTitle;
+export declare function getNumericId(id: string): NumericId;
+export declare function getImageUrl(filename: string, width?: number): Url;
+export declare function getEntityIdFromGuid<ID extends EntityWithClaims['id']>(guid: Guid<ID> | GuidAltSyntax<ID>): ID;
+export declare function findEntityTypeFromId(id: EntityId): EntityType;
+export declare function getStatementsKey(instance: string): "claims" | "statements";
+//# sourceMappingURL=helpers.d.ts.map
