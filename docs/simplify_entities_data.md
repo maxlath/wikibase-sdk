@@ -36,9 +36,12 @@ const simplificationOptions = {
   keepQualifiers: true,
   keepReferences: true,
   keepIds: true,
+  keepTypes: true,
   keepHashes: true,
+  keepSnaktypes: true,
   keepNonTruthy: true, // For each property, keep claims with preferred rank, or normal rank if no claims has the preferred rank
   keepNonDeprecated: true, // For each property, keep all claims with preferred or normal rank
+  timeConverter: 'simple-day',
 
   // sitelinks
   keepBadges: true,
