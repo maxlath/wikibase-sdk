@@ -7,7 +7,6 @@ import type { GetManyEntitiesOptions } from './queries/get_many_entities.js'
 import type { GetReverseClaimsOptions } from './queries/get_reverse_claims.js'
 import type { GetRevisionsOptions } from './queries/get_revisions.js'
 import type { SearchEntitiesOptions } from './queries/search_entities.js'
-import type { Entities } from './types/entity.js'
 import type { ClientOptions } from './types/options.js'
 import type { SearchResponse } from './types/search.js'
 import type { SparqlResults } from './types/sparql.js'
@@ -34,7 +33,7 @@ export interface ClientUrlBuilders {
   getReverseClaims: GetReverseClaims
 }
 
-async function fetchJson<T> (url: string, clientOptions?: ClientOptions): Promise<T> {
+export async function fetchJson<T> (url: string, clientOptions?: ClientOptions): Promise<T> {
   // Format sdk options to `fetch` RequestInit
   const requestInit: RequestInit = {
     headers: {
@@ -62,25 +61,40 @@ export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: Cli
   const fetch = <T>(url: string) => fetchJson<T>(url, clientOptions)
 
   return {
-    searchEntities: (options: SearchEntitiesOptions) => fetch<SearchResponse>(searchEntities(options)),
-    cirrusSearchPages: (options: CirrusSearchPagesOptions) => fetch<CirrusSearchPagesResponse>(cirrusSearchPages(options)),
-    getEntities: (options: GetEntitiesOptions) => fetch<WbGetEntitiesResponse>(getEntities(options)),
-    getManyEntities: async (options: GetManyEntitiesOptions) => {
-      const urls = getManyEntities(options)
-      const responses = await Promise.all(urls.map(url => fetch<WbGetEntitiesResponse>(url)))
-      return responses.reduce<WbGetManyEntitiesResponse>(
-        (acc, { entities, error }) => ({
-          entities: { ...acc.entities, ...entities },
-          errors: error ? [ ...acc.errors, error ] : acc.errors,
-        }),
-        { entities: {} as Entities, errors: [] }
-      )
+    searchEntities (options: SearchEntitiesOptions) {
+      return fetch<SearchResponse>(searchEntities(options))
     },
-    getRevisions: (options: GetRevisionsOptions) => fetch<RevisionsResponse>(getRevisions(options)),
-    getEntityRevision: (options: GetEntityRevisionOptions) => fetch<WbGetEntitiesResponse>(getEntityRevision(options)),
-    getEntitiesFromSitelinks: (options: GetEntitiesFromSitelinksOptions) => fetch<WbGetEntitiesResponse>(getEntitiesFromSitelinks(options)),
-    sparqlQuery: (sparql: string) => fetch<SparqlResults>(sparqlQuery(sparql)),
-    getReverseClaims: (options: GetReverseClaimsOptions) => fetch<SparqlResults>(getReverseClaims(options)),
+    cirrusSearchPages (options: CirrusSearchPagesOptions) {
+      return fetch<CirrusSearchPagesResponse>(cirrusSearchPages(options))
+    },
+    getEntities (options: GetEntitiesOptions) {
+      return fetch<WbGetEntitiesResponse>(getEntities(options))
+    },
+    async getManyEntities (options: GetManyEntitiesOptions) {
+      const urls = getManyEntities(options)
+      const aggregatedResponse: WbGetManyEntitiesResponse = { entities: {}, errors: [] }
+      for (const url of urls) {
+        const { entities, error } = await fetch<WbGetEntitiesResponse>(url)
+        Object.assign(aggregatedResponse.entities, entities)
+        if (error) aggregatedResponse.errors.push(error)
+      }
+      return aggregatedResponse
+    },
+    getRevisions (options: GetRevisionsOptions) {
+      return fetch<RevisionsResponse>(getRevisions(options))
+    },
+    getEntityRevision (options: GetEntityRevisionOptions) {
+      return fetch<WbGetEntitiesResponse>(getEntityRevision(options))
+    },
+    getEntitiesFromSitelinks (options: GetEntitiesFromSitelinksOptions) {
+      return fetch<WbGetEntitiesResponse>(getEntitiesFromSitelinks(options))
+    },
+    sparqlQuery (sparql: string) {
+      return fetch<SparqlResults>(sparqlQuery(sparql))
+    },
+    getReverseClaims (options: GetReverseClaimsOptions) {
+      return fetch<SparqlResults>(getReverseClaims(options))
+    },
   }
 }
 
