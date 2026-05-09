@@ -62,10 +62,16 @@ export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: Cli
   const fetch = <T>(url: string) => fetchJson<T>(url, clientOptions)
 
   return {
-    searchEntities: (options: SearchEntitiesOptions) => fetch<SearchResponse>(searchEntities(options)),
-    cirrusSearchPages: (options: CirrusSearchPagesOptions) => fetch<CirrusSearchPagesResponse>(cirrusSearchPages(options)),
-    getEntities: (options: GetEntitiesOptions) => fetch<WbGetEntitiesResponse>(getEntities(options)),
-    getManyEntities: async (options: GetManyEntitiesOptions) => {
+    searchEntities (options: SearchEntitiesOptions) {
+      return fetch<SearchResponse>(searchEntities(options))
+    },
+    cirrusSearchPages (options: CirrusSearchPagesOptions) {
+      return fetch<CirrusSearchPagesResponse>(cirrusSearchPages(options))
+    },
+    getEntities (options: GetEntitiesOptions) {
+      return fetch<WbGetEntitiesResponse>(getEntities(options))
+    },
+    async getManyEntities (options: GetManyEntitiesOptions) {
       const urls = getManyEntities(options)
       const responses = await Promise.all(urls.map(url => fetch<WbGetEntitiesResponse>(url)))
       return responses.reduce<WbGetManyEntitiesResponse>(
@@ -76,11 +82,21 @@ export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: Cli
         { entities: {} as Entities, errors: [] }
       )
     },
-    getRevisions: (options: GetRevisionsOptions) => fetch<RevisionsResponse>(getRevisions(options)),
-    getEntityRevision: (options: GetEntityRevisionOptions) => fetch<WbGetEntitiesResponse>(getEntityRevision(options)),
-    getEntitiesFromSitelinks: (options: GetEntitiesFromSitelinksOptions) => fetch<WbGetEntitiesResponse>(getEntitiesFromSitelinks(options)),
-    sparqlQuery: (sparql: string) => fetch<SparqlResults>(sparqlQuery(sparql)),
-    getReverseClaims: (options: GetReverseClaimsOptions) => fetch<SparqlResults>(getReverseClaims(options)),
+    getRevisions (options: GetRevisionsOptions) {
+      return fetch<RevisionsResponse>(getRevisions(options))
+    },
+    getEntityRevision (options: GetEntityRevisionOptions) {
+      return fetch<WbGetEntitiesResponse>(getEntityRevision(options))
+    },
+    getEntitiesFromSitelinks (options: GetEntitiesFromSitelinksOptions) {
+      return fetch<WbGetEntitiesResponse>(getEntitiesFromSitelinks(options))
+    },
+    sparqlQuery (sparql: string) {
+      return fetch<SparqlResults>(sparqlQuery(sparql))
+    },
+    getReverseClaims (options: GetReverseClaimsOptions) {
+      return fetch<SparqlResults>(getReverseClaims(options))
+    },
   }
 }
 

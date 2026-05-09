@@ -17,14 +17,38 @@ export function buildSimpleClient (urlBuilders: ClientUrlBuilders, clientOptions
   const simplify = (entities: Parameters<typeof simplifyEntities>[0]) => simplifyEntities(entities, simplifyEntityOptions)
 
   return {
-    searchEntities: async (options: SearchEntitiesOptions) => (await client.searchEntities(options)).search,
-    cirrusSearchPages: async (options: CirrusSearchPagesOptions) => pagesTitles(await client.cirrusSearchPages(options)),
-    getEntities: async (options: GetManyEntitiesOptions) => simplify((await client.getManyEntities(options)).entities),
-    getRevisions: async (options: GetRevisionsOptions) => (await client.getRevisions(options)).query.pages,
-    getEntityRevision: async (options: GetEntityRevisionOptions) => Object.values(simplify((await client.getEntityRevision(options)).entities))[0],
-    getEntitiesFromSitelinks: async (options: GetEntitiesFromSitelinksOptions) => simplify((await client.getEntitiesFromSitelinks(options)).entities),
-    sparqlQuery: async (sparql: string) => simplifySparqlResults(await client.sparqlQuery(sparql)),
-    getReverseClaims: async (options: GetReverseClaimsOptions) => simplifySparqlResults(await client.getReverseClaims(options)),
+    async searchEntities (options: SearchEntitiesOptions) {
+      const { search } = await client.searchEntities(options)
+      return search
+    },
+    async cirrusSearchPages (options: CirrusSearchPagesOptions) {
+      const results = await client.cirrusSearchPages(options)
+      return pagesTitles(results)
+    },
+    async getEntities (options: GetManyEntitiesOptions) {
+      const { entities } = await client.getManyEntities(options)
+      return simplify(entities)
+    },
+    async getRevisions (options: GetRevisionsOptions) {
+      const results = await client.getRevisions(options)
+      return results.query.pages
+    },
+    async getEntityRevision (options: GetEntityRevisionOptions) {
+      const { entities } = await client.getEntityRevision(options)
+      return Object.values(simplify(entities))[0]
+    },
+    async getEntitiesFromSitelinks (options: GetEntitiesFromSitelinksOptions) {
+      const { entities } = await client.getEntitiesFromSitelinks(options)
+      return simplify(entities)
+    },
+    async sparqlQuery (sparql: string) {
+      const results = await client.sparqlQuery(sparql)
+      return simplifySparqlResults(results)
+    },
+    async getReverseClaims (options: GetReverseClaimsOptions) {
+      const results = await client.getReverseClaims(options)
+      return simplifySparqlResults(results)
+    },
   }
 }
 
