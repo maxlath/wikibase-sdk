@@ -36,6 +36,8 @@
     "lint": "eslint",
     "lint-fix": "npm run lint -- --fix",
     "test": "./scripts/run_tests",
+    "test:unit": "mocha $MOCHA_OPTIONS --recursive tests/unit",
+    "test:integration": "mocha $MOCHA_OPTIONS --recursive tests/integration",
     "prepublishOnly": "git checkout main",
     "prepack": "npm run build && npm run lint && npm test",
     "postpublish": "./scripts/postpublish",
