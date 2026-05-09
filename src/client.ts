@@ -7,7 +7,6 @@ import type { GetManyEntitiesOptions } from './queries/get_many_entities.js'
 import type { GetReverseClaimsOptions } from './queries/get_reverse_claims.js'
 import type { GetRevisionsOptions } from './queries/get_revisions.js'
 import type { SearchEntitiesOptions } from './queries/search_entities.js'
-import type { Entities } from './types/entity.js'
 import type { ClientOptions } from './types/options.js'
 import type { SearchResponse } from './types/search.js'
 import type { SparqlResults } from './types/sparql.js'
@@ -73,14 +72,13 @@ export function buildClient (urlBuilders: ClientUrlBuilders, clientOptions?: Cli
     },
     async getManyEntities (options: GetManyEntitiesOptions) {
       const urls = getManyEntities(options)
-      const responses = await Promise.all(urls.map(url => fetch<WbGetEntitiesResponse>(url)))
-      return responses.reduce<WbGetManyEntitiesResponse>(
-        (acc, { entities, error }) => ({
-          entities: { ...acc.entities, ...entities },
-          errors: error ? [ ...acc.errors, error ] : acc.errors,
-        }),
-        { entities: {} as Entities, errors: [] }
-      )
+      const aggregatedResponse: WbGetManyEntitiesResponse = { entities: {}, errors: [] }
+      for (const url of urls) {
+        const { entities, error } = await fetch<WbGetEntitiesResponse>(url)
+        Object.assign(aggregatedResponse.entities, entities)
+        if (error) aggregatedResponse.errors.push(error)
+      }
+      return aggregatedResponse
     },
     getRevisions (options: GetRevisionsOptions) {
       return fetch<RevisionsResponse>(getRevisions(options))
