@@ -47,7 +47,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version info
 
 ## Dependencies
 NodeJS `>= v12.0.0` or not too outdated web browsers (see [`Object.fromEntries` browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries))
-For older JS runtimes, you can use [ES5 bundles from `wikibase-sdk <= v8`](https://github.com/maxlath/wikibase-sdk/tree/v8.1.1#download-pre-bundled-files).
+For older JS runtimes, you can use [ES5 bundles from `wikibase-sdk <= v8`](https://codeberg.org/maxlath/wikibase-sdk/src/tag/v8.1.1#download-pre-bundled-files).
 
 ## Install
 ### as an ES module
@@ -96,7 +96,7 @@ Importing with CommonJS `require` is not supported anymore in version `>= v9.0.0
 npm install wikibase-sdk@v8
 ```
 
-See the [corresponding version documentation](https://github.com/maxlath/wikibase-sdk/tree/v8.1.1#as-a-module)
+See the [corresponding version documentation](https://codeberg.org/maxlath/wikibase-sdk/src/tag/v8.1.1#as-a-module)
 
 ### download pre-bundled files
 Pre-bundled files is not supported anymore in version `>= v9.0.0`, but can still be done by pre-bundled files from older versions:
@@ -107,12 +107,12 @@ wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/v8.1.1/dist/wikibase
 wget https://raw.githubusercontent.com/maxlath/wikibase-sdk/v8.1.1/dist/wikidata-sdk.min.js
 ```
 
-See the [corresponding version documentation](https://github.com/maxlath/wikibase-sdk/tree/v8.1.1#download-pre-bundled-files)
+See the [corresponding version documentation](https://codeberg.org/maxlath/wikibase-sdk/src/tag/v8.1.1#download-pre-bundled-files)
 
 ## Features
 ### Wikibase API
 A set of functions to make **read** queries to a Wikibase instance API (see [Wikidata API documentation](https://www.wikidata.org/w/api.php)).
-For **write** operations, see [wikibase-edit](http://github.com/maxlath/wikibase-edit).
+For **write** operations, see [wikibase-edit](http://codeberg.org/maxlath/wikibase-edit).
 
 * **[Search entities](docs/search_entities.md)**
 * **[Get entities](docs/get_entities.md)**
@@ -139,18 +139,18 @@ There are additional functions for Wikibase instances that have a [SPARQL](https
 ## Contributing
 **Context**
 
-This library had for primary purpose to serve the needs of the [inventaire](https://github.com/inventaire/inventaire) project but extending its capabilities to other needs it totally possible: feel welcome to post your suggestions as issues or pull requests!
+This library had for primary purpose to serve the needs of the [inventaire](https://codeberg.org/inventaire/inventaire) project but extending its capabilities to other needs it totally possible: feel welcome to post your suggestions as issues or pull requests!
 
 **Design constraints**
 
 * `wikibase-sdk` should stay "small" and dependency-free, so that a web application can include it in its bundle without paying a too high cost for it. A consequence is that the lib generates URLs where other libs would integrate doing the request and parsing it's response. But that actually feels quite right to do this way: simply generating the URLs let's users free to handle requests as they like (with callbacks, promises, async/await, custom request agent, whatever!)
 * Therefore, it should focus on providing basic, general helper functions most application working with a Wikibase instance would need.
-* Write operations should go into [wikibase-edit](https://github.com/maxlath/wikibase-edit) as it involves working with Wikibase credentials/tokens.
-* General command-line interface tools should go to [wikibase-cli](https://github.com/maxlath/wikibase-cli), very specific ones — [`wikibase-dump-filter` and alikes](#see-also) — should get their own modules.
+* Write operations should go into [wikibase-edit](https://codeberg.org/maxlath/wikibase-edit) as it involves working with Wikibase credentials/tokens.
+* General command-line interface tools should go to [wikibase-cli](https://codeberg.org/maxlath/wikibase-cli), very specific ones — [`wikibase-dump-filter` and alikes](#see-also) — should get their own modules.
 
 ## See Also
-* [wikibase-edit](https://github.com/maxlath/wikibase-edit): Edit a Wikibase instance from NodeJS
-* [wikibase-cli](https://github.com/maxlath/wikibase-cli): The command-line interface to Wikibase instances
+* [wikibase-edit](https://codeberg.org/maxlath/wikibase-edit): Edit a Wikibase instance from NodeJS
+* [wikibase-cli](https://codeberg.org/maxlath/wikibase-cli): The command-line interface to Wikibase instances
 * [wikibase-dump-filter](https://npmjs.com/package/wikibase-dump-filter): Filter and format a newline-delimited JSON stream of Wikibase entities
 * [wikidata-taxonomy](https://github.com/nichtich/wikidata-taxonomy): Command-line tool to extract taxonomies from Wikidata
 * [Other Wikidata external tools](https://www.wikidata.org/wiki/Wikidata:Tools/External_tools)
@@ -159,7 +159,7 @@ This library had for primary purpose to serve the needs of the [inventaire](http
 
 [![inventaire banner](https://inventaire.io/public/images/inventaire-brittanystevens-13947832357-CC-BY-lighter-blue-4-banner-500px.png)](https://inventaire.io)
 
-Do you know [Inventaire](https://inventaire.io/)? It's a web app to share books with your friends, built on top of Wikidata! And its [libre software](http://github.com/inventaire/inventaire) too.
+Do you know [Inventaire](https://inventaire.io/)? It's a web app to share books with your friends, built on top of Wikidata! And its [libre software](http://codeberg.org/inventaire/inventaire) too.
 
 ## License
 [MIT](LICENSE.md)

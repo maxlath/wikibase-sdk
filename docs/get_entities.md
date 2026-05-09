@@ -53,7 +53,7 @@ const urls = wbk.getManyEntities({
 ```
 but it returns an array of urls instead.
 
-:warning: This limitation policy was probably there for a reason, right? This should be the exception, make sure to set an interval between your requests (500ms, 1s?), and if you really need a lot of entities, consider using [dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_.28recommended.29): there are [great tools](https://github.com/maxlath/wikidata-filter) to work with those too! ;)
+:warning: This limitation policy was probably there for a reason, right? This should be the exception, make sure to set an interval between your requests (500ms, 1s?), and if you really need a lot of entities, consider using [dumps](https://www.wikidata.org/wiki/Wikidata:Database_download#JSON_dumps_.28recommended.29): there are [great tools](https://codeberg.org/maxlath/wikibase-dump-filter) to work with those too! ;)
 
 
 ### By id and revision
@@ -62,9 +62,9 @@ At some point in your love story with Wikidata, you might end up needing to acce
 const url = wbk.getEntityRevision({ id: 'Q3548931', revision: 775908525 })
 ```
 
-The revision id can be obtained using [`wbk.getRevisions`](https://github.com/maxlath/wikidata-sdk/blob/main/docs/get_revisions.md#get-revisions): look for the `revid`.
+The revision id can be obtained using [`wbk.getRevisions`](https://codeberg.org/maxlath/wikidata-sdk/src/branch/main/docs/get_revisions.md#get-revisions): look for the `revid`.
 
-The returned data can then be [simplified](https://github.com/maxlath/wikidata-sdk/blob/main/docs/simplify_entities_data.md#simplify-entities-data) as for normal entity data.
+The returned data can then be [simplified](https://codeberg.org/maxlath/wikidata-sdk/src/branch/main/docs/simplify_entities_data.md#simplify-entities-data) as for normal entity data.
 
 ## By Sitelinks
 *associated Wikibase API doc: [wbgetentities](https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities)*

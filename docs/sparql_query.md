@@ -22,7 +22,7 @@ For more information on results simplification, see [`simplifySparqlResults`](si
 
 ### Example
 
-Exemple taken from [inventaire SPARQL queries](https://github.com/inventaire/inventaire/tree/master/server/data/wikidata/queries) (here written using [ES6 template string](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/template_strings) capabilities)
+Exemple taken from [inventaire SPARQL queries](https://codeberg.org/inventaire/inventaire/src/branch/main/server/data/wikidata/queries) (here written using [ES6 template string](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/template_strings) capabilities)
 ```js
 const authorQid = 'Q535'
 const sparql = `
